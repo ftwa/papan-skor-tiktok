@@ -2065,69 +2065,113 @@
       opacity: 0.08 !important;
       pointer-events: none !important;
     }
-    html.theme-comic .winner-header-title {
+    html.theme-comic .winner-title {
       font-family: 'Bangers', cursive !important;
-      font-size: 42px !important;
+      font-size: 52px !important;
       color: #ffffff !important;
       text-shadow: 4px 4px 0px #000000, -2px -2px 0px #000000, 2px -2px 0px #000000, -2px 2px 0px #000000 !important;
       letter-spacing: 2px !important;
     }
-    html.theme-comic .winner-header-sub {
-      font-family: 'Fredoka', sans-serif !important;
-      font-weight: 900 !important;
+    html.theme-comic .winner-trophy-badge {
+      font-family: 'Bangers', cursive !important;
+      font-size: 15px !important;
+      letter-spacing: 1.5px !important;
       color: #000000 !important;
       background: #ffe600 !important;
-      border: 2px solid #000000 !important;
-      box-shadow: 2px 2px 0px #000000 !important;
-      padding: 3px 12px !important;
-      border-radius: 6px !important;
+      border: 2.5px solid #000000 !important;
+      box-shadow: 3px 3px 0px #000000 !important;
+      padding: 4px 16px !important;
+      border-radius: 8px !important;
       display: inline-block !important;
     }
-    html.theme-comic .winner-card {
+    html.theme-comic .winner-title-divider span {
+      color: #000000 !important;
+      text-shadow: 1px 1px 0px #ffffff !important;
+      font-size: 18px !important;
+    }
+
+    /* Kartu Panggung Podium Comic */
+    html.theme-comic .podium-glass-card {
       background: #ffffff !important;
       border: 4px solid #000000 !important;
       box-shadow: 8px 8px 0px #000000 !important;
-      border-radius: 18px !important;
+      border-radius: 16px !important;
+      backdrop-filter: none !important;
     }
-    html.theme-comic .winner-card-1 {
+    html.theme-comic .podium-card.rank-1 .podium-glass-card {
       border: 5px solid #000000 !important;
-      box-shadow: 12px 12px 0px #000000 !important;
-      background: #ffffff !important;
+      box-shadow: 11px 11px 0px #000000 !important;
+      background: #fffde7 !important;
     }
-    html.theme-comic .winner-podium-pillar {
-      border: 3.5px solid #000000 !important;
-      box-shadow: 6px 6px 0px #000000 !important;
-      border-radius: 14px !important;
-    }
-    html.theme-comic .pillar-1 {
-      background: #ffe600 !important;
-    }
-    html.theme-comic .pillar-2 {
-      background: #00e5ff !important;
-    }
-    html.theme-comic .pillar-3 {
-      background: #ff9100 !important;
-    }
-    html.theme-comic .winner-score-badge {
-      font-family: 'Bangers', cursive !important;
-      font-size: 28px !important;
-      color: #d50000 !important;
-      text-shadow: 2px 2px 0px #ffe600 !important;
-      background: #ffffff !important;
+
+    /* Pita Ranking Juara 1, 2, 3 Comic */
+    html.theme-comic .podium-rank-ribbon {
       border: 2.5px solid #000000 !important;
       box-shadow: 3px 3px 0px #000000 !important;
-      border-radius: 8px !important;
-      padding: 2px 12px !important;
+      font-family: 'Bangers', cursive !important;
+      font-size: 16px !important;
+      letter-spacing: 1px !important;
+      border-radius: 6px !important;
+      padding: 4px 10px !important;
     }
-    html.theme-comic .winner-player-name {
+    html.theme-comic .podium-card.rank-1 .podium-rank-ribbon {
+      background: #ffe600 !important;
+      color: #000000 !important;
+    }
+    html.theme-comic .podium-card.rank-2 .podium-rank-ribbon {
+      background: #00e5ff !important;
+      color: #000000 !important;
+    }
+    html.theme-comic .podium-card.rank-3 .podium-rank-ribbon {
+      background: #ff9100 !important;
+      color: #000000 !important;
+    }
+
+    /* Nama & User Pemain di Podium Comic */
+    html.theme-comic .player-display-name {
+      color: #000000 !important;
       font-family: 'Fredoka', sans-serif !important;
       font-weight: 900 !important;
-      color: #000000 !important;
       font-size: 20px !important;
+      text-shadow: none !important;
     }
-    html.theme-comic .winner-btn-close {
+    html.theme-comic .player-username-pill {
+      background: #f1f5f9 !important;
+      color: #000000 !important;
+      border: 2px solid #000000 !important;
+      font-family: 'Fredoka', sans-serif !important;
+      font-weight: 700 !important;
+      box-shadow: 2px 2px 0px #000000 !important;
+    }
+
+    /* Skor di Podium Comic */
+    html.theme-comic .podium-score-pill {
+      background: #ffffff !important;
+      border: 3px solid #000000 !important;
+      box-shadow: 4px 4px 0px #000000 !important;
+      border-radius: 10px !important;
+    }
+    html.theme-comic .podium-score-val {
+      color: #d50000 !important;
+      font-family: 'Bangers', cursive !important;
+      font-size: 32px !important;
+      text-shadow: 2px 2px 0px #ffe600 !important;
+    }
+    html.theme-comic .podium-score-lbl {
+      color: #000000 !important;
+      font-family: 'Bangers', cursive !important;
+      font-size: 14px !important;
+    }
+
+    /* Tombol Tutup Pemenang Comic */
+    html.theme-comic .btn-close-winner {
       background: #ff1744 !important;
       color: #ffffff !important;
+      border: 3px solid #000000 !important;
+      box-shadow: 4px 4px 0px #000000 !important;
+      border-radius: 50% !important;
+      font-weight: 900 !important;
+    }
       border: 3px solid #000000 !important;
       box-shadow: 4px 4px 0px #000000 !important;
       font-family: 'Bangers', cursive !important;
