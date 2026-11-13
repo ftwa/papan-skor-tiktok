@@ -3423,23 +3423,6 @@
       siarkanPesanSync({ type: 'OPEN_PODIUM', p1, p2, p3 });
     }
   }
-    document.getElementById('winnerOverlay').classList.add('active');
-    autoScalePodium();
-    requestAnimationFrame(autoScalePodium);
-    setTimeout(autoScalePodium, 50);
-    setTimeout(autoScalePodium, 200);
-
-    putarTerompetDanTepukTangan();
-    mulaiAnimasiPetasan();
-
-    try {
-      localStorage.setItem(PODIUM_STATE_KEY, JSON.stringify({ active: true, p1, p2, p3 }));
-    } catch (_) {}
-
-    if (isBroadcast) {
-      siarkanPesanSync({ type: 'OPEN_PODIUM', p1, p2, p3 });
-    }
-  }
 
   function tutupLayarPemenang(isBroadcast = true) {
     document.body.classList.remove('winner-overlay-open');
