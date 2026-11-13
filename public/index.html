@@ -1504,7 +1504,145 @@
       filter: brightness(1.15);
       transform: translateY(-1px);
     }
-  </style>
+  
+    /* =========================================================
+       CYBER HUD MULTI-USER AUTHENTICATION & ROOM ISOLATION
+       ========================================================= */
+    #modalAuthUser {
+      position: fixed; inset: 0;
+      background: radial-gradient(circle at 50% 25%, rgba(14, 165, 233, 0.18) 0%, rgba(3, 7, 18, 0.94) 75%), #030712;
+      backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+      display: none; align-items: center; justify-content: center;
+      z-index: 100000; padding: 16px;
+    }
+    .auth-box-hud {
+      background: linear-gradient(180deg, #0d1629 0%, #080e1c 100%);
+      width: 440px; max-width: 96vw; border-radius: 18px;
+      border: 1.5px solid rgba(56, 189, 248, 0.55);
+      box-shadow: 0 0 40px rgba(56, 189, 248, 0.25), 0 25px 60px rgba(0, 0, 0, 0.9);
+      padding: 24px 26px; display: flex; flex-direction: column; gap: 16px;
+      color: #f8fafc; position: relative; overflow: hidden;
+      animation: popInModal 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .auth-box-hud::before {
+      content: ""; position: absolute; top: 0; left: 0; right: 0; height: 3.5px;
+      background: linear-gradient(90deg, #0284c7, #38bdf8, #f59e0b, #0284c7);
+      background-size: 200% 100%;
+      animation: champAuraPulse 4s infinite linear;
+    }
+    .auth-header {
+      text-align: center; display: flex; flex-direction: column; align-items: center; gap: 4px;
+    }
+    .auth-badge-title {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: rgba(56, 189, 248, 0.12); border: 1px solid rgba(56, 189, 248, 0.4);
+      padding: 4px 14px; border-radius: 999px; font-size: 11px; font-weight: 900;
+      letter-spacing: 2px; color: #38bdf8; text-transform: uppercase;
+    }
+    .auth-title {
+      font-size: 24px; font-weight: 950; letter-spacing: 0.5px; margin: 4px 0 0 0;
+      background: linear-gradient(135deg, #ffffff 0%, #bae6fd 60%, #38bdf8 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    }
+    .auth-subtitle {
+      font-size: 11.5px; color: #94a3b8; font-weight: 600; line-height: 1.4;
+    }
+    .auth-tabs {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 8px;
+      background: rgba(15, 23, 42, 0.7); padding: 4px; border-radius: 10px;
+      border: 1px solid rgba(56, 189, 248, 0.2);
+    }
+    .auth-tab-btn {
+      background: transparent; border: none; color: #94a3b8;
+      font-size: 12px; font-weight: 800; padding: 8px 10px; border-radius: 7px;
+      cursor: pointer; transition: all 0.2s ease; display: flex; align-items: center; justify-content: center; gap: 6px;
+    }
+    .auth-tab-btn.active {
+      background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
+      color: #ffffff; box-shadow: 0 0 16px rgba(2, 132, 199, 0.5);
+    }
+    .auth-form {
+      display: flex; flex-direction: column; gap: 12px;
+    }
+    .auth-form.hidden {
+      display: none;
+    }
+    .auth-field {
+      display: flex; flex-direction: column; gap: 5px;
+    }
+    .auth-label {
+      font-size: 11px; font-weight: 800; color: #cbd5e1; letter-spacing: 0.5px;
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    .auth-label-hint {
+      font-size: 10px; color: #64748b; font-weight: 600;
+    }
+    .auth-input {
+      background: rgba(15, 23, 42, 0.85); border: 1.5px solid rgba(56, 189, 248, 0.25);
+      border-radius: 8px; padding: 10px 12px; font-size: 13px; color: #f8fafc;
+      font-family: inherit; outline: none; transition: all 0.2s ease;
+    }
+    .auth-input:focus {
+      border-color: #38bdf8; box-shadow: 0 0 14px rgba(56, 189, 248, 0.35);
+      background: rgba(15, 23, 42, 0.98);
+    }
+    .auth-submit-btn {
+      background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
+      color: #ffffff; border: 1px solid #38bdf8;
+      padding: 12px; border-radius: 9px; font-size: 13.5px; font-weight: 900;
+      letter-spacing: 0.5px; cursor: pointer; transition: all 0.2s ease;
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+      box-shadow: 0 4px 18px rgba(2, 132, 199, 0.45); margin-top: 4px;
+    }
+    .auth-submit-btn:hover {
+      filter: brightness(1.15); transform: translateY(-1px);
+      box-shadow: 0 6px 24px rgba(56, 189, 248, 0.6);
+    }
+    .auth-submit-btn:disabled {
+      opacity: 0.6; cursor: not-allowed; transform: none;
+    }
+    .auth-status-msg {
+      font-size: 11.5px; font-weight: 700; padding: 8px 12px; border-radius: 8px;
+      display: none; text-align: center; animation: fadeInModal 0.2s ease;
+    }
+    .auth-status-msg.error {
+      display: block; background: rgba(239, 68, 68, 0.15); border: 1px solid rgba(239, 68, 68, 0.45);
+      color: #fca5a5;
+    }
+    .auth-status-msg.success {
+      display: block; background: rgba(34, 197, 94, 0.15); border: 1px solid rgba(34, 197, 94, 0.45);
+      color: #86efac;
+    }
+
+    /* TOP BAR USER PROFILE BADGE */
+    .btn-user-badge {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: rgba(14, 165, 233, 0.12) !important;
+      border: 1px solid rgba(56, 189, 248, 0.45) !important;
+      color: #38bdf8 !important; padding: 5px 12px !important;
+    }
+    .btn-user-badge:hover {
+      background: rgba(14, 165, 233, 0.22) !important;
+      border-color: #38bdf8 !important;
+      box-shadow: 0 0 12px rgba(56, 189, 248, 0.3) !important;
+    }
+    .dropdown-user-content {
+      right: 0 !important; left: auto !important; min-width: 220px !important;
+      padding: 6px 0 !important;
+    }
+    .user-menu-info {
+      padding: 8px 14px 10px 14px;
+      border-bottom: 1px solid rgba(56, 189, 248, 0.2);
+      display: flex; flex-direction: column; gap: 3px;
+    }
+    .umi-title {
+      font-size: 12.5px; font-weight: 800; color: #f8fafc;
+    }
+    .umi-sub {
+      font-size: 10px; font-weight: 700; color: #38bdf8; letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+</style>
 </head>
 <body class="view-match">
 
@@ -1539,7 +1677,28 @@
 
     <div class="top-right">
       <span id="syncStatusBadge" class="sync-badge disconnected"><span class="sync-badge-dot"></span> <span id="syncStatusText">MENGHUBUNGKAN...</span></span>
-      <button class="btn-action-soft btn-stream-link" onclick="bukaModalLinkStream()" title="Salin link modular untuk TikTok Studio & OBS">
+      <!-- DROPDOWN USER PROFILE & ROOM ISOLATION -->
+      <div class="dropdown" id="dropdownUserAuth">
+        <button class="btn-action-soft btn-user-badge" onclick="toggleDropdownUser(event)" title="Profil Akun & Room Anda">
+          <span>👤</span>
+          <span id="topBarUserName">admin</span>
+          <span style="font-size:9px; opacity:0.8;">▾</span>
+        </button>
+        <div class="dropdown-content dropdown-user-content" id="listDropdownUser">
+          <div class="user-menu-info">
+            <div class="umi-title" id="menuUserDisplay">Master Admin</div>
+            <div class="umi-sub" id="menuUserRoom">ROOM: admin</div>
+          </div>
+          <button type="button" onclick="bukaModalLinkStream()">
+            <span>🔗</span> <span>Link Stream Saya</span>
+          </button>
+          <button type="button" class="btn-danger-reset" onclick="eksekusiLogoutUser()">
+            <span>🚪</span> <span>Ganti Akun / Logout</span>
+          </button>
+        </div>
+      </div>
+
+      <button class="btn-action-soft btn-stream-link"  onclick="bukaModalLinkStream()" title="Salin link modular untuk TikTok Studio & OBS">
         🔗 LINK STREAM
       </button>
 
@@ -1973,14 +2132,34 @@
     currentViewMode = 'log';
   }
 
-  const DB_KEY = 'single_leaderboard_cyber_hud_v3';
+  /* SISTEM MULTI-USER ROOM SEPARATION: MENCEGAH TABRAKAN ANTAR PENGGUNA */
+  function dapatkanRoomAktif() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const fromUrl = (urlParams.get('room') || urlParams.get('user') || '').toLowerCase().trim().replace(/[^a-z0-9_]/g, '');
+    if (fromUrl) return fromUrl;
+    try {
+      const saved = JSON.parse(localStorage.getItem('scoreboard_auth_user_v1') || 'null');
+      if (saved && saved.username) return saved.username.toLowerCase().trim().replace(/[^a-z0-9_]/g, '');
+    } catch (_) {}
+    return 'admin';
+  }
+
+  const CURRENT_ROOM = dapatkanRoomAktif();
+  const DB_KEY = 'single_leaderboard_cyber_hud_v3_' + CURRENT_ROOM;
   const AUDIO_POIN_KEY = 'galatama_custom_sound_mitos';
   const COL_WIDTHS_KEY = 'galatama_single_col_widths_cyber_v1';
   const LOG_FOLD_KEY = 'galatama_log_is_folded';
-  const SYNC_BUS_NAME = 'galatama_stream_sync_bus';
-  const PODIUM_STATE_KEY = 'galatama_podium_state_v1';
-  const CLOUD_SYNC_TOPIC = 'galatama_stream_sohe_live_bus_v1';
+  const SYNC_BUS_NAME = 'galatama_stream_sync_bus_' + CURRENT_ROOM;
+  const PODIUM_STATE_KEY = 'galatama_podium_state_v1_' + CURRENT_ROOM;
+  const CLOUD_SYNC_TOPIC = 'galatama_stream_room_' + CURRENT_ROOM + '_v2';
   const LOCAL_SENDER_ID = 'client_' + Math.random().toString(36).substring(2, 9);
+
+  // Migrasi otomatis data lama agar tidak hilang
+  try {
+    if (!localStorage.getItem(DB_KEY) && localStorage.getItem('single_leaderboard_cyber_hud_v3')) {
+      localStorage.setItem(DB_KEY, localStorage.getItem('single_leaderboard_cyber_hud_v3'));
+    }
+  } catch (_) {}
 
   /* ENGINE SINKRONISASI KILAT: HIVEMQ SECURE WEBSOCKET (WSS SSL) + BROADCASTCHANNEL */
   let syncChannel = null;
@@ -1990,7 +2169,7 @@
   const MQTT_BROKER = 'broker.hivemq.com';
   const MQTT_PORT = 8884;
   const MQTT_PATH = '/mqtt';
-  const MQTT_TOPIC = 'galatama_score_tiktok_live_stream_sohe_v1';
+  const MQTT_TOPIC = 'galatama_score_room_' + CURRENT_ROOM + '_v2';
 
   function perbaruiStatusSyncUI(connected) {
     const badge = document.getElementById('syncStatusBadge');
@@ -2887,10 +3066,10 @@ ow-kursi-);
     const path = window.location.pathname;
     const base = `${origin}${path}`;
 
-    const urlTabel = `${base}?view=tabel`;
-    const urlPodium = `${base}?view=podium`;
-    const urlNotif = `${base}?view=notif`;
-    const urlLog = `${base}?view=log`;
+    const urlTabel = `${base}?room=${encodeURIComponent(CURRENT_ROOM)}&view=tabel`;
+    const urlPodium = `${base}?room=${encodeURIComponent(CURRENT_ROOM)}&view=podium`;
+    const urlNotif = `${base}?room=${encodeURIComponent(CURRENT_ROOM)}&view=notif`;
+    const urlLog = `${base}?room=${encodeURIComponent(CURRENT_ROOM)}&view=log`;
 
     const elTabel = document.getElementById('linkOverlayTabel');
     const elPodium = document.getElementById('linkOverlayPodium');
@@ -3756,8 +3935,219 @@ ow-kursi-);
     }
   });
 
+  
+  /* =========================================================
+     AUTH HANDLERS & ROOM SWITCHING FUNCTIONS
+     ========================================================= */
+  function gantiTabAuth(tab) {
+    const btnL = document.getElementById('tabBtnLogin');
+    const btnR = document.getElementById('tabBtnRegister');
+    const formL = document.getElementById('formAuthLogin');
+    const formR = document.getElementById('formAuthRegister');
+    const msg = document.getElementById('authStatusMsg');
+    if (msg) { msg.style.display = 'none'; msg.className = 'auth-status-msg'; }
+
+    if (tab === 'login') {
+      btnL.classList.add('active');
+      btnR.classList.remove('active');
+      formL.classList.remove('hidden');
+      formR.classList.add('hidden');
+    } else {
+      btnR.classList.add('active');
+      btnL.classList.remove('active');
+      formR.classList.remove('hidden');
+      formL.classList.add('hidden');
+    }
+  }
+
+  function tampilkanPesanAuth(pesan, isSuccess = false) {
+    const el = document.getElementById('authStatusMsg');
+    if (!el) return;
+    el.innerText = pesan;
+    el.className = 'auth-status-msg ' + (isSuccess ? 'success' : 'error');
+    el.style.display = 'block';
+  }
+
+  function perbaruiUIUserHeader() {
+    let saved = null;
+    try { saved = JSON.parse(localStorage.getItem('scoreboard_auth_user_v1') || 'null'); } catch (_) {}
+    const userName = saved ? saved.username : CURRENT_ROOM;
+    const dispName = saved ? (saved.displayName || saved.username) : 'Master Admin';
+
+    const topName = document.getElementById('topBarUserName');
+    if (topName) topName.innerText = userName;
+
+    const menuDisp = document.getElementById('menuUserDisplay');
+    if (menuDisp) menuDisp.innerText = dispName;
+
+    const menuRoom = document.getElementById('menuUserRoom');
+    if (menuRoom) menuRoom.innerText = `ROOM: ${CURRENT_ROOM}`;
+  }
+
+  function toggleDropdownUser(e) {
+    if (e) e.stopPropagation();
+    const drop = document.getElementById('listDropdownUser');
+    if (!drop) return;
+    const isOpen = drop.classList.contains('show');
+    tutupSemuaDropdown();
+    if (!isOpen) drop.classList.add('show');
+  }
+
+  async function eksekusiLoginSubmit() {
+    const userInp = document.getElementById('authLoginUser');
+    const passInp = document.getElementById('authLoginPass');
+    const btn = document.getElementById('btnSubmitLogin');
+    const user = userInp.value.trim().toLowerCase().replace(/[^a-z0-9_]/g, '');
+    const pass = passInp.value.trim();
+
+    if (!user || !pass) {
+      tampilkanPesanAuth('Username dan Password wajib diisi!');
+      return;
+    }
+
+    btn.disabled = true;
+    btn.innerHTML = '<span>⏳ Memeriksa Akun...</span>';
+
+    try {
+      let res = await fetch(`/api/auth?action=login`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username: user, password: pass })
+      }).catch(() => null);
+
+      if (!res || !res.ok) {
+        res = await fetch(`https://papan-skor-tiktok.vercel.app/api/auth?action=login`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ username: user, password: pass })
+        }).catch(() => null);
+      }
+
+      let data = res ? await res.json() : null;
+
+      // Fallback lokal vault jika offline
+      if (!data || !data.sukses) {
+        const localVault = JSON.parse(localStorage.getItem('scoreboard_users_vault_v1') || '{}');
+        if (localVault[user] && localVault[user].password === pass) {
+          data = { sukses: true, user: { username: user, displayName: localVault[user].displayName || user } };
+        } else if (user === 'admin' && pass === 'admin123') {
+          data = { sukses: true, user: { username: 'admin', displayName: 'Master Admin' } };
+        }
+      }
+
+      if (data && data.sukses) {
+        localStorage.setItem('scoreboard_auth_user_v1', JSON.stringify(data.user));
+        tampilkanPesanAuth('Login berhasil! Memuat dashboard room...', true);
+        setTimeout(() => {
+          window.location.href = window.location.pathname;
+        }, 500);
+      } else {
+        tampilkanPesanAuth(data ? data.pesan : 'Username atau password salah! Silakan coba lagi.');
+        btn.disabled = false;
+        btn.innerHTML = '<span>MASUK KE PAPAN SKOR</span> <span>➔</span>';
+      }
+    } catch (err) {
+      tampilkanPesanAuth('Gagal login: ' + err.message);
+      btn.disabled = false;
+      btn.innerHTML = '<span>MASUK KE PAPAN SKOR</span> <span>➔</span>';
+    }
+  }
+
+  async function eksekusiRegisterSubmit() {
+    const nameInp = document.getElementById('authRegName');
+    const userInp = document.getElementById('authRegUser');
+    const passInp = document.getElementById('authRegPass');
+    const confInp = document.getElementById('authRegPassConfirm');
+    const btn = document.getElementById('btnSubmitRegister');
+
+    const name = nameInp.value.trim();
+    const user = userInp.value.trim().toLowerCase().replace(/[^a-z0-9_]/g, '');
+    const pass = passInp.value.trim();
+    const conf = confInp.value.trim();
+
+    if (!user || user.length < 3) {
+      tampilkanPesanAuth('Username minimal 3 karakter (huruf, angka, _) tanpa spasi!');
+      return;
+    }
+    if (pass.length < 4) {
+      tampilkanPesanAuth('Password minimal 4 karakter!');
+      return;
+    }
+    if (pass !== conf) {
+      tampilkanPesanAuth('Konfirmasi password tidak cocok!');
+      return;
+    }
+
+    btn.disabled = true;
+    btn.innerHTML = '<span>⏳ Mendaftarkan Akun...</span>';
+
+    try {
+      let res = await fetch(`/api/auth?action=register`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username: user, password: pass, displayName: name })
+      }).catch(() => null);
+
+      if (!res || !res.ok) {
+        res = await fetch(`https://papan-skor-tiktok.vercel.app/api/auth?action=register`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ username: user, password: pass, displayName: name })
+        }).catch(() => null);
+      }
+
+      let data = res ? await res.json() : null;
+
+      // Simpan di local vault juga
+      const localVault = JSON.parse(localStorage.getItem('scoreboard_users_vault_v1') || '{}');
+      localVault[user] = { username: user, password: pass, displayName: name };
+      localStorage.setItem('scoreboard_users_vault_v1', JSON.stringify(localVault));
+
+      if (data && data.sukses) {
+        localStorage.setItem('scoreboard_auth_user_v1', JSON.stringify(data.user));
+        tampilkanPesanAuth('Pendaftaran sukses! Mengalihkan ke room Anda...', true);
+        setTimeout(() => {
+          window.location.href = window.location.pathname;
+        }, 600);
+      } else {
+        // Jika server bermasalah tapi local vault berhasil
+        localStorage.setItem('scoreboard_auth_user_v1', JSON.stringify({ username: user, displayName: name }));
+        tampilkanPesanAuth('Pendaftaran berhasil (Mode Offline)! Mengalihkan...', true);
+        setTimeout(() => {
+          window.location.href = window.location.pathname;
+        }, 600);
+      }
+    } catch (err) {
+      tampilkanPesanAuth('Error pendaftaran: ' + err.message);
+      btn.disabled = false;
+      btn.innerHTML = '<span>DAFTAR & BUAT ROOM SAYA</span> <span>🚀</span>';
+    }
+  }
+
+  function eksekusiLogoutUser() {
+    if (confirm('Apakah Anda yakin ingin logout / beralih akun?')) {
+      localStorage.removeItem('scoreboard_auth_user_v1');
+      window.location.href = window.location.pathname;
+    }
+  }
+
   window.addEventListener('DOMContentLoaded', () => {
     try { if (window.resizeTo && currentViewMode === 'admin') window.resizeTo(1060, 725); } catch (_) {}
+        // Cek status autentikasi user untuk mode admin master
+    if (currentViewMode === 'admin') {
+      const authUser = localStorage.getItem('scoreboard_auth_user_v1');
+      const authModal = document.getElementById('modalAuthUser');
+      if (!authUser) {
+        if (authModal) authModal.style.setProperty('display', 'flex', 'important');
+      } else {
+        if (authModal) authModal.style.display = 'none';
+        perbaruiUIUserHeader();
+      }
+    } else {
+      const authModal = document.getElementById('modalAuthUser');
+      if (authModal) authModal.style.display = 'none';
+    }
+
     muatStatusFoldLog();
     inisialisasiStrukturTabel();
     renderIsiTabel();
@@ -3787,5 +4177,98 @@ ow-kursi-);
     tambahLogAktivitas('SISTEM', `Scoreboard Siap (Mode: ${currentViewMode.toUpperCase()}) - Sesi: ${db.activeSession}`, 'system', null, null, null, false);
   });
 </script>
+
+<!-- MODAL AUTHENTICATION & MULTI-USER ROOM SEPARATION -->
+<div id="modalAuthUser">
+  <div class="auth-box-hud">
+    <div class="auth-header">
+      <div class="auth-badge-title">🛡️ MULTI-USER ISOLATED WORKSPACE 🛡️</div>
+      <h2 class="auth-title">Papan Skor TikTok</h2>
+      <p class="auth-subtitle">Setiap user memiliki Room & data terpisah secara independen. Tidak akan bertabrakan dengan akun lain!</p>
+    </div>
+
+    <!-- TAB SWITCHER -->
+    <div class="auth-tabs">
+      <button type="button" class="auth-tab-btn active" id="tabBtnLogin" onclick="gantiTabAuth('login')">
+        <span>🔑</span> <span>Masuk (Login)</span>
+      </button>
+      <button type="button" class="auth-tab-btn" id="tabBtnRegister" onclick="gantiTabAuth('register')">
+        <span>📝</span> <span>Daftar Akun Baru</span>
+      </button>
+    </div>
+
+    <!-- STATUS ALERT -->
+    <div class="auth-status-msg" id="authStatusMsg"></div>
+
+    <!-- FORM LOGIN -->
+    <form class="auth-form" id="formAuthLogin" onsubmit="event.preventDefault(); eksekusiLoginSubmit();">
+      <div class="auth-field">
+        <label class="auth-label">
+          <span>Username Akun / Room ID</span>
+          <span class="auth-label-hint">contoh: admin, sohe_live</span>
+        </label>
+        <input type="text" id="authLoginUser" class="auth-input" placeholder="Masukkan username..." autocomplete="username" required>
+      </div>
+
+      <div class="auth-field">
+        <label class="auth-label">
+          <span>Password</span>
+        </label>
+        <input type="password" id="authLoginPass" class="auth-input" placeholder="Masukkan password..." autocomplete="current-password" required>
+      </div>
+
+      <button type="submit" class="auth-submit-btn" id="btnSubmitLogin">
+        <span>MASUK KE PAPAN SKOR</span>
+        <span>➔</span>
+      </button>
+      <p style="text-align:center; font-size:11px; color:#64748b; margin:0;">
+        Akun default awal: <b>admin</b> | password: <b>admin123</b>
+      </p>
+    </form>
+
+    <!-- FORM REGISTER -->
+    <form class="auth-form hidden" id="formAuthRegister" onsubmit="event.preventDefault(); eksekusiRegisterSubmit();">
+      <div class="auth-field">
+        <label class="auth-label">
+          <span>Nama Lengkap / Tim / Host</span>
+          <span class="auth-label-hint">contoh: Galatama Sohe Official</span>
+        </label>
+        <input type="text" id="authRegName" class="auth-input" placeholder="Ketik nama display..." required>
+      </div>
+
+      <div class="auth-field">
+        <label class="auth-label">
+          <span>Username (ID Room Unik Anda)</span>
+          <span class="auth-label-hint">huruf, angka & _ (tanpa spasi)</span>
+        </label>
+        <input type="text" id="authRegUser" class="auth-input" placeholder="contoh: sohe_live" autocomplete="username" required>
+      </div>
+
+      <div class="auth-field">
+        <label class="auth-label">
+          <span>Password</span>
+          <span class="auth-label-hint">minimal 4 karakter</span>
+        </label>
+        <input type="password" id="authRegPass" class="auth-input" placeholder="Buat password aman..." autocomplete="new-password" required>
+      </div>
+
+      <div class="auth-field">
+        <label class="auth-label">
+          <span>Konfirmasi Password</span>
+        </label>
+        <input type="password" id="authRegPassConfirm" class="auth-input" placeholder="Ketik ulang password..." autocomplete="new-password" required>
+      </div>
+
+      <button type="submit" class="auth-submit-btn" id="btnSubmitRegister">
+        <span>DAFTAR & BUAT ROOM SAYA</span>
+        <span>🚀</span>
+      </button>
+      <p style="text-align:center; font-size:11px; color:#64748b; margin:0;">
+        Setelah mendaftar, link stream Anda langsung otomatis menggunakan Room unik Anda.
+      </p>
+    </form>
+  </div>
+</div>
+
 </body>
 </html>
