@@ -53,6 +53,19 @@
       --host-bg: rgba(168, 85, 247, 0.12);
       --host-text: #c084fc;
     }
+    /* HILANGKAN SEMUA SCROLLBAR SECARA MENYELURUH DI SEMUA ENGINE CEF/BROWSER */
+    *::-webkit-scrollbar {
+      display: none !important;
+      width: 0 !important;
+      height: 0 !important;
+    }
+    html, body {
+      scrollbar-width: none !important;
+      -ms-overflow-style: none !important;
+    }
+    body.winner-overlay-open {
+      overflow: hidden !important;
+    }
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Space Grotesk', sans-serif; }
     html, body {
       background-color: var(--bg);
@@ -235,7 +248,7 @@
 
     /* POPOVER POIN CEPAT */
     .quick-point-popover {
-      display: none; position: fixed; z-index: 35000; background: #0d1527; color: #f8fafc;
+      display: none; position: fixed; z-index: 999999 !important; background: #0d1527; color: #f8fafc;
       width: 235px; padding: 12px; border-radius: 12px; border: 1.5px solid #38bdf8;
       box-shadow: 0 18px 40px rgba(0, 0, 0, 0.75); flex-direction: column; gap: 8px;
     }
@@ -418,7 +431,7 @@
     .modal-overlay { 
       display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
       background: rgba(3, 7, 18, 0.88); backdrop-filter: blur(8px); 
-      z-index: 9999; justify-content: center; align-items: center; padding: 12px; 
+      z-index: 999999 !important; justify-content: center; align-items: center; padding: 12px; 
     }
     .modal-box-hud {
       background: linear-gradient(180deg, #0d1527 0%, #080d19 100%);
@@ -531,9 +544,9 @@
       position: absolute !important;
       left: 50% !important;
       top: 50% !important;
-      width: 1120px;
-      max-width: 1120px;
-      min-width: 1120px;
+      width: 1100px;
+      max-width: 1100px;
+      min-width: 1100px;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -1054,10 +1067,10 @@
       flex-wrap: nowrap !important;
       justify-content: center !important;
       align-items: flex-end !important;
-      gap: 26px !important;
-      max-width: 1120px !important;
-      width: 1120px !important;
-      min-width: 1120px !important;
+      gap: 20px !important;
+      max-width: 1100px !important;
+      width: 1100px !important;
+      min-width: 1100px !important;
       position: relative !important;
       z-index: 15 !important;
       margin: 8px auto !important;
@@ -1067,8 +1080,8 @@
     #winnerOverlay .podium-card,
     html.mode-podium .podium-card {
       flex: 1 !important;
-      max-width: 340px !important;
-      min-width: 280px !important;
+      max-width: 330px !important;
+      min-width: 260px !important;
       position: relative !important;
       display: flex !important;
       flex-direction: column !important;
@@ -1707,9 +1720,14 @@
           <span class="stream-icon">🏆</span>
           <span class="stream-name">Overlay Podium Juara (Hall of Champions)</span>
         </div>
-        <span class="stream-rec-badge">1920 × 1080 px (Fullscreen Layar Penuh)</span>
+        <span class="stream-rec-badge">1080 × 1920 px (Vertikal) / 1920 × 1080 px (Lanskap)</span>
       </div>
-      <p class="stream-card-sub">Transparan standby. Atur resolusi 1920 × 1080 (atau 1280 × 720) di TikTok Studio, klik 'Paskan ke Layar' / Fullscreen: panggung juara otomatis mengisi layar penuh 100% tanpa terpotong!</p>
+      <p class="stream-card-sub">
+        Transparan otomatis saat standby. Di TikTok LIVE Studio:<br>
+        • <b>Live Vertikal HP (Rekomendasi)</b>: Atur Lebar <b>1080</b>, Tinggi <b>1920</b>, lalu klik <i>Paskan ke Layar</i> (Fullscreen). Panggung juara otomatis presisi di tengah layar 100% utuh tanpa terpotong!<br>
+        • <b>Banner Tengah (di atas tabel)</b>: Atur Lebar <b>1080</b>, Tinggi <b>650</b>.<br>
+        • <b>Live Lanskap / PC</b>: Atur Lebar <b>1920</b>, Tinggi <b>1080</b>.
+      </p>
       <div class="stream-input-wrap">
         <input type="text" readonly id="linkOverlayPodium" class="stream-url-input" onclick="this.select()">
         <button class="btn-copy-link" onclick="salinLinkStream('linkOverlayPodium', this)">📋 Salin Link</button>
@@ -2127,21 +2145,31 @@
   function autoScalePodium() {
     const scaler = document.getElementById('podiumStageScaler');
     if (!scaler) return;
-    const targetW = 1140; // 1120px stage + 20px buffer simetris
-    const targetH = 680;
-    const winW = window.innerWidth || document.documentElement.clientWidth || 1280;
-    const winH = window.innerHeight || document.documentElement.clientHeight || 720;
-    const scaleX = (winW - 16) / targetW;
-    const scaleY = (winH - 16) / targetH;
+    const targetW = 1260; // 1100px panggung + buffer 160px untuk aura cahaya juara 2 & 3
+    const targetH = 780;  // 720px panggung + buffer 60px untuk mahkota & trofi atas
+    const winW = window.innerWidth || document.documentElement.clientWidth || 1080;
+    const winH = window.innerHeight || document.documentElement.clientHeight || 1920;
+    const scaleX = (winW - 28) / targetW;
+    const scaleY = (winH - 28) / targetH;
     let scale = Math.min(scaleX, scaleY);
-    if (scale < 0.15) scale = 0.15;
-    if (scale > 2.5) scale = 2.5; // Mendukung layar Fullscreen Full HD (1920x1080) & 2K tanpa terpotong!
+    if (scale < 0.1) scale = 0.1;
+    if (scale > 2.5) scale = 2.5; // Mendukung layar Fullscreen Vertikal (1080x1920) & Lanskap (1920x1080) tanpa terpotong!
     
     scaler.style.setProperty('position', 'absolute', 'important');
     scaler.style.setProperty('left', '50%', 'important');
     scaler.style.setProperty('top', '50%', 'important');
     scaler.style.setProperty('transform', `translate(-50%, -50%) scale(${scale.toFixed(4)})`, 'important');
     scaler.style.setProperty('transform-origin', 'center center', 'important');
+  }
+
+  let podiumResizeObs = null;
+  function aktifkanPodiumAutoResize() {
+    if (window.ResizeObserver && !podiumResizeObs) {
+      podiumResizeObs = new ResizeObserver(() => {
+        autoScalePodium();
+      });
+      if (document.body) podiumResizeObs.observe(document.body);
+    }
   }
 
   function autoScaleTabel() {
@@ -2176,9 +2204,12 @@
     pasangDataJuaraPodium(1, p1);
     pasangDataJuaraPodium(2, p2);
     pasangDataJuaraPodium(3, p3);
+    document.body.classList.add('winner-overlay-open');
     document.getElementById('winnerOverlay').classList.add('active');
     autoScalePodium();
-    autoScalePodium();
+    requestAnimationFrame(autoScalePodium);
+    setTimeout(autoScalePodium, 50);
+    setTimeout(autoScalePodium, 200);
     putarTerompetDanTepukTangan();
     mulaiAnimasiPetasan();
   }
@@ -2901,8 +2932,12 @@
     pasangDataJuaraPodium(2, p2);
     pasangDataJuaraPodium(3, p3);
 
+    document.body.classList.add('winner-overlay-open');
     document.getElementById('winnerOverlay').classList.add('active');
     autoScalePodium();
+    requestAnimationFrame(autoScalePodium);
+    setTimeout(autoScalePodium, 50);
+    setTimeout(autoScalePodium, 200);
 
     putarTerompetDanTepukTangan();
     mulaiAnimasiPetasan();
@@ -2917,6 +2952,7 @@
   }
 
   function tutupLayarPemenang(isBroadcast = true) {
+    document.body.classList.remove('winner-overlay-open');
     document.getElementById('winnerOverlay').classList.remove('active');
     if (fireworksInterval) { clearInterval(fireworksInterval); fireworksInterval = null; }
 
@@ -3486,6 +3522,7 @@
     }
 
     // Pulihkan status perayaan jika membuka link ?view=podium saat podium sedang aktif di Admin
+    aktifkanPodiumAutoResize();
     if (currentViewMode === 'podium') {
       try {
         const savedPodium = JSON.parse(localStorage.getItem(PODIUM_STATE_KEY) || 'null');
@@ -3494,6 +3531,7 @@
         }
       } catch (_) {}
       autoScalePodium();
+      setTimeout(autoScalePodium, 100);
     }
 
     tambahLogAktivitas('SISTEM', `Scoreboard Siap (Mode: ${currentViewMode.toUpperCase()}) - Sesi: ${db.activeSession}`, 'system', null, null, null, false);
