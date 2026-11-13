@@ -961,19 +961,19 @@
       background: transparent !important;
       border: none !important;
       box-shadow: none !important;
-      padding: 4px 10px 14px 10px !important;
+      padding: 4px 10px 4px 10px !important;
       margin: 0 !important;
       width: 1080px !important;
       max-width: 1080px !important;
-      height: 590px !important;
-      max-height: 590px !important;
+      height: 527px !important;
+      max-height: 527px !important;
       overflow: hidden !important;
       transform-origin: top left !important;
       box-sizing: border-box !important;
     }
     html.mode-tabel.show-log .container {
-      height: 730px !important;
-      max-height: 730px !important;
+      height: 660px !important;
+      max-height: 660px !important;
     }
     html.mode-tabel .grid-tables {
       display: grid !important;
@@ -998,6 +998,88 @@
     }
 
 
+
+    /* TAMPILAN INTERAKTIF EDIT NAMA PEMAIN DI LIVE STREAM (PAS DI TENGAH - TIDAK TERPOTONG) */
+    html.mode-tabel #modalInputNama {
+      display: none;
+      position: fixed !important;
+      top: 0 !important; left: 0 !important; right: 0 !important; bottom: 0 !important;
+      width: 100% !important; height: 100% !important;
+      background: rgba(4, 9, 20, 0.78) !important;
+      backdrop-filter: blur(8px) !important;
+      z-index: 99999 !important;
+      justify-content: center !important;
+      align-items: center !important;
+      pointer-events: none !important;
+    }
+    html.mode-tabel #modalInputNama .modal-box-hud {
+      width: 350px !important;
+      max-width: 90vw !important;
+      max-height: 85vh !important;
+      padding: 10px 14px !important;
+      gap: 6px !important;
+      border: 1.5px solid #38bdf8 !important;
+      box-shadow: 0 0 35px rgba(56, 189, 248, 0.5), 0 20px 50px rgba(0, 0, 0, 0.95) !important;
+      animation: popInModal 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
+      transform: scale(0.85) !important;
+      transform-origin: center center !important;
+      overflow: hidden !important;
+    }
+    html.mode-tabel #modalInputNama .modal-header-hud {
+      padding-bottom: 4px !important;
+      border-bottom: 1px solid rgba(56, 189, 248, 0.3) !important;
+    }
+    html.mode-tabel #modalInputNama .modal-sub-hud::before {
+      content: "⚡ LIVE PLAYER REGISTRATION ⚡ " !important;
+      color: #38bdf8 !important;
+      font-weight: 900 !important;
+      font-size: 10px !important;
+      letter-spacing: 1.5px !important;
+    }
+    html.mode-tabel #modalInputNama .modal-title-hud {
+      font-size: 15px !important;
+    }
+    html.mode-tabel #modalInputNama .btn-close-hud,
+    html.mode-tabel #modalInputNama .hud-action-row,
+    html.mode-tabel #modalInputNama .hud-btn-search {
+      display: none !important;
+    }
+    html.mode-tabel #modalInputNama .hud-player-card {
+      padding: 6px 10px !important;
+      margin: 2px 0 !important;
+    }
+    html.mode-tabel #modalInputNama .hud-avatar-box {
+      width: 40px !important; height: 40px !important;
+    }
+    html.mode-tabel #modalInputNama .hud-field-group {
+      gap: 2px !important;
+      margin-bottom: 3px !important;
+    }
+    html.mode-tabel #modalInputNama .hud-label {
+      font-size: 9.5px !important;
+      color: #94a3b8 !important;
+    }
+    html.mode-tabel #modalInputNama input {
+      height: 28px !important;
+      padding: 4px 8px !important;
+      font-size: 12px !important;
+      pointer-events: none !important;
+      user-select: none !important;
+      background: rgba(15, 23, 42, 0.8) !important;
+      border-color: rgba(56, 189, 248, 0.3) !important;
+      color: #f8fafc !important;
+    }
+    html.mode-tabel #modalInputNama #modalSearchStatus {
+      min-height: 0 !important;
+      font-size: 9px !important;
+    }
+
+    html.mode-tabel #centerNotifPopup {
+      display: none !important;
+      opacity: 0 !important;
+      visibility: hidden !important;
+      pointer-events: none !important;
+    }
 
     html.mode-tabel #quickPointPopover {
       pointer-events: none !important;
@@ -1701,6 +1783,10 @@
       <button class="btn-notif-trigger" onclick="tesPopupTengahManual()" title="Tes Tampilan Notifikasi Tengah">
         🔔 NOTIF
       </button>
+
+      <button type="button" class="btn-action-soft btn-logout-direct" onclick="eksekusiLogoutUser()" title="Keluar dari akun admin" style="border-color: rgba(239, 68, 68, 0.5); color: #fca5a5; font-weight: 800;">
+        🚪 LOGOUT
+      </button>
     </div>
   </div>
 
@@ -1936,9 +2022,9 @@
           <span class="stream-icon">📊</span>
           <span class="stream-name">Overlay Tabel Skor (Auto-Fit)</span>
         </div>
-        <span class="stream-rec-badge">1080 × 590 px (Pas Rapat 20 Kursi - Tanpa Terpotong!)</span>
+        <span class="stream-rec-badge">1080 × 527 px (Pas Rapat 20 Kursi - Tanpa Terpotong!)</span>
       </div>
-      <p class="stream-card-sub">Klasemen live transparan. Atur ukuran 1080 × 590 px di TikTok Studio agar kotak seleksi pas rapat di tepi tabel tanpa ada ruang kosong di bawahnya!</p>
+      <p class="stream-card-sub">Klasemen live transparan. Atur ukuran 1080 × 527 px di TikTok Studio agar kotak seleksi pas rapat di tepi tabel tanpa ada ruang kosong di bawahnya!</p>
       <div class="stream-input-wrap">
         <input type="text" readonly id="linkOverlayTabel" class="stream-url-input" onclick="this.select()">
         <button class="btn-copy-link" onclick="salinLinkStream('linkOverlayTabel', this)">📋 Salin Link</button>
@@ -2392,11 +2478,37 @@
         tampilkanPopupPoinTengah(msg.namaPemain, msg.deltaPoin, msg.totalPoin, msg.labelAtas, msg.warnaTag, false);
       }
     } else if (msg.type === 'OPEN_EDIT_MODAL') {
-      // Form edit modal admin tidak ditampilkan di stream penonton agar tidak terpotong
+      // Tampilkan card edit pemain di stream overlay dengan layout pas di tengah tanpa terpotong
+      if (currentViewMode === 'tabel') {
+        bukaModalInputNama(msg.chair, false);
+        if (msg.judul) document.getElementById('modalInputJudul').innerText = msg.judul;
+        if (msg.robloxUser !== undefined) document.getElementById('inputUserRoblox').value = msg.robloxUser;
+        if (msg.user !== undefined) document.getElementById('inputNamaTikTok').value = msg.user;
+        if (msg.nick !== undefined) document.getElementById('inputDisplayName').value = msg.nick;
+        if (msg.avatar !== undefined) document.getElementById('inputAvatarUrl').value = msg.avatar;
+        updateModalPreviewUI(msg.robloxUser || '', msg.nick || '', msg.avatar || '');
+        document.getElementById('modalSearchStatus').innerText = msg.statusTxt || '';
+        const m = document.getElementById('modalInputNama');
+        if (m) m.style.setProperty('display', 'flex', 'important');
+      }
     } else if (msg.type === 'UPDATE_EDIT_MODAL') {
-      // Form edit modal admin tidak ditampilkan di stream penonton
+      if (currentViewMode === 'tabel') {
+        if (msg.robloxUser !== undefined) document.getElementById('inputUserRoblox').value = msg.robloxUser;
+        if (msg.user !== undefined) document.getElementById('inputNamaTikTok').value = msg.user;
+        if (msg.nick !== undefined) document.getElementById('inputDisplayName').value = msg.nick;
+        if (msg.avatar !== undefined) document.getElementById('inputAvatarUrl').value = msg.avatar;
+        updateModalPreviewUI(msg.robloxUser || '', msg.nick || '', msg.avatar || '');
+        if (msg.statusTxt) {
+          const st = document.getElementById('modalSearchStatus');
+          if (st) st.innerText = msg.statusTxt;
+        }
+      }
     } else if (msg.type === 'CLOSE_EDIT_MODAL') {
-      // No-op di stream
+      if (currentViewMode === 'tabel') {
+        tutupModalNama(false);
+        const m = document.getElementById('modalInputNama');
+        if (m) m.style.display = 'none';
+      }
     } else if (msg.type === 'OPEN_QUICK_POINT') {
       if (currentViewMode === 'tabel') {
         const tr = document.getElementById(msg.chair === 19 ? 'row-kursi-19' : ('row-kursi-' + msg.chair));
@@ -2502,7 +2614,7 @@
     if (!container) return;
     const hasLog = document.documentElement.classList.contains('show-log');
     const baseW = 1080;
-    const baseH = hasLog ? 730 : 590;
+    const baseH = hasLog ? 660 : 527;
     const winW = window.innerWidth || document.documentElement.clientWidth || baseW;
     const winH = window.innerHeight || document.documentElement.clientHeight || baseH;
     
@@ -2873,6 +2985,8 @@
   }
 
   function tampilkanPopupPoinTengah(namaPemain, deltaPoin, totalPoin, labelAtas = "UPDATE POIN", warnaTag = "", isBroadcast = true) {
+    // 100% BLOKIR di mode-tabel: Notifikasi hanya tampil di overlay tersendiri (?view=notif)
+    if (currentViewMode === 'tabel') return;
     const popup = document.getElementById('centerNotifPopup');
     if (!popup) return;
     if (popupCenterTimer) clearTimeout(popupCenterTimer);
@@ -4108,19 +4222,19 @@
       localVault[user] = { username: user, password: pass, displayName: user };
       localStorage.setItem('scoreboard_users_vault_v1', JSON.stringify(localVault));
 
-      if (data && data.sukses) {
-        localStorage.setItem('scoreboard_auth_user_v1', JSON.stringify(data.user));
-        tampilkanPesanAuth('Pendaftaran sukses! Membuka papan skor...', true);
-        setTimeout(() => {
-          window.location.reload();
-        }, 400);
-      } else {
-        localStorage.setItem('scoreboard_auth_user_v1', JSON.stringify({ username: user, displayName: user }));
-        tampilkanPesanAuth('Pendaftaran sukses! Membuka papan skor...', true);
-        setTimeout(() => {
-          window.location.reload();
-        }, 400);
+      // JANGAN AUTO MASUK: Pengguna harus login melalui tab Login
+      document.getElementById('authRegPassword').value = '';
+      gantiTabAuth('login');
+      const loginUserInput = document.getElementById('authUsername');
+      if (loginUserInput) {
+        loginUserInput.value = user;
       }
+      const loginPassInput = document.getElementById('authPassword');
+      if (loginPassInput) {
+        loginPassInput.value = '';
+        loginPassInput.focus();
+      }
+      tampilkanPesanAuth('✅ Pendaftaran berhasil! Silakan masukkan password untuk login.', true);
     } catch (err) {
       tampilkanPesanAuth('Gagal daftar: ' + err.message);
       btn.disabled = false;
