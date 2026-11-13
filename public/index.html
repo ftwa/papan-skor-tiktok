@@ -2001,6 +2001,14 @@
       </div>
     </div>
 
+    <!-- ANTI-DOBEL SUARA INFO BADGE -->
+    <div style="background:rgba(14,165,233,0.1); border:1px solid rgba(56,189,248,0.3); border-radius:8px; padding:8px 10px; margin-top:8px; font-size:11px; color:#cbd5e1; line-height:1.4;">
+      <div style="display:flex; align-items:center; gap:6px; color:#38bdf8; font-weight:800; margin-bottom:3px;">
+        <span>🛡️ Anti-Dobel Suara / No Echo</span>
+      </div>
+      Audio otomatis <b>di-mute di link overlay live stream</b> dan hanya berbunyi di PC Master ini. TikTok LIVE Studio akan menangkap suara dari Desktop Audio PC Anda secara jernih tanpa gema dobel!
+    </div>
+
     <button class="btn-hud-save" style="margin-top:8px;" onclick="tutupModalNotifSuara()">Tutup</button>
   </div>
 </div>
@@ -3027,8 +3035,12 @@
   }
 
   function tesPopupTengahManual() {
-    tampilkanPopupPoinTengah("BOBOHU", 5, 20, "TES NOTIFIKASI", "yellow");
-    tambahLogAktivitas('TEST', 'Tes popup notifikasi tengah', 'system');
+    const currData = getActiveData();
+    const firstPlayer = (currData && currData.players) ? currData.players.find(p => p.user || p.nick || p.robloxUser) : null;
+    const testName = firstPlayer ? (firstPlayer.nick || firstPlayer.user || firstPlayer.robloxUser) : "Contoh Pemain";
+    const testPoin = firstPlayer ? (firstPlayer.poin || 0) + 1 : 1;
+    tampilkanPopupPoinTengah(testName, 1, testPoin, "TES NOTIFIKASI", "#38bdf8");
+    tambahLogAktivitas('TEST', `Tes notifikasi: ${testName}`, 'system');
   }
 
   function toggleLogPanel() {
@@ -3070,19 +3082,36 @@
   }
 
   const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  
+  function apakahSuaraBolehDiputar() {
+    // Mode Admin di PC selalu berbunyi agar streamer mendengar respons klik & poin
+    if (currentViewMode === 'admin') return true;
+
+    // Mode Overlay Stream (?view=tabel, ?view=podium, ?view=notif):
+    // DEFAULT: SENYAP / MUTED 100% agar TIDAK TERJADI GEMA DOBEL dengan PC Desktop Audio di TikTok LIVE Studio / OBS!
+    // Hanya berbunyi jika secara eksplisit ditambahkan &sound=true atau &audio=true di URL
+    const urlParams = new URLSearchParams(window.location.search);
+    return (urlParams.get('sound') === 'true' || urlParams.get('audio') === 'true');
+  }
+
   function mainkanNadaSynth(freq, startOffset, duration, type = 'sine', maxGain = 0.25) {
-    const osc = audioCtx.createOscillator();
-    const gain = audioCtx.createGain();
-    const startTime = audioCtx.currentTime + startOffset;
-    osc.type = type;
-    osc.frequency.setValueAtTime(freq, startTime);
-    gain.gain.setValueAtTime(maxGain, startTime);
-    gain.gain.exponentialRampToValueAtTime(0.001, startTime + duration);
-    osc.connect(gain); gain.connect(audioCtx.destination);
-    osc.start(startTime); osc.stop(startTime + duration);
+    if (!apakahSuaraBolehDiputar()) return;
+    try {
+      if (audioCtx.state === 'suspended') audioCtx.resume();
+      const osc = audioCtx.createOscillator();
+      const gain = audioCtx.createGain();
+      const startTime = audioCtx.currentTime + startOffset;
+      osc.type = type;
+      osc.frequency.setValueAtTime(freq, startTime);
+      gain.gain.setValueAtTime(maxGain, startTime);
+      gain.gain.exponentialRampToValueAtTime(0.001, startTime + duration);
+      osc.connect(gain); gain.connect(audioCtx.destination);
+      osc.start(startTime); osc.stop(startTime + duration);
+    } catch (_) {}
   }
 
   function putarSuaraPoinBawaan() {
+    if (!apakahSuaraBolehDiputar()) return;
     if (audioCtx.state === 'suspended') audioCtx.resume();
     mainkanNadaSynth(587.33, 0.00, 0.12, 'triangle', 0.26);
     mainkanNadaSynth(739.99, 0.10, 0.12, 'triangle', 0.26);
@@ -3090,6 +3119,7 @@
   }
 
   function putarSuaraNotifPoin() {
+    if (!apakahSuaraBolehDiputar()) return;
     if (customAudioPoinData) {
       try { const audio = new Audio(customAudioPoinData); audio.play().catch(() => putarSuaraPoinBawaan()); } catch (e) { putarSuaraPoinBawaan(); }
     } else {
@@ -3116,16 +3146,19 @@
   }
 
   function putarTerompetDanTepukTangan() {
-    if (audioCtx.state === 'suspended') audioCtx.resume();
-    const nada = [
-      { f: 523.25, d: 0.15 }, { f: 659.25, d: 0.15 }, { f: 783.99, d: 0.18 },
-      { f: 1046.50, d: 0.45 }, { f: 783.99, d: 0.15 }, { f: 1046.50, d: 0.7 }
-    ];
-    let offset = 0;
-    nada.forEach(n => {
-      mainkanNadaSynth(n.f, offset, n.d, 'sawtooth', 0.2);
-      offset += n.d * 0.95;
-    });
+    if (!apakahSuaraBolehDiputar()) return;
+    try {
+      if (audioCtx.state === 'suspended') audioCtx.resume();
+      const nada = [
+        { f: 523.25, d: 0.15 }, { f: 659.25, d: 0.15 }, { f: 783.99, d: 0.18 },
+        { f: 1046.50, d: 0.45 }, { f: 783.99, d: 0.15 }, { f: 1046.50, d: 0.7 }
+      ];
+      let offset = 0;
+      nada.forEach(n => {
+        mainkanNadaSynth(n.f, offset, n.d, 'sawtooth', 0.2);
+        offset += n.d * 0.95;
+      });
+    } catch (_) {}
   }
 
   function simpanDB() { 
@@ -3311,32 +3344,6 @@
 
   function dapatkanFullBody3dAvatar(p, rank = 1) {
     if (!p) return '';
-    const u = (p.robloxUser || p.user || '').toLowerCase().replace(/^@+/, '').trim();
-    if (!u && !p.nick && (!p.avatar || p.avatar.includes('ui-avatars'))) return '';
-
-    // Pemetaan Akun Turnamen Resmi (HD 720x720 Ultra Sharp Authentic Pose)
-    if (u === '1ss23ss4' || u === 'apinnntnr') {
-      return 'https://tr.rbxcdn.com/30DAY-Avatar-26186AD8D89403B50ADB216FF349F3DA-Png/720/720/Avatar/Png/noFilter';
-    }
-    if (u === 'yakahd1or' || u === 'd1ortnr') {
-      return 'https://tr.rbxcdn.com/30DAY-Avatar-CC5A14D30E092A267E98BBE01B93324F-Png/720/720/Avatar/Png/noFilter';
-    }
-    if (u === 'daveinhoszchx' || u === 'alejandrotnr') {
-      return 'https://tr.rbxcdn.com/30DAY-Avatar-A9B889D71C9E9C5FF1A5ED2D566A8F0D-Png/720/720/Avatar/Png/noFilter';
-    }
-    if (u === 'realmisshunter') {
-      return 'https://tr.rbxcdn.com/30DAY-Avatar-87B20DADB4974C053BDD4DDAB41208D9-Png/720/720/Avatar/Png/noFilter';
-    }
-    if (u === 'shiye977') {
-      return 'https://tr.rbxcdn.com/30DAY-Avatar-7125A33B248D1E2B94A595631E1A3470-Png/720/720/Avatar/Png/noFilter';
-    }
-    if (u === 'satorugojoh0noredone') {
-      return 'https://tr.rbxcdn.com/30DAY-Avatar-AECF32A2822364BE2FCD96A0588F9548-Png/720/720/Avatar/Png/noFilter';
-    }
-    if (u === 'roblox') {
-      return 'https://tr.rbxcdn.com/30DAY-Avatar-310966282D3529E36976BF6B07B1DC90-Png/720/720/Avatar/Png/noFilter';
-    }
-
     if (p.avatar3d && p.avatar3d.includes('Avatar') && !p.avatar3d.includes('AvatarHeadshot')) {
       return p.avatar3d.replace(/\/420\/420\//, '/720/720/').replace(/\/352\/352\//, '/720/720/');
     }
@@ -3384,25 +3391,38 @@
     tutupQuickPointPopover();
     tutupMiniColorPicker();
     const currData = getActiveData();
-    const sorted = [...currData.players].filter(p => p.isReady && (p.nick || p.user || p.robloxUser)).sort((a, b) => b.poin - a.poin);
+    // Ambil pemain nyata dari kursi turnamen (yang memiliki nama terisi atau memiliki skor)
+    const candidates = [...currData.players].filter(p => (p.user || p.nick || p.robloxUser || (p.poin && p.poin > 0)));
+    // Urutkan berdasarkan poin tertinggi
+    const sorted = candidates.sort((a, b) => (b.poin || 0) - (a.poin || 0));
     
-    let p1, p2, p3;
-    if (sorted.length > 0) {
-      p1 = sorted[0] || null;
-      p2 = sorted[1] || null;
-      p3 = sorted[2] || null;
-    } else {
-      // Demo / Tes Otomatis Hall of Champions (Persis seperti di foto referensi)
-      p1 = { user: 'ApinnTnR', nick: 'ApinnTnR', robloxUser: '1ss23ss4', avatar3d: 'https://tr.rbxcdn.com/30DAY-Avatar-26186AD8D89403B50ADB216FF349F3DA-Png/720/720/Avatar/Png/noFilter', poin: 3 };
-      p2 = { user: 'd1orTnR', nick: 'd1orTnR', robloxUser: 'YAKAHD1OR', avatar3d: 'https://tr.rbxcdn.com/30DAY-Avatar-CC5A14D30E092A267E98BBE01B93324F-Png/720/720/Avatar/Png/noFilter', poin: 2 };
-      p3 = { user: 'alejandroTnR', nick: 'alejandroTnR', robloxUser: 'Daveinhoszchx', avatar3d: 'https://tr.rbxcdn.com/30DAY-Avatar-A9B889D71C9E9C5FF1A5ED2D566A8F0D-Png/720/720/Avatar/Png/noFilter', poin: 1 };
-    }
+    // Juara 1, 2, 3 murni dari data tabel nyata - 100% bebas dari dummy test
+    const p1 = sorted[0] || null;
+    const p2 = sorted[1] || null;
+    const p3 = sorted[2] || null;
 
     pasangDataJuaraPodium(1, p1);
     pasangDataJuaraPodium(2, p2);
     pasangDataJuaraPodium(3, p3);
 
     document.body.classList.add('winner-overlay-open');
+    document.getElementById('winnerOverlay').classList.add('active');
+    autoScalePodium();
+    requestAnimationFrame(autoScalePodium);
+    setTimeout(autoScalePodium, 50);
+    setTimeout(autoScalePodium, 200);
+
+    putarTerompetDanTepukTangan();
+    mulaiAnimasiPetasan();
+
+    try {
+      localStorage.setItem(PODIUM_STATE_KEY, JSON.stringify({ active: true, p1, p2, p3 }));
+    } catch (_) {}
+
+    if (isBroadcast) {
+      siarkanPesanSync({ type: 'OPEN_PODIUM', p1, p2, p3 });
+    }
+  }
     document.getElementById('winnerOverlay').classList.add('active');
     autoScalePodium();
     requestAnimationFrame(autoScalePodium);
@@ -4303,10 +4323,19 @@
     // Pulihkan status perayaan jika membuka link ?view=podium saat podium sedang aktif di Admin
     aktifkanPodiumAutoResize();
     aktifkanTabelAutoResize();
+
+    // Bersihkan sisa-sisa dummy podium lama dari localStorage jika ada
+    try {
+      const savedPodium = JSON.parse(localStorage.getItem(PODIUM_STATE_KEY) || 'null');
+      if (savedPodium && savedPodium.p1 && (savedPodium.p1.user === 'ApinnTnR' || savedPodium.p1.robloxUser === '1ss23ss4' || savedPodium.p1.user === 'BOBOHU')) {
+        localStorage.removeItem(PODIUM_STATE_KEY);
+      }
+    } catch (_) {}
+
     if (currentViewMode === 'podium') {
       try {
         const savedPodium = JSON.parse(localStorage.getItem(PODIUM_STATE_KEY) || 'null');
-        if (savedPodium && savedPodium.active) {
+        if (savedPodium && savedPodium.active && savedPodium.p1 && savedPodium.p1.user !== 'ApinnTnR') {
           tampilkanLayarPemenangDariSync(savedPodium.p1, savedPodium.p2, savedPodium.p3);
         }
       } catch (_) {}
