@@ -7,7 +7,6 @@ import os
 import threading
 import socket
 from http.server import HTTPServer, SimpleHTTPRequestHandler
-import urllib.request
 import webview
 
 def get_bundle_dir():
@@ -35,14 +34,6 @@ def start_local_server(port, public_dir):
     except Exception as e:
         print(f"[WARN] Local server error: {e}")
 
-def is_online(url='https://papan-skor-tiktok.vercel.app/', timeout=3):
-    try:
-        req = urllib.request.Request(url, headers={'User-Agent': 'Mozilla/5.0'})
-        with urllib.request.urlopen(req, timeout=timeout) as resp:
-            return resp.status == 200
-    except Exception:
-        return False
-
 def main():
     bundle_dir = get_bundle_dir()
     public_dir = os.path.join(bundle_dir, 'public')
@@ -53,10 +44,9 @@ def main():
     t = threading.Thread(target=start_local_server, args=(local_port, public_dir), daemon=True)
     t.start()
 
-    # Utamakan live vercel URL jika online agar pembaruan cloud otomatis aktif
+    # Master Desktop App selalu memuat server lokal internal mandiri:
+    # 0ms instan, 100% offline, tahan gangguan limit cloud, dan sync via HiveMQ Cloud
     target_url = f'http://127.0.0.1:{local_port}/'
-    if is_online():
-        target_url = 'https://papan-skor-tiktok.vercel.app/'
 
     window = webview.create_window(
         title='Master Papan Skor TikTok LIVE - Cyber HUD Edition',
