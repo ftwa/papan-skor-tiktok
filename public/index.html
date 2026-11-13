@@ -444,7 +444,7 @@
       border: 1px solid rgba(56, 189, 248, 0.35);
       box-shadow: 0 24px 60px rgba(0, 0, 0, 0.85), 0 0 25px rgba(56, 189, 248, 0.15);
       padding: 16px 18px; display: flex; flex-direction: column; gap: 12px; color: #f8fafc;
-      position: relative; overflow: hidden;
+      position: relative; max-height: 94vh; overflow-y: auto; box-sizing: border-box;
     }
     .modal-box-hud::before {
       content: ""; position: absolute; top: 0; left: 0; right: 0; height: 3px;
@@ -1012,23 +1012,23 @@
     html.mode-tabel #modalInputNama[style*="display: flex"],
     html.mode-tabel #modalInputNama.show {
       display: flex !important;
-    }
       justify-content: center !important;
       align-items: center !important;
       pointer-events: none !important;
     }
     html.mode-tabel #modalInputNama .modal-box-hud {
-      width: 350px !important;
+      width: 360px !important;
       max-width: 90vw !important;
-      max-height: 85vh !important;
+      max-height: 480px !important;
       padding: 10px 14px !important;
-      gap: 6px !important;
+      gap: 5px !important;
       border: 1.5px solid #38bdf8 !important;
       box-shadow: 0 0 35px rgba(56, 189, 248, 0.5), 0 20px 50px rgba(0, 0, 0, 0.95) !important;
       animation: popInModal 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
-      transform: scale(0.85) !important;
-      transform-origin: center center !important;
-      overflow: hidden !important;
+      transform: none !important;
+      margin: auto !important;
+      overflow: visible !important;
+      box-sizing: border-box !important;
     }
     html.mode-tabel #modalInputNama .modal-header-hud {
       padding-bottom: 4px !important;
