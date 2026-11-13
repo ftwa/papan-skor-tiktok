@@ -2431,33 +2431,35 @@
       }
     } else if (msg.type === 'OPEN_QUICK_POINT') {
       if (currentViewMode === 'tabel') {
-        const tr = document.getElementById(msg.chair === 19 ? 'row-kursi-19' : 
-ow-kursi-);
+        const tr = document.getElementById(msg.chair === 19 ? 'row-kursi-19' : ('row-kursi-' + msg.chair));
         const scoreCell = tr ? (tr.querySelector('.score-val') || tr) : null;
         
         activeQuickPointIndex = msg.chair;
         renderTombolQuickPoint();
 
-        const namaTampil = msg.nama || Kursi ;
+        const namaTampil = msg.nama || ('Kursi ' + (msg.chair + 1));
         const poinTampil = (msg.poin !== undefined) ? msg.poin : 0;
-        document.getElementById('qpPlayerTitle').innerText = ${namaTampil} ( Pts);
-        document.getElementById('qpDirectInput').value = poinTampil;
+        const qpTitleEl = document.getElementById('qpPlayerTitle');
+        if (qpTitleEl) qpTitleEl.innerText = `${namaTampil} (${poinTampil} Pts)`;
+        const qpInputEl = document.getElementById('qpDirectInput');
+        if (qpInputEl) qpInputEl.value = poinTampil;
 
         const pop = document.getElementById('quickPointPopover');
-        pop.classList.add('show');
+        if (pop) {
+          pop.classList.add('show');
+          if (scoreCell) {
+            const rect = scoreCell.getBoundingClientRect();
+            const popWidth = 235;
+            const popHeight = pop.offsetHeight || 150;
 
-        if (scoreCell) {
-          const rect = scoreCell.getBoundingClientRect();
-          const popWidth = 235;
-          const popHeight = pop.offsetHeight || 150;
+            let leftPos = rect.left - popWidth - 10;
+            if (leftPos < 10) leftPos = Math.min(window.innerWidth - popWidth - 10, rect.right + 10);
+            let topPos = rect.top - (popHeight / 2) + (rect.height / 2);
+            topPos = Math.max(10, Math.min(window.innerHeight - popHeight - 10, topPos));
 
-          let leftPos = rect.left - popWidth - 10;
-          if (leftPos < 10) leftPos = Math.min(window.innerWidth - popWidth - 10, rect.right + 10);
-          let topPos = rect.top - (popHeight / 2) + (rect.height / 2);
-          topPos = Math.max(10, Math.min(window.innerHeight - popHeight - 10, topPos));
-
-          pop.style.left = ${leftPos}px;
-          pop.style.top = ${topPos}px;
+            pop.style.left = leftPos + 'px';
+            pop.style.top = topPos + 'px';
+          }
         }
       }
     } else if (msg.type === 'CLOSE_QUICK_POINT') {
@@ -3983,8 +3985,23 @@ ow-kursi-);
     if (menuRoom) menuRoom.innerText = `ROOM: ${CURRENT_ROOM}`;
   }
 
+    function bukaModalAuth(tab = 'login') {
+    const modal = document.getElementById('modalAuthUser');
+    if (modal) modal.style.setProperty('display', 'flex', 'important');
+    if (typeof gantiTabAuth === 'function') gantiTabAuth(tab);
+  }
+  function tutupModalAuth() {
+    const modal = document.getElementById('modalAuthUser');
+    if (modal) modal.style.display = 'none';
+  }
+
   function toggleDropdownUser(e) {
     if (e) e.stopPropagation();
+    const authUser = localStorage.getItem('scoreboard_auth_user_v1');
+    if (!authUser) {
+      bukaModalAuth('login');
+      return;
+    }
     const drop = document.getElementById('listDropdownUser');
     if (!drop) return;
     const isOpen = drop.classList.contains('show');
@@ -4178,8 +4195,9 @@ ow-kursi-);
 </script>
 
 <!-- MODAL AUTHENTICATION & MULTI-USER ROOM SEPARATION -->
-<div id="modalAuthUser">
+<div id="modalAuthUser" onclick="if(event.target===this) tutupModalAuth()">
   <div class="auth-box-hud">
+    <button type="button" class="btn-close-hud" onclick="tutupModalAuth()" title="Tutup" style="position:absolute; top:16px; right:16px; z-index:10;">✕</button>
     <div class="auth-header">
       <div class="auth-badge-title">🛡️ MULTI-USER ISOLATED WORKSPACE 🛡️</div>
       <h2 class="auth-title">Papan Skor TikTok</h2>
