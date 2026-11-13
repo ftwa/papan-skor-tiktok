@@ -887,19 +887,11 @@
       font-size: 11px; font-weight: 800; color: #94a3b8; letter-spacing: 1px;
     }
 
-    /* MEDIA QUERY RESPONSIVE MOBILE & TABLET */
+    /* RESPONSIVE MOBILE ADJUSTMENT (Admin View Only - Never Affects Podium or Overlays) */
     @media (max-width: 900px) {
-      .podium-container {
-        flex-direction: column;
-        align-items: center;
-        gap: 20px;
-        perspective: none;
+      body:not(.mode-podium):not(.mode-tabel):not(.mode-notif):not(.mode-log) .grid-tables {
+        grid-template-columns: 1fr;
       }
-      .podium-card { max-width: 320px; width: 100%; }
-      .podium-card.rank-1 { order: 1; transform: translateY(0); }
-      .podium-card.rank-2 { order: 2; }
-      .podium-card.rank-3 { order: 3; }
-      .board-layout { flex-direction: column; }
     }
     #fireworksCanvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 30005; }
 
@@ -987,6 +979,78 @@
     html.mode-podium #centerNotifPopup {
       display: none !important;
     }
+    html.mode-podium, html.mode-podium body,
+    html.mode-tabel, html.mode-tabel body,
+    html.mode-notif, html.mode-notif body,
+    html.mode-log, html.mode-log body,
+    #winnerOverlay {
+      overflow: hidden !important;
+      scrollbar-width: none !important;
+      -ms-overflow-style: none !important;
+    }
+    html.mode-podium::-webkit-scrollbar, html.mode-podium body::-webkit-scrollbar,
+    html.mode-tabel::-webkit-scrollbar, html.mode-tabel body::-webkit-scrollbar,
+    html.mode-notif::-webkit-scrollbar, html.mode-notif body::-webkit-scrollbar,
+    html.mode-log::-webkit-scrollbar, html.mode-log body::-webkit-scrollbar,
+    #winnerOverlay::-webkit-scrollbar {
+      display: none !important;
+      width: 0 !important;
+      height: 0 !important;
+    }
+
+    html.mode-tabel .grid-tables {
+      display: grid !important;
+      grid-template-columns: 1fr 1fr !important;
+      gap: 12px !important;
+      width: 1040px !important;
+    }
+
+    #winnerOverlay .podium-container,
+    html.mode-podium .podium-container {
+      display: flex !important;
+      flex-direction: row !important;
+      flex-wrap: nowrap !important;
+      justify-content: center !important;
+      align-items: flex-end !important;
+      gap: 26px !important;
+      max-width: 1120px !important;
+      width: 1120px !important;
+      min-width: 1120px !important;
+      position: relative !important;
+      z-index: 15 !important;
+      margin: 8px auto !important;
+      padding-bottom: 8px !important;
+    }
+
+    #winnerOverlay .podium-card,
+    html.mode-podium .podium-card {
+      flex: 1 !important;
+      max-width: 340px !important;
+      min-width: 280px !important;
+      position: relative !important;
+      display: flex !important;
+      flex-direction: column !important;
+      align-items: center !important;
+    }
+
+    #winnerOverlay .podium-card.rank-2,
+    html.mode-podium .podium-card.rank-2 {
+      order: 1 !important;
+      transform: translateY(0) !important;
+    }
+
+    #winnerOverlay .podium-card.rank-1,
+    html.mode-podium .podium-card.rank-1 {
+      order: 2 !important;
+      transform: translateY(-20px) scale(1.03) !important;
+    }
+
+    #winnerOverlay .podium-card.rank-3,
+    html.mode-podium .podium-card.rank-3 {
+      order: 3 !important;
+      transform: translateY(8px) !important;
+    }
+
     html.mode-podium #winnerOverlay {
       position: fixed !important;
       inset: 0 !important;
@@ -1793,12 +1857,25 @@
     try {
       if (typeof EventSource !== 'undefined') {
         cloudEventSource = new EventSource(`https://ntfy.sh/${CLOUD_SYNC_TOPIC}/sse?since=10m`);
-        cloudEventSource.onmessage = (event) => {
+        cloudEventSource.onmessage = async (event) => {
           try {
             if (event && event.data) {
               const parsed = JSON.parse(event.data);
-              if (parsed && parsed.message) {
-                const payload = JSON.parse(parsed.message);
+              if (parsed) {
+                let payload = null;
+                if (parsed.attachment && parsed.attachment.url) {
+                  try {
+                    const res = await fetch(parsed.attachment.url);
+                    payload = await res.json();
+                  } catch (e) {
+                    console.warn('Gagal ambil attachment ntfy:', e);
+                  }
+                } else if (parsed.message) {
+                  try {
+                    payload = JSON.parse(parsed.message);
+                  } catch (_) {}
+                }
+
                 if (payload && payload._sender !== LOCAL_SENDER_ID) {
                   tanganiPesanSync(payload);
                 }
@@ -1860,6 +1937,21 @@
 
     if (msg.type === 'REQUEST_STATE') {
       if (currentViewMode === 'admin') {
+        const activeData = getActiveData();
+        siarkanPesanSync({
+          type: 'SYNC_SESSION',
+          ses: db.activeSession,
+          players: activeData.players.map(p => ({
+            id: p.id,
+            user: p.user || '',
+            nick: p.nick || '',
+            avatar: p.avatar || '',
+            poin: p.poin || 0,
+            colorTag: p.colorTag || '',
+            isPaid: !!p.isPaid,
+            isReady: !!p.isReady
+          }))
+        });
         siarkanPesanSync({ type: 'UPDATE_DATA', db: db });
         try {
           const savedPodium = JSON.parse(localStorage.getItem(PODIUM_STATE_KEY) || 'null');
@@ -1867,6 +1959,46 @@
             siarkanPesanSync({ type: 'OPEN_PODIUM', p1: savedPodium.p1, p2: savedPodium.p2, p3: savedPodium.p3 });
           }
         } catch (_) {}
+      }
+    } else if (msg.type === 'SYNC_SCORE') {
+      if (db && db.sessions && db.sessions[msg.ses]) {
+        if (db.sessions[msg.ses].players && db.sessions[msg.ses].players[msg.chair] !== undefined) {
+          db.sessions[msg.ses].players[msg.chair].poin = msg.poin;
+        }
+      }
+      if (db.activeSession === msg.ses) {
+        const tr = document.getElementById(`row-kursi-${msg.chair}`);
+        if (tr) {
+          const scoreVal = tr.querySelector('.score-val');
+          if (scoreVal) {
+            scoreVal.innerText = msg.poin;
+            scoreVal.style.transition = 'transform 0.18s ease, color 0.18s ease';
+            scoreVal.style.transform = 'scale(1.28)';
+            scoreVal.style.color = '#38bdf8';
+            setTimeout(() => {
+              scoreVal.style.transform = '';
+              scoreVal.style.color = '';
+            }, 300);
+          }
+        }
+      }
+    } else if (msg.type === 'SYNC_SESSION') {
+      if (msg.ses) {
+        db.activeSession = msg.ses;
+        if (!db.sessions[msg.ses]) {
+          db.sessions[msg.ses] = buatDataTabelKosong();
+        }
+        if (Array.isArray(msg.players)) {
+          msg.players.forEach((p, idx) => {
+            if (db.sessions[msg.ses].players[idx]) {
+              Object.assign(db.sessions[msg.ses].players[idx], p);
+            }
+          });
+        }
+        if (currentViewMode === 'tabel' || currentViewMode === 'admin') {
+          renderIsiTabel();
+          autoScaleTabel();
+        }
       }
     } else if (msg.type === 'UPDATE_DATA') {
       if (msg.db) {
@@ -2046,7 +2178,10 @@
 
   function pilihSesi(sesiName, e) {
     if (e) e.stopPropagation();
-    if (!db || !db.sessions || !db.sessions[sesiName]) return;
+    if (!db || !db.sessions) return;
+    if (!db.sessions[sesiName]) {
+      db.sessions[sesiName] = buatDataTabelKosong();
+    }
     if (db.activeSession === sesiName) {
       tutupSemuaDropdown();
       return;
@@ -2057,6 +2192,23 @@
     renderListDropdownSesi();
     tutupSemuaDropdown();
     tambahLogAktivitas('SESI', `Beralih ke ${sesiName}`, 'system');
+
+    // Kirim sinyal pergantian sesi kilat ke TikTok LIVE Studio
+    const activeData = getActiveData();
+    siarkanPesanSync({
+      type: 'SYNC_SESSION',
+      ses: sesiName,
+      players: activeData.players.map(p => ({
+        id: p.id,
+        user: p.user || '',
+        nick: p.nick || '',
+        avatar: p.avatar || '',
+        poin: p.poin || 0,
+        colorTag: p.colorTag || '',
+        isPaid: !!p.isPaid,
+        isReady: !!p.isReady
+      }))
+    });
   }
 
   /* Menambah sesi baru secara instan */
@@ -2198,6 +2350,14 @@
 
     const namaTampil = p.nick || p.user || p.robloxUser || (idx === 19 ? 'Host' : `Kursi ${idx + 1}`);
     if (selisih !== 0) tampilkanPopupPoinTengah(namaTampil, selisih, p.poin, "TAMBAH POIN", p.colorTag);
+
+    // Kirim sinkronisasi skor instan ke overlay TikTok LIVE Studio (< 50ms)
+    siarkanPesanSync({
+      type: 'SYNC_SCORE',
+      chair: idx,
+      poin: p.poin,
+      ses: db.activeSession
+    });
 
     if (idx === 19) { simpanDB(); renderIsiTabel(); } else { urutkanOtomatis(); }
     tambahLogAktivitas(namaTampil, `Poin +${delta}`, 'system', awal, p.poin, Math.abs(delta));
