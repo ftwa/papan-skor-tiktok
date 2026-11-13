@@ -1982,7 +1982,7 @@
     <div class="modal-header-hud">
       <div class="modal-title-wrap">
         <span class="modal-sub-hud">AUDIO MODULE</span>
-        <span class="modal-title-hud">Suara Poin</span>
+        <span class="modal-title-hud">Settings Audio</span>
       </div>
       <button class="btn-close-hud" onclick="tutupModalNotifSuara()">✕</button>
     </div>
@@ -1997,6 +1997,21 @@
         <div style="display:flex; gap:6px;">
           <button type="button" class="btn-action-soft" style="flex:1; justify-content:center; padding:5px;" onclick="putarSuaraNotifPoin()">🔊 Tes Audio</button>
           <button type="button" class="btn-action-soft" style="flex:1; justify-content:center; padding:5px;" onclick="resetAudioPoin()">Reset</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECTION AUDIO PODIUM -->
+    <div style="background:rgba(15,23,42,0.7); border:1px solid #1e293b; border-left:3px solid #f59e0b; border-radius:8px; padding:10px; margin-top:8px;">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+        <span style="font-size:12px; font-weight:800; color:#fbbf24;">🏆 Sound FX Podium</span>
+        <span id="statusAudio_podium" style="font-size:10px; font-weight:800; color:#fcd34d; font-family:'JetBrains Mono',monospace;">Synth Bawaan</span>
+      </div>
+      <div style="display:flex; flex-direction:column; gap:6px;">
+        <input type="file" id="audioInput_podium" accept="audio/*" style="font-size:11px; color:#94a3b8;" onchange="unggahAudioPodium(event)">
+        <div style="display:flex; gap:6px;">
+          <button type="button" class="btn-action-soft" style="flex:1; justify-content:center; padding:5px;" onclick="putarTerompetDanTepukTangan()">🔊 Tes Podium</button>
+          <button type="button" class="btn-action-soft" style="flex:1; justify-content:center; padding:5px;" onclick="resetAudioPodium()">Reset</button>
         </div>
       </div>
     </div>
@@ -2234,6 +2249,7 @@
   const CURRENT_ROOM = dapatkanRoomAktif();
   const DB_KEY = 'single_leaderboard_cyber_hud_v3_' + CURRENT_ROOM;
   const AUDIO_POIN_KEY = 'galatama_custom_sound_mitos';
+  const AUDIO_PODIUM_KEY = 'galatama_custom_sound_podium';
   const COL_WIDTHS_KEY = 'galatama_single_col_widths_cyber_v1';
   const LOG_FOLD_KEY = 'galatama_log_is_folded';
   const SYNC_BUS_NAME = 'galatama_stream_sync_bus_' + CURRENT_ROOM;
@@ -2714,6 +2730,7 @@
   }
 
   let customAudioPoinData = localStorage.getItem(AUDIO_POIN_KEY) || null;
+  let customAudioPodiumData = localStorage.getItem(AUDIO_PODIUM_KEY) || null;
   let isLogFolded = JSON.parse(localStorage.getItem(LOG_FOLD_KEY)) || false;
   let tipeResetPending = null;
   let popupCenterTimer = null;
@@ -3071,6 +3088,8 @@
   function updateStatusAudioTierUI() {
     const elPoin = document.getElementById('statusAudio_poin');
     if (elPoin) elPoin.innerText = customAudioPoinData ? "Audio Custom ✔" : "Synth Bawaan";
+    const elPodium = document.getElementById('statusAudio_podium');
+    if (elPodium) elPodium.innerText = customAudioPodiumData ? "Audio Custom ✔" : "Synth Bawaan";
   }
 
   function bukaModalNotifSuara() {
@@ -3145,8 +3164,34 @@
     updateStatusAudioTierUI(); putarSuaraNotifPoin();
   }
 
+  function unggahAudioPodium(e) {
+    const file = e.target.files[0];
+    if (!file) return;
+    if (file.size > 800 * 1024) { alert("Ukuran audio terlalu besar! Gunakan file di bawah 800KB."); e.target.value = ''; return; }
+    const reader = new FileReader();
+    reader.onload = function(evt) {
+      customAudioPodiumData = evt.target.result;
+      try { localStorage.setItem(AUDIO_PODIUM_KEY, customAudioPodiumData); updateStatusAudioTierUI(); putarTerompetDanTepukTangan(); } catch (err) { alert("Gagal menyimpan audio podium!"); }
+    };
+    reader.readAsDataURL(file);
+  }
+
+  function resetAudioPodium() {
+    customAudioPodiumData = null; localStorage.removeItem(AUDIO_PODIUM_KEY);
+    const inp = document.getElementById('audioInput_podium'); if (inp) inp.value = '';
+    updateStatusAudioTierUI(); putarTerompetDanTepukTangan();
+  }
+
   function putarTerompetDanTepukTangan() {
     if (!apakahSuaraBolehDiputar()) return;
+    if (customAudioPodiumData) {
+      try { const audio = new Audio(customAudioPodiumData); audio.play().catch(() => putarTerompetSynth()); } catch (e) { putarTerompetSynth(); }
+    } else {
+      putarTerompetSynth();
+    }
+  }
+
+  function putarTerompetSynth() {
     try {
       if (audioCtx.state === 'suspended') audioCtx.resume();
       const nada = [
