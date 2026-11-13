@@ -124,6 +124,8 @@ def main():
     try:
         import webview
         print("[INFO] Initializing WebView2 window...")
+        storage_dir = os.path.join(tempfile.gettempdir(), 'MasterPapanSkor_Data')
+        os.makedirs(storage_dir, exist_ok=True)
         window = webview.create_window(
             title='Master Papan Skor TikTok LIVE - Cyber HUD Edition',
             url=target_url,
@@ -134,7 +136,7 @@ def main():
             text_select=True,
             confirm_close=False
         )
-        webview.start(private_mode=False)
+        webview.start(private_mode=False, storage_path=storage_dir)
         print("[INFO] WebView window closed normally.")
     except Exception as e:
         print(f"[FATAL] WebView error: {e}")
