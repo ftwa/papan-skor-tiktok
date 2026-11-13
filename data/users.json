@@ -4,5 +4,11 @@
     "passwordHash": "240be518fabd2724ddb6f04eeb1da5967448d7e831c08c8fa822809f74c720a9",
     "createdAt": "2026-11-13T22:56:00Z",
     "displayName": "Master Admin"
+  },
+  "fatwa": {
+    "username": "fatwa",
+    "passwordHash": "e8ae3437b88a944c193577a2214cf77b751731fb549de4c7ecfe4f46c24f5733",
+    "displayName": "fatwa",
+    "createdAt": "2026-11-13T18:09:49.328Z"
   }
 }
