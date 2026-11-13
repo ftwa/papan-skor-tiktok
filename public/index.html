@@ -31,6 +31,7 @@
   </script>
 
   <!-- THREE.JS & OBJLOADER UNTUK RENDER AVATAR 3D RESMI ROBLOX -->
+  <script src="mqttws31.min.js"></script>
   <script src="three.min.js"></script>
   <script src="OBJLoader.js"></script>
   <script>
@@ -902,6 +903,28 @@
        MODULAR STREAM OVERLAYS (TIKTOK LIVE STUDIO & OBS STUDIO)
        ========================================================= */
 
+        /* BADGE STATUS SINKRONISASI REAL-TIME */
+    .sync-badge {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-size: 11px; font-weight: 900; padding: 5px 12px; border-radius: 999px;
+      letter-spacing: 0.5px; user-select: none; font-family: 'Outfit', sans-serif;
+      transition: all 0.2s ease;
+    }
+    .sync-badge.connected {
+      background: rgba(16, 185, 129, 0.18); color: #34d399;
+      border: 1.5px solid rgba(16, 185, 129, 0.6);
+      box-shadow: 0 0 12px rgba(16, 185, 129, 0.4);
+    }
+    .sync-badge.disconnected {
+      background: rgba(245, 158, 11, 0.18); color: #fbbf24;
+      border: 1.5px solid rgba(245, 158, 11, 0.6);
+    }
+    .sync-badge-dot {
+      width: 7px; height: 7px; border-radius: 50%;
+      background: currentColor; display: inline-block;
+      box-shadow: 0 0 6px currentColor;
+    }
+
     /* 1. OVERLAY TABEL SKOR (?view=tabel) */
     html.mode-tabel, html.mode-tabel body {
       background: transparent !important;
@@ -1417,6 +1440,7 @@
     </div>
 
     <div class="top-right">
+      <span id="syncStatusBadge" class="sync-badge disconnected"><span class="sync-badge-dot"></span> <span id="syncStatusText">MENGHUBUNGKAN...</span></span>
       <button class="btn-action-soft btn-stream-link" onclick="bukaModalLinkStream()" title="Salin link modular untuk TikTok Studio & OBS">
         🔗 LINK STREAM
       </button>
@@ -1855,9 +1879,30 @@
   const CLOUD_SYNC_TOPIC = 'galatama_stream_sohe_live_bus_v1';
   const LOCAL_SENDER_ID = 'client_' + Math.random().toString(36).substring(2, 9);
 
-  /* ENGINE SINKRONISASI DUAL: LOKAL (BROADCASTCHANNEL) + CLOUD REAL-TIME SSE (TIKTOK STUDIO) */
+  /* ENGINE SINKRONISASI KILAT: HIVEMQ SECURE WEBSOCKET (WSS SSL) + BROADCASTCHANNEL */
   let syncChannel = null;
-  let cloudEventSource = null;
+  let mqttClient = null;
+  let isMqttConnected = false;
+
+  const MQTT_BROKER = 'broker.hivemq.com';
+  const MQTT_PORT = 8884;
+  const MQTT_PATH = '/mqtt';
+  const MQTT_TOPIC = 'galatama_score_tiktok_live_stream_sohe_v1';
+
+  function perbaruiStatusSyncUI(connected) {
+    const badge = document.getElementById('syncStatusBadge');
+    const txt = document.getElementById('syncStatusText');
+    if (!badge || !txt) return;
+    if (connected) {
+      badge.className = 'sync-badge connected';
+      txt.innerText = '⚡ SYNC LIVE ON';
+      badge.title = 'Terhubung kilat via HiveMQ WebSocket ke TikTok LIVE Studio';
+    } else {
+      badge.className = 'sync-badge disconnected';
+      txt.innerText = '🔄 MENYAMBUNGKAN...';
+      badge.title = 'Menyambungkan kembali ke server sinkronisasi...';
+    }
+  }
 
   try {
     if (typeof BroadcastChannel !== 'undefined') {
@@ -1872,43 +1917,72 @@
     console.warn('BroadcastChannel tidak aktif:', err);
   }
 
-  // Koneksi Cloud SSE agar TikTok LIVE Studio dapat menerima update dari Chrome / HP Host
-  function inisialisasiCloudSync() {
+  function inisialisasiMQTTSync() {
     try {
-      if (typeof EventSource !== 'undefined') {
-        cloudEventSource = new EventSource(`https://ntfy.sh/${CLOUD_SYNC_TOPIC}/sse?since=10m`);
-        cloudEventSource.onmessage = async (event) => {
-          try {
-            if (event && event.data) {
-              const parsed = JSON.parse(event.data);
-              if (parsed) {
-                let payload = null;
-                if (parsed.attachment && parsed.attachment.url) {
-                  try {
-                    const res = await fetch(parsed.attachment.url);
-                    payload = await res.json();
-                  } catch (e) {
-                    console.warn('Gagal ambil attachment ntfy:', e);
-                  }
-                } else if (parsed.message) {
-                  try {
-                    payload = JSON.parse(parsed.message);
-                  } catch (_) {}
-                }
-
-                if (payload && payload._sender !== LOCAL_SENDER_ID) {
-                  tanganiPesanSync(payload);
-                }
-              }
-            }
-          } catch (_) {}
-        };
+      if (typeof Paho === 'undefined' || !Paho.MQTT) {
+        console.warn('Paho MQTT belum termuat, mencoba ulang dalam 300ms...');
+        setTimeout(inisialisasiMQTTSync, 300);
+        return;
       }
+
+      const clientId = 'cl_' + Math.random().toString(36).substring(2, 10);
+      mqttClient = new Paho.MQTT.Client(MQTT_BROKER, MQTT_PORT, MQTT_PATH, clientId);
+
+      mqttClient.onConnectionLost = (responseObject) => {
+        isMqttConnected = false;
+        perbaruiStatusSyncUI(false);
+        if (responseObject.errorCode !== 0) {
+          console.warn('MQTT Connection lost:', responseObject.errorMessage);
+          setTimeout(hubungkanMQTT, 2000);
+        }
+      };
+
+      mqttClient.onMessageArrived = (message) => {
+        try {
+          const payload = JSON.parse(message.payloadString);
+          if (payload && payload._sender !== LOCAL_SENDER_ID) {
+            tanganiPesanSync(payload);
+          }
+        } catch (e) {
+          console.warn('MQTT parse error:', e);
+        }
+      };
+
+      hubungkanMQTT();
     } catch (e) {
-      console.warn('Cloud sync error:', e);
+      console.warn('Inisialisasi MQTT error:', e);
+      setTimeout(inisialisasiMQTTSync, 1500);
     }
   }
-  inisialisasiCloudSync();
+
+  function hubungkanMQTT() {
+    if (!mqttClient) return;
+    mqttClient.connect({
+      useSSL: true,
+      timeout: 5,
+      keepAliveInterval: 30,
+      cleanSession: true,
+      onSuccess: () => {
+        isMqttConnected = true;
+        perbaruiStatusSyncUI(true);
+        mqttClient.subscribe(MQTT_TOPIC, { qos: 0 });
+
+        // Jika mode overlay (TikTok Studio), segera minta data poin terkini ke Master
+        if (currentViewMode !== 'admin') {
+          siarkanPesanSync({ type: 'REQUEST_STATE' });
+        }
+      },
+      onFailure: (err) => {
+        isMqttConnected = false;
+        perbaruiStatusSyncUI(false);
+        console.warn('Koneksi MQTT gagal, sambung ulang dalam 3 detik:', err);
+        setTimeout(hubungkanMQTT, 3000);
+      }
+    });
+  }
+
+  // Mulai koneksi WebSocket MQTT
+  inisialisasiMQTTSync();
 
   window.addEventListener('storage', (e) => {
     if (e.key === DB_KEY && e.newValue) {
@@ -1932,23 +2006,26 @@
   function siarkanPesanSync(pesan) {
     const payload = { ...pesan, _sender: LOCAL_SENDER_ID, _t: Date.now() };
 
-    // 1. Kirim via BroadcastChannel
+    // 1. Kirim via HiveMQ Secure WebSocket (< 20ms ke TikTok LIVE Studio)
+    if (mqttClient && isMqttConnected) {
+      try {
+        const msg = new Paho.MQTT.Message(JSON.stringify(payload));
+        msg.destinationName = MQTT_TOPIC;
+        msg.qos = 0;
+        mqttClient.send(msg);
+      } catch (err) {
+        console.warn('Gagal kirim via MQTT WebSocket:', err);
+      }
+    }
+
+    // 2. Kirim via BroadcastChannel (Antar Tab Lokal Browser)
     if (syncChannel) {
       try { syncChannel.postMessage(payload); } catch (e) { console.warn(e); }
     }
     
-    // 2. Simpan trigger storage lokal
+    // 3. Simpan trigger storage lokal
     try {
       localStorage.setItem('galatama_stream_event_trigger', JSON.stringify(payload));
-    } catch (_) {}
-
-    // 3. Kirim ke Cloud Real-Time Bus (TikTok LIVE Studio <-> Admin Vercel)
-    try {
-      fetch(`https://ntfy.sh/${CLOUD_SYNC_TOPIC}`, {
-        method: 'POST',
-        body: JSON.stringify(payload),
-        headers: { 'Content-Type': 'text/plain' }
-      }).catch(() => {});
     } catch (_) {}
   }
 
