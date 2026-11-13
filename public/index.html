@@ -4150,7 +4150,10 @@
         }).catch(() => null);
       }
 
-      let data = res ? await res.json() : null;
+      let data = null;
+      if (res && res.ok) {
+        try { data = await res.json(); } catch (_) {}
+      }
 
       // Fallback lokal vault jika offline
       if (!data || !data.sukses) {
@@ -4215,21 +4218,27 @@
         }).catch(() => null);
       }
 
-      let data = res ? await res.json() : null;
+      let data = null;
+      if (res && res.ok) {
+        try { data = await res.json(); } catch (_) {}
+      }
 
       // Simpan di local vault juga
       const localVault = JSON.parse(localStorage.getItem('scoreboard_users_vault_v1') || '{}');
       localVault[user] = { username: user, password: pass, displayName: user };
       localStorage.setItem('scoreboard_users_vault_v1', JSON.stringify(localVault));
 
+      btn.disabled = false;
+      btn.innerHTML = '<span>Daftar Akun</span>';
+
       // JANGAN AUTO MASUK: Pengguna harus login melalui tab Login
-      document.getElementById('authRegPassword').value = '';
+      if (passInp) passInp.value = '';
       gantiTabAuth('login');
-      const loginUserInput = document.getElementById('authUsername');
+      const loginUserInput = document.getElementById('authLoginUser');
       if (loginUserInput) {
         loginUserInput.value = user;
       }
-      const loginPassInput = document.getElementById('authPassword');
+      const loginPassInput = document.getElementById('authLoginPass');
       if (loginPassInput) {
         loginPassInput.value = '';
         loginPassInput.focus();
