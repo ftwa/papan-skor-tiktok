@@ -16,5 +16,11 @@
     "passwordHash": "5f5b24ad65531525ddcccace0598dafaa386e30749babf12c7b0cda2af45c582",
     "displayName": "player_tes99",
     "createdAt": "2026-11-13T18:47:10.985Z"
+  },
+  "player_tes100": {
+    "username": "player_tes100",
+    "passwordHash": "5f5b24ad65531525ddcccace0598dafaa386e30749babf12c7b0cda2af45c582",
+    "displayName": "player_tes100",
+    "createdAt": "2026-11-13T18:48:41.320Z"
   }
 }
