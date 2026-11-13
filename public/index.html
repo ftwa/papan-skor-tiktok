@@ -1024,13 +1024,48 @@
     html.mode-tabel #quickPointPopover {
       pointer-events: none !important;
       z-index: 99998 !important;
+      background: rgba(13, 21, 39, 0.96) !important;
+      backdrop-filter: blur(12px) !important;
       border: 1.5px solid #38bdf8 !important;
-      box-shadow: 0 0 25px rgba(56, 189, 248, 0.4), 0 16px 36px rgba(0, 0, 0, 0.9) !important;
+      box-shadow: 0 0 25px rgba(56, 189, 248, 0.5), 0 16px 36px rgba(0, 0, 0, 0.95) !important;
+      animation: popInModal 0.18s cubic-bezier(0.16, 1, 0.3, 1) !important;
+    }
+    html.mode-tabel #quickPointPopover .qp-header {
+      border-bottom: 1px solid rgba(56, 189, 248, 0.3) !important;
+    }
+    html.mode-tabel #quickPointPopover .qp-title {
+      font-size: 13px !important;
+      font-weight: 900 !important;
+      color: #38bdf8 !important;
+      display: flex !important;
+      align-items: center !important;
+      gap: 6px !important;
+    }
+    html.mode-tabel #quickPointPopover .qp-title::before {
+      content: "⚡ " !important;
+      color: #facc15 !important;
     }
     html.mode-tabel #quickPointPopover .qp-close {
       display: none !important;
     }
+    html.mode-tabel #quickPointPopover .btn-qp-num {
+      pointer-events: none !important;
+      cursor: default !important;
+      font-weight: 900 !important;
+      transition: all 0.15s ease !important;
+    }
+    html.mode-tabel #quickPointPopover .qp-footer {
+      border-top: 1px solid rgba(30, 41, 59, 0.8) !important;
+      pointer-events: none !important;
+    }
     html.mode-tabel #quickPointPopover input {
+      pointer-events: none !important;
+      user-select: none !important;
+      background: rgba(15, 23, 42, 0.9) !important;
+      border-color: rgba(56, 189, 248, 0.3) !important;
+      color: #f8fafc !important;
+    }
+    html.mode-tabel #quickPointPopover .btn-qp-set {
       pointer-events: none !important;
     }
 
@@ -2224,6 +2259,18 @@
       if (currentViewMode === 'tabel') {
         tutupQuickPointPopover(false);
       }
+    } else if (msg.type === 'CLICK_QUICK_POINT') {
+      if (currentViewMode === 'tabel') {
+        const btns = document.querySelectorAll('#qpGridButtons .btn-qp-num');
+        btns.forEach(b => {
+          if (b.innerText.trim() === `+${msg.delta}` || b.innerText.trim() === `${msg.delta}`) {
+            b.style.background = '#facc15';
+            b.style.color = '#000';
+            b.style.transform = 'scale(1.15)';
+            b.style.boxShadow = '0 0 15px rgba(250, 204, 21, 0.8)';
+          }
+        });
+      }
     } else if (msg.type === 'NEW_LOG') {
       if (msg.item) {
         tambahLogAktivitas(msg.item.entitas, msg.item.keterangan, msg.item.tipe, msg.item.poinAwal, msg.item.poinAkhir, msg.item.delta, false);
@@ -2542,14 +2589,16 @@
     const pop = document.getElementById('quickPointPopover');
     pop.classList.add('show');
 
-    let targetEl = (ev && ev.currentTarget) ? ev.currentTarget : document.getElementById(index === 19 ? 'row-kursi-19' : `row-kursi-${index}`);
+    let tr = document.getElementById(index === 19 ? 'row-kursi-19' : `row-kursi-${index}`);
+    let targetEl = (ev && ev.currentTarget) ? ev.currentTarget : (tr ? (tr.querySelector('.score-val') || tr) : null);
     if (targetEl) {
-      const rect = targetEl.getBoundingClientRect();
+      const scoreCell = targetEl.querySelector ? (targetEl.querySelector('.score-val') || targetEl) : targetEl;
+      const rect = scoreCell.getBoundingClientRect();
       const popWidth = 235;
       const popHeight = pop.offsetHeight || 150;
 
-      let leftPos = rect.left - popWidth - 8;
-      if (leftPos < 10) leftPos = Math.min(window.innerWidth - popWidth - 10, rect.right + 8);
+      let leftPos = rect.left - popWidth - 10;
+      if (leftPos < 10) leftPos = Math.min(window.innerWidth - popWidth - 10, rect.right + 10);
       let topPos = rect.top - (popHeight / 2) + (rect.height / 2);
       topPos = Math.max(10, Math.min(window.innerHeight - popHeight - 10, topPos));
 
@@ -2579,6 +2628,7 @@
   function eksekusiQuickPoint(delta) {
     if (activeQuickPointIndex === null) return;
     const idx = activeQuickPointIndex;
+    siarkanPesanSync({ type: 'CLICK_QUICK_POINT', delta: delta });
     tutupQuickPointPopover();
     terapkanTambahPoin(idx, delta);
   }
