@@ -991,13 +991,10 @@
     html.mode-tabel #modalLinkStream,
     html.mode-tabel .color-picker-mini,
     html.mode-tabel #winnerOverlay,
-    html.mode-tabel #modalInputNama,
     html.mode-tabel #centerNotifPopup,
     html.mode-tabel .col-resizer {
       display: none !important;
     }
-
-
 
     /* TAMPILAN INTERAKTIF EDIT NAMA PEMAIN DI LIVE STREAM (PAS DI TENGAH - TIDAK TERPOTONG) */
     html.mode-tabel #modalInputNama {
@@ -1008,6 +1005,14 @@
       background: rgba(4, 9, 20, 0.78) !important;
       backdrop-filter: blur(8px) !important;
       z-index: 99999 !important;
+      justify-content: center !important;
+      align-items: center !important;
+      pointer-events: none !important;
+    }
+    html.mode-tabel #modalInputNama[style*="display: flex"],
+    html.mode-tabel #modalInputNama.show {
+      display: flex !important;
+    }
       justify-content: center !important;
       align-items: center !important;
       pointer-events: none !important;
