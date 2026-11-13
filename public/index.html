@@ -531,16 +531,15 @@
       position: absolute !important;
       left: 50% !important;
       top: 50% !important;
-      width: 1120px !important;
-      max-width: 1120px !important;
-      min-width: 1120px !important;
-      display: flex !important;
-      flex-direction: column !important;
-      align-items: center !important;
-      justify-content: center !important;
-      margin: 0 !important;
-      transform: translate(-50%, -50%) scale(1) !important;
-      transform-origin: center center !important;
+      width: 1120px;
+      max-width: 1120px;
+      min-width: 1120px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      margin: 0;
+      transform-origin: center center;
       transition: transform 0.15s ease-out;
       z-index: 10;
       flex-shrink: 0;
@@ -1708,9 +1707,9 @@
           <span class="stream-icon">🏆</span>
           <span class="stream-name">Overlay Podium Juara (Hall of Champions)</span>
         </div>
-        <span class="stream-rec-badge">1280 × 720 px (Auto-Center Simetris)</span>
+        <span class="stream-rec-badge">1920 × 1080 px (Fullscreen Layar Penuh)</span>
       </div>
-      <p class="stream-card-sub">Transparan standby. Juara 1, 2, 3 otomatis terkunci presisi di tengah layar (simetris kiri-kanan) di segala resolusi tanpa terpotong & tanpa scrollbar!</p>
+      <p class="stream-card-sub">Transparan standby. Atur resolusi 1920 × 1080 (atau 1280 × 720) di TikTok Studio, klik 'Paskan ke Layar' / Fullscreen: panggung juara otomatis mengisi layar penuh 100% tanpa terpotong!</p>
       <div class="stream-input-wrap">
         <input type="text" readonly id="linkOverlayPodium" class="stream-url-input" onclick="this.select()">
         <button class="btn-copy-link" onclick="salinLinkStream('linkOverlayPodium', this)">📋 Salin Link</button>
@@ -2124,7 +2123,7 @@
     }
   }
 
-  /* SISTEM AUTO-FIT & AUTO-SCALE CERDAS ANTI-TERPOTONG UNTUK TIKTOK STUDIO */
+  /* SISTEM AUTO-FIT & AUTO-SCALE CERDAS ANTI-TERPOTONG & FULLSCREEN UNTUK TIKTOK STUDIO */
   function autoScalePodium() {
     const scaler = document.getElementById('podiumStageScaler');
     if (!scaler) return;
@@ -2132,17 +2131,17 @@
     const targetH = 680;
     const winW = window.innerWidth || document.documentElement.clientWidth || 1280;
     const winH = window.innerHeight || document.documentElement.clientHeight || 720;
-    const scaleX = (winW - 20) / targetW;
-    const scaleY = (winH - 20) / targetH;
+    const scaleX = (winW - 16) / targetW;
+    const scaleY = (winH - 16) / targetH;
     let scale = Math.min(scaleX, scaleY);
     if (scale < 0.15) scale = 0.15;
-    if (scale > 1.25) scale = 1.25;
+    if (scale > 2.5) scale = 2.5; // Mendukung layar Fullscreen Full HD (1920x1080) & 2K tanpa terpotong!
     
-    scaler.style.position = 'absolute';
-    scaler.style.left = '50%';
-    scaler.style.top = '50%';
-    scaler.style.transform = `translate(-50%, -50%) scale(${scale.toFixed(4)})`;
-    scaler.style.transformOrigin = 'center center';
+    scaler.style.setProperty('position', 'absolute', 'important');
+    scaler.style.setProperty('left', '50%', 'important');
+    scaler.style.setProperty('top', '50%', 'important');
+    scaler.style.setProperty('transform', `translate(-50%, -50%) scale(${scale.toFixed(4)})`, 'important');
+    scaler.style.setProperty('transform-origin', 'center center', 'important');
   }
 
   function autoScaleTabel() {
