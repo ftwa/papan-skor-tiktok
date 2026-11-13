@@ -3239,9 +3239,9 @@
   /* FITUR MODAL LINK STREAM TIKTOK STUDIO & OBS */
   function bukaModalLinkStream() {
     tutupSemuaDropdown();
-    const origin = window.location.origin;
-    const path = window.location.pathname;
-    const base = `${origin}${path}`;
+    // Selalu gunakan domain Web Produksi HTTPS (Vercel) untuk Link Stream OBS & TikTok LIVE Studio
+    // agar dapat diakses dari TikTok Studio tanpa kendala port lokal / IP 127.0.0.1 dari MasterPapanSkor.exe
+    const base = 'https://papan-skor-tiktok-pi.vercel.app/';
 
     const urlTabel = `${base}?room=${encodeURIComponent(CURRENT_ROOM)}&view=tabel`;
     const urlPodium = `${base}?room=${encodeURIComponent(CURRENT_ROOM)}&view=podium`;
