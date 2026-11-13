@@ -2148,12 +2148,12 @@
   function autoScalePodium() {
     const scaler = document.getElementById('podiumStageScaler');
     if (!scaler) return;
-    const targetW = 1260; // 1100px panggung + buffer 160px untuk aura cahaya juara 2 & 3
-    const targetH = 780;  // 720px panggung + buffer 60px untuk mahkota & trofi atas
+    const targetW = 1280; // 1100px panggung + buffer 180px untuk aura cahaya juara 2 & 3
+    const targetH = 800;  // 720px panggung + buffer 80px untuk mahkota, pita, dan glow atas-bawah
     const winW = window.innerWidth || document.documentElement.clientWidth || 1080;
     const winH = window.innerHeight || document.documentElement.clientHeight || 1920;
-    const scaleX = (winW - 28) / targetW;
-    const scaleY = (winH - 28) / targetH;
+    const scaleX = (winW - 36) / targetW;
+    const scaleY = (winH - 36) / targetH;
     let scale = Math.min(scaleX, scaleY);
     if (scale < 0.1) scale = 0.1;
     if (scale > 2.5) scale = 2.5; // Mendukung layar Fullscreen Vertikal (1080x1920) & Lanskap (1920x1080) tanpa terpotong!
@@ -2172,6 +2172,7 @@
         autoScalePodium();
       });
       if (document.body) podiumResizeObs.observe(document.body);
+      if (document.documentElement) podiumResizeObs.observe(document.documentElement);
     }
   }
 
