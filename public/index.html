@@ -527,18 +527,21 @@
 
     /* Auto-Scaler Anti-Terpotong untuk Podium Juara di Segala Resolusi TikTok Studio */
     .podium-stage-scaler {
-      width: 1120px;
-      max-width: 1120px;
-      min-width: 1120px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      transform-origin: center center;
+      position: absolute !important;
+      left: 50% !important;
+      top: 50% !important;
+      width: 1120px !important;
+      max-width: 1120px !important;
+      min-width: 1120px !important;
+      display: flex !important;
+      flex-direction: column !important;
+      align-items: center !important;
+      justify-content: center !important;
+      margin: 0 !important;
+      transform: translate(-50%, -50%) scale(1) !important;
+      transform-origin: center center !important;
       transition: transform 0.15s ease-out;
-      position: relative;
       z-index: 10;
-      margin: auto;
       flex-shrink: 0;
     }
 
@@ -918,10 +921,27 @@
       background: transparent !important;
       border: none !important;
       box-shadow: none !important;
-      padding: 4px 6px !important;
-      margin: 0 auto !important;
-      max-width: 100% !important;
+      padding: 0 !important;
+      margin: 0 !important;
+      width: 1060px !important;
+      max-width: 1060px !important;
+      height: 520px !important;
+      max-height: 520px !important;
+      overflow: hidden !important;
       transform-origin: top left !important;
+    }
+    html.mode-tabel.show-log .container {
+      height: 650px !important;
+      max-height: 650px !important;
+    }
+    html.mode-tabel .grid-tables {
+      display: grid !important;
+      grid-template-columns: 1fr 1fr !important;
+      gap: 12px !important;
+      width: 1060px !important;
+      height: 520px !important;
+      margin: 0 !important;
+      padding: 0 !important;
     }
     html.mode-tabel .top-bar,
     html.mode-tabel .modal-overlay,
@@ -1057,13 +1077,13 @@
       width: 100vw !important;
       height: 100vh !important;
       display: none;
-      flex-direction: column !important;
-      justify-content: center !important;
-      align-items: center !important;
       overflow: hidden !important;
       padding: 0 !important;
       margin: 0 !important;
       scrollbar-width: none !important;
+    }
+    html.mode-podium #winnerOverlay.active {
+      display: block !important;
     }
     html.mode-podium #winnerOverlay::-webkit-scrollbar {
       display: none !important;
@@ -1647,9 +1667,9 @@
           <span class="stream-icon">📊</span>
           <span class="stream-name">Overlay Tabel Skor (Auto-Fit)</span>
         </div>
-        <span class="stream-rec-badge">1060 × 520 px (Auto)</span>
+        <span class="stream-rec-badge">1060 × 520 px (Pas Tepi Tabel - Tanpa Crop!)</span>
       </div>
-      <p class="stream-card-sub">Klasemen live transparan. Dilengkapi sistem Auto-Fit agar kolom POIN selalu terlihat & tidak terpotong di resolusi berapa pun.</p>
+      <p class="stream-card-sub">Klasemen live transparan. Atur ukuran 1060 × 520 px di TikTok Studio agar kotak seleksi pas rapat di tepi tabel tanpa ada ruang kosong di bawahnya!</p>
       <div class="stream-input-wrap">
         <input type="text" readonly id="linkOverlayTabel" class="stream-url-input" onclick="this.select()">
         <button class="btn-copy-link" onclick="salinLinkStream('linkOverlayTabel', this)">📋 Salin Link</button>
@@ -1664,9 +1684,9 @@
           <span class="stream-icon">🏆</span>
           <span class="stream-name">Overlay Podium Juara (Hall of Champions)</span>
         </div>
-        <span class="stream-rec-badge">1280 × 720 px (Auto-Scale)</span>
+        <span class="stream-rec-badge">1280 × 720 px (Auto-Center Simetris)</span>
       </div>
-      <p class="stream-card-sub">Transparan standby. Dilengkapi Auto-Scale adaptif: otomatis pas di segala ukuran layar TikTok LIVE Studio tanpa terpotong & tanpa scrollbar!</p>
+      <p class="stream-card-sub">Transparan standby. Juara 1, 2, 3 otomatis terkunci presisi di tengah layar (simetris kiri-kanan) di segala resolusi tanpa terpotong & tanpa scrollbar!</p>
       <div class="stream-input-wrap">
         <input type="text" readonly id="linkOverlayPodium" class="stream-url-input" onclick="this.select()">
         <button class="btn-copy-link" onclick="salinLinkStream('linkOverlayPodium', this)">📋 Salin Link</button>
@@ -2031,16 +2051,20 @@
   function autoScalePodium() {
     const scaler = document.getElementById('podiumStageScaler');
     if (!scaler) return;
-    const targetW = 1120;
-    const targetH = 700;
+    const targetW = 1140; // 1120px stage + 20px buffer simetris
+    const targetH = 680;
     const winW = window.innerWidth || document.documentElement.clientWidth || 1280;
     const winH = window.innerHeight || document.documentElement.clientHeight || 720;
-    const scaleX = (winW - 16) / targetW;
-    const scaleY = (winH - 16) / targetH;
+    const scaleX = (winW - 20) / targetW;
+    const scaleY = (winH - 20) / targetH;
     let scale = Math.min(scaleX, scaleY);
     if (scale < 0.15) scale = 0.15;
-    if (scale > 1.3) scale = 1.3;
-    scaler.style.transform = `scale(${scale.toFixed(4)})`;
+    if (scale > 1.25) scale = 1.25;
+    
+    scaler.style.position = 'absolute';
+    scaler.style.left = '50%';
+    scaler.style.top = '50%';
+    scaler.style.transform = `translate(-50%, -50%) scale(${scale.toFixed(4)})`;
     scaler.style.transformOrigin = 'center center';
   }
 
@@ -2048,17 +2072,23 @@
     if (currentViewMode !== 'tabel') return;
     const container = document.querySelector('.container');
     if (!container) return;
+    const hasLog = document.documentElement.classList.contains('show-log');
     const baseW = 1060;
-    const winW = window.innerWidth || document.documentElement.clientWidth || 1060;
-    if (winW < baseW) {
-      const scale = (winW - 8) / baseW;
-      container.style.transform = `scale(${scale.toFixed(4)})`;
-      container.style.transformOrigin = 'top left';
-      container.style.width = `${baseW}px`;
-    } else {
-      container.style.transform = '';
-      container.style.width = '100%';
-    }
+    const baseH = hasLog ? 650 : 520;
+    const winW = window.innerWidth || document.documentElement.clientWidth || baseW;
+    const winH = window.innerHeight || document.documentElement.clientHeight || baseH;
+    
+    // Auto-fit proporsional dua sumbu agar pas rapat di tepi tanpa ruang kosong di bawah
+    const scaleX = winW / baseW;
+    const scaleY = winH / baseH;
+    let scale = Math.min(scaleX, scaleY);
+    if (scale < 0.2) scale = 0.2;
+    if (scale > 1.3) scale = 1.3;
+    
+    container.style.width = `${baseW}px`;
+    container.style.height = `${baseH}px`;
+    container.style.transformOrigin = 'top left';
+    container.style.transform = `scale(${scale.toFixed(4)})`;
   }
 
   window.addEventListener('resize', () => {
