@@ -48,6 +48,11 @@
   <!-- THREE.JS & OBJLOADER UNTUK RENDER AVATAR 3D RESMI ROBLOX -->
   <script src="mqttws31.min.js"></script>
   <script src="html2canvas.min.js"></script>
+  <script>
+    if (typeof html2canvas === 'undefined') {
+      document.write('<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"><\/script>');
+    }
+  </script>
   <script src="three.min.js"></script>
   <script src="OBJLoader.js"></script>
   <script>
