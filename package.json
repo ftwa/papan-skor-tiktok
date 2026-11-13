@@ -1,0 +1,12 @@
+{
+  "name": "papan-skor-tiktok",
+  "version": "1.0.0",
+  "description": "Cyber HUD Scoreboard & Grand Finals Ceremony Overlay for TikTok LIVE Studio & OBS",
+  "main": "public/index.html",
+  "scripts": {
+    "start": "python local_dev_server.py"
+  },
+  "keywords": ["scoreboard", "tiktok-live-studio", "obs-overlay", "roblox"],
+  "author": "ftwa",
+  "license": "MIT"
+}
