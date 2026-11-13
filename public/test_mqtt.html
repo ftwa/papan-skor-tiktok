@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Test MQTT Realtime Sync</title>
+  <script src="/mqttws31.min.js"></script>
+</head>
+<body>
+  <h2>Test MQTT Realtime Sync</h2>
+  <div id="status">Connecting...</div>
+  <button id="btnSend" onclick="sendTest()">Send PING</button>
+  <div id="log" style="font-family: monospace; white-space: pre; margin-top: 10px;"></div>
+
+  <script>
+    const topic = 'galatama_score_tiktok_test_bus_77';
+    const clientId = 'test_' + Math.random().toString(36).substring(2, 9);
+    const client = new Paho.MQTT.Client('broker.hivemq.com', 8884, '/mqtt', clientId);
+
+    client.onConnectionLost = (responseObject) => {
+      document.getElementById('status').innerText = 'Connection lost: ' + responseObject.errorMessage;
+    };
+
+    client.onMessageArrived = (message) => {
+      const el = document.createElement('div');
+      el.innerText = '[RECV ' + new Date().toLocaleTimeString() + '] ' + message.payloadString;
+      document.getElementById('log').appendChild(el);
+    };
+
+    client.connect({
+      useSSL: true,
+      timeout: 5,
+      keepAliveInterval: 30,
+      onSuccess: () => {
+        document.getElementById('status').innerText = 'CONNECTED to HiveMQ WSS (SSL)!';
+        client.subscribe(topic);
+        const el = document.createElement('div');
+        el.innerText = '[SYS] Subscribed to topic: ' + topic;
+        document.getElementById('log').appendChild(el);
+      },
+      onFailure: (err) => {
+        document.getElementById('status').innerText = 'CONNECT FAILED: ' + JSON.stringify(err);
+      }
+    });
+
+    function sendTest() {
+      const msg = new Paho.MQTT.Message(JSON.stringify({ type: 'PING', time: Date.now(), from: clientId }));
+      msg.destinationName = topic;
+      client.send(msg);
+      const el = document.createElement('div');
+      el.innerText = '[SENT] PING message sent!';
+      document.getElementById('log').appendChild(el);
+    }
+  </script>
+</body>
+</html>
