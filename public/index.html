@@ -47,6 +47,7 @@
 
   <!-- THREE.JS & OBJLOADER UNTUK RENDER AVATAR 3D RESMI ROBLOX -->
   <script src="mqttws31.min.js"></script>
+  <script src="html2canvas.min.js"></script>
   <script src="three.min.js"></script>
   <script src="OBJLoader.js"></script>
   <script>
@@ -1575,6 +1576,117 @@
       filter: brightness(1.15);
       transform: translateY(-1px);
     }
+
+    /* =========================================================
+       MODAL SCREENSHOT PREVIEW & DOWNLOAD
+       ========================================================= */
+    .btn-shot-table {
+      background: linear-gradient(135deg, #0d9488 0%, #14b8a6 100%) !important;
+      border: 1px solid #2dd4bf !important;
+      color: #ffffff !important;
+      font-weight: 800 !important;
+      box-shadow: 0 2px 10px rgba(20, 184, 166, 0.35);
+    }
+    .btn-shot-table:hover {
+      filter: brightness(1.18);
+      transform: translateY(-1px);
+    }
+    .btn-shot-podium {
+      background: linear-gradient(135deg, #0284c7 0%, #38bdf8 100%) !important;
+      border: 1.5px solid #7dd3fc !important;
+      color: #ffffff !important;
+      box-shadow: 0 4px 15px rgba(56, 189, 248, 0.45);
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .btn-shot-podium:hover {
+      filter: brightness(1.2);
+      transform: scale(1.04);
+    }
+    .modal-screenshot-box {
+      width: 780px !important;
+      max-width: 96vw !important;
+      max-height: 92vh !important;
+      display: flex !important;
+      flex-direction: column !important;
+      padding: 20px 24px !important;
+      overflow-y: auto !important;
+    }
+    .screenshot-preview-wrap {
+      background: #020617;
+      border: 1.5px solid #1e293b;
+      border-radius: 10px;
+      padding: 10px;
+      margin: 10px 0 14px 0;
+      max-height: 55vh;
+      overflow: auto;
+      text-align: center;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      box-shadow: inset 0 2px 10px rgba(0,0,0,0.7);
+    }
+    .screenshot-preview-wrap img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 6px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
+    }
+    .screenshot-meta-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(15, 23, 42, 0.7);
+      border: 1px solid #1e293b;
+      border-radius: 8px;
+      padding: 7px 14px;
+      font-size: 12px;
+      color: #94a3b8;
+      margin-bottom: 8px;
+    }
+    .screenshot-actions {
+      display: flex;
+      gap: 10px;
+      justify-content: flex-end;
+      flex-wrap: wrap;
+    }
+    .btn-shot-action {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 9px 18px;
+      font-size: 13px;
+      font-weight: 800;
+      border-radius: 8px;
+      cursor: pointer;
+      border: none;
+      transition: all 0.15s ease;
+    }
+    .btn-shot-copy {
+      background: #16a34a;
+      color: #ffffff;
+      box-shadow: 0 2px 10px rgba(22, 163, 74, 0.35);
+    }
+    .btn-shot-copy:hover {
+      background: #15803d;
+      transform: translateY(-1px);
+    }
+    .btn-shot-dl {
+      background: #0284c7;
+      color: #ffffff;
+      box-shadow: 0 2px 10px rgba(2, 132, 199, 0.35);
+    }
+    .btn-shot-dl:hover {
+      background: #0369a1;
+      transform: translateY(-1px);
+    }
+    .btn-shot-close {
+      background: #334155;
+      color: #e2e8f0;
+    }
+    .btn-shot-close:hover {
+      background: #475569;
+    }
   
     /* =========================================================
        CYBER HUD MULTI-USER AUTHENTICATION & ROOM ISOLATION
@@ -2269,6 +2381,57 @@
       background: #fff9c4 !important;
       box-shadow: 6px 6px 0px #000000 !important;
     }
+    html.theme-comic .btn-shot-table {
+      background: #06b6d4 !important;
+      color: #000000 !important;
+      border: 2px solid #000000 !important;
+      box-shadow: 3px 3px 0px #000000 !important;
+      font-weight: 900 !important;
+    }
+    html.theme-comic .btn-shot-podium {
+      background: #38bdf8 !important;
+      color: #000000 !important;
+      border: 3px solid #000000 !important;
+      box-shadow: 4px 4px 0px #000000 !important;
+      font-weight: 900 !important;
+    }
+    html.theme-comic .modal-screenshot-box {
+      background: #ffffff !important;
+      border: 4px solid #000000 !important;
+      box-shadow: 8px 8px 0px #000000 !important;
+      color: #000000 !important;
+    }
+    html.theme-comic .screenshot-meta-bar {
+      background: #f1f5f9 !important;
+      border: 2px solid #000000 !important;
+      color: #0f172a !important;
+      font-weight: 700 !important;
+    }
+    html.theme-comic .screenshot-preview-wrap {
+      background: #f8fafc !important;
+      border: 3px solid #000000 !important;
+    }
+    html.theme-comic .btn-shot-copy {
+      background: #22c55e !important;
+      color: #000000 !important;
+      border: 3px solid #000000 !important;
+      box-shadow: 3px 3px 0px #000000 !important;
+      font-weight: 900 !important;
+    }
+    html.theme-comic .btn-shot-dl {
+      background: #38bdf8 !important;
+      color: #000000 !important;
+      border: 3px solid #000000 !important;
+      box-shadow: 3px 3px 0px #000000 !important;
+      font-weight: 900 !important;
+    }
+    html.theme-comic .btn-shot-close {
+      background: #e2e8f0 !important;
+      color: #000000 !important;
+      border: 3px solid #000000 !important;
+      box-shadow: 3px 3px 0px #000000 !important;
+      font-weight: 900 !important;
+    }
 </style>
 </head>
 <body class="view-match">
@@ -2280,6 +2443,7 @@
       <button class="btn-action-soft" onclick="bukaModalPoin()">Point Preset</button>
       <button class="btn-action-soft" onclick="bukaModalNotifSuara()">Settings Audio</button>
       <button class="btn-action-soft btn-theme-toggle" onclick="bukaModalPilihTema()" title="Ganti Gaya Desain & Tema Papan Skor">🎨 TEMA</button>
+      <button class="btn-action-soft btn-shot-table" onclick="ambilScreenshotTabel()" title="Ambil Foto Klasemen Bersih untuk Diposting">📸 FOTO TABEL</button>
       
       <!-- DROPDOWN RESET -->
       <div class="dropdown" id="dropdownReset">
@@ -2747,6 +2911,42 @@
   </div>
 </div>
 
+<!-- MODAL PREVIEW & DOWNLOAD SCREENSHOT -->
+<div class="modal-overlay" id="modalPreviewScreenshot" onclick="tutupModalDiLuar(event)">
+  <div class="modal-box-hud modal-screenshot-box">
+    <div class="modal-header-hud">
+      <div class="modal-title-wrap">
+        <span class="modal-sub-hud">INSTANT CAPTURE HD</span>
+        <span class="modal-title-hud" id="screenshotModalTitle">📸 Foto Klasemen / Podium</span>
+      </div>
+      <button class="btn-close-hud" onclick="tutupModalScreenshot()" title="Tutup (Esc)">✕</button>
+    </div>
+
+    <div class="screenshot-meta-bar">
+      <div>📁 File: <b id="screenshotModalFilename" style="color: #38bdf8;">hasil_foto.png</b></div>
+      <div style="color: #10b981; font-weight: 700;">⚡ Resolusi 2X Ultra-HD Jernih</div>
+    </div>
+
+    <div class="screenshot-preview-wrap">
+      <img id="imgPreviewScreenshot" src="" alt="Pratinjau Foto Tangkapan Layar">
+    </div>
+
+    <div id="screenshotCopyStatus" style="display:none; font-size:12px; font-weight:700; text-align:center; margin-bottom:10px;"></div>
+
+    <div class="screenshot-actions">
+      <button type="button" class="btn-shot-action btn-shot-copy" onclick="salinScreenshotKeClipboard(this)" title="Salin langsung ke WhatsApp">
+        <span>📋 Salin ke WhatsApp (Ctrl+V)</span>
+      </button>
+      <button type="button" class="btn-shot-action btn-shot-dl" onclick="downloadScreenshotFile()" title="Unduh ulang file PNG">
+        <span>💾 Unduh File PNG</span>
+      </button>
+      <button type="button" class="btn-shot-action btn-shot-close" onclick="tutupModalScreenshot()">
+        <span>Tutup</span>
+      </button>
+    </div>
+  </div>
+</div>
+
 <!-- OVERLAY PODIUM WINNER (LUXURY BRIGHT AWARDS CEREMONY THEME) -->
 <div class="winner-overlay" id="winnerOverlay">
   <div class="winner-light-beams"></div>
@@ -2759,6 +2959,9 @@
       <h1 class="winner-title">HALL OF CHAMPIONS</h1>
       <div class="winner-title-divider">
         <span>★ ★ ★</span>
+      </div>
+      <div style="margin-top: 10px; display: flex; justify-content: center; gap: 8px;">
+        <button type="button" class="btn-action-soft btn-shot-podium" id="btnShotPodium" onclick="ambilScreenshotPodium()" style="font-weight: 800; padding: 6px 18px; border-radius: 20px; font-size: 13px; z-index: 10;">📸 FOTO PODIUM JUARA</button>
       </div>
     </div>
     
@@ -3915,6 +4118,7 @@
       tutupModalNotifSuara();
       tutupModalLinkStream();
       tutupModalKonfirmasiResetTabel();
+      tutupModalScreenshot();
       tutupQuickPointPopover();
       tutupMiniColorPicker();
       tutupLayarPemenang();
@@ -3996,6 +4200,187 @@
     } else {
       document.execCommand('copy');
       selesaiSalin();
+    }
+  }
+
+  /* =========================================================
+     FITUR SCREENSHOT CEPAT (TABEL & PODIUM PEMENANG)
+     ========================================================= */
+  let currentScreenshotDataUrl = null;
+  let currentScreenshotBlob = null;
+  let currentScreenshotFilename = '';
+
+  async function ambilScreenshotTabel() {
+    const targetEl = document.querySelector('.grid-tables');
+    if (!targetEl) return;
+
+    if (typeof html2canvas === 'undefined') {
+      alert('Library html2canvas belum siap. Coba muat ulang halaman.');
+      return;
+    }
+
+    const notif = document.getElementById('notifAutoSave');
+    if (notif) {
+      notif.innerText = '📸 Sedang memproses foto tabel...';
+      notif.style.display = 'block';
+    }
+
+    try {
+      const room = (typeof roomAktif !== 'undefined' && roomAktif) ? roomAktif : 'room';
+      const sesi = (typeof sesiAktif !== 'undefined') ? sesiAktif : 1;
+      const tgl = new Date().toISOString().slice(0, 10);
+      const filename = `Hasil_Klasemen_Sesi${sesi}_${room}_${tgl}.png`;
+
+      // Ambil warna latar belakang halaman agar tidak transparan hitam pekat
+      const bodyBg = getComputedStyle(document.body).backgroundColor;
+      const safeBg = (bodyBg && bodyBg !== 'transparent' && bodyBg !== 'rgba(0, 0, 0, 0)') ? bodyBg : '#030712';
+
+      const canvas = await html2canvas(targetEl, {
+        scale: 2,
+        useCORS: true,
+        backgroundColor: safeBg,
+        logging: false
+      });
+
+      const dataUrl = canvas.toDataURL('image/png');
+      canvas.toBlob((blob) => {
+        bukaModalScreenshot(dataUrl, blob, filename, `📊 Foto Klasemen - Sesi ${sesi}`);
+      }, 'image/png');
+
+      tambahLogAktivitas('SCREENSHOT', `Foto Tabel Klasemen Sesi ${sesi} diambil`, 'system');
+    } catch (err) {
+      console.error('Gagal mengambil screenshot tabel:', err);
+      alert('Gagal mengambil foto tabel: ' + (err.message || err));
+    } finally {
+      if (notif) notif.style.display = 'none';
+    }
+  }
+
+  async function ambilScreenshotPodium() {
+    const overlay = document.getElementById('winnerOverlay');
+    if (!overlay) return;
+
+    if (typeof html2canvas === 'undefined') {
+      alert('Library html2canvas belum siap. Coba muat ulang halaman.');
+      return;
+    }
+
+    const closeBtn = overlay.querySelector('.btn-close-winner');
+    const shotBtn = document.getElementById('btnShotPodium');
+
+    // Sembunyikan tombol aksi agar screenshot podium bersih
+    if (closeBtn) closeBtn.style.visibility = 'hidden';
+    if (shotBtn) shotBtn.style.visibility = 'hidden';
+
+    const notif = document.getElementById('notifAutoSave');
+    if (notif) {
+      notif.innerText = '📸 Sedang memproses foto podium...';
+      notif.style.display = 'block';
+    }
+
+    try {
+      const room = (typeof roomAktif !== 'undefined' && roomAktif) ? roomAktif : 'room';
+      const sesi = (typeof sesiAktif !== 'undefined') ? sesiAktif : 1;
+      const tgl = new Date().toISOString().slice(0, 10);
+      const filename = `Podium_Juara_Sesi${sesi}_${room}_${tgl}.png`;
+
+      const targetEl = document.getElementById('podiumStageScaler') || overlay;
+
+      const canvas = await html2canvas(targetEl, {
+        scale: 2,
+        useCORS: true,
+        backgroundColor: null, // Pertahankan background asli podium
+        logging: false
+      });
+
+      const dataUrl = canvas.toDataURL('image/png');
+      canvas.toBlob((blob) => {
+        bukaModalScreenshot(dataUrl, blob, filename, `🏆 Foto Podium Juara - Sesi ${sesi}`);
+      }, 'image/png');
+
+      tambahLogAktivitas('SCREENSHOT', `Foto Podium Juara Sesi ${sesi} diambil`, 'system');
+    } catch (err) {
+      console.error('Gagal mengambil screenshot podium:', err);
+      alert('Gagal mengambil foto podium: ' + (err.message || err));
+    } finally {
+      if (closeBtn) closeBtn.style.visibility = '';
+      if (shotBtn) shotBtn.style.visibility = '';
+      if (notif) notif.style.display = 'none';
+    }
+  }
+
+  function bukaModalScreenshot(dataUrl, blob, filename, title) {
+    currentScreenshotDataUrl = dataUrl;
+    currentScreenshotBlob = blob;
+    currentScreenshotFilename = filename;
+
+    const modal = document.getElementById('modalPreviewScreenshot');
+    const imgEl = document.getElementById('imgPreviewScreenshot');
+    const titleEl = document.getElementById('screenshotModalTitle');
+    const filenameEl = document.getElementById('screenshotModalFilename');
+    const statusEl = document.getElementById('screenshotCopyStatus');
+
+    if (titleEl) titleEl.innerText = title;
+    if (filenameEl) filenameEl.innerText = filename;
+    if (imgEl) imgEl.src = dataUrl;
+    if (statusEl) {
+      statusEl.style.display = 'none';
+      statusEl.innerText = '';
+    }
+
+    if (modal) modal.style.display = 'flex';
+
+    // Langsung otomatis trigger download agar file tersimpan di folder Downloads pengguna
+    downloadScreenshotFile();
+  }
+
+  function tutupModalScreenshot() {
+    const modal = document.getElementById('modalPreviewScreenshot');
+    if (modal) modal.style.display = 'none';
+  }
+
+  function downloadScreenshotFile() {
+    if (!currentScreenshotDataUrl) return;
+    const a = document.createElement('a');
+    a.href = currentScreenshotDataUrl;
+    a.download = currentScreenshotFilename || 'screenshot_papan_skor.png';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+  }
+
+  async function salinScreenshotKeClipboard(btnEl) {
+    const statusEl = document.getElementById('screenshotCopyStatus');
+    try {
+      if (navigator.clipboard && window.ClipboardItem && currentScreenshotBlob) {
+        const item = new ClipboardItem({ 'image/png': currentScreenshotBlob });
+        await navigator.clipboard.write([item]);
+        if (statusEl) {
+          statusEl.innerText = '✅ Foto berhasil disalin ke Clipboard! Tinggal tekan Ctrl + V di WhatsApp / Medsos.';
+          statusEl.style.display = 'block';
+          statusEl.style.color = '#10b981';
+        }
+        if (btnEl) {
+          const originalText = btnEl.innerHTML;
+          btnEl.innerHTML = '<span>✅ Tersalin!</span>';
+          setTimeout(() => { btnEl.innerHTML = originalText; }, 2200);
+        }
+      } else {
+        downloadScreenshotFile();
+        if (statusEl) {
+          statusEl.innerText = '⚠️ Browser ini membatasi salin gambar langsung. Gambar otomatis ter-download ke folder Downloads Anda!';
+          statusEl.style.display = 'block';
+          statusEl.style.color = '#38bdf8';
+        }
+      }
+    } catch (err) {
+      console.warn('Clipboard write error:', err);
+      downloadScreenshotFile();
+      if (statusEl) {
+        statusEl.innerText = 'ℹ️ Gambar otomatis tersimpan di folder Downloads perangkat Anda.';
+        statusEl.style.display = 'block';
+        statusEl.style.color = '#38bdf8';
+      }
     }
   }
 
@@ -4439,6 +4824,7 @@
     if (e.target.id === 'modalNotifSuara') tutupModalNotifSuara();
     if (e.target.id === 'modalConfirmResetTabel') tutupModalKonfirmasiResetTabel();
     if (e.target.id === 'modalLinkStream') tutupModalLinkStream();
+    if (e.target.id === 'modalPreviewScreenshot') tutupModalScreenshot();
   }
 
   function simpanPoinWarna() {
