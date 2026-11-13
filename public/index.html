@@ -2109,6 +2109,9 @@
             }
           });
         }
+        if (msg.host && db.sessions[msg.ses].host) {
+          Object.assign(db.sessions[msg.ses].host, msg.host);
+        }
         if (currentViewMode === 'tabel' || currentViewMode === 'admin') {
           renderIsiTabel();
           autoScaleTabel();
@@ -2344,7 +2347,8 @@
         colorTag: p.colorTag || '',
         isPaid: !!p.isPaid,
         isReady: !!p.isReady
-      }))
+      })),
+      host: activeData.host
     });
   }
 
@@ -2516,6 +2520,14 @@
 
     const namaTampil = p.nick || p.user || p.robloxUser || (idx === 19 ? 'Host' : `Kursi ${idx + 1}`);
     if (selisih !== 0) tampilkanPopupPoinTengah(namaTampil, selisih, p.poin, "SET TOTAL", p.colorTag);
+
+    // Kirim sinkronisasi skor instan ke overlay TikTok LIVE Studio
+    siarkanPesanSync({
+      type: 'SYNC_SCORE',
+      chair: idx,
+      poin: p.poin,
+      ses: db.activeSession
+    });
 
     if (idx === 19) { simpanDB(); renderIsiTabel(); } else { urutkanOtomatis(); }
     tambahLogAktivitas(namaTampil, `Total poin disetel ke ${p.poin}`, 'system', awal, p.poin, Math.abs(selisih));
@@ -3104,6 +3116,9 @@
       // Coba endpoint lokal terlebih dahulu, jika 404/gagal otomatis beralih ke endpoint live Vercel
       let res = await fetch(`/api/cari-roblox?username=${encodeURIComponent(rawInput)}`).catch(() => null);
       if (!res || !res.ok) {
+        res = await fetch(`https://papan-skor-tiktok.vercel.app/api/cari-roblox?username=${encodeURIComponent(rawInput)}`).catch(() => null);
+      }
+      if (!res || !res.ok) {
         res = await fetch(`https://skor-sohe.vercel.app/api/cari-roblox?username=${encodeURIComponent(rawInput)}`).catch(() => null);
       }
       if (!res) {
@@ -3201,6 +3216,7 @@
     if (e.target.id === 'modalInputNama') tutupModalNama();
     if (e.target.id === 'modalNotifSuara') tutupModalNotifSuara();
     if (e.target.id === 'modalConfirmResetTabel') tutupModalKonfirmasiResetTabel();
+    if (e.target.id === 'modalLinkStream') tutupModalLinkStream();
   }
 
   function simpanPoinWarna() {
