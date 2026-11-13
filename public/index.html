@@ -961,26 +961,27 @@
       background: transparent !important;
       border: none !important;
       box-shadow: none !important;
-      padding: 0 !important;
+      padding: 4px 10px 14px 10px !important;
       margin: 0 !important;
-      width: 1060px !important;
-      max-width: 1060px !important;
-      height: 520px !important;
-      max-height: 520px !important;
+      width: 1080px !important;
+      max-width: 1080px !important;
+      height: 590px !important;
+      max-height: 590px !important;
       overflow: hidden !important;
       transform-origin: top left !important;
+      box-sizing: border-box !important;
     }
     html.mode-tabel.show-log .container {
-      height: 650px !important;
-      max-height: 650px !important;
+      height: 730px !important;
+      max-height: 730px !important;
     }
     html.mode-tabel .grid-tables {
       display: grid !important;
       grid-template-columns: 1fr 1fr !important;
-      gap: 12px !important;
+      gap: 16px !important;
       width: 1060px !important;
-      height: 520px !important;
-      margin: 0 !important;
+      height: auto !important;
+      margin: 0 auto !important;
       padding: 0 !important;
     }
     html.mode-tabel .top-bar,
@@ -990,41 +991,13 @@
     html.mode-tabel #modalLinkStream,
     html.mode-tabel .color-picker-mini,
     html.mode-tabel #winnerOverlay,
+    html.mode-tabel #modalInputNama,
+    html.mode-tabel #centerNotifPopup,
     html.mode-tabel .col-resizer {
       display: none !important;
     }
 
-    /* TAMPILAN INTERAKTIF & MENARIK DI LIVE STREAM (MODAL EDIT KURSI & POPUP POIN) */
-    html.mode-tabel #modalInputNama {
-      pointer-events: none !important;
-      background: rgba(5, 10, 20, 0.72) !important;
-      backdrop-filter: blur(8px) !important;
-      z-index: 99999 !important;
-    }
-    html.mode-tabel #modalInputNama .modal-box-hud {
-      border: 1.5px solid #38bdf8 !important;
-      box-shadow: 0 0 35px rgba(56, 189, 248, 0.4), 0 20px 50px rgba(0, 0, 0, 0.9) !important;
-      animation: popInModal 0.25s cubic-bezier(0.16, 1, 0.3, 1) !important;
-    }
-    html.mode-tabel #modalInputNama .btn-close-hud,
-    html.mode-tabel #modalInputNama .hud-action-row,
-    html.mode-tabel #modalInputNama .hud-btn-search {
-      display: none !important;
-    }
-    html.mode-tabel #modalInputNama input {
-      pointer-events: none !important;
-      user-select: none !important;
-      background: rgba(15, 23, 42, 0.8) !important;
-      border-color: rgba(56, 189, 248, 0.3) !important;
-      color: #f8fafc !important;
-    }
-    html.mode-tabel #modalInputNama .modal-sub-hud::before {
-      content: "⚡ LIVE PLAYER REGISTRATION ⚡ " !important;
-      color: #38bdf8 !important;
-      font-weight: 900 !important;
-      font-size: 11px !important;
-      letter-spacing: 1.5px !important;
-    }
+
 
     html.mode-tabel #quickPointPopover {
       pointer-events: none !important;
@@ -1074,10 +1047,7 @@
       pointer-events: none !important;
     }
 
-    html.mode-tabel #centerNotifPopup {
-      z-index: 999999 !important;
-      pointer-events: none !important;
-    }
+
     html.mode-tabel:not(.show-log) .log-panel {
       display: none !important;
     }
@@ -1966,9 +1936,9 @@
           <span class="stream-icon">📊</span>
           <span class="stream-name">Overlay Tabel Skor (Auto-Fit)</span>
         </div>
-        <span class="stream-rec-badge">1060 × 520 px (Pas Tepi Tabel - Tanpa Crop!)</span>
+        <span class="stream-rec-badge">1080 × 590 px (Pas Rapat 20 Kursi - Tanpa Terpotong!)</span>
       </div>
-      <p class="stream-card-sub">Klasemen live transparan. Atur ukuran 1060 × 520 px di TikTok Studio agar kotak seleksi pas rapat di tepi tabel tanpa ada ruang kosong di bawahnya!</p>
+      <p class="stream-card-sub">Klasemen live transparan. Atur ukuran 1080 × 590 px di TikTok Studio agar kotak seleksi pas rapat di tepi tabel tanpa ada ruang kosong di bawahnya!</p>
       <div class="stream-input-wrap">
         <input type="text" readonly id="linkOverlayTabel" class="stream-url-input" onclick="this.select()">
         <button class="btn-copy-link" onclick="salinLinkStream('linkOverlayTabel', this)">📋 Salin Link</button>
@@ -2417,37 +2387,16 @@
         tutupLayarPemenang(false);
       }
     } else if (msg.type === 'TRIGGER_TOAST') {
-      if (currentViewMode === 'notif' || currentViewMode === 'tabel') {
+      // Toast notifikasi poin besar khusus untuk mode-notif (?view=notif) agar tidak menutupi tabel
+      if (currentViewMode === 'notif') {
         tampilkanPopupPoinTengah(msg.namaPemain, msg.deltaPoin, msg.totalPoin, msg.labelAtas, msg.warnaTag, false);
       }
     } else if (msg.type === 'OPEN_EDIT_MODAL') {
-      if (currentViewMode === 'tabel') {
-        bukaModalInputNama(msg.chair, false);
-        if (msg.judul) document.getElementById('modalInputJudul').innerText = msg.judul;
-        if (msg.robloxUser !== undefined) document.getElementById('inputUserRoblox').value = msg.robloxUser;
-        if (msg.user !== undefined) document.getElementById('inputNamaTikTok').value = msg.user;
-        if (msg.nick !== undefined) document.getElementById('inputDisplayName').value = msg.nick;
-        if (msg.avatar !== undefined) document.getElementById('inputAvatarUrl').value = msg.avatar;
-        updateModalPreviewUI(msg.robloxUser || '', msg.nick || '', msg.avatar || '');
-        document.getElementById('modalSearchStatus').innerText = '';
-        document.getElementById('modalInputNama').style.display = 'flex';
-      }
+      // Form edit modal admin tidak ditampilkan di stream penonton agar tidak terpotong
     } else if (msg.type === 'UPDATE_EDIT_MODAL') {
-      if (currentViewMode === 'tabel') {
-        if (msg.robloxUser !== undefined) document.getElementById('inputUserRoblox').value = msg.robloxUser;
-        if (msg.user !== undefined) document.getElementById('inputNamaTikTok').value = msg.user;
-        if (msg.nick !== undefined) document.getElementById('inputDisplayName').value = msg.nick;
-        if (msg.avatar !== undefined) document.getElementById('inputAvatarUrl').value = msg.avatar;
-        updateModalPreviewUI(msg.robloxUser || '', msg.nick || '', msg.avatar || '');
-        if (msg.statusTxt) {
-          const st = document.getElementById('modalSearchStatus');
-          if (st) st.innerText = msg.statusTxt;
-        }
-      }
+      // Form edit modal admin tidak ditampilkan di stream penonton
     } else if (msg.type === 'CLOSE_EDIT_MODAL') {
-      if (currentViewMode === 'tabel') {
-        tutupModalNama(false);
-      }
+      // No-op di stream
     } else if (msg.type === 'OPEN_QUICK_POINT') {
       if (currentViewMode === 'tabel') {
         const tr = document.getElementById(msg.chair === 19 ? 'row-kursi-19' : ('row-kursi-' + msg.chair));
@@ -2525,6 +2474,17 @@
     scaler.style.setProperty('transform-origin', 'center center', 'important');
   }
 
+  let tabelResizeObs = null;
+  function aktifkanTabelAutoResize() {
+    if (window.ResizeObserver && !tabelResizeObs) {
+      tabelResizeObs = new ResizeObserver(() => {
+        autoScaleTabel();
+      });
+      if (document.body) tabelResizeObs.observe(document.body);
+      if (document.documentElement) tabelResizeObs.observe(document.documentElement);
+    }
+  }
+
   let podiumResizeObs = null;
   function aktifkanPodiumAutoResize() {
     if (window.ResizeObserver && !podiumResizeObs) {
@@ -2541,12 +2501,12 @@
     const container = document.querySelector('.container');
     if (!container) return;
     const hasLog = document.documentElement.classList.contains('show-log');
-    const baseW = 1060;
-    const baseH = hasLog ? 650 : 520;
+    const baseW = 1080;
+    const baseH = hasLog ? 730 : 590;
     const winW = window.innerWidth || document.documentElement.clientWidth || baseW;
     const winH = window.innerHeight || document.documentElement.clientHeight || baseH;
     
-    // Auto-fit proporsional dua sumbu agar pas rapat di tepi tanpa ruang kosong di bawah
+    // Auto-fit proporsional dua sumbu agar pas rapat di tepi tanpa memotong baris 10 & 20
     const scaleX = winW / baseW;
     const scaleY = winH / baseH;
     let scale = Math.min(scaleX, scaleY);
@@ -4214,6 +4174,7 @@
 
     // Pulihkan status perayaan jika membuka link ?view=podium saat podium sedang aktif di Admin
     aktifkanPodiumAutoResize();
+    aktifkanTabelAutoResize();
     if (currentViewMode === 'podium') {
       try {
         const savedPodium = JSON.parse(localStorage.getItem(PODIUM_STATE_KEY) || 'null');
