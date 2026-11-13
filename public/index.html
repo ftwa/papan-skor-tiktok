@@ -6,7 +6,7 @@
   <title>Scoreboard Cyber HUD Edition</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@600;700;800;900&family=Space+Grotesk:wght@600;700&family=JetBrains+Mono:wght@700;800;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@600;700;800;900&family=Space+Grotesk:wght@600;700&family=JetBrains+Mono:wght@700;800;900&family=Bangers&family=Fredoka:wght@600;700;800;900&display=swap" rel="stylesheet">
   
   <script>
     // Deteksi awal mode overlay instan agar CSS transparan aktif sebelum render halaman (anti-flicker)
@@ -32,6 +32,16 @@
           }
         } catch (_) {}
       }
+
+      // Deteksi awal tema aktif agar tampilan langsung sinkron tanpa flicker
+      try {
+        const roomName = (urlParams.get('room') || urlParams.get('user') || 'admin').toLowerCase().trim().replace(/[^a-z0-9_]/g, '');
+        const urlTheme = (urlParams.get('theme') || '').toLowerCase();
+        const savedTheme = urlTheme || localStorage.getItem('galatama_active_theme_' + roomName) || localStorage.getItem('galatama_active_theme_global') || 'cyber';
+        if (savedTheme === 'comic') {
+          document.documentElement.classList.add('theme-comic');
+        }
+      } catch (_) {}
     })();
   </script>
 
@@ -1717,6 +1727,504 @@
       font-size: 10px; font-weight: 700; color: #38bdf8; letter-spacing: 0.5px;
       text-transform: uppercase;
     }
+
+    /* ==========================================================================
+       TEMA: COMIC POP-ART (WEBTOON & ACTION MANGA STYLE)
+       - Border tebal tinta komik hitam pekat (3px solid #000)
+       - Bayangan tegas solid drop shadow tanpa blur (4px 4px 0px #000)
+       - Tipografi komik: Bangers (Header & Skor) + Fredoka (Nama Pemain)
+       - Palet warna: Comic Yellow (#FFE600), Cyan (#00E5FF), Red (#FF1744)
+       ========================================================================== */
+    html.theme-comic {
+      --bg: #fffbe6;
+      --card-bg: #ffffff;
+      --border-color: #000000;
+      --primary: #ffe600;
+      --primary-hover: #ffd000;
+      --text-main: #000000;
+      --text-sub: #475569;
+      --color-point: #d50000;
+      --host-bg: #fff9c4;
+      --host-text: #000000;
+    }
+
+    html.theme-comic body {
+      font-family: 'Fredoka', 'Outfit', sans-serif !important;
+      color: #000000 !important;
+    }
+
+    /* Background Admin Mode: Kertas Komik Retro dengan Pola Halftone Dots */
+    html.theme-comic:not(.mode-tabel):not(.mode-podium):not(.mode-notif) body {
+      background-color: #fffde7 !important;
+      background-image: radial-gradient(#cbd5e1 15%, transparent 16%) !important;
+      background-size: 16px 16px !important;
+    }
+
+    /* Top Bar Comic */
+    html.theme-comic .top-bar {
+      background: #ffffff !important;
+      border: 3.5px solid #000000 !important;
+      box-shadow: 5px 5px 0px #000000 !important;
+      border-radius: 14px !important;
+      margin-bottom: 12px !important;
+    }
+
+    /* Tombol-tombol di Top Bar */
+    html.theme-comic .btn-action-soft {
+      background: #ffe600 !important;
+      color: #000000 !important;
+      border: 2.5px solid #000000 !important;
+      box-shadow: 3px 3px 0px #000000 !important;
+      border-radius: 8px !important;
+      font-family: 'Fredoka', sans-serif !important;
+      font-weight: 800 !important;
+      transition: all 0.1s ease !important;
+    }
+    html.theme-comic .btn-action-soft:hover {
+      background: #fff066 !important;
+      box-shadow: 4px 4px 0px #000000 !important;
+    }
+    html.theme-comic .btn-action-soft:active {
+      transform: translate(2px, 2px) !important;
+      box-shadow: 1px 1px 0px #000000 !important;
+    }
+
+    /* Tombol Tema */
+    .btn-theme-toggle {
+      background: #ec4899 !important;
+      color: #ffffff !important;
+      border: 1px solid rgba(244, 114, 182, 0.4) !important;
+      font-weight: 800 !important;
+    }
+    html.theme-comic .btn-theme-toggle {
+      background: #ff3366 !important;
+      color: #ffffff !important;
+      border: 2.5px solid #000000 !important;
+      box-shadow: 3px 3px 0px #000000 !important;
+      font-family: 'Bangers', cursive !important;
+      letter-spacing: 1px !important;
+      font-size: 14px !important;
+    }
+
+    /* Tombol Podium Juara Comic */
+    html.theme-comic .btn-winner-trigger {
+      background: linear-gradient(180deg, #ff1744 0%, #d50000 100%) !important;
+      color: #ffffff !important;
+      border: 3px solid #000000 !important;
+      box-shadow: 4px 4px 0px #000000 !important;
+      font-family: 'Bangers', cursive !important;
+      font-size: 15px !important;
+      letter-spacing: 1.5px !important;
+      text-shadow: 1.5px 1.5px 0px #000000 !important;
+    }
+
+    /* Tombol Urutkan Manual Comic */
+    html.theme-comic .btn-sort-manual {
+      background: #00e5ff !important;
+      color: #000000 !important;
+      border: 2.5px solid #000000 !important;
+      box-shadow: 3px 3px 0px #000000 !important;
+      font-family: 'Bangers', cursive !important;
+      letter-spacing: 1px !important;
+      font-size: 14px !important;
+    }
+
+    /* Tombol Notif Manual Comic */
+    html.theme-comic .btn-notif-trigger {
+      background: #ff9100 !important;
+      color: #000000 !important;
+      border: 2.5px solid #000000 !important;
+      box-shadow: 3px 3px 0px #000000 !important;
+      font-family: 'Bangers', cursive !important;
+      letter-spacing: 1px !important;
+    }
+
+    /* Badge Status Sync Comic */
+    html.theme-comic .sync-badge {
+      border: 2px solid #000000 !important;
+      box-shadow: 2px 2px 0px #000000 !important;
+      font-family: 'Fredoka', sans-serif !important;
+      font-weight: 800 !important;
+      color: #000000 !important;
+    }
+    html.theme-comic .sync-badge.connected {
+      background: #a7f3d0 !important;
+      border-color: #000000 !important;
+      color: #065f46 !important;
+    }
+
+    /* Card Tabel Skor Comic */
+    html.theme-comic .card-table {
+      background: #ffffff !important;
+      border: 3.5px solid #000000 !important;
+      box-shadow: 6px 6px 0px #000000 !important;
+      border-radius: 14px !important;
+      overflow: hidden !important;
+    }
+
+    /* Header Kolom Tabel Comic */
+    html.theme-comic table th {
+      background: linear-gradient(180deg, #ffe600 0%, #ffd000 100%) !important;
+      color: #000000 !important;
+      border-bottom: 3.5px solid #000000 !important;
+      font-family: 'Bangers', cursive !important;
+      font-size: 16px !important;
+      letter-spacing: 1.5px !important;
+      text-shadow: 1px 1px 0px #ffffff !important;
+      padding: 9px 6px !important;
+    }
+
+    /* Baris Tabel Comic */
+    html.theme-comic table tr {
+      background: #ffffff !important;
+      border-bottom: 2px solid #000000 !important;
+      transition: background 0.15s ease !important;
+    }
+    html.theme-comic table tr:nth-child(even) {
+      background: #fffde7 !important;
+    }
+    html.theme-comic table tr:hover {
+      background: #e0f7fa !important;
+    }
+
+    /* Kursi Juara 1 (Leader Klasemen) Comic */
+    html.theme-comic table tr.is-leader,
+    html.theme-comic table tr.rank-1-row {
+      background: #fff9c4 !important;
+      border-left: 6px solid #ffe600 !important;
+    }
+
+    /* Baris Kursi Host (Kursi 20) Comic */
+    html.theme-comic table tr.row-host {
+      background: #fdf2e9 !important;
+      border-top: 3px dashed #000000 !important;
+    }
+
+    /* Nomor Kursi / Badge Rank Comic */
+    html.theme-comic .rank-badge {
+      font-family: 'Bangers', cursive !important;
+      font-size: 14px !important;
+      border: 2px solid #000000 !important;
+      box-shadow: 2px 2px 0px #000000 !important;
+      border-radius: 6px !important;
+      background: #f1f5f9 !important;
+      color: #000000 !important;
+    }
+    html.theme-comic .rank-1,
+    html.theme-comic tr.rank-1-row .rank-badge {
+      background: #ffe600 !important;
+      color: #000000 !important;
+      border-color: #000000 !important;
+    }
+    html.theme-comic .rank-2 {
+      background: #00e5ff !important;
+      color: #000000 !important;
+    }
+    html.theme-comic .rank-3 {
+      background: #ff9100 !important;
+      color: #000000 !important;
+    }
+
+    /* Avatar Lingkaran Comic */
+    html.theme-comic .player-avatar-circle {
+      border: 2px solid #000000 !important;
+      box-shadow: 1.5px 1.5px 0px #000000 !important;
+      background: #ffffff !important;
+    }
+
+    /* Nama Pemain & Display Name Comic */
+    html.theme-comic .player-name {
+      color: #000000 !important;
+      font-family: 'Fredoka', sans-serif !important;
+      font-weight: 800 !important;
+      font-size: 13px !important;
+    }
+    html.theme-comic .display-name-val {
+      color: #475569 !important;
+      font-weight: 700 !important;
+    }
+    html.theme-comic .player-empty-label {
+      color: #94a3b8 !important;
+      font-style: italic !important;
+    }
+
+    /* Angka Skor Pemain Comic */
+    html.theme-comic .score-val {
+      color: #d50000 !important;
+      font-family: 'Bangers', cursive !important;
+      font-size: 23px !important;
+      letter-spacing: 1px !important;
+      text-shadow: 1px 1px 0px #ffe600 !important;
+      display: inline-block !important;
+    }
+
+    /* Badge Bayar DONE ✔ Comic */
+    html.theme-comic .badge-pay {
+      border: 2px solid #000000 !important;
+      box-shadow: 2px 2px 0px #000000 !important;
+      font-family: 'Bangers', cursive !important;
+      letter-spacing: 0.5px !important;
+      font-size: 11px !important;
+    }
+    html.theme-comic .badge-pay.paid {
+      background: #00e676 !important;
+      color: #000000 !important;
+      border-color: #000000 !important;
+    }
+    html.theme-comic .badge-pay.unpaid {
+      background: #ffffff !important;
+      color: #94a3b8 !important;
+      border: 2px dashed #000000 !important;
+    }
+
+    /* Quick Point Popover Comic */
+    html.theme-comic .quick-point-popover {
+      background: #ffe600 !important;
+      border: 3.5px solid #000000 !important;
+      box-shadow: 6px 6px 0px #000000 !important;
+      border-radius: 16px !important;
+    }
+    html.theme-comic .qp-title {
+      color: #000000 !important;
+      font-family: 'Bangers', cursive !important;
+      font-size: 16px !important;
+      letter-spacing: 1px !important;
+    }
+    html.theme-comic .qp-btn {
+      background: #ffffff !important;
+      color: #000000 !important;
+      border: 2.5px solid #000000 !important;
+      box-shadow: 3px 3px 0px #000000 !important;
+      font-family: 'Bangers', cursive !important;
+      font-size: 18px !important;
+      border-radius: 8px !important;
+    }
+    html.theme-comic .qp-btn:hover {
+      background: #ff1744 !important;
+      color: #ffffff !important;
+    }
+    html.theme-comic .qp-btn:active {
+      transform: translate(2px, 2px) !important;
+      box-shadow: 1px 1px 0px #000000 !important;
+    }
+
+    /* Center Notif Toast (BOBOHU / Strike) Comic */
+    html.theme-comic .center-notif-popup {
+      background: #ffe600 !important;
+      border: 4.5px solid #000000 !important;
+      box-shadow: 8px 8px 0px #000000 !important;
+      border-radius: 20px !important;
+      color: #000000 !important;
+    }
+    html.theme-comic .center-notif-popup .c-notif-tag {
+      background: #ff1744 !important;
+      color: #ffffff !important;
+      border: 2.5px solid #000000 !important;
+      box-shadow: 2px 2px 0px #000000 !important;
+      font-family: 'Bangers', cursive !important;
+      letter-spacing: 1.5px !important;
+      font-size: 14px !important;
+      border-radius: 6px !important;
+    }
+    html.theme-comic .center-notif-popup .c-notif-name {
+      color: #000000 !important;
+      font-family: 'Bangers', cursive !important;
+      font-size: 28px !important;
+      letter-spacing: 1.5px !important;
+      text-shadow: 2px 2px 0px #ffffff !important;
+    }
+    html.theme-comic .center-notif-popup .c-notif-pts-box {
+      background: #ffffff !important;
+      border: 3px solid #000000 !important;
+      box-shadow: 4px 4px 0px #000000 !important;
+      border-radius: 12px !important;
+    }
+    html.theme-comic .center-notif-popup .c-notif-pts-main {
+      color: #d50000 !important;
+      font-family: 'Bangers', cursive !important;
+      font-size: 26px !important;
+    }
+    html.theme-comic .center-notif-popup .c-notif-pts-total {
+      color: #000000 !important;
+      font-family: 'Fredoka', sans-serif !important;
+      font-weight: 700 !important;
+    }
+
+    /* ==========================================================================
+       PODIUM JUARA: COMIC BOOK COVER EDITION!
+       ========================================================================== */
+    html.theme-comic #winnerOverlay {
+      background: radial-gradient(circle at center, rgba(255, 230, 0, 0.98) 0%, rgba(255, 145, 0, 0.98) 100%) !important;
+    }
+    html.theme-comic #winnerOverlay::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background-image: radial-gradient(#000000 15%, transparent 16%) !important;
+      background-size: 20px 20px !important;
+      opacity: 0.08 !important;
+      pointer-events: none !important;
+    }
+    html.theme-comic .winner-header-title {
+      font-family: 'Bangers', cursive !important;
+      font-size: 42px !important;
+      color: #ffffff !important;
+      text-shadow: 4px 4px 0px #000000, -2px -2px 0px #000000, 2px -2px 0px #000000, -2px 2px 0px #000000 !important;
+      letter-spacing: 2px !important;
+    }
+    html.theme-comic .winner-header-sub {
+      font-family: 'Fredoka', sans-serif !important;
+      font-weight: 900 !important;
+      color: #000000 !important;
+      background: #ffe600 !important;
+      border: 2px solid #000000 !important;
+      box-shadow: 2px 2px 0px #000000 !important;
+      padding: 3px 12px !important;
+      border-radius: 6px !important;
+      display: inline-block !important;
+    }
+    html.theme-comic .winner-card {
+      background: #ffffff !important;
+      border: 4px solid #000000 !important;
+      box-shadow: 8px 8px 0px #000000 !important;
+      border-radius: 18px !important;
+    }
+    html.theme-comic .winner-card-1 {
+      border: 5px solid #000000 !important;
+      box-shadow: 12px 12px 0px #000000 !important;
+      background: #ffffff !important;
+    }
+    html.theme-comic .winner-podium-pillar {
+      border: 3.5px solid #000000 !important;
+      box-shadow: 6px 6px 0px #000000 !important;
+      border-radius: 14px !important;
+    }
+    html.theme-comic .pillar-1 {
+      background: #ffe600 !important;
+    }
+    html.theme-comic .pillar-2 {
+      background: #00e5ff !important;
+    }
+    html.theme-comic .pillar-3 {
+      background: #ff9100 !important;
+    }
+    html.theme-comic .winner-score-badge {
+      font-family: 'Bangers', cursive !important;
+      font-size: 28px !important;
+      color: #d50000 !important;
+      text-shadow: 2px 2px 0px #ffe600 !important;
+      background: #ffffff !important;
+      border: 2.5px solid #000000 !important;
+      box-shadow: 3px 3px 0px #000000 !important;
+      border-radius: 8px !important;
+      padding: 2px 12px !important;
+    }
+    html.theme-comic .winner-player-name {
+      font-family: 'Fredoka', sans-serif !important;
+      font-weight: 900 !important;
+      color: #000000 !important;
+      font-size: 20px !important;
+    }
+    html.theme-comic .winner-btn-close {
+      background: #ff1744 !important;
+      color: #ffffff !important;
+      border: 3px solid #000000 !important;
+      box-shadow: 4px 4px 0px #000000 !important;
+      font-family: 'Bangers', cursive !important;
+      font-size: 16px !important;
+      letter-spacing: 1.5px !important;
+      border-radius: 8px !important;
+    }
+
+    /* Modal Dialogs Comic */
+    html.theme-comic .modal-box-hud {
+      background: #ffffff !important;
+      border: 4px solid #000000 !important;
+      box-shadow: 10px 10px 0px #000000 !important;
+      border-radius: 16px !important;
+      color: #000000 !important;
+    }
+    html.theme-comic .modal-title-hud {
+      color: #000000 !important;
+      font-family: 'Bangers', cursive !important;
+      font-size: 22px !important;
+      letter-spacing: 1px !important;
+    }
+    html.theme-comic .modal-sub-hud {
+      color: #ff1744 !important;
+      font-family: 'Fredoka', sans-serif !important;
+      font-weight: 900 !important;
+    }
+    html.theme-comic .btn-close-hud {
+      background: #ff1744 !important;
+      color: #ffffff !important;
+      border: 2px solid #000000 !important;
+      box-shadow: 2px 2px 0px #000000 !important;
+      border-radius: 50% !important;
+      font-weight: 900 !important;
+    }
+    html.theme-comic .input-hud, 
+    html.theme-comic input[type="text"], 
+    html.theme-comic input[type="password"] {
+      background: #fffde7 !important;
+      color: #000000 !important;
+      border: 2.5px solid #000000 !important;
+      box-shadow: 3px 3px 0px #000000 !important;
+      font-family: 'Fredoka', sans-serif !important;
+      font-weight: 700 !important;
+      border-radius: 8px !important;
+    }
+    html.theme-comic .btn-hud-save {
+      background: #ffe600 !important;
+      color: #000000 !important;
+      border: 3px solid #000000 !important;
+      box-shadow: 4px 4px 0px #000000 !important;
+      font-family: 'Bangers', cursive !important;
+      font-size: 16px !important;
+      letter-spacing: 1px !important;
+      border-radius: 8px !important;
+    }
+    html.theme-comic .btn-hud-cancel {
+      background: #e2e8f0 !important;
+      color: #000000 !important;
+      border: 2.5px solid #000000 !important;
+      box-shadow: 3px 3px 0px #000000 !important;
+      font-family: 'Fredoka', sans-serif !important;
+      font-weight: 800 !important;
+      border-radius: 8px !important;
+    }
+
+    /* Modal Pemilih Tema Styling */
+    .theme-card-option {
+      background: rgba(15, 23, 42, 0.7);
+      border: 2px solid #1e293b;
+      border-radius: 12px;
+      padding: 12px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .theme-card-option:hover {
+      border-color: #38bdf8;
+      transform: translateY(-2px);
+    }
+    .theme-card-option.active {
+      border-color: #38bdf8;
+      background: rgba(14, 165, 233, 0.15);
+      box-shadow: 0 0 15px rgba(56, 189, 248, 0.25);
+    }
+    html.theme-comic .theme-card-option {
+      background: #ffffff !important;
+      border: 3px solid #000000 !important;
+      box-shadow: 4px 4px 0px #000000 !important;
+    }
+    html.theme-comic .theme-card-option.active {
+      border-color: #000000 !important;
+      background: #fff9c4 !important;
+      box-shadow: 6px 6px 0px #000000 !important;
+    }
 </style>
 </head>
 <body class="view-match">
@@ -1727,6 +2235,7 @@
     <div class="top-left">
       <button class="btn-action-soft" onclick="bukaModalPoin()">Point Preset</button>
       <button class="btn-action-soft" onclick="bukaModalNotifSuara()">Settings Audio</button>
+      <button class="btn-action-soft btn-theme-toggle" onclick="bukaModalPilihTema()" title="Ganti Gaya Desain & Tema Papan Skor">🎨 TEMA</button>
       
       <!-- DROPDOWN RESET -->
       <div class="dropdown" id="dropdownReset">
@@ -1973,6 +2482,68 @@
       <input type="text" id="inputPresetPoinCepat" class="hud-input" style="font-family:'JetBrains Mono',monospace;" value="1, 2, 3, 4, 5" onchange="simpanPoinWarna()">
     </div>
     <button class="btn-hud-save" style="margin-top:8px;" onclick="tutupModalPoin()">Selesai</button>
+  </div>
+</div>
+
+<!-- MODAL PILIH TEMA PAPAN SKOR -->
+<div class="modal-overlay" id="modalPilihTema" onclick="tutupModalDiLuar(event)">
+  <div class="modal-box-hud" style="width: 380px; max-width: 95vw;">
+    <div class="modal-header-hud">
+      <div class="modal-title-wrap">
+        <span class="modal-sub-hud">THEME ENGINE</span>
+        <span class="modal-title-hud">PILIH TEMA TAMPILAN</span>
+      </div>
+      <button class="btn-close-hud" onclick="tutupModalPilihTema()">✕</button>
+    </div>
+
+    <div style="font-size: 11px; color: var(--text-sub); margin-bottom: 10px; line-height: 1.4;">
+      Pilih gaya desain visual untuk Papan Skor dan Overlay Live Stream Anda. Perubahan akan langsung disinkronkan secara realtime:
+    </div>
+
+    <div style="display: flex; flex-direction: column; gap: 10px;">
+      <!-- CARD TEMA 1: CYBER HUD (DEFAULT) -->
+      <div class="theme-card-option" id="themeCard_cyber" onclick="pilihTema('cyber')">
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+          <div style="display:flex; align-items:center; gap:8px;">
+            <span style="font-size:20px;">🔷</span>
+            <div>
+              <div style="font-weight:800; font-size:13px; color:#38bdf8;">Cyber HUD (Default)</div>
+              <div style="font-size:10px; opacity:0.8;">Sci-Fi Tournament, Neon Cyan & Sapphire Blue</div>
+            </div>
+          </div>
+          <span class="theme-active-tag" id="tagTema_cyber" style="font-size:10px; font-weight:800; padding:3px 8px; border-radius:6px; background:#0284c7; color:#fff;">AKTIF ✔</span>
+        </div>
+        <div style="display:flex; gap:6px; margin-top:4px;">
+          <span style="width:14px; height:14px; border-radius:50%; background:#070b14; border:1px solid #38bdf8;"></span>
+          <span style="width:14px; height:14px; border-radius:50%; background:#00f0ff;"></span>
+          <span style="width:14px; height:14px; border-radius:50%; background:#1e293b;"></span>
+          <span style="font-size:10px; opacity:0.7; margin-left:auto;">Border Neon • Monospace Font</span>
+        </div>
+      </div>
+
+      <!-- CARD TEMA 2: COMIC POP-ART -->
+      <div class="theme-card-option" id="themeCard_comic" onclick="pilihTema('comic')">
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+          <div style="display:flex; align-items:center; gap:8px;">
+            <span style="font-size:20px;">💥</span>
+            <div>
+              <div style="font-weight:800; font-size:13px; color:#e11d48;">Comic Pop-Art</div>
+              <div style="font-size:10px; opacity:0.8;">Webtoon Manga, Bold Black Inks, Halftone Dots</div>
+            </div>
+          </div>
+          <span class="theme-active-tag" id="tagTema_comic" style="font-size:10px; font-weight:800; padding:3px 8px; border-radius:6px; background:#e2e8f0; color:#475569;">PILIH</span>
+        </div>
+        <div style="display:flex; gap:6px; margin-top:4px;">
+          <span style="width:14px; height:14px; border-radius:50%; background:#ffe600; border:1px solid #000;"></span>
+          <span style="width:14px; height:14px; border-radius:50%; background:#00e5ff; border:1px solid #000;"></span>
+          <span style="width:14px; height:14px; border-radius:50%; background:#ff1744; border:1px solid #000;"></span>
+          <span style="width:14px; height:14px; border-radius:50%; background:#000000;"></span>
+          <span style="font-size:10px; opacity:0.7; margin-left:auto;">Bangers Font • 3px Solid Shadow</span>
+        </div>
+      </div>
+    </div>
+
+    <button class="btn-hud-save" style="margin-top:12px; width:100%;" onclick="tutupModalPilihTema()">Selesai</button>
   </div>
 </div>
 
@@ -2435,6 +3006,7 @@
           }))
         });
         siarkanPesanSync({ type: 'UPDATE_DATA', db: db });
+        siarkanPesanSync({ type: 'CHANGE_THEME', theme: temaAktif });
         try {
           const savedPodium = JSON.parse(localStorage.getItem(PODIUM_STATE_KEY) || 'null');
           if (savedPodium && savedPodium.active) {
@@ -2590,6 +3162,10 @@
     } else if (msg.type === 'NEW_LOG') {
       if (msg.item) {
         tambahLogAktivitas(msg.item.entitas, msg.item.keterangan, msg.item.tipe, msg.item.poinAwal, msg.item.poinAkhir, msg.item.delta, false);
+      }
+    } else if (msg.type === 'CHANGE_THEME') {
+      if (msg.theme) {
+        terapkanTema(msg.theme, false);
       }
     }
   }
@@ -3083,6 +3659,71 @@
     tutupMiniColorPicker();
     urutkanOtomatis();
     tambahLogAktivitas('SKOR', 'Papan skor berhasil diurutkan', 'system');
+  }
+
+  /* SISTEM PEMILIHAN & MANAJEMEN TEMA PAPAN SKOR */
+  const THEME_KEY = 'galatama_active_theme_' + CURRENT_ROOM;
+  let temaAktif = (new URLSearchParams(window.location.search).get('theme') || localStorage.getItem(THEME_KEY) || localStorage.getItem('galatama_active_theme_global') || 'cyber').toLowerCase();
+
+  function terapkanTema(namaTema, siarkan = true) {
+    if (!namaTema) return;
+    temaAktif = namaTema.toLowerCase();
+    try {
+      localStorage.setItem(THEME_KEY, temaAktif);
+      localStorage.setItem('galatama_active_theme_global', temaAktif);
+    } catch (_) {}
+
+    if (temaAktif === 'comic') {
+      document.documentElement.classList.add('theme-comic');
+      document.body.classList.add('theme-comic');
+    } else {
+      document.documentElement.classList.remove('theme-comic');
+      document.body.classList.remove('theme-comic');
+    }
+
+    perbaruiUIModalTema();
+
+    if (siarkan) {
+      siarkanPesanSync({ type: 'CHANGE_THEME', theme: temaAktif });
+      tambahLogAktivitas('TEMA', `Tema visual diubah ke: ${temaAktif.toUpperCase()}`, 'system');
+    }
+  }
+
+  function perbaruiUIModalTema() {
+    const cardCyber = document.getElementById('themeCard_cyber');
+    const cardComic = document.getElementById('themeCard_comic');
+    const tagCyber = document.getElementById('tagTema_cyber');
+    const tagComic = document.getElementById('tagTema_comic');
+
+    if (cardCyber && cardComic) {
+      if (temaAktif === 'comic') {
+        cardCyber.classList.remove('active');
+        cardComic.classList.add('active');
+        if (tagCyber) { tagCyber.innerText = 'PILIH'; tagCyber.style.background = '#334155'; tagCyber.style.color = '#94a3b8'; }
+        if (tagComic) { tagComic.innerText = 'AKTIF ✔'; tagComic.style.background = '#e11d48'; tagComic.style.color = '#ffffff'; }
+      } else {
+        cardCyber.classList.add('active');
+        cardComic.classList.remove('active');
+        if (tagCyber) { tagCyber.innerText = 'AKTIF ✔'; tagCyber.style.background = '#0284c7'; tagCyber.style.color = '#ffffff'; }
+        if (tagComic) { tagComic.innerText = 'PILIH'; tagComic.style.background = '#334155'; tagComic.style.color = '#94a3b8'; }
+      }
+    }
+  }
+
+  function bukaModalPilihTema() {
+    tutupSemuaDropdown();
+    perbaruiUIModalTema();
+    const m = document.getElementById('modalPilihTema');
+    if (m) m.style.display = 'flex';
+  }
+
+  function tutupModalPilihTema() {
+    const m = document.getElementById('modalPilihTema');
+    if (m) m.style.display = 'none';
+  }
+
+  function pilihTema(namaTema) {
+    terapkanTema(namaTema, true);
   }
 
   function updateStatusAudioTierUI() {
@@ -3750,6 +4391,7 @@
   function tutupModalDiLuar(e) {
     if (e.target.id === 'modalPoin') tutupModalPoin();
     if (e.target.id === 'modalInputNama') tutupModalNama();
+    if (e.target.id === 'modalPilihTema') tutupModalPilihTema();
     if (e.target.id === 'modalNotifSuara') tutupModalNotifSuara();
     if (e.target.id === 'modalConfirmResetTabel') tutupModalKonfirmasiResetTabel();
     if (e.target.id === 'modalLinkStream') tutupModalLinkStream();
@@ -4335,6 +4977,7 @@
       if (authModal) authModal.style.display = 'none';
     }
 
+    terapkanTema(temaAktif, false);
     muatStatusFoldLog();
     inisialisasiStrukturTabel();
     renderIsiTabel();
