@@ -2253,7 +2253,34 @@
       }
     } else if (msg.type === 'OPEN_QUICK_POINT') {
       if (currentViewMode === 'tabel') {
-        bukaQuickPointPopover(msg.chair, null, false);
+        const tr = document.getElementById(msg.chair === 19 ? 'row-kursi-19' : 
+ow-kursi-);
+        const scoreCell = tr ? (tr.querySelector('.score-val') || tr) : null;
+        
+        activeQuickPointIndex = msg.chair;
+        renderTombolQuickPoint();
+
+        const namaTampil = msg.nama || Kursi ;
+        const poinTampil = (msg.poin !== undefined) ? msg.poin : 0;
+        document.getElementById('qpPlayerTitle').innerText = ${namaTampil} ( Pts);
+        document.getElementById('qpDirectInput').value = poinTampil;
+
+        const pop = document.getElementById('quickPointPopover');
+        pop.classList.add('show');
+
+        if (scoreCell) {
+          const rect = scoreCell.getBoundingClientRect();
+          const popWidth = 235;
+          const popHeight = pop.offsetHeight || 150;
+
+          let leftPos = rect.left - popWidth - 10;
+          if (leftPos < 10) leftPos = Math.min(window.innerWidth - popWidth - 10, rect.right + 10);
+          let topPos = rect.top - (popHeight / 2) + (rect.height / 2);
+          topPos = Math.max(10, Math.min(window.innerHeight - popHeight - 10, topPos));
+
+          pop.style.left = ${leftPos}px;
+          pop.style.top = ${topPos}px;
+        }
       }
     } else if (msg.type === 'CLOSE_QUICK_POINT') {
       if (currentViewMode === 'tabel') {
