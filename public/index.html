@@ -1,0 +1,2974 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Scoreboard Cyber HUD Edition</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@600;700;800;900&family=Space+Grotesk:wght@600;700&family=JetBrains+Mono:wght@700;800;900&display=swap" rel="stylesheet">
+  
+  <script>
+    // Deteksi awal mode overlay instan agar CSS transparan aktif sebelum render halaman (anti-flicker)
+    (function() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const raw = (urlParams.get('view') || urlParams.get('overlay') || 'admin').toLowerCase();
+      if (['tabel', 'table', 'scoreboard', 'board'].includes(raw)) {
+        document.documentElement.classList.add('mode-tabel');
+      } else if (['podium', 'winner', 'champions', 'juara'].includes(raw)) {
+        document.documentElement.classList.add('mode-podium');
+      } else if (['notif', 'toast', 'alert'].includes(raw)) {
+        document.documentElement.classList.add('mode-notif');
+      } else {
+        document.documentElement.classList.add('mode-admin');
+      }
+    })();
+  </script>
+
+  <!-- THREE.JS & OBJLOADER UNTUK RENDER AVATAR 3D RESMI ROBLOX -->
+  <script src="three.min.js"></script>
+  <script src="OBJLoader.js"></script>
+  <script>
+    if (typeof THREE === 'undefined') {
+      document.write('<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"><\\/script>');
+      document.write('<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/OBJLoader.js"><\\/script>');
+    }
+  </script>
+  <style>
+    :root {
+      --bg: #070b14;
+      --card-bg: #0d1424;
+      --border-color: #1e293b;
+      --primary: #38bdf8;
+      --primary-hover: #0284c7;
+      --text-main: #f8fafc;
+      --text-sub: #94a3b8;
+      --color-point: #f8fafc;
+      --host-bg: rgba(168, 85, 247, 0.12);
+      --host-text: #c084fc;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Space Grotesk', sans-serif; }
+    html, body {
+      background-color: var(--bg);
+      background-image: radial-gradient(rgba(56, 189, 248, 0.08) 1px, transparent 1px);
+      background-size: 20px 20px;
+      color: #f8fafc; width: 100%; min-height: 100%; overflow-x: hidden;
+    }
+    body { padding: 8px; display: flex; justify-content: center; align-items: flex-start; }
+    body.resizing-active { user-select: none !important; cursor: col-resize !important; }
+
+    .container {
+      width: 100%; max-width: 1260px; background: var(--card-bg);
+      border-radius: 14px; padding: 12px 14px; border: 1.5px solid var(--border-color);
+      box-shadow: 0 16px 35px -5px rgba(0, 0, 0, 0.65);
+      position: relative; margin-bottom: 10px; overflow: visible;
+    }
+
+    /* BAR ATAS */
+    .top-bar {
+      display: flex; justify-content: space-between; align-items: center;
+      margin-bottom: 10px; padding-bottom: 8px; border-bottom: 1.5px solid #1e293b;
+      gap: 8px; flex-wrap: wrap; position: relative; z-index: 20;
+    }
+    .top-left, .top-right { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+
+    .btn-action-soft {
+      background: #131d31; color: #cbd5e1; border: 1px solid #28354d; padding: 6px 12px;
+      border-radius: 6px; font-size: 11.5px; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 4px;
+      transition: all 0.14s ease;
+    }
+    .btn-action-soft:hover { background: #1e2b45; border-color: #38bdf8; color: #ffffff; }
+
+    .btn-sort-manual {
+      display: inline-flex; align-items: center; gap: 4px;
+      background: #1e1b4b; color: #a5b4fc; border: 1px solid #4338ca;
+      padding: 6px 13px; border-radius: 6px; font-size: 11.5px; font-weight: 800; cursor: pointer;
+      transition: all 0.14s ease;
+    }
+    .btn-sort-manual:hover { background: #312e81; color: #ffffff; }
+
+    .btn-winner-trigger {
+      display: inline-flex; align-items: center; gap: 4px;
+      background: linear-gradient(135deg, #b45309 0%, #d97706 100%);
+      color: #ffffff; border: 1px solid #f59e0b;
+      padding: 6px 13px; border-radius: 6px; font-size: 11.5px; font-weight: 800; cursor: pointer;
+      box-shadow: 0 2px 8px rgba(217, 119, 6, 0.35); transition: all 0.14s ease;
+    }
+    .btn-winner-trigger:hover { filter: brightness(1.1); transform: translateY(-1px); }
+
+    .btn-notif-trigger {
+      background: #064e3b; color: #6ee7b7; border: 1px solid #059669; padding: 6px 12px;
+      border-radius: 6px; font-size: 11.5px; font-weight: 800; cursor: pointer; display: flex; align-items: center; gap: 4px;
+    }
+    .btn-notif-trigger:hover { background: #047857; color: #ffffff; }
+
+    /* DROPDOWN RESET & SESI */
+    .dropdown { position: relative; display: inline-block; }
+    .dropdown-content {
+      display: none; position: absolute; top: 100%; left: 0; margin-top: 4px;
+      background-color: #0f172a; width: auto; min-width: 120px; box-shadow: 0 10px 25px rgba(0,0,0,0.55);
+      border-radius: 8px; border: 1px solid #334155; z-index: 1000; overflow: hidden;
+    }
+    /* Batas maksimal tinggi list sesi dengan scrollbar */
+    .dropdown-content.scrollable-list {
+      max-height: 220px;
+      overflow-y: auto;
+      scrollbar-width: thin;
+      scrollbar-color: #334155 #0f172a;
+    }
+    .dropdown-content .dropdown-item-custom {
+      width: 100%; text-align: left; padding: 8px 12px; font-size: 12px; font-weight: 700;
+      border: none; background: transparent; cursor: pointer; color: #e2e8f0; border-bottom: 1px solid #1e293b;
+      display: flex; justify-content: flex-start; align-items: center; gap: 14px; white-space: nowrap;
+    }
+    .dropdown-content .dropdown-item-custom:hover { background: #1e293b; color: var(--primary); }
+    
+    .dropdown-content .btn-tambah-sesi {
+      width: 100%; text-align: left; padding: 9px 12px; font-size: 12px; font-weight: 800;
+      border: none; background: #131d31; color: #38bdf8; cursor: pointer; border-top: 1px solid #334155;
+      display: flex; justify-content: flex-start; align-items: center; white-space: nowrap;
+    }
+    .dropdown-content .btn-tambah-sesi:hover { background: #1e2b45; color: #ffffff; }
+    
+    .dropdown.show .dropdown-content { display: block; }
+
+    /* POPUP NOTIFIKASI CYBER HUD */
+    .center-notif-popup {
+      position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%) scale(0.9);
+      width: 270px; min-height: 180px; background: rgba(13, 20, 36, 0.96); backdrop-filter: blur(16px);
+      border-radius: 16px; border: 1.5px solid rgba(56, 189, 248, 0.65);
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.85), 0 0 35px rgba(56, 189, 248, 0.25); z-index: 25000;
+      display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px;
+      padding: 16px; text-align: center; opacity: 0; pointer-events: none;
+      transition: opacity 0.2s ease, transform 0.22s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.2s, box-shadow 0.2s;
+    }
+    .center-notif-popup.show { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+    .c-notif-tag {
+      font-family: 'Outfit', sans-serif; font-size: 10px; font-weight: 800; color: #38bdf8;
+      background: rgba(56, 189, 248, 0.12); padding: 3px 10px; border-radius: 99px;
+      border: 1px solid rgba(56, 189, 248, 0.35); letter-spacing: 1px; text-transform: uppercase;
+      transition: all 0.2s ease;
+    }
+    .c-notif-name {
+      font-family: 'Outfit', sans-serif; font-size: 22px; font-weight: 800; color: #ffffff;
+      line-height: 1.15; max-width: 100%; overflow: hidden; text-overflow: ellipsis;
+    }
+    .c-notif-pts-box {
+      width: 100%; background: rgba(56, 189, 248, 0.1); border: 1px solid rgba(56, 189, 248, 0.4);
+      border-radius: 10px; padding: 6px 10px; margin-top: 4px;
+      transition: all 0.2s ease;
+    }
+    .c-notif-pts-main { font-family: 'JetBrains Mono', monospace; font-size: 20px; font-weight: 900; color: #38bdf8; transition: color 0.2s ease; }
+    .c-notif-pts-total { font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 700; color: #bae6fd; margin-top: 2px; transition: color 0.2s ease; }
+
+    /* VARIAN WARNA POPUP NOTIFIKASI */
+    .center-notif-popup.theme-purple {
+      border-color: rgba(168, 85, 247, 0.85);
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.85), 0 0 35px rgba(168, 85, 247, 0.35);
+    }
+    .center-notif-popup.theme-purple .c-notif-tag {
+      color: #d8b4fe; background: rgba(168, 85, 247, 0.2); border-color: rgba(168, 85, 247, 0.5);
+    }
+    .center-notif-popup.theme-purple .c-notif-pts-box {
+      background: rgba(168, 85, 247, 0.15); border-color: rgba(168, 85, 247, 0.5);
+    }
+    .center-notif-popup.theme-purple .c-notif-pts-main { color: #d8b4fe; }
+    .center-notif-popup.theme-purple .c-notif-pts-total { color: #f3e8ff; }
+
+    .center-notif-popup.theme-pink {
+      border-color: rgba(244, 114, 182, 0.85);
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.85), 0 0 35px rgba(244, 114, 182, 0.35);
+    }
+    .center-notif-popup.theme-pink .c-notif-tag {
+      color: #f472b6; background: rgba(244, 114, 182, 0.2); border-color: rgba(244, 114, 182, 0.5);
+    }
+    .center-notif-popup.theme-pink .c-notif-pts-box {
+      background: rgba(244, 114, 182, 0.15); border-color: rgba(244, 114, 182, 0.5);
+    }
+    .center-notif-popup.theme-pink .c-notif-pts-main { color: #f472b6; }
+    .center-notif-popup.theme-pink .c-notif-pts-total { color: #fce7f3; }
+
+    .center-notif-popup.theme-red {
+      border-color: rgba(244, 63, 94, 0.85);
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.85), 0 0 35px rgba(244, 63, 94, 0.35);
+    }
+    .center-notif-popup.theme-red .c-notif-tag {
+      color: #fb7185; background: rgba(244, 63, 94, 0.2); border-color: rgba(244, 63, 94, 0.5);
+    }
+    .center-notif-popup.theme-red .c-notif-pts-box {
+      background: rgba(244, 63, 94, 0.15); border-color: rgba(244, 63, 94, 0.5);
+    }
+    .center-notif-popup.theme-red .c-notif-pts-main { color: #fb7185; }
+    .center-notif-popup.theme-red .c-notif-pts-total { color: #ffe4e6; }
+
+    .center-notif-popup.theme-yellow {
+      border-color: rgba(250, 204, 21, 0.85);
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.85), 0 0 35px rgba(250, 204, 21, 0.35);
+    }
+    .center-notif-popup.theme-yellow .c-notif-tag {
+      color: #fef08a; background: rgba(250, 204, 21, 0.2); border-color: rgba(250, 204, 21, 0.5);
+    }
+    .center-notif-popup.theme-yellow .c-notif-pts-box {
+      background: rgba(250, 204, 21, 0.15); border-color: rgba(250, 204, 21, 0.5);
+    }
+    .center-notif-popup.theme-yellow .c-notif-pts-main { color: #facc15; }
+    .center-notif-popup.theme-yellow .c-notif-pts-total { color: #fef9c3; }
+
+    /* POPOVER POIN CEPAT */
+    .quick-point-popover {
+      display: none; position: fixed; z-index: 35000; background: #0d1527; color: #f8fafc;
+      width: 235px; padding: 12px; border-radius: 12px; border: 1.5px solid #38bdf8;
+      box-shadow: 0 18px 40px rgba(0, 0, 0, 0.75); flex-direction: column; gap: 8px;
+    }
+    .quick-point-popover.show { display: flex; }
+    .qp-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #1e293b; padding-bottom: 6px; }
+    .qp-title { font-size: 12px; font-weight: 800; color: #38bdf8; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .qp-close { background: none; border: none; color: #94a3b8; font-size: 16px; font-weight: 800; cursor: pointer; }
+    .qp-close:hover { color: #ef4444; }
+    .qp-grid-plus { display: grid; grid-template-columns: repeat(5, 1fr); gap: 4px; }
+    .btn-qp {
+      border: 1px solid #1e293b; background: #141f36; color: #38bdf8; font-family: 'JetBrains Mono', monospace;
+      font-size: 12.5px; font-weight: 900; padding: 6px 0; border-radius: 5px; cursor: pointer; transition: all 0.12s ease;
+    }
+    .btn-qp:hover { background: #0284c7; color: #ffffff; border-color: #38bdf8; }
+    .qp-footer { display: flex; align-items: center; gap: 4px; margin-top: 2px; }
+    .qp-custom-input {
+      flex: 1; width: 100%; background: #141f36; border: 1px solid #334155; color: #ffffff;
+      font-family: 'JetBrains Mono', monospace; font-size: 12px; font-weight: 900; padding: 4px 6px; border-radius: 5px; outline: none; text-align: center;
+    }
+    .btn-qp-set { background: #1e293b; color: #e2e8f0; border: 1px solid #334155; font-size: 10.5px; font-weight: 800; padding: 5px 8px; border-radius: 5px; cursor: pointer; }
+    .btn-qp-set:hover { background: #0284c7; color: #fff; }
+
+    /* TABEL GRID */
+    .grid-tables { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; width: 100%; position: relative; z-index: 10; }
+    .table-container {
+      background: #0a101f; border-radius: 10px; border: 1.5px solid #1e293b;
+      overflow: hidden; box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4); scrollbar-width: none;
+    }
+    .table-container::-webkit-scrollbar { display: none; width: 0; height: 0; }
+    table { border-collapse: separate; border-spacing: 0; width: 100%; table-layout: fixed; }
+
+    th {
+      padding: 9px 6px; font-family: 'Outfit', sans-serif; font-size: 12px; font-weight: 800; color: #e2e8f0;
+      text-align: center; letter-spacing: 0.8px; position: relative; user-select: none;
+      background: #111a2e; border-bottom: 2px solid #1e293b; border-right: 1px solid rgba(51, 65, 85, 0.4);
+    }
+    th:last-child { border-right: none; }
+    th .col-resizer { position: absolute; right: -4px; top: 0; bottom: 0; width: 8px; cursor: col-resize; z-index: 50; }
+    th .col-resizer:hover { background: #38bdf8; }
+    th.th-no { border-right: 1.5px solid #1e293b !important; }
+
+    tbody tr { position: relative; border-bottom: 1px solid #141e33; }
+    tbody tr.moving-row { transition: transform 0.55s cubic-bezier(0.2, 1, 0.25, 1) !important; z-index: 10; }
+    td {
+      padding: 4px 6px; font-size: 14px; border-bottom: 1px solid #141e33; border-right: 1px solid #141e33; height: 48px; text-align: center;
+      background: #0a101f; overflow: hidden; white-space: nowrap; text-overflow: ellipsis;
+    }
+    td:last-child { border-right: none; }
+    tbody tr:nth-child(even) td { background: #0e1629; }
+
+    .td-no { background: #111a2e !important; font-weight: 800; color: #94a3b8; font-size: 13.5px; border-right: 1.5px solid #1e293b !important; }
+    
+    /* BADGE STATUS */
+    .pay-status-tag {
+      display: inline-flex; align-items: center; justify-content: center;
+      font-size: 10px; font-weight: 900; padding: 2.5px 7px; border-radius: 5px;
+      margin-left: 4px; flex-shrink: 0; cursor: pointer; font-family: 'JetBrains Mono', monospace;
+      user-select: none; letter-spacing: 0.4px; transition: transform 0.1s ease;
+    }
+    .pay-status-tag:hover { transform: scale(1.05); }
+    .pay-status-tag.done {
+      background: #059669; color: #ffffff; border: 1.5px solid #10b981;
+      box-shadow: 0 0 8px rgba(16, 185, 129, 0.45);
+    }
+    .pay-status-tag.ready {
+      background: #1e293b; color: #94a3b8; border: 1.5px solid #475569;
+    }
+
+    /* IKON PALET CAT */
+    .btn-color-palette {
+      font-size: 13px; cursor: pointer; margin-left: 5px;
+      user-select: none; filter: grayscale(0.2); transition: transform 0.12s ease;
+      display: inline-flex; align-items: center;
+    }
+    .btn-color-palette:hover { transform: scale(1.25); filter: grayscale(0); }
+
+    /* MINI PALET WARNA */
+    .color-picker-mini {
+      display: none; position: absolute; z-index: 36000; background: #0f172a;
+      border: 1px solid #334155; border-radius: 8px; padding: 5px 6px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.65); gap: 5px; align-items: center;
+    }
+    .color-picker-mini.show { display: flex; }
+    .cp-dot {
+      width: 16px; height: 16px; border-radius: 50%; cursor: pointer; border: 1px solid transparent;
+      transition: transform 0.1s;
+    }
+    .cp-dot:hover { transform: scale(1.2); border-color: #fff; }
+    .cp-dot.c-blue { background: #38bdf8; }
+    .cp-dot.c-pink { background: #f472b6; }
+    .cp-dot.c-purple { background: #a855f7; }
+    .cp-dot.c-red { background: #fb7185; }
+    .cp-dot.c-yellow { background: #facc15; }
+    .cp-dot.c-reset { background: #475569; position: relative; }
+    .cp-dot.c-reset::after { content: "×"; color: #fff; font-size: 11px; position: absolute; top: -1px; left: 4px; font-weight: 900; }
+
+    .cell-click-popup { cursor: pointer; border-radius: 5px; padding: 2px 4px; text-align: left; }
+    .cell-click-popup:hover { background: #141f36; }
+    
+    .name-tiktok { font-size: 14px; font-weight: 700; color: #f8fafc; word-break: break-all; line-height: 1.15; overflow: hidden; text-overflow: ellipsis; }
+    .name-roblox-display { font-size: 13px; font-weight: 700; color: #cbd5e1; word-break: break-all; line-height: 1.15; overflow: hidden; text-overflow: ellipsis; }
+    .name-empty { font-size: 12.5px; font-weight: 600; color: #475569; font-style: italic; }
+
+    /* BARIS HOST */
+    tr.host-row td { background: var(--host-bg); color: var(--host-text); border-bottom: 2px solid #9333ea; }
+
+    /* LATAR WARNA KUSTOM BARIS */
+    tr.tag-blue td, tr.tag-blue.host-row td { 
+      background: #bfdbfe !important; color: #0f172a !important; 
+      border-bottom: 1px solid #93c5fd !important; border-right-color: #93c5fd !important;
+    }
+    tr.tag-blue .name-tiktok { color: #0f172a !important; font-weight: 800; }
+    tr.tag-blue .name-roblox-display { color: #1e40af !important; font-weight: 700; }
+    tr.tag-blue .td-no { background: #93c5fd !important; color: #1e3a8a !important; }
+    tr.tag-blue .score-val { background: #ffffff !important; color: #0f172a !important; border-color: #93c5fd !important; }
+    tr.tag-blue .pay-status-tag.ready { background: #ffffff; color: #475569; border-color: #cbd5e1; }
+
+    tr.tag-pink td, tr.tag-pink.host-row td { 
+      background: #fbcfe8 !important; color: #0f172a !important; 
+      border-bottom: 1px solid #f472b6 !important; border-right-color: #f472b6 !important;
+    }
+    tr.tag-pink .name-tiktok { color: #831843 !important; font-weight: 800; }
+    tr.tag-pink .name-roblox-display { color: #9d174d !important; font-weight: 700; }
+    tr.tag-pink .td-no { background: #f472b6 !important; color: #ffffff !important; }
+    tr.tag-pink .score-val { background: #ffffff !important; color: #831843 !important; border-color: #f472b6 !important; }
+    tr.tag-pink .pay-status-tag.ready { background: #ffffff; color: #831843; border-color: #fbcfe8; }
+
+    tr.tag-purple td, tr.tag-purple.host-row td { 
+      background: #4c1d95 !important; color: #f5f3ff !important; 
+      border-bottom: 1px solid #7c3aed !important; border-right-color: #7c3aed !important;
+    }
+    tr.tag-purple .name-tiktok { color: #ffffff !important; font-weight: 800; }
+    tr.tag-purple .name-roblox-display { color: #ddd6fe !important; font-weight: 700; }
+    tr.tag-purple .td-no { background: #6d28d9 !important; color: #f5f3ff !important; }
+    tr.tag-purple .score-val { background: #1e1b4b !important; color: #e9d5ff !important; border-color: #a855f7 !important; }
+    tr.tag-purple .pay-status-tag.ready { background: #3b0764; color: #e9d5ff; border-color: #7c3aed; }
+
+    tr.tag-red td, tr.tag-red.host-row td { 
+      background: #e11d48 !important; color: #ffffff !important; 
+      border-bottom: 1px solid #be123c !important; border-right-color: #be123c !important;
+    }
+    tr.tag-red .name-tiktok { color: #ffffff !important; font-weight: 900; }
+    tr.tag-red .name-roblox-display { color: #ffe4e6 !important; font-weight: 700; }
+    tr.tag-red .td-no { background: #be123c !important; color: #ffffff !important; }
+    tr.tag-red .score-val { background: #ffffff !important; color: #be123c !important; border-color: #ffffff !important; }
+    tr.tag-red .pay-status-tag.ready { background: #9f1239; color: #ffe4e6; border-color: #be123c; }
+
+    tr.tag-yellow td, tr.tag-yellow.host-row td { 
+      background: #fef08a !important; color: #713f12 !important; 
+      border-bottom: 1px solid #facc15 !important; border-right-color: #facc15 !important;
+    }
+    tr.tag-yellow .name-tiktok { color: #713f12 !important; font-weight: 900; }
+    tr.tag-yellow .name-roblox-display { color: #854d0e !important; font-weight: 800; }
+    tr.tag-yellow .td-no { background: #facc15 !important; color: #713f12 !important; }
+    tr.tag-yellow .score-val { background: #ffffff !important; color: #713f12 !important; border-color: #facc15 !important; }
+    tr.tag-yellow .pay-status-tag.ready { background: #ffffff; color: #854d0e; border-color: #fef08a; }
+
+    .avatar-mini { width: 30px; height: 30px; border-radius: 50%; object-fit: cover; background: #141f36; border: 1px solid #334155; flex-shrink: 0; }
+    .avatar-placeholder { width: 30px; height: 30px; border-radius: 50%; background: #141f36; border: 1px solid #334155; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 800; color: #94a3b8; }
+
+    .score-box { display: flex; justify-content: center; align-items: center; white-space: nowrap; }
+    .score-val { 
+      min-width: 52px; font-size: 18px; font-weight: 900; color: var(--color-point); 
+      text-align: center; border-radius: 6px; outline: none; cursor: pointer; 
+      padding: 3px 8px; background: #141f36; border: 1px solid #28354d; 
+      font-family: 'JetBrains Mono', monospace; line-height: 1; flex-shrink: 0; user-select: none;
+    }
+    .score-val:hover:not(.score-standby) { background: #1e2b45; border-color: #38bdf8; transform: scale(1.05); }
+    .score-standby { color: #475569 !important; background: transparent !important; border-color: transparent !important; cursor: pointer !important; font-size: 15px; }
+
+    /* LOG PANEL */
+    .log-panel { margin-top: 10px; background: #0a101f; border-radius: 10px; border: 1px solid #1e293b; padding: 8px 12px; position: relative; z-index: 10; }
+    .log-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #141e33; padding-bottom: 6px; }
+    .log-title { font-family: 'Outfit', sans-serif; font-size: 12px; font-weight: 800; color: #38bdf8; text-transform: uppercase; cursor: pointer; user-select: none; }
+    .btn-clear-log { background: transparent; color: #94a3b8; border: 1px solid #334155; padding: 2px 8px; border-radius: 4px; font-size: 10px; cursor: pointer; }
+    .log-list { max-height: 110px; overflow-y: auto; display: flex; flex-direction: column; gap: 4px; font-family: 'JetBrains Mono', monospace; font-size: 11px; margin-top: 6px; }
+    .log-item { display: flex; justify-content: space-between; align-items: center; padding: 3px 6px; background: #0e1629; border-radius: 5px; border-left: 3px solid #38bdf8; color: #e2e8f0; }
+
+    /* MODAL TEMA CYBER HUD */
+    .modal-overlay { 
+      display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
+      background: rgba(3, 7, 18, 0.88); backdrop-filter: blur(8px); 
+      z-index: 9999; justify-content: center; align-items: center; padding: 12px; 
+    }
+    .modal-box-hud {
+      background: linear-gradient(180deg, #0d1527 0%, #080d19 100%);
+      width: 360px; max-width: 95vw; border-radius: 16px;
+      border: 1px solid rgba(56, 189, 248, 0.35);
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.85), 0 0 25px rgba(56, 189, 248, 0.15);
+      padding: 16px 18px; display: flex; flex-direction: column; gap: 12px; color: #f8fafc;
+      position: relative; overflow: hidden;
+    }
+    .modal-box-hud::before {
+      content: ""; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+      background: linear-gradient(90deg, #0284c7, #38bdf8, #818cf8);
+    }
+    .modal-header-hud {
+      display: flex; justify-content: space-between; align-items: center;
+      border-bottom: 1px solid rgba(30, 41, 59, 0.8); padding-bottom: 8px;
+    }
+    .modal-title-wrap { display: flex; flex-direction: column; }
+    .modal-sub-hud { font-family: 'JetBrains Mono', monospace; font-size: 9px; font-weight: 800; letter-spacing: 1.5px; color: #38bdf8; text-transform: uppercase; }
+    .modal-title-hud { font-family: 'Outfit', sans-serif; font-size: 17px; font-weight: 900; color: #ffffff; letter-spacing: 0.5px; }
+    
+    .btn-close-hud {
+      background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.3);
+      width: 28px; height: 28px; border-radius: 8px; font-size: 15px; font-weight: 900;
+      color: #f87171; cursor: pointer; display: flex; align-items: center; justify-content: center;
+      transition: all 0.12s ease;
+    }
+    .btn-close-hud:hover { background: #ef4444; color: #ffffff; transform: rotate(90deg); }
+
+    /* KARTU PREVIEW PROFILE HOLO */
+    .hud-player-card {
+      display: flex; align-items: center; gap: 12px;
+      background: rgba(15, 23, 42, 0.7); border: 1px solid rgba(56, 189, 248, 0.2);
+      padding: 10px 12px; border-radius: 12px; position: relative;
+    }
+    .hud-avatar-box {
+      width: 48px; height: 48px; border-radius: 50%;
+      background: #020617; border: 2px solid #38bdf8;
+      box-shadow: 0 0 12px rgba(56, 189, 248, 0.3);
+      display: flex; align-items: center; justify-content: center;
+      overflow: hidden; flex-shrink: 0;
+    }
+    .hud-avatar-box img { width: 100%; height: 100%; object-fit: cover; }
+    .hud-avatar-empty { font-size: 10px; font-weight: 800; color: #64748b; font-family: 'JetBrains Mono', monospace; }
+
+    .hud-meta-info { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px; }
+    .hud-nick-txt { font-family: 'Outfit', sans-serif; font-size: 14.5px; font-weight: 800; color: #f8fafc; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .hud-user-txt { font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 700; color: #38bdf8; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+    /* FIELD FORM HUD */
+    .hud-field-group { display: flex; flex-direction: column; gap: 4px; }
+    .hud-label {
+      font-size: 10.5px; font-weight: 800; color: #94a3b8;
+      letter-spacing: 0.5px; text-transform: uppercase; font-family: 'Outfit', sans-serif;
+    }
+    .hud-input-row { display: flex; gap: 6px; }
+    .hud-input {
+      width: 100%; padding: 8px 10px; border-radius: 7px;
+      border: 1px solid #1e293b; background: rgba(10, 16, 31, 0.95);
+      font-size: 13.5px; font-weight: 700; color: #f8fafc; outline: none;
+      transition: all 0.14s ease;
+    }
+    .hud-input:focus { border-color: #38bdf8; box-shadow: 0 0 10px rgba(56, 189, 248, 0.25); background: #0c1527; }
+    .hud-btn-search {
+      background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
+      color: #ffffff; border: 1px solid #38bdf8; padding: 0 14px;
+      border-radius: 7px; font-weight: 800; font-size: 11.5px;
+      cursor: pointer; transition: all 0.14s ease; white-space: nowrap;
+    }
+    .hud-btn-search:hover { filter: brightness(1.15); transform: translateY(-1px); }
+
+    /* ACTION BUTTONS */
+    .hud-action-row { display: flex; gap: 8px; margin-top: 6px; }
+    .btn-hud-reset {
+      flex: 1; background: rgba(239, 68, 68, 0.12); color: #f87171;
+      border: 1px solid rgba(239, 68, 68, 0.35); padding: 9px;
+      border-radius: 8px; font-weight: 800; font-size: 12px; cursor: pointer;
+      transition: all 0.14s ease;
+    }
+    .btn-hud-reset:hover { background: #ef4444; color: #ffffff; border-color: #ef4444; }
+    .btn-hud-save {
+      flex: 2; background: linear-gradient(135deg, #0284c7 0%, #0ea5e9 100%);
+      color: #070b14; border: 1px solid #38bdf8; padding: 9px;
+      border-radius: 8px; font-weight: 900; font-size: 12.5px; cursor: pointer;
+      box-shadow: 0 4px 14px rgba(14, 165, 233, 0.3); transition: all 0.14s ease;
+    }
+    .btn-hud-save:hover { filter: brightness(1.15); transform: translateY(-1px); }
+
+    /* ========================================================
+       PRESTIGIOUS AWARDS CEREMONY PODIUM (HALL OF CHAMPIONS)
+       ======================================================== */
+    .winner-overlay {
+      position: fixed; inset: 0;
+      /* Tema Mewah & Lebih Terang: Royal Sapphire Blue dengan Golden Overhead Spotlight */
+      background:
+        radial-gradient(circle at 50% -12%, rgba(255, 248, 200, 0.55) 0%, rgba(250, 204, 21, 0.28) 22%, rgba(59, 130, 246, 0.35) 45%, transparent 70%),
+        radial-gradient(circle at 20% 80%, rgba(37, 99, 235, 0.25) 0%, transparent 50%),
+        radial-gradient(circle at 80% 80%, rgba(217, 119, 6, 0.2) 0%, transparent 50%),
+        linear-gradient(180deg, #142a53 0%, #102142 40%, #0a162b 100%);
+      backdrop-filter: blur(28px); -webkit-backdrop-filter: blur(28px);
+      display: none; flex-direction: column; justify-content: center; align-items: center;
+      z-index: 99999; padding: 20px 24px; overflow-y: auto;
+    }
+    .winner-overlay.active { display: flex; animation: fadeInModal 0.35s cubic-bezier(0.16, 1, 0.3, 1); }
+
+    /* Luminous God Rays / Light Beams Ambient */
+    .winner-light-beams {
+      position: absolute; inset: 0; pointer-events: none; z-index: 1;
+      background: radial-gradient(ellipse at 50% 0%, rgba(254, 240, 138, 0.2) 0%, rgba(234, 179, 8, 0.08) 35%, transparent 70%);
+      opacity: 0.9;
+    }
+
+    #fireworksCanvas {
+      position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 2;
+    }
+
+    .btn-close-winner {
+      position: absolute; top: 22px; right: 26px;
+      background: rgba(255, 255, 255, 0.15);
+      border: 1.5px solid rgba(255, 255, 255, 0.35);
+      color: #ffffff; width: 44px; height: 44px; border-radius: 50%;
+      font-size: 20px; font-weight: 800; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1); z-index: 30;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+    }
+    .btn-close-winner:hover {
+      background: #ef4444; border-color: #fca5a5;
+      transform: scale(1.1) rotate(90deg);
+      box-shadow: 0 0 20px rgba(239, 68, 68, 0.7);
+    }
+
+    /* Prestigious Ceremony Header */
+    .winner-header {
+      text-align: center; margin-bottom: 22px; position: relative; z-index: 10;
+    }
+    .winner-trophy-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: linear-gradient(135deg, rgba(250, 204, 21, 0.25) 0%, rgba(202, 138, 4, 0.15) 100%);
+      border: 1px solid rgba(250, 204, 21, 0.55);
+      padding: 6px 20px; border-radius: 999px;
+      font-size: 13px; font-weight: 900; letter-spacing: 3px; color: #fef08a;
+      text-transform: uppercase; margin-bottom: 8px;
+      box-shadow: 0 0 20px rgba(250, 204, 21, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+      backdrop-filter: blur(10px);
+    }
+    .winner-title {
+      font-family: 'Outfit', 'Plus Jakarta Sans', sans-serif;
+      font-size: 46px; font-weight: 950; letter-spacing: 2px; line-height: 1.15;
+      background: linear-gradient(135deg, #ffffff 0%, #fef08a 25%, #facc15 50%, #fbbf24 75%, #f59e0b 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      filter: drop-shadow(0 4px 18px rgba(250, 204, 21, 0.55));
+      text-transform: uppercase; margin: 0;
+    }
+    .winner-title-divider {
+      display: flex; align-items: center; justify-content: center; gap: 12px;
+      margin-top: 8px;
+    }
+    .winner-title-divider::before,
+    .winner-title-divider::after {
+      content: ''; width: 80px; height: 2px;
+      background: linear-gradient(90deg, transparent, rgba(250, 204, 21, 0.8), transparent);
+    }
+    .winner-title-divider span {
+      color: #facc15; font-size: 13px; letter-spacing: 4px;
+      text-shadow: 0 0 12px rgba(250, 204, 21, 0.9);
+    }
+
+    /* Podium Stage Container */
+    .podium-container {
+      display: flex; justify-content: center; align-items: flex-end; gap: 26px;
+      max-width: 1100px; width: 100%; position: relative; z-index: 15;
+      margin-top: 8px; padding-bottom: 8px;
+    }
+
+    /* Podium Column / Card Structure */
+    .podium-card {
+      flex: 1; max-width: 330px; position: relative;
+      display: flex; flex-direction: column; align-items: center;
+      transition: transform 0.3s ease;
+    }
+
+    /* Staggered Podium Heights & Orders */
+    .podium-card.rank-1 {
+      order: 2; transform: translateY(-16px); max-width: 370px;
+    }
+    .podium-card.rank-2 {
+      order: 1; transform: translateY(0);
+    }
+    .podium-card.rank-3 {
+      order: 3; transform: translateY(0);
+    }
+
+    /* Entrance Animations */
+    .winner-overlay.active .podium-card.rank-1 {
+      animation: champGrandEntrance 0.85s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+    .winner-overlay.active .podium-card.rank-2 {
+      animation: rank2GrandEntrance 0.85s cubic-bezier(0.16, 1, 0.3, 1) 0.15s forwards;
+    }
+    .winner-overlay.active .podium-card.rank-3 {
+      animation: rank3GrandEntrance 0.85s cubic-bezier(0.16, 1, 0.3, 1) 0.3s forwards;
+    }
+
+    @keyframes champGrandEntrance {
+      0% { opacity: 0; transform: translateY(60px) scale(0.9); }
+      100% { opacity: 1; transform: translateY(-16px) scale(1); }
+    }
+    @keyframes rank2GrandEntrance {
+      0% { opacity: 0; transform: translateY(60px) scale(0.9); }
+      100% { opacity: 1; transform: translateY(0px) scale(1); }
+    }
+    @keyframes rank3GrandEntrance {
+      0% { opacity: 0; transform: translateY(60px) scale(0.9); }
+      100% { opacity: 1; transform: translateY(0px) scale(1); }
+    }
+
+    /* 3D Avatar Stage: Free, Head Clear, Natural Breathing Float */
+    .winner-3d-floating-stage {
+      position: relative; width: 100%;
+      display: flex; flex-direction: column; align-items: center; justify-content: flex-end;
+      z-index: 5;
+    }
+    .rank-1 .winner-3d-floating-stage { height: 325px; }
+    .rank-2 .winner-3d-floating-stage { height: 275px; }
+    .rank-3 .winner-3d-floating-stage { height: 275px; }
+
+    /* Luxury Luminous Backlight Auras (Behind Avatar) */
+    .winner-gojo-aura {
+      position: absolute; border-radius: 50%;
+      pointer-events: none; z-index: 1;
+    }
+    .rank-1 .winner-gojo-aura, .aura-rank-1 {
+      width: 280px; height: 280px; top: 15%;
+      background: radial-gradient(circle, rgba(254, 240, 138, 0.6) 0%, rgba(250, 204, 21, 0.45) 30%, rgba(234, 179, 8, 0.2) 55%, transparent 75%);
+      animation: champAuraPulse 3.5s infinite ease-in-out;
+    }
+    .rank-2 .winner-gojo-aura, .aura-rank-2 {
+      width: 230px; height: 230px; top: 15%;
+      background: radial-gradient(circle, rgba(224, 242, 254, 0.65) 0%, rgba(56, 189, 248, 0.45) 35%, rgba(14, 165, 233, 0.2) 60%, transparent 75%);
+      animation: rank2AuraPulse 3.8s infinite ease-in-out 0.4s;
+    }
+    .rank-3 .winner-gojo-aura, .aura-rank-3 {
+      width: 230px; height: 230px; top: 15%;
+      background: radial-gradient(circle, rgba(255, 237, 213, 0.65) 0%, rgba(251, 146, 60, 0.45) 35%, rgba(234, 88, 12, 0.2) 60%, transparent 75%);
+      animation: rank3AuraPulse 3.6s infinite ease-in-out 0.8s;
+    }
+
+    @keyframes champAuraPulse {
+      0%, 100% { transform: scale(0.95); opacity: 0.8; filter: drop-shadow(0 0 25px rgba(250, 204, 21, 0.6)); }
+      50% { transform: scale(1.15); opacity: 1; filter: drop-shadow(0 0 45px rgba(250, 204, 21, 0.95)) drop-shadow(0 0 25px rgba(254, 240, 138, 0.8)); }
+    }
+    @keyframes rank2AuraPulse {
+      0%, 100% { transform: scale(0.95); opacity: 0.75; filter: drop-shadow(0 0 20px rgba(56, 189, 248, 0.55)); }
+      50% { transform: scale(1.12); opacity: 1; filter: drop-shadow(0 0 35px rgba(56, 189, 248, 0.9)); }
+    }
+    @keyframes rank3AuraPulse {
+      0%, 100% { transform: scale(0.95); opacity: 0.75; filter: drop-shadow(0 0 20px rgba(251, 146, 60, 0.55)); }
+      50% { transform: scale(1.12); opacity: 1; filter: drop-shadow(0 0 35px rgba(251, 146, 60, 0.9)); }
+    }
+
+    .winner-3d-body-wrap {
+      position: relative; z-index: 2;
+      width: 100%; height: 100%;
+      display: flex; align-items: flex-end; justify-content: center;
+      transform-origin: bottom center;
+    }
+
+    /* Living Breathe & Floating Motion for Avatars */
+    @keyframes winnerOriginalFloatRank1 {
+      0%, 100% {
+        transform: translateY(0px) scale(1);
+        filter: drop-shadow(0 14px 22px rgba(0, 0, 0, 0.65)) drop-shadow(0 0 25px rgba(250, 204, 21, 0.75));
+      }
+      50% {
+        transform: translateY(-8px) scale(1.025);
+        filter: drop-shadow(0 20px 28px rgba(0, 0, 0, 0.75)) drop-shadow(0 0 40px rgba(250, 204, 21, 0.95));
+      }
+    }
+    @keyframes winnerOriginalFloatRank2 {
+      0%, 100% {
+        transform: translateY(0px) scale(1);
+        filter: drop-shadow(0 12px 18px rgba(0, 0, 0, 0.65)) drop-shadow(0 0 22px rgba(56, 189, 248, 0.7));
+      }
+      50% {
+        transform: translateY(-6px) scale(1.02);
+        filter: drop-shadow(0 18px 24px rgba(0, 0, 0, 0.75)) drop-shadow(0 0 32px rgba(56, 189, 248, 0.9));
+      }
+    }
+    @keyframes winnerOriginalFloatRank3 {
+      0%, 100% {
+        transform: translateY(0px) scale(1);
+        filter: drop-shadow(0 12px 18px rgba(0, 0, 0, 0.65)) drop-shadow(0 0 22px rgba(251, 146, 60, 0.7));
+      }
+      50% {
+        transform: translateY(-6px) scale(1.02);
+        filter: drop-shadow(0 18px 24px rgba(0, 0, 0, 0.75)) drop-shadow(0 0 32px rgba(251, 146, 60, 0.9));
+      }
+    }
+
+    .winner-3d-full-img {
+      max-width: 100%; object-fit: contain;
+      display: block;
+      transform-origin: bottom center !important;
+      will-change: transform, filter;
+      transition: transform 0.3s ease;
+    }
+    .rank-1 .winner-3d-full-img {
+      max-height: 310px;
+      animation: winnerOriginalFloatRank1 3.2s ease-in-out infinite;
+    }
+    .rank-2 .winner-3d-full-img {
+      max-height: 265px;
+      animation: winnerOriginalFloatRank2 3.6s ease-in-out infinite 0.4s;
+    }
+    .rank-3 .winner-3d-full-img {
+      max-height: 265px;
+      animation: winnerOriginalFloatRank3 3.4s ease-in-out infinite 0.8s;
+    }
+
+    /* Architectural Tiered Pedestal Step (Pijakan Mewah dengan Glow LED) */
+    .podium-pedestal-step {
+      width: 100%; position: relative; z-index: 6;
+      margin-top: -12px; margin-bottom: -1px;
+      display: flex; flex-direction: column; align-items: center;
+    }
+    .pedestal-surface {
+      width: 82%; height: 18px; border-radius: 50%;
+      position: relative; z-index: 2;
+    }
+    .rank-1 .pedestal-surface {
+      width: 90%; height: 22px;
+      background: radial-gradient(ellipse, #fef08a 0%, #facc15 45%, #ca8a04 80%, rgba(202, 138, 4, 0.2) 100%);
+      box-shadow: 0 0 35px rgba(250, 204, 21, 0.95), 0 4px 15px rgba(0,0,0,0.5);
+      border: 1.5px solid rgba(255, 255, 255, 0.8);
+    }
+    .rank-2 .pedestal-surface {
+      background: radial-gradient(ellipse, #e0f2fe 0%, #38bdf8 45%, #0284c7 80%, rgba(2, 132, 199, 0.2) 100%);
+      box-shadow: 0 0 28px rgba(56, 189, 248, 0.85), 0 4px 15px rgba(0,0,0,0.5);
+      border: 1.5px solid rgba(255, 255, 255, 0.8);
+    }
+    .rank-3 .pedestal-surface {
+      background: radial-gradient(ellipse, #ffedd5 0%, #fb923c 45%, #c2410c 80%, rgba(194, 65, 12, 0.2) 100%);
+      box-shadow: 0 0 28px rgba(251, 146, 60, 0.85), 0 4px 15px rgba(0,0,0,0.5);
+      border: 1.5px solid rgba(255, 255, 255, 0.8);
+    }
+
+    /* Luxury Glassmorphism Information Card */
+    .podium-glass-card {
+      width: 100%; border-radius: 20px;
+      padding: 22px 18px 20px 18px;
+      display: flex; flex-direction: column; align-items: center; text-align: center;
+      position: relative; z-index: 7;
+      backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.4), inset 0 1px 1px rgba(255, 255, 255, 0.35);
+      transition: all 0.3s ease;
+    }
+    .rank-1 .podium-glass-card {
+      background: linear-gradient(180deg, rgba(254, 240, 138, 0.22) 0%, rgba(30, 41, 69, 0.85) 30%, rgba(17, 24, 39, 0.95) 100%);
+      border: 2px solid rgba(250, 204, 21, 0.75);
+      box-shadow: 0 20px 45px rgba(0, 0, 0, 0.5), 0 0 35px rgba(250, 204, 21, 0.35), inset 0 1px 2px rgba(255, 255, 255, 0.6);
+    }
+    .rank-2 .podium-glass-card {
+      background: linear-gradient(180deg, rgba(224, 242, 254, 0.18) 0%, rgba(23, 37, 65, 0.85) 30%, rgba(15, 23, 42, 0.95) 100%);
+      border: 2px solid rgba(56, 189, 248, 0.65);
+      box-shadow: 0 16px 36px rgba(0, 0, 0, 0.45), 0 0 25px rgba(56, 189, 248, 0.25), inset 0 1px 2px rgba(255, 255, 255, 0.5);
+    }
+    .rank-3 .podium-glass-card {
+      background: linear-gradient(180deg, rgba(255, 237, 213, 0.18) 0%, rgba(41, 29, 24, 0.85) 30%, rgba(24, 18, 17, 0.95) 100%);
+      border: 2px solid rgba(251, 146, 60, 0.65);
+      box-shadow: 0 16px 36px rgba(0, 0, 0, 0.45), 0 0 25px rgba(251, 146, 60, 0.25), inset 0 1px 2px rgba(255, 255, 255, 0.5);
+    }
+
+    /* Integrated Rank Ribbon Badge */
+    .podium-rank-ribbon {
+      font-size: 13px; font-weight: 950; letter-spacing: 1.8px;
+      text-transform: uppercase; padding: 5px 18px; border-radius: 999px;
+      margin-bottom: 12px; display: inline-flex; align-items: center; gap: 6px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35);
+    }
+    .rank-1 .podium-rank-ribbon {
+      background: linear-gradient(135deg, #fef08a 0%, #facc15 50%, #d97706 100%);
+      color: #78350f; border: 1px solid #fef08a;
+      box-shadow: 0 0 20px rgba(250, 204, 21, 0.65);
+    }
+    .rank-2 .podium-rank-ribbon {
+      background: linear-gradient(135deg, #f0f9ff 0%, #bae6fd 50%, #38bdf8 100%);
+      color: #0c4a6e; border: 1px solid #e0f2fe;
+      box-shadow: 0 0 16px rgba(56, 189, 248, 0.5);
+    }
+    .rank-3 .podium-rank-ribbon {
+      background: linear-gradient(135deg, #fff7ed 0%, #fed7aa 50%, #fb923c 100%);
+      color: #7c2d12; border: 1px solid #ffedd5;
+      box-shadow: 0 0 16px rgba(251, 146, 60, 0.5);
+    }
+
+    /* Player Names & Identifiers */
+    .player-display-name {
+      font-size: 20px; font-weight: 900; color: #ffffff;
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+      margin-bottom: 4px; max-width: 250px;
+      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.6);
+      letter-spacing: 0.5px;
+    }
+    .rank-1 .player-display-name {
+      font-size: 24px; color: #fef08a; max-width: 280px;
+      text-shadow: 0 0 20px rgba(250, 204, 21, 0.6), 0 2px 10px rgba(0, 0, 0, 0.8);
+    }
+    .player-username-pill {
+      font-size: 12px; font-weight: 700; color: #cbd5e1;
+      background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 999px; padding: 3px 12px; margin-bottom: 14px;
+      letter-spacing: 0.5px; max-width: 200px;
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    }
+    .rank-1 .player-username-pill {
+      color: #fef9c3; background: rgba(250, 204, 21, 0.12);
+      border-color: rgba(250, 204, 21, 0.35);
+    }
+
+    /* Score Capsule Badge */
+    .podium-score-pill {
+      background: rgba(0, 0, 0, 0.45); border-radius: 999px;
+      padding: 6px 20px; display: inline-flex; align-items: baseline; gap: 6px;
+      box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.6);
+    }
+    .rank-1 .podium-score-pill {
+      border: 1.5px solid #facc15; background: rgba(250, 204, 21, 0.18);
+      box-shadow: 0 0 16px rgba(250, 204, 21, 0.35), inset 0 2px 5px rgba(0, 0, 0, 0.5);
+    }
+    .rank-2 .podium-score-pill {
+      border: 1.5px solid #38bdf8; background: rgba(56, 189, 248, 0.18);
+      box-shadow: 0 0 14px rgba(56, 189, 248, 0.3), inset 0 2px 5px rgba(0, 0, 0, 0.5);
+    }
+    .rank-3 .podium-score-pill {
+      border: 1.5px solid #fb923c; background: rgba(251, 146, 60, 0.18);
+      box-shadow: 0 0 14px rgba(251, 146, 60, 0.3), inset 0 2px 5px rgba(0, 0, 0, 0.5);
+    }
+    .podium-score-val {
+      font-size: 24px; font-weight: 950; color: #ffffff;
+      font-family: 'Outfit', 'Plus Jakarta Sans', sans-serif;
+    }
+    .rank-1 .podium-score-val { color: #fef08a; text-shadow: 0 0 10px rgba(250, 204, 21, 0.8); }
+    .rank-2 .podium-score-val { color: #e0f2fe; text-shadow: 0 0 10px rgba(56, 189, 248, 0.8); }
+    .rank-3 .podium-score-val { color: #ffedd5; text-shadow: 0 0 10px rgba(251, 146, 60, 0.8); }
+    .podium-score-lbl {
+      font-size: 11px; font-weight: 800; color: #94a3b8; letter-spacing: 1px;
+    }
+
+    /* MEDIA QUERY RESPONSIVE MOBILE & TABLET */
+    @media (max-width: 900px) {
+      .podium-container {
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+        perspective: none;
+      }
+      .podium-card { max-width: 320px; width: 100%; }
+      .podium-card.rank-1 { order: 1; transform: translateY(0); }
+      .podium-card.rank-2 { order: 2; }
+      .podium-card.rank-3 { order: 3; }
+      .board-layout { flex-direction: column; }
+    }
+    #fireworksCanvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 30005; }
+
+    /* =========================================================
+       MODULAR STREAM OVERLAYS (TIKTOK LIVE STUDIO & OBS STUDIO)
+       ========================================================= */
+
+    /* 1. OVERLAY TABEL SKOR (?view=tabel) */
+    html.mode-tabel, html.mode-tabel body {
+      background: transparent !important;
+      background-image: none !important;
+      padding: 0 !important;
+      margin: 0 !important;
+      overflow: hidden !important;
+      display: block !important;
+      width: 100% !important;
+      height: auto !important;
+    }
+    html.mode-tabel .container {
+      background: transparent !important;
+      border: none !important;
+      box-shadow: none !important;
+      padding: 4px 6px !important;
+      margin: 0 auto !important;
+      max-width: 100% !important;
+    }
+    html.mode-tabel .top-bar,
+    html.mode-tabel .log-panel,
+    html.mode-tabel .modal-overlay,
+    html.mode-tabel .quick-point-popover,
+    html.mode-tabel .color-picker-mini,
+    html.mode-tabel #winnerOverlay,
+    html.mode-tabel #centerNotifPopup,
+    html.mode-tabel .col-resizer {
+      display: none !important;
+    }
+    html.mode-tabel .cell-click-popup,
+    html.mode-tabel .score-val,
+    html.mode-tabel .pay-status-tag,
+    html.mode-tabel .btn-color-palette {
+      pointer-events: none !important;
+      cursor: default !important;
+    }
+    html.mode-tabel .score-val:hover {
+      transform: none !important;
+      background: #141f36 !important;
+      border-color: #28354d !important;
+    }
+
+    /* 2. OVERLAY PODIUM JUARA (?view=podium) */
+    html.mode-podium, html.mode-podium body {
+      background: transparent !important;
+      background-image: none !important;
+      padding: 0 !important;
+      margin: 0 !important;
+      overflow: hidden !important;
+      width: 100vw !important;
+      height: 100vh !important;
+    }
+    html.mode-podium .container,
+    html.mode-podium .modal-overlay,
+    html.mode-podium .quick-point-popover,
+    html.mode-podium .color-picker-mini,
+    html.mode-podium #centerNotifPopup {
+      display: none !important;
+    }
+    html.mode-podium #winnerOverlay {
+      display: none;
+    }
+    html.mode-podium #winnerOverlay.active {
+      display: flex !important;
+    }
+    html.mode-podium .btn-close-winner {
+      display: none !important;
+    }
+
+    /* 3. OVERLAY NOTIFIKASI TOAST (?view=notif) */
+    html.mode-notif, html.mode-notif body {
+      background: transparent !important;
+      background-image: none !important;
+      padding: 0 !important;
+      margin: 0 !important;
+      overflow: hidden !important;
+      width: 100vw !important;
+      height: 100vh !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+    }
+    html.mode-notif .container,
+    html.mode-notif #winnerOverlay,
+    html.mode-notif .modal-overlay,
+    html.mode-notif .quick-point-popover,
+    html.mode-notif .color-picker-mini {
+      display: none !important;
+    }
+    html.mode-notif #centerNotifPopup {
+      position: relative !important;
+      top: auto !important;
+      left: auto !important;
+      transform: scale(0.9) !important;
+      pointer-events: none !important;
+    }
+    html.mode-notif #centerNotifPopup.show {
+      transform: scale(1) !important;
+    }
+
+    /* =========================================================
+       MODAL LINK STREAM TIKTOK STUDIO & OBS
+       ========================================================= */
+    .modal-stream-box {
+      width: 620px !important;
+      max-width: 96vw !important;
+      max-height: 90vh !important;
+      overflow-y: auto !important;
+      padding: 20px 22px !important;
+      scrollbar-width: thin;
+      scrollbar-color: #38bdf8 #0a101f;
+    }
+    .modal-stream-box::-webkit-scrollbar { width: 6px; }
+    .modal-stream-box::-webkit-scrollbar-thumb { background: #38bdf8; border-radius: 4px; }
+    .modal-stream-box::-webkit-scrollbar-track { background: #0a101f; }
+
+    .stream-modal-desc {
+      font-size: 12.5px;
+      line-height: 1.5;
+      color: #94a3b8;
+      margin-top: 2px;
+      margin-bottom: 12px;
+    }
+    .stream-modal-desc b {
+      color: #38bdf8;
+    }
+
+    .stream-link-card {
+      background: rgba(15, 23, 42, 0.75);
+      border: 1.5px solid rgba(56, 189, 248, 0.25);
+      border-radius: 12px;
+      padding: 12px 14px;
+      margin-bottom: 10px;
+      transition: all 0.15s ease;
+    }
+    .stream-link-card:hover {
+      border-color: rgba(56, 189, 248, 0.6);
+      box-shadow: 0 4px 18px rgba(0, 0, 0, 0.45);
+    }
+    .stream-link-card.highlight-gold {
+      border-color: rgba(245, 158, 11, 0.4);
+      background: linear-gradient(180deg, rgba(30, 24, 15, 0.8) 0%, rgba(15, 23, 42, 0.8) 100%);
+    }
+    .stream-link-card.highlight-gold:hover {
+      border-color: rgba(245, 158, 11, 0.75);
+      box-shadow: 0 4px 20px rgba(245, 158, 11, 0.2);
+    }
+
+    .stream-card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 4px;
+    }
+    .stream-card-title {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+    }
+    .stream-icon {
+      font-size: 16px;
+    }
+    .stream-name {
+      font-family: 'Outfit', sans-serif;
+      font-size: 14.5px;
+      font-weight: 800;
+      color: #ffffff;
+    }
+    .stream-rec-badge {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10.5px;
+      font-weight: 800;
+      color: #38bdf8;
+      background: rgba(56, 189, 248, 0.14);
+      border: 1px solid rgba(56, 189, 248, 0.4);
+      padding: 2.5px 8px;
+      border-radius: 99px;
+      letter-spacing: 0.5px;
+    }
+    .stream-link-card.highlight-gold .stream-rec-badge {
+      color: #fbbf24;
+      background: rgba(245, 158, 11, 0.15);
+      border-color: rgba(245, 158, 11, 0.45);
+    }
+
+    .stream-card-sub {
+      font-size: 11.5px;
+      color: #94a3b8;
+      margin-bottom: 8px;
+      line-height: 1.35;
+    }
+
+    .stream-input-wrap {
+      display: flex;
+      gap: 6px;
+      align-items: center;
+    }
+    .stream-url-input {
+      flex: 1;
+      min-width: 0;
+      background: #090e1a;
+      border: 1px solid #1e293b;
+      border-radius: 6px;
+      color: #cbd5e1;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      padding: 7px 10px;
+      outline: none;
+      user-select: all;
+    }
+    .stream-url-input:focus {
+      border-color: #38bdf8;
+      color: #ffffff;
+      box-shadow: 0 0 10px rgba(56, 189, 248, 0.25);
+    }
+
+    .btn-copy-link {
+      background: #1e293b;
+      color: #f8fafc;
+      border: 1px solid #334155;
+      border-radius: 6px;
+      padding: 6px 12px;
+      font-size: 11px;
+      font-weight: 800;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.15s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .btn-copy-link:hover {
+      background: #0284c7;
+      border-color: #38bdf8;
+      color: #ffffff;
+      transform: translateY(-1px);
+    }
+    .btn-preview-link {
+      background: #131d31;
+      color: #38bdf8;
+      border: 1px solid #28354d;
+      border-radius: 6px;
+      padding: 6px 10px;
+      font-size: 13px;
+      font-weight: 900;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.15s ease;
+    }
+    .btn-preview-link:hover {
+      background: #38bdf8;
+      color: #0d1424;
+      border-color: #38bdf8;
+      transform: translateY(-1px);
+    }
+
+    .stream-quick-guide {
+      background: rgba(8, 14, 27, 0.85);
+      border: 1px dashed rgba(56, 189, 248, 0.35);
+      border-radius: 10px;
+      padding: 10px 14px;
+      margin-top: 6px;
+      margin-bottom: 10px;
+    }
+    .stream-guide-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 12px;
+      font-weight: 800;
+      color: #38bdf8;
+      margin-bottom: 6px;
+    }
+    .stream-guide-list {
+      margin-left: 18px;
+      font-size: 11px;
+      color: #94a3b8;
+      line-height: 1.55;
+    }
+    .stream-guide-list li b {
+      color: #e2e8f0;
+    }
+
+    .btn-stream-link {
+      background: linear-gradient(135deg, #0369a1 0%, #0284c7 100%) !important;
+      border: 1px solid #38bdf8 !important;
+      color: #ffffff !important;
+      box-shadow: 0 2px 10px rgba(2, 132, 199, 0.35);
+    }
+    .btn-stream-link:hover {
+      filter: brightness(1.15);
+      transform: translateY(-1px);
+    }
+  </style>
+</head>
+<body class="view-match">
+
+<div class="container" id="mainContainer">
+  <!-- BAR ATAS -->
+  <div class="top-bar">
+    <div class="top-left">
+      <button class="btn-action-soft" onclick="bukaModalPoin()">Point Preset</button>
+      <button class="btn-action-soft" onclick="bukaModalNotifSuara()">Settings Audio</button>
+      
+      <!-- DROPDOWN RESET -->
+      <div class="dropdown" id="dropdownReset">
+        <button class="btn-action-soft" onclick="toggleDropdownReset(event)">RESET ▾</button>
+        <div class="dropdown-content">
+          <button onclick="bukaModalKonfirmasiReset('POINT')">Reset Poin Saja</button>
+          <button onclick="bukaModalKonfirmasiReset('SEMUA')">Kosongkan Semua Kursi</button>
+        </div>
+      </div>
+
+      <!-- DROPDOWN SESI -->
+      <div class="dropdown" id="dropdownSesi">
+        <button class="btn-action-soft" onclick="toggleDropdownSesi(event)"><span id="labelSesiAktif">Sesi 1</span> ▾</button>
+        <div class="dropdown-content scrollable-list" id="listDropdownSesi">
+          <!-- Item sesi dirender dinamis -->
+        </div>
+      </div>
+    </div>
+
+    <div class="top-right">
+      <button class="btn-action-soft btn-stream-link" onclick="bukaModalLinkStream()" title="Salin link modular untuk TikTok Studio & OBS">
+        🔗 LINK STREAM
+      </button>
+
+      <button id="btnUrutkanManual" class="btn-sort-manual" onclick="eksekusiUrutkanManual()" title="Urutkan ranking sekarang">
+        URUTKAN
+      </button>
+
+      <button class="btn-winner-trigger" onclick="tampilkanLayarPemenang()" title="Tampilkan Layar Pemenang">
+        🏆 PODIUM
+      </button>
+
+      <button class="btn-notif-trigger" onclick="tesPopupTengahManual()" title="Tes Tampilan Notifikasi Tengah">
+        🔔 NOTIF
+      </button>
+    </div>
+  </div>
+
+  <!-- TABEL 20 KURSI -->
+  <div class="grid-tables">
+    <div class="table-container">
+      <table id="tableLeft">
+        <colgroup>
+          <col data-col="no" style="width: 38px;">
+          <col data-col="nama" style="width: 210px;">
+          <col data-col="display" style="width: 180px;">
+          <col data-col="point" class="col-point" style="width: 95px;">
+        </colgroup>
+        <thead>
+          <tr>
+            <th data-col="no" class="th-no">NO<div class="col-resizer"></div></th>
+            <th data-col="nama">NAMA PEMAIN<div class="col-resizer"></div></th>
+            <th data-col="display">DISPLAY NAME<div class="col-resizer"></div></th>
+            <th data-col="point">POIN</th>
+          </tr>
+        </thead>
+        <tbody id="bodyLeft"></tbody>
+      </table>
+    </div>
+
+    <div class="table-container">
+      <table id="tableRight">
+        <colgroup>
+          <col data-col="no" style="width: 38px;">
+          <col data-col="nama" style="width: 210px;">
+          <col data-col="display" style="width: 180px;">
+          <col data-col="point" class="col-point" style="width: 95px;">
+        </colgroup>
+        <thead>
+          <tr>
+            <th data-col="no" class="th-no">NO<div class="col-resizer"></div></th>
+            <th data-col="nama">NAMA PEMAIN<div class="col-resizer"></div></th>
+            <th data-col="display">DISPLAY NAME<div class="col-resizer"></div></th>
+            <th data-col="point">POIN</th>
+          </tr>
+        </thead>
+        <tbody id="bodyRight"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- LOG AKTIVITAS -->
+  <div class="log-panel" id="mainLogPanel">
+    <div class="log-header">
+      <span class="log-title" onclick="toggleLogPanel()">
+        LOG AKTIVITAS <span id="iconFoldLog" style="font-size:10px;">▼</span>
+      </span>
+      <button class="btn-clear-log" onclick="hapusLogAktivitas()">Clear</button>
+    </div>
+    <div class="log-list" id="logList">
+      <div style="color: #64748b; font-style: italic; padding: 4px;" id="emptyLogText">Tidak ada aktivitas</div>
+    </div>
+  </div>
+</div>
+
+<!-- MINI PALET WARNA -->
+<div class="color-picker-mini" id="miniColorPicker" onclick="event.stopPropagation()">
+  <span class="cp-dot c-blue" title="Biru Langit" onclick="pilihWarnaKustom('blue')"></span>
+  <span class="cp-dot c-pink" title="Pink Pastel" onclick="pilihWarnaKustom('pink')"></span>
+  <span class="cp-dot c-purple" title="Ungu Cyber" onclick="pilihWarnaKustom('purple')"></span>
+  <span class="cp-dot c-red" title="Merah Solid" onclick="pilihWarnaKustom('red')"></span>
+  <span class="cp-dot c-yellow" title="Kuning Cyber" onclick="pilihWarnaKustom('yellow')"></span>
+  <span class="cp-dot c-reset" title="Reset Default" onclick="pilihWarnaKustom('')"></span>
+</div>
+
+<!-- POPOVER POIN CEPAT -->
+<div class="quick-point-popover" id="quickPointPopover" onclick="event.stopPropagation()">
+  <div class="qp-header">
+    <span class="qp-title" id="qpPlayerTitle">Tambah Poin</span>
+    <button class="qp-close" onclick="tutupQuickPointPopover()">×</button>
+  </div>
+  <div class="qp-grid-plus" id="qpGridButtons"></div>
+  <div class="qp-footer">
+    <input type="number" id="qpDirectInput" class="qp-custom-input" min="0" placeholder="Set total..." onkeydown="if(event.key==='Enter'){event.stopPropagation();simpanSetTotalLangsung();}">
+    <button class="btn-qp-set" onclick="simpanSetTotalLangsung()">Set</button>
+  </div>
+</div>
+
+<!-- POPUP NOTIFIKASI CYBER HUD -->
+<div class="center-notif-popup" id="centerNotifPopup">
+  <span class="c-notif-tag" id="cNotifTag">UPDATE POIN</span>
+  <div class="c-notif-name" id="cNotifPlayer">NAMA PEMAIN</div>
+  <div class="c-notif-pts-box">
+    <div class="c-notif-pts-main" id="cNotifPts">+1 POIN</div>
+    <div class="c-notif-pts-total" id="cNotifTotal">Total: 15 Poin</div>
+  </div>
+</div>
+
+<!-- MODAL KONFIRMASI RESET MURNI YA / TIDAK -->
+<div class="modal-overlay" id="modalConfirmResetTabel" onclick="tutupModalDiLuar(event)">
+  <div class="modal-box-hud" style="width: 290px; text-align: center; padding: 20px 16px;">
+    <div id="resetTabelModalTitle" style="font-family:'Outfit',sans-serif; font-size:16px; font-weight:800; color:#f87171; margin-bottom:14px;">
+      Reset Poin?
+    </div>
+    <div class="hud-action-row" style="gap: 8px;">
+      <button class="btn-hud-reset" style="padding:8px;" onclick="tutupModalKonfirmasiResetTabel()">Tidak</button>
+      <button class="btn-hud-save" style="background:#dc2626; border-color:#ef4444; color:#fff; padding:8px;" onclick="eksekusiResetTabelPasti()">Ya</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL INPUT NAMA PESERTA -->
+<div class="modal-overlay" id="modalInputNama" onclick="tutupModalDiLuar(event)">
+  <div class="modal-box-hud">
+    <div class="modal-header-hud">
+      <div class="modal-title-wrap">
+        <span class="modal-sub-hud"></span>
+        <span class="modal-title-hud" id="modalInputJudul">Kursi 1</span>
+      </div>
+      <button class="btn-close-hud" onclick="tutupModalNama()" title="Tutup (Esc)">✕</button>
+    </div>
+    <input type="hidden" id="editPlayerIndex" value="-1">
+    <input type="hidden" id="inputAvatarUrl" value="">
+    <input type="hidden" id="inputAvatar3dUrl" value="">
+    <input type="hidden" id="inputUserId" value="">
+
+    <!-- PROFILE CARD HOLO -->
+    <div class="hud-player-card">
+      <div class="hud-avatar-box">
+        <img id="modalAvatarPreview" src="" alt="Avatar" style="display:none;">
+        <div id="modalAvatarEmpty" class="hud-avatar-empty">NO PIC</div>
+      </div>
+      <div class="hud-meta-info">
+        <span id="modalPreviewNick" class="hud-nick-txt">-</span>
+        <span id="modalPreviewUser" class="hud-user-txt">@username_roblox</span>
+      </div>
+    </div>
+
+    <!-- FORM INPUTS -->
+    <div class="hud-field-group">
+      <label class="hud-label">Roblox Account ID</label>
+      <div class="hud-input-row">
+        <input type="text" id="inputUserRoblox" class="hud-input" placeholder="contoh: Username" autocomplete="off" onkeydown="if(event.key==='Enter'){event.preventDefault();mulaiCariAkunRobloxAuto();}">
+        <button type="button" id="btnCariRoblox" class="hud-btn-search" onclick="mulaiCariAkunRobloxAuto()">
+          Cari
+        </button>
+      </div>
+      <span id="modalSearchStatus" style="font-family:'JetBrains Mono',monospace; font-size:10px; font-weight:700; color:#94a3b8; min-height:14px; margin-top:2px;"></span>
+    </div>
+
+    <div class="hud-field-group">
+      <label class="hud-label">Nama Pemain (Tim / Peserta)</label>
+      <input type="text" id="inputNamaTikTok" class="hud-input" placeholder="Ketik nama pemain..." onkeydown="if(event.key==='Enter')simpanDataModalNama()">
+    </div>
+
+    <div class="hud-field-group">
+      <label class="hud-label">Display Name Roblox</label>
+      <input type="text" id="inputDisplayName" class="hud-input" placeholder="Otomatis / manual" onkeydown="if(event.key==='Enter')simpanDataModalNama()">
+    </div>
+
+    <div class="hud-action-row">
+      <button class="btn-hud-reset" type="button" onclick="resetFormModalNama()">Reset</button>
+      <button class="btn-hud-save" type="button" onclick="simpanDataModalNama()">Simpan</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL PRESET ANGKA POIN -->
+<div class="modal-overlay" id="modalPoin" onclick="tutupModalDiLuar(event)">
+  <div class="modal-box-hud" style="width: 320px;">
+    <div class="modal-header-hud">
+      <div class="modal-title-wrap">
+        <span class="modal-sub-hud">SETTINGS</span>
+        <span class="modal-title-hud">Preset Poin Cepat</span>
+      </div>
+      <button class="btn-close-hud" onclick="tutupModalPoin()">✕</button>
+    </div>
+    <div class="hud-field-group" style="margin-top:6px;">
+      <label class="hud-label">Daftar Angka (Pisahkan koma):</label>
+      <input type="text" id="inputPresetPoinCepat" class="hud-input" style="font-family:'JetBrains Mono',monospace;" value="1, 2, 3, 4, 5" onchange="simpanPoinWarna()">
+    </div>
+    <button class="btn-hud-save" style="margin-top:8px;" onclick="tutupModalPoin()">Selesai</button>
+  </div>
+</div>
+
+<!-- MODAL SETTINGS AUDIO -->
+<div class="modal-overlay" id="modalNotifSuara" onclick="tutupModalDiLuar(event)">
+  <div class="modal-box-hud" style="width: 340px;">
+    <div class="modal-header-hud">
+      <div class="modal-title-wrap">
+        <span class="modal-sub-hud">AUDIO MODULE</span>
+        <span class="modal-title-hud">Suara Poin</span>
+      </div>
+      <button class="btn-close-hud" onclick="tutupModalNotifSuara()">✕</button>
+    </div>
+
+    <div style="background:rgba(15,23,42,0.7); border:1px solid #1e293b; border-left:3px solid #10b981; border-radius:8px; padding:10px; margin-top:4px;">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+        <span style="font-size:12px; font-weight:800; color:#34d399;">🔔 Sound FX Poin</span>
+        <span id="statusAudio_poin" style="font-size:10px; font-weight:800; color:#4ade80; font-family:'JetBrains Mono',monospace;">Synth Bawaan</span>
+      </div>
+      <div style="display:flex; flex-direction:column; gap:6px;">
+        <input type="file" id="audioInput_poin" accept="audio/*" style="font-size:11px; color:#94a3b8;" onchange="unggahAudioPoin(event)">
+        <div style="display:flex; gap:6px;">
+          <button type="button" class="btn-action-soft" style="flex:1; justify-content:center; padding:5px;" onclick="putarSuaraNotifPoin()">🔊 Tes Audio</button>
+          <button type="button" class="btn-action-soft" style="flex:1; justify-content:center; padding:5px;" onclick="resetAudioPoin()">Reset</button>
+        </div>
+      </div>
+    </div>
+
+    <button class="btn-hud-save" style="margin-top:8px;" onclick="tutupModalNotifSuara()">Tutup</button>
+  </div>
+</div>
+
+<!-- MODAL LINK STREAM TIKTOK STUDIO & OBS -->
+<div class="modal-overlay" id="modalLinkStream" onclick="tutupModalDiLuar(event)">
+  <div class="modal-box-hud modal-stream-box">
+    <div class="modal-header-hud">
+      <div class="modal-title-wrap">
+        <span class="modal-sub-hud">BROADCAST OVERLAYS</span>
+        <span class="modal-title-hud">🔗 Link TikTok Studio & OBS</span>
+      </div>
+      <button class="btn-close-hud" onclick="tutupModalLinkStream()" title="Tutup (Esc)">✕</button>
+    </div>
+
+    <p class="stream-modal-desc">
+      Gunakan link di bawah ini sebagai <b>Tautan Web (Browser Source)</b> terpisah di TikTok LIVE Studio atau OBS Studio. Setiap elemen memiliki latar belakang <b>transparan</b> sehingga posisinya bisa Anda atur bebas di layar streaming!
+    </p>
+
+    <!-- CARD 1: TABEL SKOR -->
+    <div class="stream-link-card">
+      <div class="stream-card-header">
+        <div class="stream-card-title">
+          <span class="stream-icon">📊</span>
+          <span class="stream-name">Overlay Tabel Skor</span>
+        </div>
+        <span class="stream-rec-badge">1060 × 520 px</span>
+      </div>
+      <p class="stream-card-sub">Klasemen pemain live tanpa tombol admin. Transparan & beranimasi otomatis saat skor berubah.</p>
+      <div class="stream-input-wrap">
+        <input type="text" readonly id="linkOverlayTabel" class="stream-url-input" onclick="this.select()">
+        <button class="btn-copy-link" onclick="salinLinkStream('linkOverlayTabel', this)">📋 Salin Link</button>
+        <a id="previewOverlayTabel" target="_blank" class="btn-preview-link" title="Buka di tab baru">↗</a>
+      </div>
+    </div>
+
+    <!-- CARD 2: PODIUM JUARA -->
+    <div class="stream-link-card highlight-gold">
+      <div class="stream-card-header">
+        <div class="stream-card-title">
+          <span class="stream-icon">🏆</span>
+          <span class="stream-name">Overlay Podium Juara (Hall of Champions)</span>
+        </div>
+        <span class="stream-rec-badge">1280 × 720 px</span>
+      </div>
+      <p class="stream-card-sub">Transparan saat standby. Otomatis muncul megah dengan avatar Roblox asli & petasan saat Host menekan tombol PODIUM.</p>
+      <div class="stream-input-wrap">
+        <input type="text" readonly id="linkOverlayPodium" class="stream-url-input" onclick="this.select()">
+        <button class="btn-copy-link" onclick="salinLinkStream('linkOverlayPodium', this)">📋 Salin Link</button>
+        <a id="previewOverlayPodium" target="_blank" class="btn-preview-link" title="Buka di tab baru">↗</a>
+      </div>
+    </div>
+
+    <!-- CARD 3: NOTIFIKASI TOAST -->
+    <div class="stream-link-card">
+      <div class="stream-card-header">
+        <div class="stream-card-title">
+          <span class="stream-icon">🔔</span>
+          <span class="stream-name">Overlay Notifikasi Tangkapan (Toast)</span>
+        </div>
+        <span class="stream-rec-badge">400 × 300 px</span>
+      </div>
+      <p class="stream-card-sub">Pop-up alert & efek suara saat pemain dapat poin/ikan. Bisa diletakkan di atas webcam atau sudut layar.</p>
+      <div class="stream-input-wrap">
+        <input type="text" readonly id="linkOverlayNotif" class="stream-url-input" onclick="this.select()">
+        <button class="btn-copy-link" onclick="salinLinkStream('linkOverlayNotif', this)">📋 Salin Link</button>
+        <a id="previewOverlayNotif" target="_blank" class="btn-preview-link" title="Buka di tab baru">↗</a>
+      </div>
+    </div>
+
+    <!-- PANDUAN CEPAT -->
+    <div class="stream-quick-guide">
+      <div class="stream-guide-title">💡 Cara Pasang di TikTok LIVE Studio:</div>
+      <ol class="stream-guide-list">
+        <li>Buka <b>TikTok LIVE Studio</b> ➔ Klik <b>+ Tambah Sumber</b> di adegan Anda.</li>
+        <li>Pilih <b>Tautan Web (Browser Source)</b>.</li>
+        <li>Tempelkan Link yang telah disalin di atas pada kolom URL.</li>
+        <li>Atur Lebar & Tinggi sesuai resolusi rekomendasi di atas.</li>
+        <li>Geser dan atur posisi kotak di layar stream sesuai keinginan Anda!</li>
+      </ol>
+    </div>
+
+    <button class="btn-hud-save" style="margin-top:4px;" onclick="tutupModalLinkStream()">Tutup</button>
+  </div>
+</div>
+
+<!-- OVERLAY PODIUM WINNER (LUXURY BRIGHT AWARDS CEREMONY THEME) -->
+<div class="winner-overlay" id="winnerOverlay">
+  <div class="winner-light-beams"></div>
+  <canvas id="fireworksCanvas"></canvas>
+  <button class="btn-close-winner" onclick="tutupLayarPemenang()" title="Tutup Layar Pemenang">✕</button>
+
+  <div class="winner-header">
+    <div class="winner-trophy-badge" id="winTrophyBadge">🏆 GRAND FINALS CEREMONY 🏆</div>
+    <h1 class="winner-title">HALL OF CHAMPIONS</h1>
+    <div class="winner-title-divider">
+      <span>★ ★ ★</span>
+    </div>
+  </div>
+  
+  <div class="podium-container">
+    <!-- Rank 2: 2nd Place (Silver / Diamond) -->
+    <div class="podium-card rank-2">
+      <div class="winner-3d-floating-stage">
+        <div class="winner-gojo-aura aura-rank-2"></div>
+        <div class="winner-3d-body-wrap" id="winAvatarBox2">
+          <span>2</span>
+        </div>
+      </div>
+      <div class="podium-pedestal-step">
+        <div class="pedestal-surface"></div>
+      </div>
+      <div class="podium-glass-card">
+        <div class="podium-rank-ribbon">🥈 2ND PLACE</div>
+        <div class="player-display-name" id="winName2">-</div>
+        <div class="player-username-pill" id="winNick2">-</div>
+        <div class="podium-score-pill">
+          <span class="podium-score-val" id="winScore2">0</span>
+          <span class="podium-score-lbl">PTS</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Rank 1: Champion (Gold / Solaria) -->
+    <div class="podium-card rank-1">
+      <div class="winner-3d-floating-stage">
+        <div class="winner-gojo-aura aura-rank-1"></div>
+        <div class="winner-3d-body-wrap" id="winAvatarBox1">
+          <span>1</span>
+        </div>
+      </div>
+      <div class="podium-pedestal-step">
+        <div class="pedestal-surface"></div>
+      </div>
+      <div class="podium-glass-card">
+        <div class="podium-rank-ribbon">👑 1ST CHAMPION</div>
+        <div class="player-display-name" id="winName1">-</div>
+        <div class="player-username-pill" id="winNick1">-</div>
+        <div class="podium-score-pill">
+          <span class="podium-score-val" id="winScore1">0</span>
+          <span class="podium-score-lbl">PTS</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Rank 3: 3rd Place (Bronze / Ember) -->
+    <div class="podium-card rank-3">
+      <div class="winner-3d-floating-stage">
+        <div class="winner-gojo-aura aura-rank-3"></div>
+        <div class="winner-3d-body-wrap" id="winAvatarBox3">
+          <span>3</span>
+        </div>
+      </div>
+      <div class="podium-pedestal-step">
+        <div class="pedestal-surface"></div>
+      </div>
+      <div class="podium-glass-card">
+        <div class="podium-rank-ribbon">🥉 3RD PLACE</div>
+        <div class="player-display-name" id="winName3">-</div>
+        <div class="player-username-pill" id="winNick3">-</div>
+        <div class="podium-score-pill">
+          <span class="podium-score-val" id="winScore3">0</span>
+          <span class="podium-score-lbl">PTS</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  /* =========================================================
+     DETEKSI MODE VIEW STREAMING & SINKRONISASI REAL-TIME
+     ========================================================= */
+  const urlParams = new URLSearchParams(window.location.search);
+  const rawView = (urlParams.get('view') || urlParams.get('overlay') || 'admin').toLowerCase();
+  let currentViewMode = 'admin';
+  if (['tabel', 'table', 'scoreboard', 'board'].includes(rawView)) {
+    currentViewMode = 'tabel';
+  } else if (['podium', 'winner', 'champions', 'juara'].includes(rawView)) {
+    currentViewMode = 'podium';
+  } else if (['notif', 'toast', 'alert'].includes(rawView)) {
+    currentViewMode = 'notif';
+  }
+
+  const DB_KEY = 'single_leaderboard_cyber_hud_v3';
+  const AUDIO_POIN_KEY = 'galatama_custom_sound_mitos';
+  const COL_WIDTHS_KEY = 'galatama_single_col_widths_cyber_v1';
+  const LOG_FOLD_KEY = 'galatama_log_is_folded';
+  const SYNC_BUS_NAME = 'galatama_stream_sync_bus';
+  const PODIUM_STATE_KEY = 'galatama_podium_state_v1';
+  const CLOUD_SYNC_TOPIC = 'galatama_stream_sohe_live_bus_v1';
+  const LOCAL_SENDER_ID = 'client_' + Math.random().toString(36).substring(2, 9);
+
+  /* ENGINE SINKRONISASI DUAL: LOKAL (BROADCASTCHANNEL) + CLOUD REAL-TIME SSE (TIKTOK STUDIO) */
+  let syncChannel = null;
+  let cloudEventSource = null;
+
+  try {
+    if (typeof BroadcastChannel !== 'undefined') {
+      syncChannel = new BroadcastChannel(SYNC_BUS_NAME);
+      syncChannel.onmessage = (event) => {
+        if (event && event.data && event.data._sender !== LOCAL_SENDER_ID) {
+          tanganiPesanSync(event.data);
+        }
+      };
+    }
+  } catch (err) {
+    console.warn('BroadcastChannel tidak aktif:', err);
+  }
+
+  // Koneksi Cloud SSE agar TikTok LIVE Studio dapat menerima update dari Chrome / HP Host
+  function inisialisasiCloudSync() {
+    try {
+      if (typeof EventSource !== 'undefined') {
+        cloudEventSource = new EventSource(`https://ntfy.sh/${CLOUD_SYNC_TOPIC}/sse?since=10m`);
+        cloudEventSource.onmessage = (event) => {
+          try {
+            if (event && event.data) {
+              const parsed = JSON.parse(event.data);
+              if (parsed && parsed.message) {
+                const payload = JSON.parse(parsed.message);
+                if (payload && payload._sender !== LOCAL_SENDER_ID) {
+                  tanganiPesanSync(payload);
+                }
+              }
+            }
+          } catch (_) {}
+        };
+      }
+    } catch (e) {
+      console.warn('Cloud sync error:', e);
+    }
+  }
+  inisialisasiCloudSync();
+
+  window.addEventListener('storage', (e) => {
+    if (e.key === DB_KEY && e.newValue) {
+      try {
+        db = JSON.parse(e.newValue);
+        if (currentViewMode === 'tabel' || currentViewMode === 'admin') {
+          renderIsiTabel();
+        }
+      } catch (_) {}
+    } else if (e.key === 'galatama_stream_event_trigger' && e.newValue) {
+      try {
+        const ev = JSON.parse(e.newValue);
+        if (ev && ev._sender !== LOCAL_SENDER_ID) {
+          tanganiPesanSync(ev);
+        }
+      } catch (_) {}
+    }
+  });
+
+  function siarkanPesanSync(pesan) {
+    const payload = { ...pesan, _sender: LOCAL_SENDER_ID, _t: Date.now() };
+
+    // 1. Kirim via BroadcastChannel
+    if (syncChannel) {
+      try { syncChannel.postMessage(payload); } catch (e) { console.warn(e); }
+    }
+    
+    // 2. Simpan trigger storage lokal
+    try {
+      localStorage.setItem('galatama_stream_event_trigger', JSON.stringify(payload));
+    } catch (_) {}
+
+    // 3. Kirim ke Cloud Real-Time Bus (TikTok LIVE Studio <-> Admin Vercel)
+    try {
+      fetch(`https://ntfy.sh/${CLOUD_SYNC_TOPIC}`, {
+        method: 'POST',
+        body: JSON.stringify(payload),
+        headers: { 'Content-Type': 'text/plain' }
+      }).catch(() => {});
+    } catch (_) {}
+  }
+    } catch (_) {}
+  }
+
+  function tanganiPesanSync(msg) {
+    if (!msg || !msg.type) return;
+
+    if (msg.type === 'UPDATE_DATA') {
+      if (msg.db) {
+        db = msg.db;
+        if (currentViewMode === 'tabel' || currentViewMode === 'admin') {
+          renderIsiTabel();
+        }
+      }
+    } else if (msg.type === 'OPEN_PODIUM') {
+      if (currentViewMode === 'podium' || currentViewMode === 'admin') {
+        tampilkanLayarPemenangDariSync(msg.p1, msg.p2, msg.p3);
+      }
+    } else if (msg.type === 'CLOSE_PODIUM') {
+      if (currentViewMode === 'podium' || currentViewMode === 'admin') {
+        tutupLayarPemenang(false);
+      }
+    } else if (msg.type === 'TRIGGER_TOAST') {
+      if (currentViewMode === 'notif') {
+        tampilkanPopupPoinTengah(msg.namaPemain, msg.deltaPoin, msg.totalPoin, msg.labelAtas, msg.warnaTag, false);
+      }
+    }
+  }
+
+  function tampilkanLayarPemenangDariSync(p1, p2, p3) {
+    pasangDataJuaraPodium(1, p1);
+    pasangDataJuaraPodium(2, p2);
+    pasangDataJuaraPodium(3, p3);
+    document.getElementById('winnerOverlay').classList.add('active');
+    putarTerompetDanTepukTangan();
+    mulaiAnimasiPetasan();
+  }
+
+  const DEFAULT_QUICK_POINTS = [1, 2, 3, 4, 5];
+  const MIN_WIDTHS = { no: 36, nama: 100, display: 100, point: 85 };
+
+  function buatDataTabelKosong() {
+    const players = [];
+    for (let i = 0; i < 19; i++) {
+      players.push({ 
+        id: `p_kursi_${Date.now()}_${i}_${Math.random().toString(36).substr(2, 4)}`, 
+        robloxUser: '', user: '', nick: '', avatar: '', poin: 0, 
+        isReady: false, isPaid: false, colorTag: '' 
+      });
+    }
+    return {
+      players: players,
+      host: { id: `p_host_${Date.now()}`, robloxUser: '', user: '', nick: '', avatar: '', poin: 0, isReady: true, isPaid: true, colorTag: '' }
+    };
+  }
+
+  let db = JSON.parse(localStorage.getItem(DB_KEY)) || {
+    warnaPoin: { quickPoints: DEFAULT_QUICK_POINTS },
+    sessions: {
+      "Sesi 1": buatDataTabelKosong()
+    },
+    activeSession: "Sesi 1"
+  };
+
+  if (!db.warnaPoin) db.warnaPoin = { quickPoints: DEFAULT_QUICK_POINTS };
+  if (!db.sessions || typeof db.sessions !== 'object' || Object.keys(db.sessions).length === 0) {
+    db.sessions = { "Sesi 1": buatDataTabelKosong() };
+  }
+  if (!db.activeSession || !db.sessions[db.activeSession]) {
+    db.activeSession = Object.keys(db.sessions)[0];
+  }
+
+  function getActiveData() {
+    return db.sessions[db.activeSession];
+  }
+
+  let customAudioPoinData = localStorage.getItem(AUDIO_POIN_KEY) || null;
+  let isLogFolded = JSON.parse(localStorage.getItem(LOG_FOLD_KEY)) || false;
+  let tipeResetPending = null;
+  let popupCenterTimer = null;
+  let activeQuickPointIndex = null;
+  let activeColorTagIndex = null;
+
+  let savedColWidths = JSON.parse(localStorage.getItem(COL_WIDTHS_KEY)) || {
+    no: "38px", nama: "210px", display: "180px", point: "95px"
+  };
+
+  /* FITUR DROPDOWN SESI */
+  function toggleDropdownSesi(e) {
+    e.stopPropagation();
+    tutupSemuaDropdown();
+    const el = document.getElementById('dropdownSesi');
+    const wasOpen = el.classList.contains('show');
+    if (!wasOpen) {
+      renderListDropdownSesi();
+      el.classList.add('show');
+    }
+  }
+
+  function renderListDropdownSesi() {
+    const listEl = document.getElementById('listDropdownSesi');
+    if (!listEl) return;
+    
+    const lblSesi = document.getElementById('labelSesiAktif');
+    if (lblSesi) lblSesi.innerText = db.activeSession;
+
+    let html = '';
+    Object.keys(db.sessions).forEach(sesiName => {
+      const isAktif = sesiName === db.activeSession;
+      html += `
+        <div class="dropdown-item-custom" style="background: ${isAktif ? '#1e293b' : 'transparent'}; color: ${isAktif ? '#38bdf8' : '#e2e8f0'};" onclick="pilihSesi('${sesiName}', event)">
+          <span style="white-space: nowrap; margin-right: 18px;">${sesiName} ${isAktif ? '✔' : ''}</span>
+          ${Object.keys(db.sessions).length > 1 ? `<button type="button" onclick="hapusSesi('${sesiName}', event)" style="background:none; border:none; color:#f87171; font-weight:900; cursor:pointer; padding:2px 6px; margin-left:auto;" title="Hapus sesi">×</button>` : ''}
+        </div>
+      `;
+    });
+
+    html += `
+      <button type="button" class="btn-tambah-sesi" onclick="tambahSesiBaruInstan(event)">
+        +Tambah
+      </button>
+    `;
+    listEl.innerHTML = html;
+  }
+
+  function pilihSesi(sesiName, e) {
+    if (e) e.stopPropagation();
+    db.activeSession = sesiName;
+    simpanDB();
+    renderIsiTabel();
+    tutupSemuaDropdown();
+    tambahLogAktivitas('SESI', `Beralih ke ${sesiName}`, 'system');
+  }
+
+  /* Menambah sesi baru secara instan */
+  function tambahSesiBaruInstan(e) {
+    if (e) e.stopPropagation();
+    let counter = Object.keys(db.sessions).length + 1;
+    let newName = `Sesi ${counter}`;
+    while (db.sessions[newName]) {
+      counter++;
+      newName = `Sesi ${counter}`;
+    }
+
+    db.sessions[newName] = buatDataTabelKosong();
+    db.activeSession = newName;
+    simpanDB();
+    renderListDropdownSesi();
+    renderIsiTabel();
+    tambahLogAktivitas('SESI', `Sesi baru "${newName}" ditambahkan`, 'system');
+  }
+
+  function hapusSesi(sesiName, e) {
+    if (e) e.stopPropagation();
+    if (Object.keys(db.sessions).length <= 1) {
+      alert("Minimal harus ada 1 sesi!");
+      return;
+    }
+    if (confirm(`Yakin ingin menghapus sesi "${sesiName}"?`)) {
+      delete db.sessions[sesiName];
+      if (db.activeSession === sesiName) {
+        db.activeSession = Object.keys(db.sessions)[0];
+      }
+      simpanDB();
+      renderListDropdownSesi();
+      renderIsiTabel();
+      tambahLogAktivitas('SESI', `Sesi "${sesiName}" dihapus`, 'system');
+    }
+  }
+
+  /* FITUR PILIH WARNA KUSTOM TIAP BARIS */
+  function bukaMiniColorPicker(idx, ev) {
+    if (ev) ev.stopPropagation();
+    activeColorTagIndex = idx;
+    const picker = document.getElementById('miniColorPicker');
+    if (!picker) return;
+
+    picker.classList.add('show');
+    const rect = ev.currentTarget.getBoundingClientRect();
+    let leftPos = rect.right + 6;
+    if (leftPos + 140 > window.innerWidth) leftPos = rect.left - 140;
+    picker.style.left = `${leftPos}px`;
+    picker.style.top = `${rect.top - 4}px`;
+  }
+
+  function tutupMiniColorPicker() {
+    const picker = document.getElementById('miniColorPicker');
+    if (picker) picker.classList.remove('show');
+    activeColorTagIndex = null;
+  }
+
+  function pilihWarnaKustom(warna) {
+    if (activeColorTagIndex === null) return;
+    const idx = activeColorTagIndex;
+    tutupMiniColorPicker();
+    const currData = getActiveData();
+
+    if (idx === 19) {
+      if (!currData.host) currData.host = { robloxUser: '', user: '', nick: '', avatar: '', poin: 0, isReady: true, isPaid: true, colorTag: '' };
+      currData.host.colorTag = warna;
+    } else {
+      const p = currData.players[idx];
+      if (p) p.colorTag = warna;
+    }
+    
+    simpanDB();
+    renderIsiTabel();
+  }
+
+  function renderTombolQuickPoint() {
+    const grid = document.getElementById('qpGridButtons');
+    if (!grid) return;
+    const listAngka = (db.warnaPoin && Array.isArray(db.warnaPoin.quickPoints)) ? db.warnaPoin.quickPoints : DEFAULT_QUICK_POINTS;
+    grid.innerHTML = listAngka.map(n => `<button type="button" class="btn-qp" onclick="eksekusiQuickPoint(${n})">+${n}</button>`).join('');
+  }
+
+  function bukaQuickPointPopover(index, ev) {
+    if (ev) ev.stopPropagation();
+    const currData = getActiveData();
+    const p = (index === 19) ? currData.host : currData.players[index];
+    if (!p) return;
+    if (index !== 19 && !p.isReady) {
+      bukaModalInputNama(index);
+      return;
+    }
+
+    activeQuickPointIndex = index;
+    renderTombolQuickPoint();
+
+    const namaTampil = p.nick || p.user || p.robloxUser || (index === 19 ? 'Host' : `Kursi ${index + 1}`);
+    document.getElementById('qpPlayerTitle').innerText = `${namaTampil} (${p.poin} Pts)`;
+    document.getElementById('qpDirectInput').value = p.poin;
+
+    const pop = document.getElementById('quickPointPopover');
+    pop.classList.add('show');
+
+    const rect = ev.currentTarget.getBoundingClientRect();
+    const popWidth = 235;
+    const popHeight = pop.offsetHeight || 150;
+
+    let leftPos = rect.left - popWidth - 8;
+    if (leftPos < 10) leftPos = Math.min(window.innerWidth - popWidth - 10, rect.right + 8);
+    let topPos = rect.top - (popHeight / 2) + (rect.height / 2);
+    topPos = Math.max(10, Math.min(window.innerHeight - popHeight - 10, topPos));
+
+    pop.style.left = `${leftPos}px`;
+    pop.style.top = `${topPos}px`;
+  }
+
+  function tutupQuickPointPopover() {
+    const pop = document.getElementById('quickPointPopover');
+    if (pop) pop.classList.remove('show');
+    activeQuickPointIndex = null;
+  }
+
+  function eksekusiQuickPoint(delta) {
+    if (activeQuickPointIndex === null) return;
+    const idx = activeQuickPointIndex;
+    tutupQuickPointPopover();
+    terapkanTambahPoin(idx, delta);
+  }
+
+  function terapkanTambahPoin(idx, delta) {
+    const currData = getActiveData();
+    const p = (idx === 19) ? currData.host : currData.players[idx];
+    if (!p || (idx !== 19 && !p.isReady)) return;
+
+    const awal = p.poin;
+    p.poin = Math.max(0, p.poin + delta);
+    const selisih = p.poin - awal;
+
+    const namaTampil = p.nick || p.user || p.robloxUser || (idx === 19 ? 'Host' : `Kursi ${idx + 1}`);
+    if (selisih !== 0) tampilkanPopupPoinTengah(namaTampil, selisih, p.poin, "TAMBAH POIN", p.colorTag);
+
+    if (idx === 19) { simpanDB(); renderIsiTabel(); } else { urutkanOtomatis(); }
+    tambahLogAktivitas(namaTampil, `Poin +${delta}`, 'system', awal, p.poin, Math.abs(delta));
+  }
+
+  function simpanSetTotalLangsung() {
+    if (activeQuickPointIndex === null) return;
+    const idx = activeQuickPointIndex;
+    const val = Math.max(0, parseInt(document.getElementById('qpDirectInput').value) || 0);
+    tutupQuickPointPopover();
+
+    const currData = getActiveData();
+    const p = (idx === 19) ? currData.host : currData.players[idx];
+    if (!p || (idx !== 19 && !p.isReady)) return;
+
+    const awal = p.poin;
+    p.poin = val;
+    const selisih = p.poin - awal;
+
+    const namaTampil = p.nick || p.user || p.robloxUser || (idx === 19 ? 'Host' : `Kursi ${idx + 1}`);
+    if (selisih !== 0) tampilkanPopupPoinTengah(namaTampil, selisih, p.poin, "SET TOTAL", p.colorTag);
+
+    if (idx === 19) { simpanDB(); renderIsiTabel(); } else { urutkanOtomatis(); }
+    tambahLogAktivitas(namaTampil, `Total poin disetel ke ${p.poin}`, 'system', awal, p.poin, Math.abs(selisih));
+  }
+
+  function tampilkanPopupPoinTengah(namaPemain, deltaPoin, totalPoin, labelAtas = "UPDATE POIN", warnaTag = "", isBroadcast = true) {
+    const popup = document.getElementById('centerNotifPopup');
+    if (!popup) return;
+    if (popupCenterTimer) clearTimeout(popupCenterTimer);
+
+    popup.classList.remove('theme-purple', 'theme-pink', 'theme-red', 'theme-blue', 'theme-yellow');
+    if (warnaTag) {
+      popup.classList.add(`theme-${warnaTag}`);
+    }
+
+    const tanda = deltaPoin >= 0 ? `+${deltaPoin}` : `${deltaPoin}`;
+    document.getElementById('cNotifTag').innerText = labelAtas;
+    document.getElementById('cNotifPlayer').innerText = namaPemain || "PEMAIN";
+    document.getElementById('cNotifPts').innerText = `${tanda} POIN`;
+    document.getElementById('cNotifTotal').innerText = `Total: ${totalPoin} Poin`;
+
+    popup.classList.remove('show');
+    void popup.offsetWidth;
+    popup.classList.add('show');
+
+    if (deltaPoin > 0) putarSuaraNotifPoin();
+    popupCenterTimer = setTimeout(() => { popup.classList.remove('show'); popupCenterTimer = null; }, 2200);
+
+    if (isBroadcast) {
+      siarkanPesanSync({
+        type: 'TRIGGER_TOAST',
+        namaPemain: namaPemain,
+        deltaPoin: deltaPoin,
+        totalPoin: totalPoin,
+        labelAtas: labelAtas,
+        warnaTag: warnaTag
+      });
+    }
+  }
+
+  function tesPopupTengahManual() {
+    tampilkanPopupPoinTengah("BOBOHU", 5, 20, "TES NOTIFIKASI", "yellow");
+    tambahLogAktivitas('TEST', 'Tes popup notifikasi tengah', 'system');
+  }
+
+  function toggleLogPanel() {
+    const list = document.getElementById('logList');
+    const icon = document.getElementById('iconFoldLog');
+    if (!list) return;
+    isLogFolded = !isLogFolded;
+    localStorage.setItem(LOG_FOLD_KEY, JSON.stringify(isLogFolded));
+    list.style.display = isLogFolded ? 'none' : 'flex';
+    if (icon) icon.innerText = isLogFolded ? '▶' : '▼';
+  }
+
+  function muatStatusFoldLog() {
+    const list = document.getElementById('logList');
+    const icon = document.getElementById('iconFoldLog');
+    if (!list) return;
+    list.style.display = isLogFolded ? 'none' : 'flex';
+    if (icon) icon.innerText = isLogFolded ? '▶' : '▼';
+  }
+
+  function eksekusiUrutkanManual() {
+    tutupQuickPointPopover();
+    tutupMiniColorPicker();
+    urutkanOtomatis();
+    tambahLogAktivitas('SKOR', 'Papan skor berhasil diurutkan', 'system');
+  }
+
+  function updateStatusAudioTierUI() {
+    const elPoin = document.getElementById('statusAudio_poin');
+    if (elPoin) elPoin.innerText = customAudioPoinData ? "Audio Custom ✔" : "Synth Bawaan";
+  }
+
+  function bukaModalNotifSuara() {
+    updateStatusAudioTierUI();
+    document.getElementById('modalNotifSuara').style.display = 'flex';
+  }
+  function tutupModalNotifSuara() {
+    document.getElementById('modalNotifSuara').style.display = 'none';
+  }
+
+  const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  function mainkanNadaSynth(freq, startOffset, duration, type = 'sine', maxGain = 0.25) {
+    const osc = audioCtx.createOscillator();
+    const gain = audioCtx.createGain();
+    const startTime = audioCtx.currentTime + startOffset;
+    osc.type = type;
+    osc.frequency.setValueAtTime(freq, startTime);
+    gain.gain.setValueAtTime(maxGain, startTime);
+    gain.gain.exponentialRampToValueAtTime(0.001, startTime + duration);
+    osc.connect(gain); gain.connect(audioCtx.destination);
+    osc.start(startTime); osc.stop(startTime + duration);
+  }
+
+  function putarSuaraPoinBawaan() {
+    if (audioCtx.state === 'suspended') audioCtx.resume();
+    mainkanNadaSynth(587.33, 0.00, 0.12, 'triangle', 0.26);
+    mainkanNadaSynth(739.99, 0.10, 0.12, 'triangle', 0.26);
+    mainkanNadaSynth(880.00, 0.20, 0.28, 'sine', 0.28);
+  }
+
+  function putarSuaraNotifPoin() {
+    if (customAudioPoinData) {
+      try { const audio = new Audio(customAudioPoinData); audio.play().catch(() => putarSuaraPoinBawaan()); } catch (e) { putarSuaraPoinBawaan(); }
+    } else {
+      putarSuaraPoinBawaan();
+    }
+  }
+
+  function unggahAudioPoin(e) {
+    const file = e.target.files[0];
+    if (!file) return;
+    if (file.size > 800 * 1024) { alert("Ukuran audio terlalu besar! Gunakan file di bawah 800KB."); e.target.value = ''; return; }
+    const reader = new FileReader();
+    reader.onload = function(evt) {
+      customAudioPoinData = evt.target.result;
+      try { localStorage.setItem(AUDIO_POIN_KEY, customAudioPoinData); updateStatusAudioTierUI(); putarSuaraNotifPoin(); } catch (err) { alert("Gagal menyimpan audio!"); }
+    };
+    reader.readAsDataURL(file);
+  }
+
+  function resetAudioPoin() {
+    customAudioPoinData = null; localStorage.removeItem(AUDIO_POIN_KEY);
+    const inp = document.getElementById('audioInput_poin'); if (inp) inp.value = '';
+    updateStatusAudioTierUI(); putarSuaraNotifPoin();
+  }
+
+  function putarTerompetDanTepukTangan() {
+    if (audioCtx.state === 'suspended') audioCtx.resume();
+    const nada = [
+      { f: 523.25, d: 0.15 }, { f: 659.25, d: 0.15 }, { f: 783.99, d: 0.18 },
+      { f: 1046.50, d: 0.45 }, { f: 783.99, d: 0.15 }, { f: 1046.50, d: 0.7 }
+    ];
+    let offset = 0;
+    nada.forEach(n => {
+      mainkanNadaSynth(n.f, offset, n.d, 'sawtooth', 0.2);
+      offset += n.d * 0.95;
+    });
+  }
+
+  function simpanDB() { 
+    localStorage.setItem(DB_KEY, JSON.stringify(db)); 
+    siarkanPesanSync({ type: 'UPDATE_DATA', db: db });
+  }
+  function tutupSemuaDropdown() { document.querySelectorAll('.dropdown').forEach(d => d.classList.remove('show')); }
+
+  function toggleDropdownReset(e) {
+    e.stopPropagation(); const el = document.getElementById('dropdownReset');
+    const wasOpen = el.classList.contains('show'); tutupSemuaDropdown(); if (!wasOpen) el.classList.add('show');
+  }
+
+  window.addEventListener('click', () => { 
+    tutupSemuaDropdown(); 
+    tutupQuickPointPopover(); 
+    tutupMiniColorPicker();
+  });
+
+  window.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      tutupModalNama();
+      tutupModalPoin();
+      tutupModalNotifSuara();
+      tutupModalLinkStream();
+      tutupModalKonfirmasiResetTabel();
+      tutupQuickPointPopover();
+      tutupMiniColorPicker();
+      tutupLayarPemenang();
+    }
+  });
+
+  /* FITUR MODAL LINK STREAM TIKTOK STUDIO & OBS */
+  function bukaModalLinkStream() {
+    tutupSemuaDropdown();
+    const origin = window.location.origin;
+    const path = window.location.pathname;
+    const base = `${origin}${path}`;
+
+    const urlTabel = `${base}?view=tabel`;
+    const urlPodium = `${base}?view=podium`;
+    const urlNotif = `${base}?view=notif`;
+
+    const elTabel = document.getElementById('linkOverlayTabel');
+    const elPodium = document.getElementById('linkOverlayPodium');
+    const elNotif = document.getElementById('linkOverlayNotif');
+
+    if (elTabel) {
+      elTabel.value = urlTabel;
+      const prev = document.getElementById('previewOverlayTabel');
+      if (prev) prev.href = urlTabel;
+    }
+    if (elPodium) {
+      elPodium.value = urlPodium;
+      const prev = document.getElementById('previewOverlayPodium');
+      if (prev) prev.href = urlPodium;
+    }
+    if (elNotif) {
+      elNotif.value = urlNotif;
+      const prev = document.getElementById('previewOverlayNotif');
+      if (prev) prev.href = urlNotif;
+    }
+
+    const modal = document.getElementById('modalLinkStream');
+    if (modal) modal.style.display = 'flex';
+  }
+
+  function tutupModalLinkStream() {
+    const modal = document.getElementById('modalLinkStream');
+    if (modal) modal.style.display = 'none';
+  }
+
+  function salinLinkStream(inputId, btnEl) {
+    const input = document.getElementById(inputId);
+    if (!input) return;
+    input.select();
+    input.setSelectionRange(0, 99999);
+
+    const selesaiSalin = () => {
+      const teksAwal = btnEl.innerHTML;
+      btnEl.innerHTML = '✅ Tersalin!';
+      btnEl.style.background = '#059669';
+      btnEl.style.borderColor = '#10b981';
+      btnEl.style.color = '#ffffff';
+      setTimeout(() => {
+        btnEl.innerHTML = teksAwal;
+        btnEl.style.background = '';
+        btnEl.style.borderColor = '';
+        btnEl.style.color = '';
+      }, 1800);
+    };
+
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(input.value).then(selesaiSalin).catch(() => {
+        document.execCommand('copy');
+        selesaiSalin();
+      });
+    } else {
+      document.execCommand('copy');
+      selesaiSalin();
+    }
+  }
+
+  /* MODAL KONFIRMASI RESET */
+  function bukaModalKonfirmasiReset(tipe) {
+    tutupSemuaDropdown(); tipeResetPending = tipe;
+    const title = document.getElementById('resetTabelModalTitle');
+    if (tipe === 'POINT') {
+      title.innerText = "Reset Semua Poin ke 0?";
+    } else {
+      title.innerText = "Kosongkan Seluruh Kursi?";
+    }
+    document.getElementById('modalConfirmResetTabel').style.display = 'flex';
+  }
+
+  function tutupModalKonfirmasiResetTabel() { document.getElementById('modalConfirmResetTabel').style.display = 'none'; tipeResetPending = null; }
+
+  function eksekusiResetTabelPasti() {
+    const currData = getActiveData();
+    if (tipeResetPending === 'POINT') {
+      currData.players.forEach(p => { p.poin = 0; });
+      if (currData.host) { currData.host.poin = 0; }
+      simpanDB(); urutkanOtomatis();
+      tambahLogAktivitas('RESET', `Semua poin ${db.activeSession} direset ke 0`, 'system');
+    } else if (tipeResetPending === 'SEMUA') {
+      db.sessions[db.activeSession] = buatDataTabelKosong();
+      simpanDB(); renderIsiTabel();
+      tambahLogAktivitas('RESET', `Seluruh data ${db.activeSession} dikosongkan`, 'system');
+    }
+    tutupModalKonfirmasiResetTabel();
+  }
+
+  // ========================================================
+  // HALL OF CHAMPIONS - FULL BODY AVATAR SYSTEM
+  // Menampilkan avatar resmi pose asli Roblox dengan floating living animation & pedestal aura
+  // ========================================================
+
+  function escapeHtml(text) {
+    if (text === null || text === undefined) return '';
+    return String(text)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#039;');
+  }
+
+  function pasangAvatarPodium(elemId, avatarUrl, nama, fallbackRank = 1, headshotUrl = null, robloxUser = '') {
+    const box = document.getElementById(elemId);
+    if (!box) return;
+
+    if (!avatarUrl && headshotUrl) {
+      avatarUrl = headshotUrl;
+    }
+
+    if (!avatarUrl) {
+      box.innerHTML = `
+        <div class="winner-empty-slot" style="display:flex; flex-direction:column; align-items:center; justify-content:center; height:100%; opacity:0.35;">
+          <span style="font-size:42px;">👤</span>
+          <span style="font-size:12px; font-weight:700; color:#94a3b8; margin-top:4px;">${escapeHtml(nama || 'KOSONG')}</span>
+        </div>
+      `;
+      return;
+    }
+
+    let srcFinal = avatarUrl;
+    if (srcFinal && srcFinal.includes('/Avatar/Png')) {
+      srcFinal = srcFinal.replace(/\/420\/420\//, '/720/720/').replace(/\/352\/352\//, '/720/720/');
+    }
+
+    const isHeadshotOnly = srcFinal.includes('AvatarHeadshot') || srcFinal.includes('ui-avatars.com');
+    const imgClass = isHeadshotOnly ? 'winner-3d-full-img winner-headshot-render' : 'winner-3d-full-img';
+
+    box.innerHTML = `<img src="${escapeHtml(srcFinal)}" class="${imgClass}" alt="${escapeHtml(nama || 'Winner')}" onerror="this.onerror=null; this.src='https://ui-avatars.com/api/?name=${encodeURIComponent(nama || 'Winner')}&background=0284c7&color=fff&rounded=true&bold=true'; this.className='winner-3d-full-img winner-headshot-render';">`;
+  }
+
+  function dapatkanFullBody3dAvatar(p, rank = 1) {
+    if (!p) return '';
+    const u = (p.robloxUser || p.user || '').toLowerCase().replace(/^@+/, '').trim();
+    if (!u && !p.nick && (!p.avatar || p.avatar.includes('ui-avatars'))) return '';
+
+    // Pemetaan Akun Turnamen Resmi (HD 720x720 Ultra Sharp Authentic Pose)
+    if (u === '1ss23ss4' || u === 'apinnntnr') {
+      return 'https://tr.rbxcdn.com/30DAY-Avatar-26186AD8D89403B50ADB216FF349F3DA-Png/720/720/Avatar/Png/noFilter';
+    }
+    if (u === 'yakahd1or' || u === 'd1ortnr') {
+      return 'https://tr.rbxcdn.com/30DAY-Avatar-CC5A14D30E092A267E98BBE01B93324F-Png/720/720/Avatar/Png/noFilter';
+    }
+    if (u === 'daveinhoszchx' || u === 'alejandrotnr') {
+      return 'https://tr.rbxcdn.com/30DAY-Avatar-A9B889D71C9E9C5FF1A5ED2D566A8F0D-Png/720/720/Avatar/Png/noFilter';
+    }
+    if (u === 'realmisshunter') {
+      return 'https://tr.rbxcdn.com/30DAY-Avatar-87B20DADB4974C053BDD4DDAB41208D9-Png/720/720/Avatar/Png/noFilter';
+    }
+    if (u === 'shiye977') {
+      return 'https://tr.rbxcdn.com/30DAY-Avatar-7125A33B248D1E2B94A595631E1A3470-Png/720/720/Avatar/Png/noFilter';
+    }
+    if (u === 'satorugojoh0noredone') {
+      return 'https://tr.rbxcdn.com/30DAY-Avatar-AECF32A2822364BE2FCD96A0588F9548-Png/720/720/Avatar/Png/noFilter';
+    }
+    if (u === 'roblox') {
+      return 'https://tr.rbxcdn.com/30DAY-Avatar-310966282D3529E36976BF6B07B1DC90-Png/720/720/Avatar/Png/noFilter';
+    }
+
+    if (p.avatar3d && p.avatar3d.includes('Avatar') && !p.avatar3d.includes('AvatarHeadshot')) {
+      return p.avatar3d.replace(/\/420\/420\//, '/720/720/').replace(/\/352\/352\//, '/720/720/');
+    }
+
+    if (p.avatar && p.avatar.includes('rbxcdn.com')) {
+      if (p.avatar.includes('/Avatar/') && !p.avatar.includes('AvatarHeadshot')) {
+        return p.avatar.replace(/\/420\/420\//, '/720/720/').replace(/\/352\/352\//, '/720/720/');
+      }
+      return p.avatar;
+    }
+
+    if (p.avatar && !p.avatar.includes('ui-avatars')) {
+      return p.avatar;
+    }
+    return '';
+  }
+
+  function pasangDataJuaraPodium(rank, pData) {
+    const nameEl = document.getElementById(`winName${rank}`);
+    const nickEl = document.getElementById(`winNick${rank}`);
+    const scoreEl = document.getElementById(`winScore${rank}`);
+
+    if (pData) {
+      const namaDisplay = pData.nick || pData.user || pData.robloxUser || `Juara ${rank}`;
+      const usernameTag = pData.robloxUser ? `@${pData.robloxUser.replace(/^@+/, '')}` : (pData.user ? `@${pData.user}` : '-');
+      const scoreVal = (pData.poin !== undefined && pData.poin !== null) ? pData.poin : 0;
+
+      if (nameEl) nameEl.innerText = namaDisplay;
+      if (nickEl) nickEl.innerText = usernameTag;
+      if (scoreEl) scoreEl.innerText = scoreVal;
+
+      const avUrl = pData.avatar3d || dapatkanFullBody3dAvatar(pData, rank);
+      pasangAvatarPodium(`winAvatarBox${rank}`, avUrl, namaDisplay, rank, pData.avatar, pData.robloxUser || pData.user);
+    } else {
+      if (nameEl) nameEl.innerText = 'Belum Ada';
+      if (nickEl) nickEl.innerText = '@standby';
+      if (scoreEl) scoreEl.innerText = '0';
+      pasangAvatarPodium(`winAvatarBox${rank}`, '', '', rank);
+    }
+  }
+
+  let fireworksInterval = null;
+
+  function tampilkanLayarPemenang(isBroadcast = true) {
+    tutupQuickPointPopover();
+    tutupMiniColorPicker();
+    const currData = getActiveData();
+    const sorted = [...currData.players].filter(p => p.isReady && (p.nick || p.user || p.robloxUser)).sort((a, b) => b.poin - a.poin);
+    
+    let p1, p2, p3;
+    if (sorted.length > 0) {
+      p1 = sorted[0] || null;
+      p2 = sorted[1] || null;
+      p3 = sorted[2] || null;
+    } else {
+      // Demo / Tes Otomatis Hall of Champions (Persis seperti di foto referensi)
+      p1 = { user: 'ApinnTnR', nick: 'ApinnTnR', robloxUser: '1ss23ss4', avatar3d: 'https://tr.rbxcdn.com/30DAY-Avatar-26186AD8D89403B50ADB216FF349F3DA-Png/720/720/Avatar/Png/noFilter', poin: 3 };
+      p2 = { user: 'd1orTnR', nick: 'd1orTnR', robloxUser: 'YAKAHD1OR', avatar3d: 'https://tr.rbxcdn.com/30DAY-Avatar-CC5A14D30E092A267E98BBE01B93324F-Png/720/720/Avatar/Png/noFilter', poin: 2 };
+      p3 = { user: 'alejandroTnR', nick: 'alejandroTnR', robloxUser: 'Daveinhoszchx', avatar3d: 'https://tr.rbxcdn.com/30DAY-Avatar-A9B889D71C9E9C5FF1A5ED2D566A8F0D-Png/720/720/Avatar/Png/noFilter', poin: 1 };
+    }
+
+    pasangDataJuaraPodium(1, p1);
+    pasangDataJuaraPodium(2, p2);
+    pasangDataJuaraPodium(3, p3);
+
+    document.getElementById('winnerOverlay').classList.add('active');
+
+    putarTerompetDanTepukTangan();
+    mulaiAnimasiPetasan();
+
+    try {
+      localStorage.setItem(PODIUM_STATE_KEY, JSON.stringify({ active: true, p1, p2, p3 }));
+    } catch (_) {}
+
+    if (isBroadcast) {
+      siarkanPesanSync({ type: 'OPEN_PODIUM', p1, p2, p3 });
+    }
+  }
+
+  function tutupLayarPemenang(isBroadcast = true) {
+    document.getElementById('winnerOverlay').classList.remove('active');
+    if (fireworksInterval) { clearInterval(fireworksInterval); fireworksInterval = null; }
+
+    try {
+      localStorage.setItem(PODIUM_STATE_KEY, JSON.stringify({ active: false }));
+    } catch (_) {}
+
+    if (isBroadcast) {
+      siarkanPesanSync({ type: 'CLOSE_PODIUM' });
+    }
+  }
+
+  function mulaiAnimasiPetasan() {
+    const canvas = document.getElementById('fireworksCanvas');
+    const ctx = canvas.getContext('2d');
+    canvas.width = window.innerWidth; canvas.height = window.innerHeight;
+    let particles = [];
+    function createFirework(x, y) {
+      const colors = ['#facc15', '#38bdf8', '#fb923c', '#4ade80', '#f43f5e', '#ffffff'];
+      for (let i = 0; i < 35; i++) {
+        const angle = Math.random() * Math.PI * 2;
+        const speed = Math.random() * 6 + 2;
+        particles.push({
+          x, y, vx: Math.cos(angle) * speed, vy: Math.sin(angle) * speed,
+          color: colors[Math.floor(Math.random() * colors.length)],
+          alpha: 1, decay: Math.random() * 0.025 + 0.015
+        });
+      }
+    }
+    if (fireworksInterval) clearInterval(fireworksInterval);
+    fireworksInterval = setInterval(() => {
+      createFirework(Math.random() * canvas.width * 0.8 + canvas.width * 0.1, Math.random() * canvas.height * 0.5 + 50);
+    }, 550);
+
+    function loop() {
+      if (!document.getElementById('winnerOverlay').classList.contains('active')) {
+        ctx.clearRect(0, 0, canvas.width, canvas.height); return;
+      }
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      for (let i = particles.length - 1; i >= 0; i--) {
+        const p = particles[i];
+        p.x += p.vx; p.y += p.vy; p.vy += 0.06; p.alpha -= p.decay;
+        if (p.alpha <= 0) particles.splice(i, 1);
+        else {
+          ctx.globalAlpha = p.alpha; ctx.fillStyle = p.color;
+          ctx.beginPath(); ctx.arc(p.x, p.y, 3, 0, Math.PI * 2); ctx.fill();
+        }
+      }
+      ctx.globalAlpha = 1; requestAnimationFrame(loop);
+    }
+    loop();
+  }
+
+  function bukaModalInputNama(index) {
+    tutupQuickPointPopover();
+    tutupMiniColorPicker();
+    const currData = getActiveData();
+    const p = (index === 19) ? currData.host : currData.players[index];
+    if (!p) return;
+
+    document.getElementById('editPlayerIndex').value = index;
+    document.getElementById('modalInputJudul').innerText = (index === 19) ? 'Kursi 20 (Host)' : `Kursi ${index + 1}`;
+    document.getElementById('inputUserRoblox').value = p.robloxUser || '';
+    document.getElementById('inputNamaTikTok').value = p.user || '';
+    document.getElementById('inputDisplayName').value = p.nick || '';
+    document.getElementById('inputAvatarUrl').value = p.avatar || '';
+    document.getElementById('inputAvatar3dUrl').value = p.avatar3d || '';
+    document.getElementById('inputUserId').value = p.userId || '';
+
+    updateModalPreviewUI(p.robloxUser || '', p.nick || '', p.avatar || '');
+    document.getElementById('modalSearchStatus').innerText = '';
+
+    document.getElementById('modalInputNama').style.display = 'flex';
+    setTimeout(() => { document.getElementById('inputUserRoblox').focus(); }, 100);
+  }
+
+  function updateModalPreviewUI(robloxUser, nick, avatarUrl) {
+    const prevImg = document.getElementById('modalAvatarPreview');
+    const emptyBox = document.getElementById('modalAvatarEmpty');
+    const txtUser = document.getElementById('modalPreviewUser');
+    const txtNick = document.getElementById('modalPreviewNick');
+
+    txtUser.innerText = robloxUser ? `@${robloxUser}` : '@username_roblox';
+    txtNick.innerText = nick ? nick : '-';
+
+    if (avatarUrl) {
+      prevImg.src = avatarUrl; prevImg.style.display = 'block'; emptyBox.style.display = 'none';
+    } else {
+      prevImg.style.display = 'none'; emptyBox.style.display = 'flex';
+    }
+  }
+
+  function tutupModalNama() { document.getElementById('modalInputNama').style.display = 'none'; }
+
+  function resetFormModalNama() {
+    const idx = parseInt(document.getElementById('editPlayerIndex').value);
+    document.getElementById('inputUserRoblox').value = '';
+    document.getElementById('inputNamaTikTok').value = '';
+    document.getElementById('inputDisplayName').value = '';
+    document.getElementById('inputAvatarUrl').value = '';
+    document.getElementById('inputAvatar3dUrl').value = '';
+    document.getElementById('inputUserId').value = '';
+    updateModalPreviewUI('', '', '');
+    document.getElementById('modalSearchStatus').innerText = '';
+
+    const currData = getActiveData();
+    if (!isNaN(idx) && idx >= 0) {
+      if (idx === 19) {
+        currData.host.robloxUser = '';
+        currData.host.user = '';
+        currData.host.nick = '';
+        currData.host.avatar = '';
+        currData.host.avatar3d = '';
+        currData.host.userId = '';
+        currData.host.poin = 0;
+        currData.host.colorTag = '';
+        tutupModalNama();
+        simpanDB();
+        renderIsiTabel();
+        tambahLogAktivitas('RESET', 'Host berhasil direset', 'system');
+      } else if (currData.players[idx]) {
+        const namaLama = currData.players[idx].nick || currData.players[idx].user || `Kursi ${idx + 1}`;
+        currData.players[idx].robloxUser = ''; currData.players[idx].user = ''; currData.players[idx].nick = ''; currData.players[idx].avatar = '';
+        currData.players[idx].avatar3d = ''; currData.players[idx].userId = '';
+        currData.players[idx].poin = 0; currData.players[idx].isReady = false; currData.players[idx].isPaid = false; currData.players[idx].colorTag = '';
+        tutupModalNama(); urutkanOtomatis();
+        tambahLogAktivitas('RESET', `${namaLama} dihapus & kursi digeser ke bawah`, 'system');
+      }
+    }
+  }
+
+  async function mulaiCariAkunRobloxAuto() {
+    const rawInput = document.getElementById('inputUserRoblox').value.trim().replace(/^@+/, '');
+    const statusEl = document.getElementById('modalSearchStatus');
+    const btnCari = document.getElementById('btnCariRoblox');
+
+    if (!rawInput) {
+      statusEl.style.color = '#f87171';
+      statusEl.innerText = 'Ketik username Roblox terlebih dahulu!';
+      return;
+    }
+
+    btnCari.disabled = true;
+    btnCari.innerText = '⏳...';
+    statusEl.style.color = '#38bdf8';
+    statusEl.innerText = 'Mencari akun...';
+
+    try {
+      // Coba endpoint lokal terlebih dahulu, jika 404/gagal otomatis beralih ke endpoint live Vercel
+      let res = await fetch(`/api/cari-roblox?username=${encodeURIComponent(rawInput)}`).catch(() => null);
+      if (!res || !res.ok) {
+        res = await fetch(`https://skor-sohe.vercel.app/api/cari-roblox?username=${encodeURIComponent(rawInput)}`).catch(() => null);
+      }
+      if (!res) {
+        throw new Error('Tidak dapat terhubung ke server pencarian');
+      }
+      const data = await res.json();
+
+      btnCari.disabled = false;
+      btnCari.innerText = 'Cari';
+
+      if (res.ok && data.sukses) {
+        document.getElementById('inputUserRoblox').value = data.userName;
+        document.getElementById('inputDisplayName').value = data.displayName;
+        document.getElementById('inputAvatarUrl').value = data.avatarUrl;
+        document.getElementById('inputAvatar3dUrl').value = data.avatar3dUrl || data.avatarUrl;
+        document.getElementById('inputUserId').value = data.userId || '';
+
+        updateModalPreviewUI(data.userName, data.displayName, data.avatarUrl);
+        statusEl.style.color = '#4ade80';
+        statusEl.innerText = 'Akun Roblox & Foto ditemukan! ✔';
+      } else {
+        statusEl.style.color = '#f87171';
+        statusEl.innerText = data.pesan || 'Akun tidak ditemukan!';
+      }
+    } catch (err) {
+      btnCari.disabled = false;
+      btnCari.innerText = 'Cari';
+      statusEl.style.color = '#f87171';
+      statusEl.innerText = 'Gagal terhubung ke API!';
+    }
+  }
+
+  function simpanDataModalNama() {
+    const idx = parseInt(document.getElementById('editPlayerIndex').value);
+    if (isNaN(idx)) return;
+
+    const robloxU = document.getElementById('inputUserRoblox').value.trim().replace(/^@+/, '');
+    let namaPemain = document.getElementById('inputNamaTikTok').value.trim();
+    let displayN = document.getElementById('inputDisplayName').value.trim().replace(/^@+/, '');
+    let avatarA = document.getElementById('inputAvatarUrl').value.trim();
+    let avatar3dA = document.getElementById('inputAvatar3dUrl').value.trim();
+    let userIdA = document.getElementById('inputUserId').value.trim();
+
+    if (robloxU && !namaPemain) namaPemain = displayN || robloxU;
+    if (robloxU && !displayN) displayN = namaPemain || robloxU;
+    if ((robloxU || namaPemain || displayN) && !avatarA) {
+      const inisialNama = displayN || namaPemain || robloxU;
+      avatarA = `https://api.dicebear.com/7.x/bottts/svg?seed=${encodeURIComponent(inisialNama)}&backgroundColor=0284c7`;
+    }
+
+    const currData = getActiveData();
+    if (idx === 19) {
+      const h = currData.host;
+      h.robloxUser = robloxU;
+      h.user = namaPemain;
+      h.nick = displayN;
+      h.avatar = avatarA;
+      h.avatar3d = avatar3dA || avatarA;
+      h.userId = userIdA;
+      tutupModalNama();
+      simpanDB();
+      renderIsiTabel();
+      tambahLogAktivitas('EDIT', `Host diperbarui: ${h.nick || h.user || '(Kosong)'}`, 'system');
+      return;
+    }
+
+    const p = currData.players[idx];
+    p.robloxUser = robloxU;
+    p.user = namaPemain;
+    p.nick = displayN;
+    p.avatar = avatarA;
+    p.avatar3d = avatar3dA || avatarA;
+    p.userId = userIdA;
+
+    const adaIsi = Boolean(robloxU || namaPemain || displayN);
+    p.isReady = adaIsi;
+
+    if (!adaIsi) {
+      p.poin = 0; p.avatar = ''; p.isPaid = false; p.colorTag = '';
+    }
+    tutupModalNama();
+    urutkanOtomatis();
+    tambahLogAktivitas('EDIT', `Kursi ${idx + 1} diperbarui: ${p.nick || p.user || '(Kosong)'}`, 'system');
+  }
+
+  function bukaModalPoin() { 
+    const qpArr = (db.warnaPoin && Array.isArray(db.warnaPoin.quickPoints)) ? db.warnaPoin.quickPoints : DEFAULT_QUICK_POINTS;
+    document.getElementById('inputPresetPoinCepat').value = qpArr.join(', ');
+    document.getElementById('modalPoin').style.display = 'flex'; 
+  }
+
+  function tutupModalPoin() { document.getElementById('modalPoin').style.display = 'none'; }
+  function tutupModalDiLuar(e) {
+    if (e.target.id === 'modalPoin') tutupModalPoin();
+    if (e.target.id === 'modalInputNama') tutupModalNama();
+    if (e.target.id === 'modalNotifSuara') tutupModalNotifSuara();
+    if (e.target.id === 'modalConfirmResetTabel') tutupModalKonfirmasiResetTabel();
+  }
+
+  function simpanPoinWarna() {
+    const rawPreset = document.getElementById('inputPresetPoinCepat').value || '';
+    const parsedPreset = rawPreset.split(',').map(s => parseInt(s.trim())).filter(n => !isNaN(n) && n > 0);
+    db.warnaPoin.quickPoints = parsedPreset.length > 0 ? parsedPreset : DEFAULT_QUICK_POINTS;
+    simpanDB();
+    renderTombolQuickPoint();
+    tambahLogAktivitas('POIN', `Preset angka poin cepat diperbarui`, 'system');
+  }
+
+  function togglePayStatus(index, ev) {
+    if (ev) ev.stopPropagation();
+    const currData = getActiveData();
+    const p = (index === 19) ? currData.host : currData.players[index];
+    if (!p) return;
+    p.isPaid = !p.isPaid;
+    simpanDB(); renderIsiTabel();
+    tambahLogAktivitas(p.nick || p.user || (index === 19 ? 'Host' : `Kursi ${index+1}`), `Status: ${p.isPaid ? 'DONE ✔' : 'READY'}`, 'system');
+  }
+
+  function inisialisasiStrukturTabel() {
+    const tbL = document.getElementById('bodyLeft');
+    const tbR = document.getElementById('bodyRight');
+    tbL.innerHTML = ''; tbR.innerHTML = '';
+
+    for (let i = 0; i < 19; i++) {
+      const tr = document.createElement('tr');
+      tr.id = `row-kursi-${i}`;
+      tr.innerHTML = `
+        <td class="td-no">${i + 1}</td>
+        <td class="cell-click-popup cell-nama-target" title="Klik untuk edit data pemain">
+          <div style="padding-left:4px;"><span class="name-tiktok name-empty">(Kosong)</span></div>
+        </td>
+        <td class="cell-click-popup cell-roblox-target" title="Klik untuk edit data Roblox">
+          <div style="display:flex; align-items:center; gap:8px;">
+            <div class="avatar-wrap">${renderAvatarHtml('', '')}</div>
+            <div style="flex:1; min-width:0;"><span class="name-roblox-display name-empty">-</span></div>
+          </div>
+        </td>
+        <td class="col-point">
+          <div class="score-box">
+            <div class="score-val" title="Klik untuk Poin Cepat">0</div>
+          </div>
+        </td>
+      `;
+      if (i < 10) tbL.appendChild(tr); else tbR.appendChild(tr);
+    }
+
+    const trHost = document.createElement('tr');
+    trHost.className = "host-row";
+    trHost.id = "row-kursi-19";
+    trHost.innerHTML = `
+      <td class="td-no">20</td>
+      <td colspan="2" class="cell-click-popup cell-host-merged" title="Klik untuk edit data Host" onclick="bukaModalInputNama(19)">
+        <div style="display:flex; align-items:center; justify-content:space-between; gap:10px; padding:0 6px;">
+          <div style="display:flex; align-items:center; gap:10px; min-width:0; flex:1;">
+            <div class="avatar-wrap" id="hostAvatarWrap"></div>
+            <div style="display:flex; flex-direction:column; min-width:0;">
+              <span id="hostDisplayName" class="name-roblox-display" style="font-weight:800; font-size:14px; color:var(--text-main);"></span>
+              <span id="hostRobloxTag" style="font-family:'JetBrains Mono',monospace; font-size:11px; color:var(--text-sub); overflow:hidden; text-overflow:ellipsis;"></span>
+            </div>
+          </div>
+          <div style="display:flex; align-items:center; gap:4px; flex-shrink:0;">
+            <span class="pay-status-tag done" title="Status Host">HOST</span>
+            <span class="btn-color-palette" onclick="bukaMiniColorPicker(19, event)" title="Ubah warna latar baris">🎨</span>
+          </div>
+        </div>
+      </td>
+      <td class="col-point">
+        <div class="score-box">
+          <div class="score-val host-score" onclick="bukaQuickPointPopover(19, event)" title="Klik untuk tambah poin Host">0</div>
+        </div>
+      </td>
+    `;
+    tbR.appendChild(trHost);
+  }
+
+  function renderAvatarHtml(avatarUrl, nama) {
+    const inisial = nama ? nama.charAt(0).toUpperCase() : '-';
+    if (avatarUrl) {
+      return `<img class="avatar-mini" src="${avatarUrl}" alt="Avatar" loading="lazy" onerror="this.outerHTML='<div class=\\\'avatar-placeholder\\\'>${inisial}</div>'">`;
+    }
+    return `<div class="avatar-placeholder">${inisial}</div>`;
+  }
+
+  function renderIsiTabel() {
+    const currData = getActiveData();
+    const lblSesi = document.getElementById('labelSesiAktif');
+    if (lblSesi) lblSesi.innerText = db.activeSession;
+
+    currData.players.forEach((p, idx) => {
+      let tr = document.getElementById(`row-kursi-${idx}`);
+      if (!tr) return;
+
+      const adaPemain = !!(p.user || p.robloxUser || p.nick);
+      p.isReady = adaPemain;
+
+      tr.classList.remove('tag-blue', 'tag-pink', 'tag-purple', 'tag-red', 'tag-yellow');
+      if (p.colorTag) {
+        tr.classList.add(`tag-${p.colorTag}`);
+      }
+
+      const colorIconHtml = adaPemain 
+        ? `<span class="btn-color-palette" onclick="bukaMiniColorPicker(${idx}, event)" title="Ubah warna latar baris">🎨</span>` 
+        : '';
+
+      const badgePayHtml = adaPemain
+        ? `<span class="pay-status-tag ${p.isPaid ? 'done' : 'ready'}" onclick="togglePayStatus(${idx}, event)" title="Klik untuk ganti status">${p.isPaid ? '✔' : '— READY'}</span>${colorIconHtml}`
+        : '';
+
+      const cellNama = tr.querySelector('.cell-nama-target');
+      if (cellNama) {
+        cellNama.onclick = () => bukaModalInputNama(idx);
+        cellNama.innerHTML = `
+          <div style="padding-left:4px; display:flex; align-items:center; justify-content:space-between;">
+            <span class="name-tiktok ${!p.user ? 'name-empty' : ''}">${p.user || '(Kosong)'}</span>
+            <div style="display:flex; align-items:center; flex-shrink:0;">${badgePayHtml}</div>
+          </div>`;
+      }
+
+      const cellRoblox = tr.querySelector('.cell-roblox-target');
+      if (cellRoblox) {
+        cellRoblox.onclick = () => bukaModalInputNama(idx);
+        const avHtml = renderAvatarHtml(p.avatar, p.nick || p.user);
+        const nickHtml = `<span class="name-roblox-display ${!p.nick ? 'name-empty' : ''}">${p.nick || '-'}</span>`;
+        cellRoblox.innerHTML = `
+          <div style="display:flex; align-items:center; gap:6px;">
+            <div class="avatar-wrap">${avHtml}</div>
+            <div style="flex:1; min-width:0; display:flex; align-items:center;">${nickHtml}</div>
+          </div>`;
+      }
+
+      const scoreVal = tr.querySelector('.score-val');
+      if (scoreVal) {
+        if (p.isReady) {
+          scoreVal.innerText = p.poin;
+          scoreVal.className = 'score-val';
+          scoreVal.onclick = (ev) => bukaQuickPointPopover(idx, ev);
+        } else {
+          scoreVal.innerText = '-';
+          scoreVal.className = 'score-val score-standby';
+          scoreVal.onclick = () => bukaModalInputNama(idx);
+        }
+      }
+    });
+
+    // Render Host (Baris 20)
+    const h = currData.host || { robloxUser: '', user: '', nick: '', avatar: '', poin: 0, colorTag: '' };
+    const trHost = document.getElementById('row-kursi-19');
+    if (trHost) {
+      trHost.classList.remove('tag-blue', 'tag-pink', 'tag-purple', 'tag-red', 'tag-yellow');
+      if (h.colorTag) {
+        trHost.classList.add(`tag-${h.colorTag}`);
+      }
+
+      const hostAvatar = document.getElementById('hostAvatarWrap');
+      const hostNick = document.getElementById('hostDisplayName');
+      const hostTag = document.getElementById('hostRobloxTag');
+
+      if (hostAvatar) hostAvatar.innerHTML = renderAvatarHtml(h.avatar, h.nick || h.user || 'Host');
+      if (hostNick) {
+        hostNick.innerText = h.nick || h.user || 'HOST (Belum Diatur)';
+        hostNick.className = `name-roblox-display ${!(h.nick || h.user) ? 'name-empty' : ''}`;
+      }
+      if (hostTag) {
+        hostTag.innerText = h.robloxUser ? `@${h.robloxUser}` : (h.user ? `@${h.user}` : '@host');
+      }
+
+      const hostScoreEl = trHost.querySelector('.host-score');
+      if (hostScoreEl) hostScoreEl.innerText = h.poin;
+    }
+  }
+
+  function urutkanOtomatis() {
+    for (let i = 0; i < 19; i++) {
+      const el = document.getElementById(`row-kursi-${i}`);
+      if (el) { el.classList.remove('moving-row'); el.style.transform = ''; }
+    }
+
+    const currData = getActiveData();
+    const posisiLama = {};
+    currData.players.forEach((p, idx) => {
+      const el = document.getElementById(`row-kursi-${idx}`);
+      if (el) posisiLama[p.id] = el.getBoundingClientRect().top;
+    });
+
+    const punyaIsi = (p) => Boolean((p.user && p.user.trim()) || (p.robloxUser && p.robloxUser.trim()) || (p.nick && p.nick.trim()));
+    currData.players.forEach(p => { p.isReady = punyaIsi(p); });
+
+    const aktifSiap = currData.players.filter(p => punyaIsi(p));
+    const kursiKosong = currData.players.filter(p => !punyaIsi(p));
+
+    aktifSiap.sort((a, b) => b.poin - a.poin);
+    currData.players = [...aktifSiap, ...kursiKosong];
+
+    simpanDB(); 
+    renderIsiTabel();
+
+    requestAnimationFrame(() => {
+      currData.players.forEach((p, idx) => {
+        if (posisiLama[p.id] !== undefined) {
+          const el = document.getElementById(`row-kursi-${idx}`);
+          if (el) {
+            const posisiBaru = el.getBoundingClientRect().top;
+            const deltaY = posisiLama[p.id] - posisiBaru;
+            if (deltaY !== 0) {
+              el.style.transform = `translateY(${deltaY}px)`;
+              void el.offsetHeight;
+              el.classList.add('moving-row');
+              el.style.transform = 'translateY(0)';
+              setTimeout(() => { el.classList.remove('moving-row'); el.style.transform = ''; }, 580);
+            }
+          }
+        }
+      });
+    });
+  }
+
+  function tambahLogAktivitas(entitas, keterangan, tipe = 'system', poinAwal = null, poinAkhir = null, delta = null) {
+    const list = document.getElementById('logList');
+    if (!list) return;
+    const emptyText = document.getElementById('emptyLogText');
+    if (emptyText) emptyText.remove();
+
+    const d = new Date();
+    const waktuStr = `${String(d.getHours()).padStart(2, '0')}:${String(d.getMinutes()).padStart(2, '0')}:${String(d.getSeconds()).padStart(2, '0')}`;
+    const itemEl = document.createElement('div');
+    itemEl.className = `log-item tier-${tipe}`;
+
+    let transisiHtml = '';
+    if (poinAwal !== null && poinAkhir !== null && delta !== null) {
+      const tanda = poinAkhir >= poinAwal ? '+' : '-';
+      transisiHtml = `<div class="log-item-pts-wrap"><span class="log-item-transisi">${poinAwal} ➔ ${poinAkhir}</span> <span class="log-item-pts">${tanda}${Math.abs(delta)}</span></div>`;
+    }
+
+    itemEl.innerHTML = `
+      <div style="overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">
+        <span class="log-item-time">[${waktuStr}]</span>
+        <span class="log-item-user">${entitas}</span>: <span class="log-item-text">${keterangan}</span>
+      </div>
+      ${transisiHtml}
+    `;
+    list.insertBefore(itemEl, list.firstChild);
+    if (list.children.length > 40) list.removeChild(list.lastChild);
+  }
+
+  function hapusLogAktivitas() {
+    document.getElementById('logList').innerHTML = `<div style="color: #64748b; font-style: italic; padding: 4px;" id="emptyLogText">Log telah dibersihkan</div>`;
+  }
+
+  function terapkanUkuranKolomTersimpan() {
+    if (!savedColWidths) return;
+    Object.keys(savedColWidths).forEach(colName => {
+      const w = savedColWidths[colName];
+      document.querySelectorAll(`col[data-col="${colName}"]`).forEach(c => { c.style.width = w; });
+      document.querySelectorAll(`th[data-col="${colName}"]`).forEach(th => { th.style.width = w; });
+    });
+  }
+
+  function inisialisasiResizeKolom() {
+    terapkanUkuranKolomTersimpan();
+    document.querySelectorAll('th .col-resizer').forEach(resizer => {
+      resizer.addEventListener('pointerdown', function(e) {
+        e.preventDefault(); e.stopPropagation();
+        const th = this.parentElement;
+        const colName = th.getAttribute('data-col');
+        if (!colName) return;
+
+        const startX = e.clientX;
+        const startWidth = th.offsetWidth;
+        const minW = MIN_WIDTHS[colName] || 40;
+
+        th.classList.add('resizing');
+        document.body.classList.add('resizing-active');
+
+        function onPointerMove(moveEvent) {
+          const deltaX = moveEvent.clientX - startX;
+          const widthStr = Math.max(minW, startWidth + deltaX) + 'px';
+          document.querySelectorAll(`col[data-col="${colName}"]`).forEach(colEl => { colEl.style.width = widthStr; });
+          document.querySelectorAll(`th[data-col="${colName}"]`).forEach(thEl => { thEl.style.width = widthStr; });
+          savedColWidths[colName] = widthStr;
+        }
+
+        function onPointerUp() {
+          th.classList.remove('resizing');
+          document.body.classList.remove('resizing-active');
+          window.removeEventListener('pointermove', onPointerMove);
+          window.removeEventListener('pointerup', onPointerUp);
+          try { localStorage.setItem(COL_WIDTHS_KEY, JSON.stringify(savedColWidths)); } catch (_) {}
+        }
+
+        window.addEventListener('pointermove', onPointerMove);
+        window.addEventListener('pointerup', onPointerUp);
+      });
+    });
+  }
+
+  window.addEventListener('DOMContentLoaded', () => {
+    try { if (window.resizeTo && currentViewMode === 'admin') window.resizeTo(1060, 725); } catch (_) {}
+    muatStatusFoldLog();
+    inisialisasiStrukturTabel();
+    renderIsiTabel();
+    inisialisasiResizeKolom();
+
+    // Pulihkan status perayaan jika membuka link ?view=podium saat podium sedang aktif di Admin
+    if (currentViewMode === 'podium') {
+      try {
+        const savedPodium = JSON.parse(localStorage.getItem(PODIUM_STATE_KEY) || 'null');
+        if (savedPodium && savedPodium.active) {
+          tampilkanLayarPemenangDariSync(savedPodium.p1, savedPodium.p2, savedPodium.p3);
+        }
+      } catch (_) {}
+    }
+
+    tambahLogAktivitas('SISTEM', `Scoreboard Siap (Mode: ${currentViewMode.toUpperCase()}) - Sesi: ${db.activeSession}`, 'system');
+  });
+</script>
+</body>
+</html>
