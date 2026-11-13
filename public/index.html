@@ -546,12 +546,12 @@
       top: 50% !important;
       width: 1100px;
       max-width: 1100px;
-      min-width: 1100px;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
       margin: 0;
+      transform: translate(-50%, -50%) scale(min(calc((100vw - 36px) / 1280), calc((100vh - 36px) / 800)));
       transform-origin: center center;
       transition: transform 0.15s ease-out;
       z-index: 10;
@@ -1156,7 +1156,6 @@
       gap: 20px !important;
       max-width: 1100px !important;
       width: 1100px !important;
-      min-width: 1100px !important;
       position: relative !important;
       z-index: 15 !important;
       margin: 8px auto !important;
