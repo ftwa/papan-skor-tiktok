@@ -2522,6 +2522,1629 @@
       box-shadow: 3px 3px 0px #000000 !important;
       font-weight: 900 !important;
     }
+
+/* ==========================================================================
+   20 TEMA LENGKAP PAPAN SKOR TIKTOK LIVE STREAM & OVERLAY OBS
+   Setiap tema memiliki karakter tipografi, palet warna, tekstur, dan fitur spesial.
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   0. PERBAIKAN HARMONI & WARNA FONT TEMA: COMIC POP-ART (WEBTOON)
+   -------------------------------------------------------------------------- */
+html.theme-comic {
+  --bg: #fffde7;
+  --card-bg: #ffffff;
+  --border-color: #000000;
+  --primary: #ffe600;
+  --primary-hover: #ffd000;
+  --text-main: #0a0a0a;
+  --text-sub: #334155;
+  --color-point: #dc2626;
+  --host-bg: #ffedd5;
+  --host-text: #000000;
+}
+
+html.theme-comic body {
+  font-family: 'Fredoka', 'Outfit', sans-serif !important;
+  color: #0a0a0a !important;
+}
+
+html.theme-comic:not(.mode-tabel):not(.mode-podium):not(.mode-notif) body {
+  background-color: #fffde7 !important;
+  background-image: radial-gradient(#94a3b8 15%, transparent 16%) !important;
+  background-size: 16px 16px !important;
+}
+
+/* Comic Top Bar */
+html.theme-comic .top-bar {
+  background: #ffffff !important;
+  border: 3.5px solid #000000 !important;
+  box-shadow: 5px 5px 0px #000000 !important;
+  border-radius: 14px !important;
+}
+
+html.theme-comic .btn-action-soft {
+  background: #ffe600 !important;
+  color: #000000 !important;
+  border: 2.5px solid #000000 !important;
+  box-shadow: 3px 3px 0px #000000 !important;
+  font-family: 'Fredoka', sans-serif !important;
+  font-weight: 800 !important;
+  border-radius: 8px !important;
+}
+html.theme-comic .btn-action-soft:hover {
+  background: #fff066 !important;
+  transform: translateY(-1px) !important;
+  box-shadow: 4px 4px 0px #000000 !important;
+}
+
+html.theme-comic .btn-theme-toggle {
+  background: #ff0055 !important;
+  color: #ffffff !important;
+  border: 2.5px solid #000000 !important;
+  box-shadow: 3px 3px 0px #000000 !important;
+  font-family: 'Bangers', cursive !important;
+  font-size: 15px !important;
+  letter-spacing: 1px !important;
+}
+
+html.theme-comic .btn-winner-trigger {
+  background: #ff1744 !important;
+  color: #ffffff !important;
+  border: 3px solid #000000 !important;
+  box-shadow: 4px 4px 0px #000000 !important;
+  font-family: 'Bangers', cursive !important;
+  font-size: 15px !important;
+  letter-spacing: 1.5px !important;
+}
+
+html.theme-comic .btn-sort-manual {
+  background: #00e5ff !important;
+  color: #000000 !important;
+  border: 2.5px solid #000000 !important;
+  box-shadow: 3px 3px 0px #000000 !important;
+  font-family: 'Bangers', cursive !important;
+  letter-spacing: 1px !important;
+}
+
+html.theme-comic .btn-notif-trigger {
+  background: #ff9100 !important;
+  color: #000000 !important;
+  border: 2.5px solid #000000 !important;
+  box-shadow: 3px 3px 0px #000000 !important;
+  font-family: 'Bangers', cursive !important;
+}
+
+html.theme-comic .btn-shot-table {
+  background: #00d2d3 !important;
+  color: #000000 !important;
+  border: 2.5px solid #000000 !important;
+  box-shadow: 3px 3px 0px #000000 !important;
+  font-weight: 900 !important;
+}
+
+html.theme-comic .btn-stream-link {
+  background: #3b82f6 !important;
+  color: #ffffff !important;
+  border: 2.5px solid #000000 !important;
+  box-shadow: 3px 3px 0px #000000 !important;
+  font-weight: 800 !important;
+}
+
+html.theme-comic .sync-badge {
+  border: 2px solid #000000 !important;
+  box-shadow: 2px 2px 0px #000000 !important;
+  font-family: 'Fredoka', sans-serif !important;
+  font-weight: 800 !important;
+  color: #000000 !important;
+}
+html.theme-comic .sync-badge.connected {
+  background: #86efac !important;
+  color: #052e16 !important;
+}
+
+/* Comic Table Container & Rows */
+html.theme-comic .table-container {
+  background: #ffffff !important;
+  border: 3.5px solid #000000 !important;
+  box-shadow: 6px 6px 0px #000000 !important;
+  border-radius: 12px !important;
+  overflow: hidden !important;
+}
+
+html.theme-comic table th {
+  background: #fde047 !important;
+  color: #000000 !important;
+  border-bottom: 3.5px solid #000000 !important;
+  border-right: 2px solid #000000 !important;
+  font-family: 'Bangers', cursive !important;
+  font-size: 16px !important;
+  letter-spacing: 1px !important;
+  padding: 8px 6px !important;
+}
+
+html.theme-comic table tr {
+  background: #ffffff !important;
+  border-bottom: 2px solid #000000 !important;
+  transition: background 0.1s ease !important;
+}
+html.theme-comic table tr:nth-child(even) {
+  background: #fefce8 !important;
+}
+html.theme-comic table tr:hover {
+  background: #cffafe !important;
+}
+
+html.theme-comic table tr.is-leader,
+html.theme-comic table tr.rank-1-row {
+  background: #fef08a !important;
+  border-left: 6px solid #eab308 !important;
+}
+
+html.theme-comic table tr.host-row {
+  background: #ffedd5 !important;
+  border-top: 3px dashed #000000 !important;
+}
+
+html.theme-comic .td-no {
+  font-family: 'Bangers', cursive !important;
+  font-size: 15px !important;
+  color: #000000 !important;
+  border-right: 2px solid #000000 !important;
+  font-weight: 800 !important;
+}
+
+html.theme-comic .name-tiktok {
+  color: #0f172a !important;
+  font-family: 'Fredoka', sans-serif !important;
+  font-weight: 800 !important;
+  font-size: 13.5px !important;
+}
+html.theme-comic .name-roblox-display {
+  color: #334155 !important;
+  font-family: 'Fredoka', sans-serif !important;
+  font-weight: 700 !important;
+  font-size: 12px !important;
+}
+html.theme-comic .name-empty {
+  color: #94a3b8 !important;
+  font-style: italic !important;
+  font-weight: 600 !important;
+}
+
+html.theme-comic .score-val {
+  color: #dc2626 !important;
+  font-family: 'Bangers', cursive !important;
+  font-size: 24px !important;
+  letter-spacing: 1px !important;
+  text-shadow: 1.5px 1.5px 0px #fde047 !important;
+}
+html.theme-comic .score-standby {
+  color: #94a3b8 !important;
+  text-shadow: none !important;
+  font-size: 18px !important;
+}
+
+html.theme-comic .pay-status-tag {
+  border: 2px solid #000000 !important;
+  box-shadow: 1.5px 1.5px 0px #000000 !important;
+  font-family: 'Bangers', cursive !important;
+  font-size: 11px !important;
+  letter-spacing: 0.5px !important;
+  border-radius: 6px !important;
+  padding: 2px 7px !important;
+}
+html.theme-comic .pay-status-tag.done {
+  background: #22c55e !important;
+  color: #000000 !important;
+}
+html.theme-comic .pay-status-tag.ready {
+  background: #ffffff !important;
+  color: #475569 !important;
+}
+
+html.theme-comic .avatar-wrap {
+  border: 2px solid #000000 !important;
+  box-shadow: 1.5px 1.5px 0px #000000 !important;
+  border-radius: 50% !important;
+  background: #ffffff !important;
+}
+
+/* Comic Quick Point Popover */
+html.theme-comic .quick-point-popover {
+  background: #fde047 !important;
+  border: 3.5px solid #000000 !important;
+  box-shadow: 6px 6px 0px #000000 !important;
+  border-radius: 14px !important;
+}
+html.theme-comic .qp-title {
+  color: #000000 !important;
+  font-family: 'Bangers', cursive !important;
+  font-size: 16px !important;
+}
+html.theme-comic .qp-btn {
+  background: #ffffff !important;
+  color: #000000 !important;
+  border: 2.5px solid #000000 !important;
+  box-shadow: 3px 3px 0px #000000 !important;
+  font-family: 'Bangers', cursive !important;
+  font-size: 18px !important;
+  border-radius: 8px !important;
+}
+html.theme-comic .qp-btn:hover {
+  background: #ff1744 !important;
+  color: #ffffff !important;
+}
+
+/* Comic Center Notif Toast */
+html.theme-comic .center-notif-popup {
+  background: #fde047 !important;
+  border: 4.5px solid #000000 !important;
+  box-shadow: 8px 8px 0px #000000 !important;
+  border-radius: 18px !important;
+  color: #000000 !important;
+}
+html.theme-comic .c-notif-tag {
+  background: #ff1744 !important;
+  color: #ffffff !important;
+  border: 2.5px solid #000000 !important;
+  font-family: 'Bangers', cursive !important;
+}
+html.theme-comic .c-notif-name {
+  color: #000000 !important;
+  font-family: 'Bangers', cursive !important;
+  font-size: 28px !important;
+  text-shadow: 2px 2px 0px #ffffff !important;
+}
+html.theme-comic .c-notif-pts-box {
+  background: #ffffff !important;
+  border: 3px solid #000000 !important;
+}
+html.theme-comic .c-notif-pts-main {
+  color: #dc2626 !important;
+  font-family: 'Bangers', cursive !important;
+}
+html.theme-comic .c-notif-pts-total {
+  color: #000000 !important;
+  font-family: 'Fredoka', sans-serif !important;
+  font-weight: 700 !important;
+}
+
+/* Comic Layar Podium Pemenang */
+html.theme-comic #winnerOverlay {
+  background: radial-gradient(circle at center, #fde047 0%, #f97316 100%) !important;
+}
+html.theme-comic #winnerOverlay::before {
+  content: '';
+  position: absolute; inset: 0;
+  background-image: radial-gradient(#000000 15%, transparent 16%) !important;
+  background-size: 20px 20px !important;
+  opacity: 0.1 !important;
+  pointer-events: none !important;
+}
+html.theme-comic .winner-title {
+  font-family: 'Bangers', cursive !important;
+  font-size: 52px !important;
+  color: #ffffff !important;
+  text-shadow: 4px 4px 0px #000000, -2px -2px 0px #000000, 2px -2px 0px #000000, -2px 2px 0px #000000 !important;
+}
+html.theme-comic .winner-trophy-badge {
+  font-family: 'Bangers', cursive !important;
+  font-size: 15px !important;
+  color: #000000 !important;
+  background: #ffe600 !important;
+  border: 2.5px solid #000000 !important;
+  box-shadow: 3px 3px 0px #000000 !important;
+  border-radius: 8px !important;
+}
+html.theme-comic .podium-glass-card {
+  background: #ffffff !important;
+  border: 4px solid #000000 !important;
+  box-shadow: 8px 8px 0px #000000 !important;
+  border-radius: 16px !important;
+}
+html.theme-comic .podium-card.rank-1 .podium-glass-card {
+  border: 5px solid #000000 !important;
+  box-shadow: 12px 12px 0px #000000 !important;
+  background: #fffde7 !important;
+}
+html.theme-comic .podium-rank-ribbon {
+  border: 2.5px solid #000000 !important;
+  box-shadow: 3px 3px 0px #000000 !important;
+  font-family: 'Bangers', cursive !important;
+  font-size: 16px !important;
+}
+html.theme-comic .podium-card.rank-1 .podium-rank-ribbon { background: #fde047 !important; color: #000000 !important; }
+html.theme-comic .podium-card.rank-2 .podium-rank-ribbon { background: #00e5ff !important; color: #000000 !important; }
+html.theme-comic .podium-card.rank-3 .podium-rank-ribbon { background: #ff9100 !important; color: #000000 !important; }
+
+html.theme-comic .player-display-name {
+  color: #000000 !important;
+  font-family: 'Fredoka', sans-serif !important;
+  font-weight: 900 !important;
+  font-size: 20px !important;
+}
+html.theme-comic .player-username-pill {
+  background: #f1f5f9 !important;
+  color: #000000 !important;
+  border: 2px solid #000000 !important;
+  font-family: 'Fredoka', sans-serif !important;
+  font-weight: 700 !important;
+}
+html.theme-comic .podium-score-pill {
+  background: #ffffff !important;
+  border: 3px solid #000000 !important;
+  box-shadow: 4px 4px 0px #000000 !important;
+  border-radius: 10px !important;
+}
+html.theme-comic .podium-score-val {
+  color: #dc2626 !important;
+  font-family: 'Bangers', cursive !important;
+  font-size: 32px !important;
+  text-shadow: 2px 2px 0px #fde047 !important;
+}
+html.theme-comic .podium-score-lbl {
+  color: #000000 !important;
+  font-family: 'Bangers', cursive !important;
+}
+html.theme-comic .btn-close-winner {
+  background: #ff1744 !important;
+  color: #ffffff !important;
+  border: 3px solid #000000 !important;
+  box-shadow: 4px 4px 0px #000000 !important;
+}
+html.theme-comic .btn-shot-podium {
+  background: #00e5ff !important;
+  color: #000000 !important;
+  border: 3px solid #000000 !important;
+  box-shadow: 4px 4px 0px #000000 !important;
+  font-weight: 900 !important;
+}
+
+/* Comic Modals */
+html.theme-comic .modal-box-hud {
+  background: #ffffff !important;
+  border: 4px solid #000000 !important;
+  box-shadow: 8px 8px 0px #000000 !important;
+  color: #000000 !important;
+}
+html.theme-comic .modal-title-hud {
+  color: #000000 !important;
+  font-family: 'Bangers', cursive !important;
+  font-size: 22px !important;
+}
+html.theme-comic .modal-sub-hud {
+  color: #ff1744 !important;
+  font-family: 'Fredoka', sans-serif !important;
+  font-weight: 900 !important;
+}
+html.theme-comic .btn-close-hud {
+  background: #ff1744 !important;
+  color: #ffffff !important;
+  border: 2px solid #000000 !important;
+}
+html.theme-comic .btn-hud-save {
+  background: #fde047 !important;
+  color: #000000 !important;
+  border: 3px solid #000000 !important;
+  box-shadow: 3px 3px 0px #000000 !important;
+  font-family: 'Bangers', cursive !important;
+  font-size: 16px !important;
+}
+
+
+/* ==========================================================================
+   1. TEMA: AQUATIC PRO FISHING (LAUT DALAM & AIR BERSIH TROPIS)
+   Fitur Spesial: Deep Ocean Wave glow, Aquamarine shimmer, Clean water accents.
+   ========================================================================== */
+html.theme-aquatic {
+  --bg: #021729;
+  --card-bg: #062b47;
+  --border-color: #00f5d4;
+  --primary: #00f5d4;
+  --primary-hover: #00b4d8;
+  --text-main: #f0fdfa;
+  --text-sub: #7dd3fc;
+  --color-point: #38bdf8;
+  --host-bg: #0c4a6e;
+}
+html.theme-aquatic body {
+  background-color: #021729 !important;
+  background-image: radial-gradient(circle at 50% 10%, #084069 0%, #021729 80%) !important;
+  color: #f0fdfa !important;
+}
+html.theme-aquatic .top-bar {
+  background: rgba(6, 43, 71, 0.85) !important;
+  border: 1.5px solid #00f5d4 !important;
+  box-shadow: 0 4px 20px rgba(0, 245, 212, 0.25) !important;
+  backdrop-filter: blur(12px) !important;
+}
+html.theme-aquatic .btn-action-soft {
+  background: rgba(8, 64, 105, 0.7) !important;
+  border: 1px solid rgba(0, 245, 212, 0.45) !important;
+  color: #a7f3d0 !important;
+}
+html.theme-aquatic .btn-action-soft:hover {
+  background: #00f5d4 !important;
+  color: #021729 !important;
+  box-shadow: 0 0 14px rgba(0, 245, 212, 0.5) !important;
+}
+html.theme-aquatic .table-container {
+  background: #041f35 !important;
+  border: 1.5px solid rgba(0, 245, 212, 0.4) !important;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.6) !important;
+}
+html.theme-aquatic table th {
+  background: linear-gradient(180deg, #075985 0%, #033656 100%) !important;
+  color: #67e8f9 !important;
+  border-bottom: 2px solid #00f5d4 !important;
+  font-family: 'Rajdhani', sans-serif !important;
+  font-weight: 800 !important;
+  letter-spacing: 1px !important;
+}
+html.theme-aquatic table tr {
+  background: rgba(5, 33, 56, 0.95) !important;
+  border-bottom: 1px solid rgba(0, 245, 212, 0.15) !important;
+}
+html.theme-aquatic table tr:nth-child(even) {
+  background: rgba(8, 48, 80, 0.85) !important;
+}
+html.theme-aquatic table tr:hover {
+  background: rgba(14, 116, 144, 0.45) !important;
+}
+html.theme-aquatic table tr.is-leader,
+html.theme-aquatic table tr.rank-1-row {
+  background: rgba(0, 245, 212, 0.16) !important;
+  border-left: 4px solid #00f5d4 !important;
+}
+html.theme-aquatic .name-tiktok { color: #f0fdfa !important; font-weight: 800 !important; }
+html.theme-aquatic .name-roblox-display { color: #7dd3fc !important; }
+html.theme-aquatic .score-val {
+  color: #00f5d4 !important;
+  font-family: 'Rajdhani', sans-serif !important;
+  font-weight: 800 !important;
+  font-size: 22px !important;
+  text-shadow: 0 0 10px rgba(0, 245, 212, 0.6) !important;
+}
+html.theme-aquatic .pay-status-tag.done {
+  background: #00f5d4 !important;
+  color: #021729 !important;
+  font-weight: 800 !important;
+}
+html.theme-aquatic #winnerOverlay {
+  background: radial-gradient(circle at center, #075985 0%, #021729 100%) !important;
+}
+html.theme-aquatic .winner-title {
+  color: #00f5d4 !important;
+  text-shadow: 0 0 25px rgba(0, 245, 212, 0.8) !important;
+}
+html.theme-aquatic .podium-glass-card {
+  background: rgba(6, 43, 71, 0.85) !important;
+  border: 1.5px solid #00f5d4 !important;
+  box-shadow: 0 0 30px rgba(0, 245, 212, 0.3) !important;
+}
+
+
+/* ==========================================================================
+   2. TEMA: RETRO 80S ARCADE (SYNTHWAVE & 8-BIT)
+   Fitur Spesial: Font Press Start 2P, CRT Scanline grid, Neon Magenta/Cyan.
+   ========================================================================== */
+html.theme-arcade {
+  --bg: #11052c;
+  --card-bg: #1a0845;
+  --border-color: #ff007f;
+  --primary: #00f0ff;
+  --primary-hover: #ff007f;
+  --text-main: #ffffff;
+  --text-sub: #f472b6;
+  --color-point: #ffee00;
+}
+html.theme-arcade body {
+  background-color: #11052c !important;
+  background-image: linear-gradient(rgba(255, 0, 127, 0.08) 1px, transparent 1px),
+                    linear-gradient(90deg, rgba(0, 240, 255, 0.08) 1px, transparent 1px) !important;
+  background-size: 20px 20px !important;
+  color: #ffffff !important;
+}
+html.theme-arcade .top-bar {
+  background: #1a0845 !important;
+  border: 3px solid #ff007f !important;
+  box-shadow: 0 0 18px rgba(255, 0, 127, 0.5), inset 0 0 10px rgba(0, 240, 255, 0.3) !important;
+  border-radius: 4px !important;
+}
+html.theme-arcade .btn-action-soft {
+  background: #2a085c !important;
+  border: 2px solid #00f0ff !important;
+  color: #ffee00 !important;
+  border-radius: 0px !important;
+  font-family: 'Press Start 2P', monospace !important;
+  font-size: 9px !important;
+  box-shadow: 3px 3px 0px #ff007f !important;
+}
+html.theme-arcade .btn-action-soft:hover {
+  background: #ff007f !important;
+  color: #ffffff !important;
+  box-shadow: 4px 4px 0px #00f0ff !important;
+}
+html.theme-arcade .table-container {
+  background: #150638 !important;
+  border: 3px solid #ff007f !important;
+  box-shadow: 0 0 20px rgba(255, 0, 127, 0.4) !important;
+  border-radius: 0px !important;
+}
+html.theme-arcade table th {
+  background: #2b0866 !important;
+  color: #ffee00 !important;
+  border-bottom: 3px solid #00f0ff !important;
+  font-family: 'Press Start 2P', monospace !important;
+  font-size: 10px !important;
+  letter-spacing: 0.5px !important;
+  text-shadow: 2px 2px 0px #ff007f !important;
+}
+html.theme-arcade table tr {
+  background: #18073d !important;
+  border-bottom: 2px solid rgba(255, 0, 127, 0.3) !important;
+}
+html.theme-arcade table tr:nth-child(even) { background: #200952 !important; }
+html.theme-arcade table tr:hover { background: #350c82 !important; }
+html.theme-arcade .td-no {
+  font-family: 'Press Start 2P', monospace !important;
+  font-size: 10px !important;
+  color: #00f0ff !important;
+}
+html.theme-arcade .name-tiktok {
+  font-family: 'VT323', monospace !important;
+  font-size: 18px !important;
+  color: #ffffff !important;
+}
+html.theme-arcade .name-roblox-display {
+  font-family: 'VT323', monospace !important;
+  font-size: 16px !important;
+  color: #f472b6 !important;
+}
+html.theme-arcade .score-val {
+  color: #ffee00 !important;
+  font-family: 'Press Start 2P', monospace !important;
+  font-size: 15px !important;
+  text-shadow: 2px 2px 0px #ff007f !important;
+}
+html.theme-arcade .pay-status-tag.done {
+  background: #00f0ff !important;
+  color: #11052c !important;
+  border-radius: 0px !important;
+  font-family: 'Press Start 2P', monospace !important;
+  font-size: 8px !important;
+}
+html.theme-arcade #winnerOverlay {
+  background: radial-gradient(circle at center, #2e085c 0%, #0c0220 100%) !important;
+}
+html.theme-arcade .winner-title {
+  font-family: 'Press Start 2P', monospace !important;
+  font-size: 32px !important;
+  color: #ffee00 !important;
+  text-shadow: 4px 4px 0px #ff007f !important;
+}
+html.theme-arcade .podium-glass-card {
+  background: #1d074d !important;
+  border: 3px solid #00f0ff !important;
+  box-shadow: 6px 6px 0px #ff007f !important;
+  border-radius: 0px !important;
+}
+
+
+/* ==========================================================================
+   3. TEMA: GOLD LUXURY ROYALE (VIP DIAMOND & OBSIDIAN)
+   Fitur Spesial: Metallic 24K Gold shimmer, Font Cinzel Serif, Regal Crown.
+   ========================================================================== */
+html.theme-luxury {
+  --bg: #09090b;
+  --card-bg: #141418;
+  --border-color: #d4af37;
+  --primary: #f59e0b;
+  --primary-hover: #fbbf24;
+  --text-main: #fef3c7;
+  --text-sub: #d1d5db;
+  --color-point: #fbbf24;
+}
+html.theme-luxury body {
+  background-color: #09090b !important;
+  background-image: radial-gradient(circle at 50% 20%, #221a08 0%, #09090b 75%) !important;
+  color: #fef3c7 !important;
+}
+html.theme-luxury .top-bar {
+  background: linear-gradient(180deg, #181510 0%, #0f0d0a 100%) !important;
+  border: 1.5px solid #d4af37 !important;
+  box-shadow: 0 4px 25px rgba(212, 175, 55, 0.25) !important;
+  border-radius: 10px !important;
+}
+html.theme-luxury .btn-action-soft {
+  background: #1f1b13 !important;
+  border: 1px solid #d4af37 !important;
+  color: #fef3c7 !important;
+  font-family: 'Cinzel', serif !important;
+  font-weight: 700 !important;
+  font-size: 11px !important;
+  letter-spacing: 1px !important;
+}
+html.theme-luxury .btn-action-soft:hover {
+  background: #d4af37 !important;
+  color: #0a0a0a !important;
+  box-shadow: 0 0 15px rgba(212, 175, 55, 0.6) !important;
+}
+html.theme-luxury .table-container {
+  background: #11100d !important;
+  border: 1.5px solid #d4af37 !important;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.8) !important;
+  border-radius: 8px !important;
+}
+html.theme-luxury table th {
+  background: linear-gradient(180deg, #2b220c 0%, #171307 100%) !important;
+  color: #fde68a !important;
+  border-bottom: 2px solid #d4af37 !important;
+  font-family: 'Cinzel', serif !important;
+  font-weight: 900 !important;
+  letter-spacing: 1.5px !important;
+}
+html.theme-luxury table tr {
+  background: #12100d !important;
+  border-bottom: 1px solid rgba(212, 175, 55, 0.2) !important;
+}
+html.theme-luxury table tr:nth-child(even) { background: #181510 !important; }
+html.theme-luxury table tr:hover { background: #261f10 !important; }
+html.theme-luxury table tr.is-leader,
+html.theme-luxury table tr.rank-1-row {
+  background: rgba(212, 175, 55, 0.15) !important;
+  border-left: 4px solid #d4af37 !important;
+}
+html.theme-luxury .name-tiktok {
+  color: #fef3c7 !important;
+  font-family: 'Cinzel', serif !important;
+  font-weight: 700 !important;
+  font-size: 13px !important;
+}
+html.theme-luxury .score-val {
+  color: #fbbf24 !important;
+  font-family: 'Cinzel', serif !important;
+  font-weight: 900 !important;
+  font-size: 22px !important;
+  text-shadow: 0 0 12px rgba(245, 158, 11, 0.5) !important;
+}
+html.theme-luxury .pay-status-tag.done {
+  background: #d4af37 !important;
+  color: #0a0a0a !important;
+  font-weight: 800 !important;
+}
+html.theme-luxury #winnerOverlay {
+  background: radial-gradient(circle at center, #261e0b 0%, #09090b 100%) !important;
+}
+html.theme-luxury .winner-title {
+  font-family: 'Cinzel', serif !important;
+  color: #fde68a !important;
+  text-shadow: 0 0 30px rgba(212, 175, 55, 0.8) !important;
+}
+html.theme-luxury .podium-glass-card {
+  background: #16130e !important;
+  border: 2px solid #d4af37 !important;
+  box-shadow: 0 0 35px rgba(212, 175, 55, 0.35) !important;
+}
+
+
+/* ==========================================================================
+   4. TEMA: MECHA ANIME STREETWEAR (TECHWEAR ACID LIME)
+   Fitur Spesial: Sudut Chamfered Techwear, Acid Lime Yellow, Stensil Futuristik.
+   ========================================================================== */
+html.theme-mecha {
+  --bg: #0f0f11;
+  --card-bg: #18181b;
+  --border-color: #e6ff00;
+  --primary: #e6ff00;
+  --primary-hover: #c4d600;
+  --text-main: #f4f4f5;
+  --text-sub: #a1a1aa;
+  --color-point: #e6ff00;
+}
+html.theme-mecha body {
+  background-color: #0f0f11 !important;
+  background-image: repeating-linear-gradient(45deg, rgba(230, 255, 0, 0.03) 0px, rgba(230, 255, 0, 0.03) 2px, transparent 2px, transparent 8px) !important;
+  color: #f4f4f5 !important;
+}
+html.theme-mecha .top-bar {
+  background: #18181b !important;
+  border-left: 5px solid #e6ff00 !important;
+  border-right: 1px solid #27272a !important;
+  border-top: 1px solid #27272a !important;
+  border-bottom: 2px solid #e6ff00 !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.7) !important;
+  border-radius: 4px !important;
+}
+html.theme-mecha .btn-action-soft {
+  background: #27272a !important;
+  color: #e6ff00 !important;
+  border: 1px solid #3f3f46 !important;
+  font-family: 'Rajdhani', sans-serif !important;
+  font-weight: 800 !important;
+  letter-spacing: 1px !important;
+  clip-path: polygon(8px 0%, 100% 0%, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0% 100%, 0% 8px) !important;
+}
+html.theme-mecha .btn-action-soft:hover {
+  background: #e6ff00 !important;
+  color: #09090b !important;
+}
+html.theme-mecha .table-container {
+  background: #141416 !important;
+  border: 1px solid #27272a !important;
+  border-top: 3px solid #e6ff00 !important;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.9) !important;
+}
+html.theme-mecha table th {
+  background: #1f1f23 !important;
+  color: #e6ff00 !important;
+  border-bottom: 2px solid #e6ff00 !important;
+  font-family: 'Rajdhani', sans-serif !important;
+  font-weight: 800 !important;
+  letter-spacing: 1px !important;
+}
+html.theme-mecha table tr { background: #141416 !important; border-bottom: 1px solid #27272a !important; }
+html.theme-mecha table tr:nth-child(even) { background: #19191d !important; }
+html.theme-mecha table tr:hover { background: #26262b !important; }
+html.theme-mecha .score-val {
+  color: #e6ff00 !important;
+  font-family: 'Rajdhani', sans-serif !important;
+  font-weight: 900 !important;
+  font-size: 24px !important;
+}
+
+
+/* ==========================================================================
+   5. TEMA: RUSTIC WOOD & NATURE CAMP (GALATAMA ASRI KAYU JATI)
+   Fitur Spesial: Woodgrain frame, Kuningan antik, Nuansa pancing alam pedesaan.
+   ========================================================================== */
+html.theme-rustic {
+  --bg: #1c140d;
+  --card-bg: #291e14;
+  --border-color: #d4a373;
+  --primary: #d4a373;
+  --primary-hover: #b08968;
+  --text-main: #fefae0;
+  --text-sub: #cca988;
+  --color-point: #dda15e;
+}
+html.theme-rustic body {
+  background-color: #1c140d !important;
+  background-image: radial-gradient(circle at center, #2e2115 0%, #150e09 100%) !important;
+  color: #fefae0 !important;
+}
+html.theme-rustic .top-bar {
+  background: #2b1f14 !important;
+  border: 2px solid #8b5e34 !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.8), inset 0 0 10px rgba(212, 163, 115, 0.2) !important;
+  border-radius: 8px !important;
+}
+html.theme-rustic .btn-action-soft {
+  background: #3b2c1d !important;
+  color: #faedcd !important;
+  border: 1px solid #8b5e34 !important;
+  font-family: 'Fredoka', sans-serif !important;
+  font-weight: 700 !important;
+}
+html.theme-rustic .btn-action-soft:hover {
+  background: #8b5e34 !important;
+  color: #ffffff !important;
+}
+html.theme-rustic .table-container {
+  background: #22180f !important;
+  border: 2px solid #6f4e2b !important;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.7) !important;
+}
+html.theme-rustic table th {
+  background: #38281a !important;
+  color: #fefae0 !important;
+  border-bottom: 2px solid #8b5e34 !important;
+  font-family: 'Outfit', sans-serif !important;
+  font-weight: 800 !important;
+}
+html.theme-rustic table tr { background: #22180f !important; border-bottom: 1px solid #3d2b1b !important; }
+html.theme-rustic table tr:nth-child(even) { background: #2b1f14 !important; }
+html.theme-rustic .score-val {
+  color: #dda15e !important;
+  font-family: 'Fredoka', sans-serif !important;
+  font-weight: 800 !important;
+  font-size: 22px !important;
+}
+
+
+/* ==========================================================================
+   6. TEMA: CYBER HAZARD 2077 (INDUSTRIAL CAUTION STRIPES)
+   Fitur Spesial: Strip kuning-hitam caution stripes, Stensil Heavy Industrial.
+   ========================================================================== */
+html.theme-hazard {
+  --bg: #0b0b0b;
+  --card-bg: #141414;
+  --border-color: #fcee0a;
+  --primary: #fcee0a;
+  --primary-hover: #eab308;
+  --text-main: #f8fafc;
+  --text-sub: #fde047;
+  --color-point: #fcee0a;
+}
+html.theme-hazard body {
+  background-color: #0b0b0b !important;
+  background-image: repeating-linear-gradient(45deg, #141414 0px, #141414 10px, #0b0b0b 10px, #0b0b0b 20px) !important;
+  color: #f8fafc !important;
+}
+html.theme-hazard .top-bar {
+  background: #141414 !important;
+  border: 2px solid #fcee0a !important;
+  box-shadow: 0 0 20px rgba(252, 238, 10, 0.3) !important;
+  position: relative !important;
+}
+html.theme-hazard .top-bar::after {
+  content: '';
+  position: absolute; bottom: 0; left: 0; right: 0; height: 3px;
+  background: repeating-linear-gradient(45deg, #fcee0a 0, #fcee0a 10px, #000 10px, #000 20px);
+}
+html.theme-hazard .btn-action-soft {
+  background: #1f1f1f !important;
+  border: 1.5px solid #fcee0a !important;
+  color: #fcee0a !important;
+  font-family: 'Rajdhani', sans-serif !important;
+  font-weight: 800 !important;
+}
+html.theme-hazard .btn-action-soft:hover {
+  background: #fcee0a !important;
+  color: #000000 !important;
+}
+html.theme-hazard .table-container {
+  background: #111111 !important;
+  border: 2px solid #fcee0a !important;
+  box-shadow: 0 0 25px rgba(252, 238, 10, 0.2) !important;
+}
+html.theme-hazard table th {
+  background: #1a1a1a !important;
+  color: #fcee0a !important;
+  border-bottom: 2px solid #fcee0a !important;
+  font-family: 'Rajdhani', sans-serif !important;
+  font-weight: 900 !important;
+  letter-spacing: 1.5px !important;
+}
+html.theme-hazard table tr { background: #111111 !important; border-bottom: 1px solid #262626 !important; }
+html.theme-hazard table tr:nth-child(even) { background: #171717 !important; }
+html.theme-hazard .score-val {
+  color: #fcee0a !important;
+  font-family: 'Rajdhani', sans-serif !important;
+  font-weight: 900 !important;
+  font-size: 24px !important;
+  text-shadow: 0 0 10px rgba(252, 238, 10, 0.6) !important;
+}
+
+
+/* ==========================================================================
+   7. TEMA: MAGMA INFERNO (ESPORT API LAHAR MEMBARA)
+   Fitur Spesial: Pulsing Fire Embers, Molten Orange/Red Lava Glow.
+   ========================================================================== */
+html.theme-inferno {
+  --bg: #140404;
+  --card-bg: #220707;
+  --border-color: #ff4500;
+  --primary: #ff4500;
+  --primary-hover: #ff6b35;
+  --text-main: #ffedd5;
+  --text-sub: #fda4af;
+  --color-point: #ff3b00;
+}
+html.theme-inferno body {
+  background-color: #140404 !important;
+  background-image: radial-gradient(circle at center, #350909 0%, #120202 85%) !important;
+  color: #ffedd5 !important;
+}
+html.theme-inferno .top-bar {
+  background: #240808 !important;
+  border: 1.5px solid #ff4500 !important;
+  box-shadow: 0 0 25px rgba(255, 69, 0, 0.4) !important;
+}
+html.theme-inferno .btn-action-soft {
+  background: #3b0d0d !important;
+  border: 1px solid #ff4500 !important;
+  color: #ffedd5 !important;
+  font-weight: 800 !important;
+}
+html.theme-inferno .btn-action-soft:hover {
+  background: #ff4500 !important;
+  color: #ffffff !important;
+  box-shadow: 0 0 18px rgba(255, 69, 0, 0.7) !important;
+}
+html.theme-inferno .table-container {
+  background: #1c0606 !important;
+  border: 1.5px solid #ff4500 !important;
+  box-shadow: 0 0 30px rgba(255, 69, 0, 0.3) !important;
+}
+html.theme-inferno table th {
+  background: linear-gradient(180deg, #4d1010 0%, #260707 100%) !important;
+  color: #fca5a5 !important;
+  border-bottom: 2px solid #ff4500 !important;
+  font-family: 'Rajdhani', sans-serif !important;
+  font-weight: 900 !important;
+}
+html.theme-inferno table tr { background: #1c0606 !important; border-bottom: 1px solid #380d0d !important; }
+html.theme-inferno table tr:nth-child(even) { background: #260909 !important; }
+html.theme-inferno .score-val {
+  color: #ff4500 !important;
+  font-family: 'Rajdhani', sans-serif !important;
+  font-weight: 900 !important;
+  font-size: 24px !important;
+  text-shadow: 0 0 15px rgba(255, 69, 0, 0.8) !important;
+}
+
+
+/* ==========================================================================
+   8. TEMA: FROSTED GLASS CLEAN (IOS GLASSMORPHISM AESTHETIC)
+   Fitur Spesial: Ultra-smooth 24px Backdrop Blur, Minimalist Translucent.
+   ========================================================================== */
+html.theme-glass {
+  --bg: #050811;
+  --card-bg: rgba(255, 255, 255, 0.06);
+  --border-color: rgba(255, 255, 255, 0.22);
+  --primary: #ffffff;
+  --primary-hover: #e2e8f0;
+  --text-main: #ffffff;
+  --text-sub: #94a3b8;
+  --color-point: #38bdf8;
+}
+html.theme-glass body {
+  background-color: #050811 !important;
+  background-image: radial-gradient(circle at 50% 10%, #0d1e3d 0%, #050811 80%) !important;
+  color: #ffffff !important;
+}
+html.theme-glass .top-bar {
+  background: rgba(255, 255, 255, 0.06) !important;
+  backdrop-filter: blur(24px) !important;
+  -webkit-backdrop-filter: blur(24px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4) !important;
+  border-radius: 14px !important;
+}
+html.theme-glass .btn-action-soft {
+  background: rgba(255, 255, 255, 0.08) !important;
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+  color: #ffffff !important;
+  backdrop-filter: blur(12px) !important;
+  border-radius: 8px !important;
+}
+html.theme-glass .btn-action-soft:hover {
+  background: rgba(255, 255, 255, 0.2) !important;
+  box-shadow: 0 4px 15px rgba(255, 255, 255, 0.2) !important;
+}
+html.theme-glass .table-container {
+  background: rgba(255, 255, 255, 0.04) !important;
+  backdrop-filter: blur(24px) !important;
+  -webkit-backdrop-filter: blur(24px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.18) !important;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5) !important;
+  border-radius: 14px !important;
+}
+html.theme-glass table th {
+  background: rgba(255, 255, 255, 0.08) !important;
+  color: #ffffff !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2) !important;
+  font-family: 'Outfit', sans-serif !important;
+  font-weight: 800 !important;
+}
+html.theme-glass table tr { background: transparent !important; border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important; }
+html.theme-glass table tr:nth-child(even) { background: rgba(255, 255, 255, 0.03) !important; }
+html.theme-glass table tr:hover { background: rgba(255, 255, 255, 0.1) !important; }
+html.theme-glass .score-val {
+  color: #38bdf8 !important;
+  font-family: 'Outfit', sans-serif !important;
+  font-weight: 800 !important;
+  font-size: 22px !important;
+}
+
+
+/* ==========================================================================
+   9. TEMA: PASTEL VAPORWAVE & LOFI SUNSET
+   Fitur Spesial: Gradasi Senja Lilac/Pink/Orange, Aesthetic Relaxing Vibes.
+   ========================================================================== */
+html.theme-vaporwave {
+  --bg: #211038;
+  --card-bg: #321654;
+  --border-color: #f472b6;
+  --primary: #f472b6;
+  --primary-hover: #fb923c;
+  --text-main: #fdf2f8;
+  --text-sub: #fbcfe8;
+  --color-point: #f43f5e;
+}
+html.theme-vaporwave body {
+  background-color: #211038 !important;
+  background-image: linear-gradient(180deg, #381861 0%, #170929 100%) !important;
+  color: #fdf2f8 !important;
+}
+html.theme-vaporwave .top-bar {
+  background: linear-gradient(90deg, #3c1a69 0%, #4a1d6d 100%) !important;
+  border: 1.5px solid #f472b6 !important;
+  box-shadow: 0 4px 20px rgba(244, 114, 182, 0.3) !important;
+}
+html.theme-vaporwave .btn-action-soft {
+  background: rgba(244, 114, 182, 0.15) !important;
+  border: 1px solid #f472b6 !important;
+  color: #fdf2f8 !important;
+}
+html.theme-vaporwave .btn-action-soft:hover {
+  background: #f472b6 !important;
+  color: #211038 !important;
+}
+html.theme-vaporwave .table-container {
+  background: #2b1347 !important;
+  border: 1.5px solid rgba(244, 114, 182, 0.4) !important;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.6) !important;
+}
+html.theme-vaporwave table th {
+  background: linear-gradient(90deg, #4c1d95 0%, #be185d 100%) !important;
+  color: #fef08a !important;
+  border-bottom: 2px solid #f472b6 !important;
+  font-family: 'Space Grotesk', sans-serif !important;
+}
+html.theme-vaporwave table tr { background: #26113f !important; border-bottom: 1px solid rgba(244, 114, 182, 0.15) !important; }
+html.theme-vaporwave table tr:nth-child(even) { background: #321654 !important; }
+html.theme-vaporwave .score-val {
+  color: #fb7185 !important;
+  font-family: 'Space Grotesk', sans-serif !important;
+  font-weight: 800 !important;
+  font-size: 22px !important;
+}
+
+
+/* ==========================================================================
+   10. TEMA: COSMIC GALAXY NEBULA
+   Fitur Spesial: Deep Space Stardust, Glowing Celestial Aurora Borders.
+   ========================================================================== */
+html.theme-cosmic {
+  --bg: #070719;
+  --card-bg: #101035;
+  --border-color: #8b5cf6;
+  --primary: #c084fc;
+  --primary-hover: #a855f7;
+  --text-main: #f5f3ff;
+  --text-sub: #c4b5fd;
+  --color-point: #c084fc;
+}
+html.theme-cosmic body {
+  background-color: #070719 !important;
+  background-image: radial-gradient(circle at 50% 20%, #2e1065 0%, #070719 80%) !important;
+  color: #f5f3ff !important;
+}
+html.theme-cosmic .top-bar {
+  background: #12123d !important;
+  border: 1.5px solid #8b5cf6 !important;
+  box-shadow: 0 0 25px rgba(139, 92, 246, 0.35) !important;
+}
+html.theme-cosmic .btn-action-soft {
+  background: #1e1b4b !important;
+  border: 1px solid #8b5cf6 !important;
+  color: #e9d5ff !important;
+  font-family: 'Orbitron', sans-serif !important;
+  font-size: 11px !important;
+}
+html.theme-cosmic .btn-action-soft:hover {
+  background: #8b5cf6 !important;
+  color: #ffffff !important;
+}
+html.theme-cosmic .table-container {
+  background: #0d0d2b !important;
+  border: 1.5px solid #8b5cf6 !important;
+  box-shadow: 0 0 30px rgba(139, 92, 246, 0.25) !important;
+}
+html.theme-cosmic table th {
+  background: linear-gradient(90deg, #3b0764 0%, #1e1b4b 100%) !important;
+  color: #e9d5ff !important;
+  border-bottom: 2px solid #8b5cf6 !important;
+  font-family: 'Orbitron', sans-serif !important;
+}
+html.theme-cosmic table tr { background: #0d0d2b !important; border-bottom: 1px solid #232357 !important; }
+html.theme-cosmic table tr:nth-child(even) { background: #14143d !important; }
+html.theme-cosmic .score-val {
+  color: #c084fc !important;
+  font-family: 'Orbitron', sans-serif !important;
+  font-weight: 800 !important;
+  font-size: 20px !important;
+}
+
+
+/* ==========================================================================
+   11. TEMA: F1 RACING TELEMETRY (SPEEDWAY PIT STOP)
+   Fitur Spesial: Carbon Fiber Grid, Checkered Flags, Speedometer Typography.
+   ========================================================================== */
+html.theme-racing {
+  --bg: #0f0f11;
+  --card-bg: #17171a;
+  --border-color: #ef4444;
+  --primary: #ef4444;
+  --primary-hover: #dc2626;
+  --text-main: #ffffff;
+  --text-sub: #9ca3af;
+  --color-point: #ef4444;
+}
+html.theme-racing body {
+  background-color: #0f0f11 !important;
+  background-image: repeating-linear-gradient(0deg, #17171a, #17171a 1px, #0f0f11 1px, #0f0f11 2px) !important;
+  color: #ffffff !important;
+}
+html.theme-racing .top-bar {
+  background: #17171a !important;
+  border-left: 5px solid #ef4444 !important;
+  border-top: 1px solid #374151 !important;
+  border-right: 1px solid #374151 !important;
+  border-bottom: 2px solid #ef4444 !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.8) !important;
+}
+html.theme-racing .btn-action-soft {
+  background: #26262a !important;
+  border: 1px solid #ef4444 !important;
+  color: #ffffff !important;
+  font-family: 'Rajdhani', sans-serif !important;
+  font-weight: 800 !important;
+}
+html.theme-racing .btn-action-soft:hover {
+  background: #ef4444 !important;
+  color: #ffffff !important;
+}
+html.theme-racing .table-container {
+  background: #141416 !important;
+  border: 1.5px solid #ef4444 !important;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.9) !important;
+}
+html.theme-racing table th {
+  background: #1f1f23 !important;
+  color: #ef4444 !important;
+  border-bottom: 2px solid #ef4444 !important;
+  font-family: 'Rajdhani', sans-serif !important;
+  font-weight: 900 !important;
+  letter-spacing: 1px !important;
+}
+html.theme-racing table tr { background: #141416 !important; border-bottom: 1px solid #27272a !important; }
+html.theme-racing table tr:nth-child(even) { background: #1a1a1e !important; }
+html.theme-racing .score-val {
+  color: #ef4444 !important;
+  font-family: 'Rajdhani', sans-serif !important;
+  font-weight: 900 !important;
+  font-size: 24px !important;
+}
+
+
+/* ==========================================================================
+   12. TEMA: MEDIEVAL FANTASY GUILD QUEST (RPG PARCHMENT & IRON)
+   Fitur Spesial: Iron Forged Rivets, Ancient Guild Banner, Cinzel Typography.
+   ========================================================================== */
+html.theme-fantasy {
+  --bg: #18120b;
+  --card-bg: #271d12;
+  --border-color: #ca8a04;
+  --primary: #ca8a04;
+  --primary-hover: #eab308;
+  --text-main: #fef08a;
+  --text-sub: #d4d4d8;
+  --color-point: #ca8a04;
+}
+html.theme-fantasy body {
+  background-color: #18120b !important;
+  background-image: radial-gradient(circle at center, #2e2215 0%, #120d07 100%) !important;
+  color: #fef08a !important;
+}
+html.theme-fantasy .top-bar {
+  background: #2a1f13 !important;
+  border: 2px solid #ca8a04 !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.8) !important;
+}
+html.theme-fantasy .btn-action-soft {
+  background: #3d2d1b !important;
+  border: 1px solid #ca8a04 !important;
+  color: #fef08a !important;
+  font-family: 'Cinzel', serif !important;
+  font-weight: 700 !important;
+}
+html.theme-fantasy .table-container {
+  background: #20170e !important;
+  border: 2px solid #ca8a04 !important;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.8) !important;
+}
+html.theme-fantasy table th {
+  background: #362718 !important;
+  color: #fde047 !important;
+  border-bottom: 2px solid #ca8a04 !important;
+  font-family: 'Cinzel', serif !important;
+  font-weight: 900 !important;
+}
+html.theme-fantasy table tr { background: #20170e !important; border-bottom: 1px solid #3d2c1c !important; }
+html.theme-fantasy table tr:nth-child(even) { background: #291e12 !important; }
+html.theme-fantasy .score-val {
+  color: #facc15 !important;
+  font-family: 'Cinzel', serif !important;
+  font-weight: 900 !important;
+  font-size: 22px !important;
+}
+
+
+/* ==========================================================================
+   13. TEMA: FROSTBITE ARCTIC ICE (CRYSTAL GLACIAL FREEZE)
+   Fitur Spesial: Sharp Frost Edges, Diamond Ice Shards, Glacial Cyan.
+   ========================================================================== */
+html.theme-frostbite {
+  --bg: #03121f;
+  --card-bg: #072238;
+  --border-color: #7dd3fc;
+  --primary: #38bdf8;
+  --primary-hover: #0284c7;
+  --text-main: #f0f9ff;
+  --text-sub: #bae6fd;
+  --color-point: #38bdf8;
+}
+html.theme-frostbite body {
+  background-color: #03121f !important;
+  background-image: radial-gradient(circle at 50% 20%, #0b3759 0%, #03121f 85%) !important;
+  color: #f0f9ff !important;
+}
+html.theme-frostbite .top-bar {
+  background: #082a47 !important;
+  border: 1.5px solid #7dd3fc !important;
+  box-shadow: 0 0 20px rgba(125, 211, 252, 0.3) !important;
+}
+html.theme-frostbite .btn-action-soft {
+  background: #0c3d66 !important;
+  border: 1px solid #7dd3fc !important;
+  color: #e0f2fe !important;
+}
+html.theme-frostbite .table-container {
+  background: #051a2c !important;
+  border: 1.5px solid #7dd3fc !important;
+  box-shadow: 0 0 25px rgba(125, 211, 252, 0.25) !important;
+}
+html.theme-frostbite table th {
+  background: #0d4673 !important;
+  color: #e0f2fe !important;
+  border-bottom: 2px solid #7dd3fc !important;
+  font-family: 'Outfit', sans-serif !important;
+  font-weight: 800 !important;
+}
+html.theme-frostbite table tr { background: #051a2c !important; border-bottom: 1px solid #0d3b61 !important; }
+html.theme-frostbite table tr:nth-child(even) { background: #092842 !important; }
+html.theme-frostbite .score-val {
+  color: #7dd3fc !important;
+  font-family: 'Outfit', sans-serif !important;
+  font-weight: 800 !important;
+  font-size: 22px !important;
+  text-shadow: 0 0 10px rgba(125, 211, 252, 0.6) !important;
+}
+
+
+/* ==========================================================================
+   14. TEMA: IMPERIAL DYNASTY RED DRAGON (ORIENTAL HOKI FESTIVAL)
+   Fitur Spesial: Vermilion Crimson, Imperial Gold Trims, Prosperity Vibes.
+   ========================================================================== */
+html.theme-imperial {
+  --bg: #2b0606;
+  --card-bg: #450a0a;
+  --border-color: #eab308;
+  --primary: #f59e0b;
+  --primary-hover: #fbbf24;
+  --text-main: #fef08a;
+  --text-sub: #fecdd3;
+  --color-point: #facc15;
+}
+html.theme-imperial body {
+  background-color: #2b0606 !important;
+  background-image: radial-gradient(circle at center, #540e0e 0%, #200404 100%) !important;
+  color: #fef08a !important;
+}
+html.theme-imperial .top-bar {
+  background: #4a0c0c !important;
+  border: 2px solid #eab308 !important;
+  box-shadow: 0 4px 25px rgba(234, 179, 8, 0.3) !important;
+}
+html.theme-imperial .btn-action-soft {
+  background: #6b1414 !important;
+  border: 1px solid #eab308 !important;
+  color: #fef08a !important;
+  font-family: 'Cinzel', serif !important;
+  font-weight: 700 !important;
+}
+html.theme-imperial .table-container {
+  background: #3b0808 !important;
+  border: 2px solid #eab308 !important;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.8) !important;
+}
+html.theme-imperial table th {
+  background: #5c0f0f !important;
+  color: #fef08a !important;
+  border-bottom: 2px solid #eab308 !important;
+  font-family: 'Cinzel', serif !important;
+  font-weight: 900 !important;
+}
+html.theme-imperial table tr { background: #3b0808 !important; border-bottom: 1px solid #611010 !important; }
+html.theme-imperial table tr:nth-child(even) { background: #4a0c0c !important; }
+html.theme-imperial .score-val {
+  color: #fde047 !important;
+  font-family: 'Cinzel', serif !important;
+  font-weight: 900 !important;
+  font-size: 24px !important;
+  text-shadow: 0 0 10px rgba(253, 224, 71, 0.5) !important;
+}
+
+
+/* ==========================================================================
+   15. TEMA: MATRIX TERMINAL HACKER (GREEN PHOSPHOR CRT)
+   Fitur Spesial: Kode Monospace VT323 Hijau Fosfor di Atas Hitam Mutlak.
+   ========================================================================== */
+html.theme-matrix {
+  --bg: #020a04;
+  --card-bg: #041708;
+  --border-color: #00ff66;
+  --primary: #00ff66;
+  --primary-hover: #22c55e;
+  --text-main: #00ff66;
+  --text-sub: #86efac;
+  --color-point: #00ff66;
+}
+html.theme-matrix body {
+  background-color: #020a04 !important;
+  background-image: repeating-linear-gradient(0deg, rgba(0, 255, 102, 0.04) 0px, rgba(0, 255, 102, 0.04) 1px, transparent 1px, transparent 3px) !important;
+  color: #00ff66 !important;
+}
+html.theme-matrix .top-bar {
+  background: #041708 !important;
+  border: 1.5px solid #00ff66 !important;
+  box-shadow: 0 0 20px rgba(0, 255, 102, 0.35) !important;
+  border-radius: 2px !important;
+}
+html.theme-matrix .btn-action-soft {
+  background: #07290f !important;
+  border: 1px solid #00ff66 !important;
+  color: #00ff66 !important;
+  font-family: 'VT323', monospace !important;
+  font-size: 16px !important;
+  border-radius: 2px !important;
+}
+html.theme-matrix .table-container {
+  background: #031206 !important;
+  border: 1.5px solid #00ff66 !important;
+  box-shadow: 0 0 25px rgba(0, 255, 102, 0.25) !important;
+  border-radius: 2px !important;
+}
+html.theme-matrix table th {
+  background: #093313 !important;
+  color: #00ff66 !important;
+  border-bottom: 2px solid #00ff66 !important;
+  font-family: 'VT323', monospace !important;
+  font-size: 18px !important;
+}
+html.theme-matrix table tr { background: #031206 !important; border-bottom: 1px solid #093813 !important; }
+html.theme-matrix table tr:nth-child(even) { background: #051c0a !important; }
+html.theme-matrix .name-tiktok { font-family: 'VT323', monospace !important; font-size: 19px !important; }
+html.theme-matrix .name-roblox-display { font-family: 'VT323', monospace !important; font-size: 17px !important; }
+html.theme-matrix .score-val {
+  color: #00ff66 !important;
+  font-family: 'VT323', monospace !important;
+  font-size: 26px !important;
+  text-shadow: 0 0 10px rgba(0, 255, 102, 0.8) !important;
+}
+
+
+/* ==========================================================================
+   16. TEMA: CYBER DUNE SCI-FI (ARRAKIS SPICE ORANGE)
+   Fitur Spesial: Desert Sandstorm Glow, Copper Bronze, Futuristic Visor HUD.
+   ========================================================================== */
+html.theme-dune {
+  --bg: #1c1008;
+  --card-bg: #2e1a0d;
+  --border-color: #ea580c;
+  --primary: #ea580c;
+  --primary-hover: #f97316;
+  --text-main: #ffedd5;
+  --text-sub: #fdba74;
+  --color-point: #f97316;
+}
+html.theme-dune body {
+  background-color: #1c1008 !important;
+  background-image: radial-gradient(circle at 50% 20%, #3d210f 0%, #170d06 80%) !important;
+  color: #ffedd5 !important;
+}
+html.theme-dune .top-bar {
+  background: #2e1a0d !important;
+  border: 1.5px solid #ea580c !important;
+  box-shadow: 0 0 20px rgba(234, 88, 12, 0.35) !important;
+}
+html.theme-dune .btn-action-soft {
+  background: #452410 !important;
+  border: 1px solid #ea580c !important;
+  color: #ffedd5 !important;
+  font-family: 'Orbitron', sans-serif !important;
+  font-size: 11px !important;
+}
+html.theme-dune .table-container {
+  background: #241409 !important;
+  border: 1.5px solid #ea580c !important;
+  box-shadow: 0 0 25px rgba(234, 88, 12, 0.25) !important;
+}
+html.theme-dune table th {
+  background: #42220f !important;
+  color: #fdba74 !important;
+  border-bottom: 2px solid #ea580c !important;
+  font-family: 'Orbitron', sans-serif !important;
+}
+html.theme-dune table tr { background: #241409 !important; border-bottom: 1px solid #4a2711 !important; }
+html.theme-dune table tr:nth-child(even) { background: #2f190b !important; }
+html.theme-dune .score-val {
+  color: #f97316 !important;
+  font-family: 'Orbitron', sans-serif !important;
+  font-weight: 800 !important;
+  font-size: 20px !important;
+}
+
+
+/* ==========================================================================
+   17. TEMA: CLOCKWORK STEAMPUNK (VICTORIAN BRASS & GEARS)
+   Fitur Spesial: Polished Brass Trims, Copper Cogs & Victorian Gauge Design.
+   ========================================================================== */
+html.theme-steampunk {
+  --bg: #1c1510;
+  --card-bg: #2e2219;
+  --border-color: #b45309;
+  --primary: #d97706;
+  --primary-hover: #b45309;
+  --text-main: #fef3c7;
+  --text-sub: #d4a373;
+  --color-point: #d97706;
+}
+html.theme-steampunk body {
+  background-color: #1c1510 !important;
+  background-image: radial-gradient(circle at center, #38291e 0%, #140e0a 100%) !important;
+  color: #fef3c7 !important;
+}
+html.theme-steampunk .top-bar {
+  background: #33251c !important;
+  border: 2px solid #b45309 !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.8) !important;
+}
+html.theme-steampunk .btn-action-soft {
+  background: #473326 !important;
+  border: 1px solid #b45309 !important;
+  color: #fef3c7 !important;
+  font-family: 'Cinzel', serif !important;
+  font-weight: 700 !important;
+}
+html.theme-steampunk .table-container {
+  background: #261b14 !important;
+  border: 2px solid #b45309 !important;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.8) !important;
+}
+html.theme-steampunk table th {
+  background: #3d2b1f !important;
+  color: #fde68a !important;
+  border-bottom: 2px solid #b45309 !important;
+  font-family: 'Cinzel', serif !important;
+  font-weight: 900 !important;
+}
+html.theme-steampunk table tr { background: #261b14 !important; border-bottom: 1px solid #4a3424 !important; }
+html.theme-steampunk table tr:nth-child(even) { background: #302219 !important; }
+html.theme-steampunk .score-val {
+  color: #f59e0b !important;
+  font-family: 'Cinzel', serif !important;
+  font-weight: 900 !important;
+  font-size: 22px !important;
+}
+
+
+/* ==========================================================================
+   18. TEMA: Y2K CHROME CYBER-GOTH (LIQUID MERCURY METALLIC)
+   Fitur Spesial: Liquid Chrome Silver Sheen, Lavender Hologram, Starbursts.
+   ========================================================================== */
+html.theme-chrome {
+  --bg: #09090b;
+  --card-bg: #18181b;
+  --border-color: #cbd5e1;
+  --primary: #ffffff;
+  --primary-hover: #e2e8f0;
+  --text-main: #f8fafc;
+  --text-sub: #c084fc;
+  --color-point: #ffffff;
+}
+html.theme-chrome body {
+  background-color: #09090b !important;
+  background-image: radial-gradient(circle at 50% 10%, #27272a 0%, #09090b 80%) !important;
+  color: #f8fafc !important;
+}
+html.theme-chrome .top-bar {
+  background: linear-gradient(180deg, #27272a 0%, #18181b 100%) !important;
+  border: 1.5px solid #e2e8f0 !important;
+  box-shadow: 0 0 25px rgba(255, 255, 255, 0.25) !important;
+}
+html.theme-chrome .btn-action-soft {
+  background: #27272a !important;
+  border: 1px solid #ffffff !important;
+  color: #ffffff !important;
+  font-family: 'Orbitron', sans-serif !important;
+  font-size: 11px !important;
+}
+html.theme-chrome .btn-action-soft:hover {
+  background: #ffffff !important;
+  color: #000000 !important;
+  box-shadow: 0 0 15px rgba(255, 255, 255, 0.8) !important;
+}
+html.theme-chrome .table-container {
+  background: #121214 !important;
+  border: 1.5px solid #e2e8f0 !important;
+  box-shadow: 0 0 30px rgba(255, 255, 255, 0.15) !important;
+}
+html.theme-chrome table th {
+  background: linear-gradient(180deg, #3f3f46 0%, #1f1f23 100%) !important;
+  color: #ffffff !important;
+  border-bottom: 2px solid #e2e8f0 !important;
+  font-family: 'Orbitron', sans-serif !important;
+}
+html.theme-chrome table tr { background: #121214 !important; border-bottom: 1px solid #27272a !important; }
+html.theme-chrome table tr:nth-child(even) { background: #1a1a1e !important; }
+html.theme-chrome .score-val {
+  color: #ffffff !important;
+  font-family: 'Orbitron', sans-serif !important;
+  font-weight: 900 !important;
+  font-size: 22px !important;
+  text-shadow: 0 0 12px rgba(255, 255, 255, 0.8) !important;
+}
+
+
+/* ==========================================================================
+   19. TEMA: COZY LOFI CAFE (VINTAGE KRAFT & ESPRESSO)
+   Fitur Spesial: Warm Cream Latte, Paper Texture, Relaxing Chill Ambiance.
+   ========================================================================== */
+html.theme-lofi {
+  --bg: #1f1814;
+  --card-bg: #2d221c;
+  --border-color: #d6b49c;
+  --primary: #d6b49c;
+  --primary-hover: #c49a7e;
+  --text-main: #fdfaf6;
+  --text-sub: #e6ccb8;
+  --color-point: #e6ccb8;
+}
+html.theme-lofi body {
+  background-color: #1f1814 !important;
+  background-image: radial-gradient(circle at center, #362922 0%, #17110e 100%) !important;
+  color: #fdfaf6 !important;
+}
+html.theme-lofi .top-bar {
+  background: #30241e !important;
+  border: 1.5px solid #d6b49c !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6) !important;
+  border-radius: 12px !important;
+}
+html.theme-lofi .btn-action-soft {
+  background: #3d2f27 !important;
+  border: 1px solid #d6b49c !important;
+  color: #fdfaf6 !important;
+  font-family: 'Fredoka', sans-serif !important;
+  font-weight: 700 !important;
+}
+html.theme-lofi .table-container {
+  background: #251c17 !important;
+  border: 1.5px solid #d6b49c !important;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.7) !important;
+  border-radius: 12px !important;
+}
+html.theme-lofi table th {
+  background: #403027 !important;
+  color: #fdfaf6 !important;
+  border-bottom: 2px solid #d6b49c !important;
+  font-family: 'Fredoka', sans-serif !important;
+  font-weight: 800 !important;
+}
+html.theme-lofi table tr { background: #251c17 !important; border-bottom: 1px solid #3d2d25 !important; }
+html.theme-lofi table tr:nth-child(even) { background: #2d221c !important; }
+html.theme-lofi .score-val {
+  color: #e6ccb8 !important;
+  font-family: 'Fredoka', sans-serif !important;
+  font-weight: 800 !important;
+  font-size: 22px !important;
+}
+
 </style>
 </head>
 <body class="view-match">
