@@ -26,6 +26,11 @@
         document.documentElement.classList.add('mode-log');
       } else {
         document.documentElement.classList.add('mode-admin');
+        try {
+          if (!localStorage.getItem('scoreboard_auth_user_v1')) {
+            document.documentElement.classList.add('auth-locked');
+          }
+        } catch (_) {}
       }
     })();
   </script>
@@ -1507,6 +1512,20 @@
     /* =========================================================
        CYBER HUD MULTI-USER AUTHENTICATION & ROOM ISOLATION
        ========================================================= */
+    /* MANDATORY AUTHENTICATION GATE */
+    html.auth-locked .container,
+    body.auth-locked .container {
+      display: none !important;
+    }
+    html.auth-locked #modalAuthUser,
+    body.auth-locked #modalAuthUser {
+      display: flex !important;
+      position: fixed; inset: 0;
+      background: #070b14 !important;
+      z-index: 100000;
+      align-items: center; justify-content: center;
+    }
+
     #modalAuthUser {
       position: fixed; inset: 0;
       background: radial-gradient(circle at 50% 25%, rgba(14, 165, 233, 0.18) 0%, rgba(3, 7, 18, 0.94) 75%), #030712;
@@ -3945,19 +3964,29 @@
     const btnR = document.getElementById('tabBtnRegister');
     const formL = document.getElementById('formAuthLogin');
     const formR = document.getElementById('formAuthRegister');
+    const titleEl = document.getElementById('authHeaderTitle');
+    const subEl = document.getElementById('authHeaderSub');
     const msg = document.getElementById('authStatusMsg');
-    if (msg) { msg.style.display = 'none'; msg.className = 'auth-status-msg'; }
+    if (msg) { msg.style.display = 'none'; msg.innerText = ''; }
 
     if (tab === 'login') {
       btnL.classList.add('active');
       btnR.classList.remove('active');
       formL.classList.remove('hidden');
       formR.classList.add('hidden');
+      if (titleEl) titleEl.innerText = 'Login';
+      if (subEl) subEl.innerText = 'Masuk untuk mengakses papan skor';
+      const u = document.getElementById('authLoginUser');
+      if (u) u.focus();
     } else {
       btnR.classList.add('active');
       btnL.classList.remove('active');
       formR.classList.remove('hidden');
       formL.classList.add('hidden');
+      if (titleEl) titleEl.innerText = 'Daftar';
+      if (subEl) subEl.innerText = 'Buat akun baru untuk papan skor Anda';
+      const u = document.getElementById('authRegUser');
+      if (u) u.focus();
     }
   }
 
@@ -3965,8 +3994,10 @@
     const el = document.getElementById('authStatusMsg');
     if (!el) return;
     el.innerText = pesan;
-    el.className = 'auth-status-msg ' + (isSuccess ? 'success' : 'error');
     el.style.display = 'block';
+    el.style.color = isSuccess ? '#86efac' : '#fca5a5';
+    el.style.background = isSuccess ? 'rgba(34, 197, 94, 0.15)' : 'rgba(239, 68, 68, 0.18)';
+    el.style.borderColor = isSuccess ? '#22c55e' : '#ef4444';
   }
 
   function perbaruiUIUserHeader() {
@@ -3985,12 +4016,14 @@
     if (menuRoom) menuRoom.innerText = `ROOM: ${CURRENT_ROOM}`;
   }
 
-    function bukaModalAuth(tab = 'login') {
+  function bukaModalAuth(tab = 'login') {
     const modal = document.getElementById('modalAuthUser');
     if (modal) modal.style.setProperty('display', 'flex', 'important');
-    if (typeof gantiTabAuth === 'function') gantiTabAuth(tab);
+    gantiTabAuth(tab);
   }
   function tutupModalAuth() {
+    const authUser = localStorage.getItem('scoreboard_auth_user_v1');
+    if (!authUser && currentViewMode === 'admin') return; // Jangan tutup jika belum login
     const modal = document.getElementById('modalAuthUser');
     if (modal) modal.style.display = 'none';
   }
@@ -4016,13 +4049,17 @@
     const user = userInp.value.trim().toLowerCase().replace(/[^a-z0-9_]/g, '');
     const pass = passInp.value.trim();
 
-    if (!user || !pass) {
-      tampilkanPesanAuth('Username dan Password wajib diisi!');
+    if (!user) {
+      tampilkanPesanAuth('Silakan masukkan nama / username!');
+      return;
+    }
+    if (!pass) {
+      tampilkanPesanAuth('Silakan masukkan password!');
       return;
     }
 
     btn.disabled = true;
-    btn.innerHTML = '<span>⏳ Memeriksa Akun...</span>';
+    btn.innerHTML = '<span>⏳ Memeriksa...</span>';
 
     try {
       let res = await fetch(`/api/auth?action=login`, {
@@ -4032,7 +4069,7 @@
       }).catch(() => null);
 
       if (!res || !res.ok) {
-        res = await fetch(`https://papan-skor-tiktok.vercel.app/api/auth?action=login`, {
+        res = await fetch(`https://papan-skor-tiktok-pi.vercel.app/api/auth?action=login`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ username: user, password: pass })
@@ -4053,62 +4090,54 @@
 
       if (data && data.sukses) {
         localStorage.setItem('scoreboard_auth_user_v1', JSON.stringify(data.user));
-        tampilkanPesanAuth('Login berhasil! Memuat dashboard room...', true);
+        tampilkanPesanAuth('Login berhasil! Membuka papan skor...', true);
         setTimeout(() => {
-          window.location.href = window.location.pathname;
-        }, 500);
+          window.location.reload();
+        }, 400);
       } else {
-        tampilkanPesanAuth(data ? data.pesan : 'Username atau password salah! Silakan coba lagi.');
+        tampilkanPesanAuth(data ? data.pesan : 'Nama atau password salah!');
         btn.disabled = false;
-        btn.innerHTML = '<span>MASUK KE PAPAN SKOR</span> <span>➔</span>';
+        btn.innerHTML = '<span>Masuk</span>';
       }
     } catch (err) {
       tampilkanPesanAuth('Gagal login: ' + err.message);
       btn.disabled = false;
-      btn.innerHTML = '<span>MASUK KE PAPAN SKOR</span> <span>➔</span>';
+      btn.innerHTML = '<span>Masuk</span>';
     }
   }
 
   async function eksekusiRegisterSubmit() {
-    const nameInp = document.getElementById('authRegName');
     const userInp = document.getElementById('authRegUser');
     const passInp = document.getElementById('authRegPass');
-    const confInp = document.getElementById('authRegPassConfirm');
     const btn = document.getElementById('btnSubmitRegister');
 
-    const name = nameInp.value.trim();
     const user = userInp.value.trim().toLowerCase().replace(/[^a-z0-9_]/g, '');
     const pass = passInp.value.trim();
-    const conf = confInp.value.trim();
 
     if (!user || user.length < 3) {
-      tampilkanPesanAuth('Username minimal 3 karakter (huruf, angka, _) tanpa spasi!');
+      tampilkanPesanAuth('Nama minimal 3 karakter (huruf, angka, _) tanpa spasi!');
       return;
     }
-    if (pass.length < 4) {
-      tampilkanPesanAuth('Password minimal 4 karakter!');
-      return;
-    }
-    if (pass !== conf) {
-      tampilkanPesanAuth('Konfirmasi password tidak cocok!');
+    if (pass.length < 3) {
+      tampilkanPesanAuth('Password minimal 3 karakter!');
       return;
     }
 
     btn.disabled = true;
-    btn.innerHTML = '<span>⏳ Mendaftarkan Akun...</span>';
+    btn.innerHTML = '<span>⏳ Mendaftarkan...</span>';
 
     try {
       let res = await fetch(`/api/auth?action=register`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ username: user, password: pass, displayName: name })
+        body: JSON.stringify({ username: user, password: pass, displayName: user })
       }).catch(() => null);
 
       if (!res || !res.ok) {
-        res = await fetch(`https://papan-skor-tiktok.vercel.app/api/auth?action=register`, {
+        res = await fetch(`https://papan-skor-tiktok-pi.vercel.app/api/auth?action=register`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ username: user, password: pass, displayName: name })
+          body: JSON.stringify({ username: user, password: pass, displayName: user })
         }).catch(() => null);
       }
 
@@ -4116,34 +4145,33 @@
 
       // Simpan di local vault juga
       const localVault = JSON.parse(localStorage.getItem('scoreboard_users_vault_v1') || '{}');
-      localVault[user] = { username: user, password: pass, displayName: name };
+      localVault[user] = { username: user, password: pass, displayName: user };
       localStorage.setItem('scoreboard_users_vault_v1', JSON.stringify(localVault));
 
       if (data && data.sukses) {
         localStorage.setItem('scoreboard_auth_user_v1', JSON.stringify(data.user));
-        tampilkanPesanAuth('Pendaftaran sukses! Mengalihkan ke room Anda...', true);
+        tampilkanPesanAuth('Pendaftaran sukses! Membuka papan skor...', true);
         setTimeout(() => {
-          window.location.href = window.location.pathname;
-        }, 600);
+          window.location.reload();
+        }, 400);
       } else {
-        // Jika server bermasalah tapi local vault berhasil
-        localStorage.setItem('scoreboard_auth_user_v1', JSON.stringify({ username: user, displayName: name }));
-        tampilkanPesanAuth('Pendaftaran berhasil (Mode Offline)! Mengalihkan...', true);
+        localStorage.setItem('scoreboard_auth_user_v1', JSON.stringify({ username: user, displayName: user }));
+        tampilkanPesanAuth('Pendaftaran sukses! Membuka papan skor...', true);
         setTimeout(() => {
-          window.location.href = window.location.pathname;
-        }, 600);
+          window.location.reload();
+        }, 400);
       }
     } catch (err) {
-      tampilkanPesanAuth('Error pendaftaran: ' + err.message);
+      tampilkanPesanAuth('Gagal daftar: ' + err.message);
       btn.disabled = false;
-      btn.innerHTML = '<span>DAFTAR & BUAT ROOM SAYA</span> <span>🚀</span>';
+      btn.innerHTML = '<span>Daftar Akun</span>';
     }
   }
 
   function eksekusiLogoutUser() {
-    if (confirm('Apakah Anda yakin ingin logout / beralih akun?')) {
+    if (confirm('Apakah Anda yakin ingin logout? Papan skor akan terkunci kembali.')) {
       localStorage.removeItem('scoreboard_auth_user_v1');
-      window.location.href = window.location.pathname;
+      window.location.reload();
     }
   }
 
@@ -4154,12 +4182,19 @@
       const authUser = localStorage.getItem('scoreboard_auth_user_v1');
       const authModal = document.getElementById('modalAuthUser');
       if (!authUser) {
+        document.documentElement.classList.add('auth-locked');
+        document.body.classList.add('auth-locked');
         if (authModal) authModal.style.setProperty('display', 'flex', 'important');
+        return; // Hentikan render dan inisialisasi papan skor sampai login berhasil!
       } else {
+        document.documentElement.classList.remove('auth-locked');
+        document.body.classList.remove('auth-locked');
         if (authModal) authModal.style.display = 'none';
         perbaruiUIUserHeader();
       }
     } else {
+      document.documentElement.classList.remove('auth-locked');
+      document.body.classList.remove('auth-locked');
       const authModal = document.getElementById('modalAuthUser');
       if (authModal) authModal.style.display = 'none';
     }
@@ -4195,94 +4230,62 @@
 </script>
 
 <!-- MODAL AUTHENTICATION & MULTI-USER ROOM SEPARATION -->
-<div id="modalAuthUser" onclick="if(event.target===this) tutupModalAuth()">
-  <div class="auth-box-hud">
-    <button type="button" class="btn-close-hud" onclick="tutupModalAuth()" title="Tutup" style="position:absolute; top:16px; right:16px; z-index:10;">✕</button>
-    <div class="auth-header">
-      <div class="auth-badge-title">🛡️ MULTI-USER ISOLATED WORKSPACE 🛡️</div>
-      <h2 class="auth-title">Papan Skor TikTok</h2>
-      <p class="auth-subtitle">Setiap user memiliki Room & data terpisah secara independen. Tidak akan bertabrakan dengan akun lain!</p>
+<!-- MODAL AUTHENTICATION & MANDATORY LOGIN GATE (SIMPEL) -->
+<div id="modalAuthUser">
+  <div class="auth-box-hud" style="max-width: 380px; width: 92vw; padding: 28px 24px;">
+    <div class="auth-header" style="margin-bottom: 6px;">
+      <h2 class="auth-title" id="authHeaderTitle" style="font-size: 26px;">Login</h2>
+      <p class="auth-subtitle" id="authHeaderSub" style="margin-top: 4px; color: #94a3b8; font-size: 12px;">Masuk untuk mengakses papan skor</p>
     </div>
 
-    <!-- TAB SWITCHER -->
-    <div class="auth-tabs">
+    <!-- TAB SWITCHER SIMPEL -->
+    <div class="auth-tabs" style="margin-bottom: 12px;">
       <button type="button" class="auth-tab-btn active" id="tabBtnLogin" onclick="gantiTabAuth('login')">
-        <span>🔑</span> <span>Masuk (Login)</span>
+        <span>Login</span>
       </button>
       <button type="button" class="auth-tab-btn" id="tabBtnRegister" onclick="gantiTabAuth('register')">
-        <span>📝</span> <span>Daftar Akun Baru</span>
+        <span>Daftar</span>
       </button>
     </div>
 
     <!-- STATUS ALERT -->
     <div class="auth-status-msg" id="authStatusMsg"></div>
 
-    <!-- FORM LOGIN -->
+    <!-- FORM LOGIN SIMPEL -->
     <form class="auth-form" id="formAuthLogin" onsubmit="event.preventDefault(); eksekusiLoginSubmit();">
       <div class="auth-field">
-        <label class="auth-label">
-          <span>Username Akun / Room ID</span>
-          <span class="auth-label-hint">contoh: admin, sohe_live</span>
-        </label>
-        <input type="text" id="authLoginUser" class="auth-input" placeholder="Masukkan username..." autocomplete="username" required>
+        <label class="auth-label">Nama</label>
+        <input type="text" id="authLoginUser" class="auth-input" placeholder="Masukkan nama..." autocomplete="username" required autofocus>
       </div>
 
       <div class="auth-field">
-        <label class="auth-label">
-          <span>Password</span>
-        </label>
+        <label class="auth-label">Password</label>
         <input type="password" id="authLoginPass" class="auth-input" placeholder="Masukkan password..." autocomplete="current-password" required>
       </div>
 
-      <button type="submit" class="auth-submit-btn" id="btnSubmitLogin">
-        <span>MASUK KE PAPAN SKOR</span>
-        <span>➔</span>
+      <button type="submit" class="auth-submit-btn" id="btnSubmitLogin" style="margin-top: 10px;">
+        <span>Masuk</span>
       </button>
-      <p style="text-align:center; font-size:11px; color:#64748b; margin:0;">
-        Akun default awal: <b>admin</b> | password: <b>admin123</b>
-      </p>
+      <div style="text-align: center; font-size: 11px; color: #64748b; margin-top: 6px;">
+        Default: nama <b>admin</b> | password <b>admin123</b>
+      </div>
     </form>
 
-    <!-- FORM REGISTER -->
+    <!-- FORM DAFTAR SIMPEL -->
     <form class="auth-form hidden" id="formAuthRegister" onsubmit="event.preventDefault(); eksekusiRegisterSubmit();">
       <div class="auth-field">
-        <label class="auth-label">
-          <span>Nama Lengkap / Tim / Host</span>
-          <span class="auth-label-hint">contoh: Galatama Sohe Official</span>
-        </label>
-        <input type="text" id="authRegName" class="auth-input" placeholder="Ketik nama display..." required>
+        <label class="auth-label">Nama</label>
+        <input type="text" id="authRegUser" class="auth-input" placeholder="Buat nama akun..." autocomplete="username" required>
       </div>
 
       <div class="auth-field">
-        <label class="auth-label">
-          <span>Username (ID Room Unik Anda)</span>
-          <span class="auth-label-hint">huruf, angka & _ (tanpa spasi)</span>
-        </label>
-        <input type="text" id="authRegUser" class="auth-input" placeholder="contoh: sohe_live" autocomplete="username" required>
+        <label class="auth-label">Password</label>
+        <input type="password" id="authRegPass" class="auth-input" placeholder="Buat password..." autocomplete="new-password" required>
       </div>
 
-      <div class="auth-field">
-        <label class="auth-label">
-          <span>Password</span>
-          <span class="auth-label-hint">minimal 4 karakter</span>
-        </label>
-        <input type="password" id="authRegPass" class="auth-input" placeholder="Buat password aman..." autocomplete="new-password" required>
-      </div>
-
-      <div class="auth-field">
-        <label class="auth-label">
-          <span>Konfirmasi Password</span>
-        </label>
-        <input type="password" id="authRegPassConfirm" class="auth-input" placeholder="Ketik ulang password..." autocomplete="new-password" required>
-      </div>
-
-      <button type="submit" class="auth-submit-btn" id="btnSubmitRegister">
-        <span>DAFTAR & BUAT ROOM SAYA</span>
-        <span>🚀</span>
+      <button type="submit" class="auth-submit-btn" id="btnSubmitRegister" style="margin-top: 10px;">
+        <span>Daftar Akun</span>
       </button>
-      <p style="text-align:center; font-size:11px; color:#64748b; margin:0;">
-        Setelah mendaftar, link stream Anda langsung otomatis menggunakan Room unik Anda.
-      </p>
     </form>
   </div>
 </div>
