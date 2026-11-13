@@ -979,13 +979,64 @@
       padding: 0 !important;
     }
     html.mode-tabel .top-bar,
-    html.mode-tabel .modal-overlay,
-    html.mode-tabel .quick-point-popover,
+    html.mode-tabel #modalPresetPoin,
+    html.mode-tabel #modalPengaturanAudio,
+    html.mode-tabel #modalConfirmResetTabel,
+    html.mode-tabel #modalLinkStream,
     html.mode-tabel .color-picker-mini,
     html.mode-tabel #winnerOverlay,
-    html.mode-tabel #centerNotifPopup,
     html.mode-tabel .col-resizer {
       display: none !important;
+    }
+
+    /* TAMPILAN INTERAKTIF & MENARIK DI LIVE STREAM (MODAL EDIT KURSI & POPUP POIN) */
+    html.mode-tabel #modalInputNama {
+      pointer-events: none !important;
+      background: rgba(5, 10, 20, 0.72) !important;
+      backdrop-filter: blur(8px) !important;
+      z-index: 99999 !important;
+    }
+    html.mode-tabel #modalInputNama .modal-box-hud {
+      border: 1.5px solid #38bdf8 !important;
+      box-shadow: 0 0 35px rgba(56, 189, 248, 0.4), 0 20px 50px rgba(0, 0, 0, 0.9) !important;
+      animation: popInModal 0.25s cubic-bezier(0.16, 1, 0.3, 1) !important;
+    }
+    html.mode-tabel #modalInputNama .btn-close-hud,
+    html.mode-tabel #modalInputNama .hud-action-row,
+    html.mode-tabel #modalInputNama .hud-btn-search {
+      display: none !important;
+    }
+    html.mode-tabel #modalInputNama input {
+      pointer-events: none !important;
+      user-select: none !important;
+      background: rgba(15, 23, 42, 0.8) !important;
+      border-color: rgba(56, 189, 248, 0.3) !important;
+      color: #f8fafc !important;
+    }
+    html.mode-tabel #modalInputNama .modal-sub-hud::before {
+      content: "⚡ LIVE PLAYER REGISTRATION ⚡ " !important;
+      color: #38bdf8 !important;
+      font-weight: 900 !important;
+      font-size: 11px !important;
+      letter-spacing: 1.5px !important;
+    }
+
+    html.mode-tabel #quickPointPopover {
+      pointer-events: none !important;
+      z-index: 99998 !important;
+      border: 1.5px solid #38bdf8 !important;
+      box-shadow: 0 0 25px rgba(56, 189, 248, 0.4), 0 16px 36px rgba(0, 0, 0, 0.9) !important;
+    }
+    html.mode-tabel #quickPointPopover .qp-close {
+      display: none !important;
+    }
+    html.mode-tabel #quickPointPopover input {
+      pointer-events: none !important;
+    }
+
+    html.mode-tabel #centerNotifPopup {
+      z-index: 999999 !important;
+      pointer-events: none !important;
     }
     html.mode-tabel:not(.show-log) .log-panel {
       display: none !important;
@@ -2134,8 +2185,44 @@
         tutupLayarPemenang(false);
       }
     } else if (msg.type === 'TRIGGER_TOAST') {
-      if (currentViewMode === 'notif') {
+      if (currentViewMode === 'notif' || currentViewMode === 'tabel') {
         tampilkanPopupPoinTengah(msg.namaPemain, msg.deltaPoin, msg.totalPoin, msg.labelAtas, msg.warnaTag, false);
+      }
+    } else if (msg.type === 'OPEN_EDIT_MODAL') {
+      if (currentViewMode === 'tabel') {
+        bukaModalInputNama(msg.chair, false);
+        if (msg.judul) document.getElementById('modalInputJudul').innerText = msg.judul;
+        if (msg.robloxUser !== undefined) document.getElementById('inputUserRoblox').value = msg.robloxUser;
+        if (msg.user !== undefined) document.getElementById('inputNamaTikTok').value = msg.user;
+        if (msg.nick !== undefined) document.getElementById('inputDisplayName').value = msg.nick;
+        if (msg.avatar !== undefined) document.getElementById('inputAvatarUrl').value = msg.avatar;
+        updateModalPreviewUI(msg.robloxUser || '', msg.nick || '', msg.avatar || '');
+        document.getElementById('modalSearchStatus').innerText = '';
+        document.getElementById('modalInputNama').style.display = 'flex';
+      }
+    } else if (msg.type === 'UPDATE_EDIT_MODAL') {
+      if (currentViewMode === 'tabel') {
+        if (msg.robloxUser !== undefined) document.getElementById('inputUserRoblox').value = msg.robloxUser;
+        if (msg.user !== undefined) document.getElementById('inputNamaTikTok').value = msg.user;
+        if (msg.nick !== undefined) document.getElementById('inputDisplayName').value = msg.nick;
+        if (msg.avatar !== undefined) document.getElementById('inputAvatarUrl').value = msg.avatar;
+        updateModalPreviewUI(msg.robloxUser || '', msg.nick || '', msg.avatar || '');
+        if (msg.statusTxt) {
+          const st = document.getElementById('modalSearchStatus');
+          if (st) st.innerText = msg.statusTxt;
+        }
+      }
+    } else if (msg.type === 'CLOSE_EDIT_MODAL') {
+      if (currentViewMode === 'tabel') {
+        tutupModalNama(false);
+      }
+    } else if (msg.type === 'OPEN_QUICK_POINT') {
+      if (currentViewMode === 'tabel') {
+        bukaQuickPointPopover(msg.chair, null, false);
+      }
+    } else if (msg.type === 'CLOSE_QUICK_POINT') {
+      if (currentViewMode === 'tabel') {
+        tutupQuickPointPopover(false);
       }
     } else if (msg.type === 'NEW_LOG') {
       if (msg.item) {
@@ -2435,13 +2522,13 @@
     grid.innerHTML = listAngka.map(n => `<button type="button" class="btn-qp" onclick="eksekusiQuickPoint(${n})">+${n}</button>`).join('');
   }
 
-  function bukaQuickPointPopover(index, ev) {
+  function bukaQuickPointPopover(index, ev, isBroadcast = true) {
     if (ev) ev.stopPropagation();
     const currData = getActiveData();
     const p = (index === 19) ? currData.host : currData.players[index];
     if (!p) return;
     if (index !== 19 && !p.isReady) {
-      bukaModalInputNama(index);
+      bukaModalInputNama(index, isBroadcast);
       return;
     }
 
@@ -2455,23 +2542,38 @@
     const pop = document.getElementById('quickPointPopover');
     pop.classList.add('show');
 
-    const rect = ev.currentTarget.getBoundingClientRect();
-    const popWidth = 235;
-    const popHeight = pop.offsetHeight || 150;
+    let targetEl = (ev && ev.currentTarget) ? ev.currentTarget : document.getElementById(index === 19 ? 'row-kursi-19' : `row-kursi-${index}`);
+    if (targetEl) {
+      const rect = targetEl.getBoundingClientRect();
+      const popWidth = 235;
+      const popHeight = pop.offsetHeight || 150;
 
-    let leftPos = rect.left - popWidth - 8;
-    if (leftPos < 10) leftPos = Math.min(window.innerWidth - popWidth - 10, rect.right + 8);
-    let topPos = rect.top - (popHeight / 2) + (rect.height / 2);
-    topPos = Math.max(10, Math.min(window.innerHeight - popHeight - 10, topPos));
+      let leftPos = rect.left - popWidth - 8;
+      if (leftPos < 10) leftPos = Math.min(window.innerWidth - popWidth - 10, rect.right + 8);
+      let topPos = rect.top - (popHeight / 2) + (rect.height / 2);
+      topPos = Math.max(10, Math.min(window.innerHeight - popHeight - 10, topPos));
 
-    pop.style.left = `${leftPos}px`;
-    pop.style.top = `${topPos}px`;
+      pop.style.left = `${leftPos}px`;
+      pop.style.top = `${topPos}px`;
+    }
+
+    if (isBroadcast) {
+      siarkanPesanSync({
+        type: 'OPEN_QUICK_POINT',
+        chair: index,
+        poin: p.poin,
+        nama: namaTampil
+      });
+    }
   }
 
-  function tutupQuickPointPopover() {
+  function tutupQuickPointPopover(isBroadcast = true) {
     const pop = document.getElementById('quickPointPopover');
     if (pop) pop.classList.remove('show');
     activeQuickPointIndex = null;
+    if (isBroadcast) {
+      siarkanPesanSync({ type: 'CLOSE_QUICK_POINT' });
+    }
   }
 
   function eksekusiQuickPoint(delta) {
@@ -3019,7 +3121,7 @@
     loop();
   }
 
-  function bukaModalInputNama(index) {
+  function bukaModalInputNama(index, isBroadcast = true) {
     tutupQuickPointPopover();
     tutupMiniColorPicker();
     const currData = getActiveData();
@@ -3027,7 +3129,8 @@
     if (!p) return;
 
     document.getElementById('editPlayerIndex').value = index;
-    document.getElementById('modalInputJudul').innerText = (index === 19) ? 'Kursi 20 (Host)' : `Kursi ${index + 1}`;
+    const judul = (index === 19) ? 'Kursi 20 (Host)' : `Kursi ${index + 1}`;
+    document.getElementById('modalInputJudul').innerText = judul;
     document.getElementById('inputUserRoblox').value = p.robloxUser || '';
     document.getElementById('inputNamaTikTok').value = p.user || '';
     document.getElementById('inputDisplayName').value = p.nick || '';
@@ -3039,7 +3142,21 @@
     document.getElementById('modalSearchStatus').innerText = '';
 
     document.getElementById('modalInputNama').style.display = 'flex';
-    setTimeout(() => { document.getElementById('inputUserRoblox').focus(); }, 100);
+    if (currentViewMode === 'admin') {
+      setTimeout(() => { document.getElementById('inputUserRoblox').focus(); }, 100);
+    }
+
+    if (isBroadcast) {
+      siarkanPesanSync({
+        type: 'OPEN_EDIT_MODAL',
+        chair: index,
+        judul: judul,
+        robloxUser: p.robloxUser || '',
+        user: p.user || '',
+        nick: p.nick || '',
+        avatar: p.avatar || ''
+      });
+    }
   }
 
   function updateModalPreviewUI(robloxUser, nick, avatarUrl) {
@@ -3058,7 +3175,13 @@
     }
   }
 
-  function tutupModalNama() { document.getElementById('modalInputNama').style.display = 'none'; }
+  function tutupModalNama(isBroadcast = true) {
+    const el = document.getElementById('modalInputNama');
+    if (el) el.style.display = 'none';
+    if (isBroadcast) {
+      siarkanPesanSync({ type: 'CLOSE_EDIT_MODAL' });
+    }
+  }
 
   function resetFormModalNama() {
     const idx = parseInt(document.getElementById('editPlayerIndex').value);
@@ -3140,6 +3263,15 @@
         updateModalPreviewUI(data.userName, data.displayName, data.avatarUrl);
         statusEl.style.color = '#4ade80';
         statusEl.innerText = 'Akun Roblox & Foto ditemukan! ✔';
+
+        siarkanPesanSync({
+          type: 'UPDATE_EDIT_MODAL',
+          robloxUser: data.userName,
+          nick: data.displayName,
+          user: document.getElementById('inputNamaTikTok').value || data.userName,
+          avatar: data.avatarUrl,
+          statusTxt: 'Akun Roblox & Foto ditemukan! ✔'
+        });
       } else {
         statusEl.style.color = '#f87171';
         statusEl.innerText = data.pesan || 'Akun tidak ditemukan!';
@@ -3522,6 +3654,30 @@
       });
     });
   }
+
+  
+  // Sinkronisasi realtime apa yang diketik host di modal edit ke layar stream
+  ['inputUserRoblox', 'inputNamaTikTok', 'inputDisplayName'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) {
+      el.addEventListener('input', () => {
+        if (currentViewMode === 'admin') {
+          const robloxU = document.getElementById('inputUserRoblox').value;
+          const nick = document.getElementById('inputDisplayName').value;
+          const user = document.getElementById('inputNamaTikTok').value;
+          const av = document.getElementById('inputAvatarUrl').value;
+          siarkanPesanSync({
+            type: 'UPDATE_EDIT_MODAL',
+            robloxUser: robloxU,
+            nick: nick,
+            user: user,
+            avatar: av,
+            statusTxt: document.getElementById('modalSearchStatus').innerText || ''
+          });
+        }
+      });
+    }
+  });
 
   window.addEventListener('DOMContentLoaded', () => {
     try { if (window.resizeTo && currentViewMode === 'admin') window.resizeTo(1060, 725); } catch (_) {}
