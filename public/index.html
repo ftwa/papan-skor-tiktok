@@ -4351,22 +4351,7 @@ html.theme-hazard .c-notif-badge-icon {
       box-shadow: none !important;
     }
 
-    /* Background Podium di mode streaming TikTok Studio WAJIB TRANSPARAN */
-    html.mode-podium #winnerOverlay,
-    html[class*="mode-"] #winnerOverlay,
-    html[class*="theme-"].mode-podium #winnerOverlay,
-    html.mode-podium.theme-comic #winnerOverlay,
-    html.mode-podium.theme-cyber #winnerOverlay,
-    html.mode-podium.theme-arcade #winnerOverlay,
-    html.mode-podium.theme-hazard #winnerOverlay,
-    html.mode-podium.theme-imperial #winnerOverlay,
-    html.mode-podium.theme-matrix #winnerOverlay,
-    html.mode-podium.theme-aquatic #winnerOverlay {
-      background: transparent !important;
-      background-color: transparent !important;
-      background-image: none !important;
-      backdrop-filter: none !important;
-    }
+
 
     /* Penempatan Center Notif Popup di mode-notif agar 100% pas di tengah */
     html.mode-notif #centerNotifPopup {
@@ -4380,6 +4365,21 @@ html.theme-hazard .c-notif-badge-icon {
       transform: translate(-50%, -50%) scale(1) !important;
       opacity: 1 !important;
       visibility: visible !important;
+    }
+
+  
+    /* Comic Pop-Art Notif Name (Putih Jelas dengan Outline Hitam Pop-Art) */
+    html.theme-comic .c-notif-name,
+    html.theme-comic #cNotifPlayer {
+      color: #ffffff !important;
+      -webkit-text-fill-color: #ffffff !important;
+      font-family: 'Bangers', cursive !important;
+      font-size: 34px !important;
+      font-weight: 900 !important;
+      line-height: 1.2 !important;
+      text-shadow: 3px 3px 0px #000000, -2px -2px 0px #000000, 2px -2px 0px #000000, -2px 2px 0px #000000, 0px 3px 0px #000000, 0px 0px 15px rgba(0,0,0,0.9) !important;
+      -webkit-text-stroke: 1.2px #000000;
+      letter-spacing: 1px !important;
     }
 
   </style>
