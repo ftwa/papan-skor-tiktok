@@ -4851,6 +4851,17 @@ html.theme-hazard .c-notif-badge-icon {
   const rawView = (urlParams.get('view') || urlParams.get('overlay') || 'admin').toLowerCase();
   let currentViewMode = 'admin';
 
+  // HELPER UNTUK MENCEGAH CRASH AKIBAT DATA KORUP DI LOCALSTORAGE
+  function safeJsonParse(str, fallbackVal) {
+    if (!str || typeof str !== 'string') return fallbackVal;
+    try {
+      const parsed = JSON.parse(str);
+      return (parsed !== null && parsed !== undefined) ? parsed : fallbackVal;
+    } catch (_) {
+      return fallbackVal;
+    }
+  }
+
   // GLOBAL THEME ICON MAPPER
   const ICON_TEMA_MAP = {
     cyber: '⚡',
@@ -5367,13 +5378,16 @@ html.theme-hazard .c-notif-badge-icon {
     };
   }
 
-  let db = JSON.parse(localStorage.getItem(DB_KEY)) || {
-    warnaPoin: { quickPoints: DEFAULT_QUICK_POINTS },
-    sessions: {
-      "Sesi 1": buatDataTabelKosong()
-    },
-    activeSession: "Sesi 1"
-  };
+  let db = safeJsonParse(localStorage.getItem(DB_KEY), null);
+  if (!db || typeof db !== 'object') {
+    db = {
+      warnaPoin: { quickPoints: DEFAULT_QUICK_POINTS },
+      sessions: {
+        "Sesi 1": buatDataTabelKosong()
+      },
+      activeSession: "Sesi 1"
+    };
+  }
 
   if (!db.warnaPoin) db.warnaPoin = { quickPoints: DEFAULT_QUICK_POINTS };
   if (!db.sessions || typeof db.sessions !== 'object' || Object.keys(db.sessions).length === 0) {
@@ -5401,15 +5415,15 @@ html.theme-hazard .c-notif-badge-icon {
 
   let customAudioPoinData = localStorage.getItem(AUDIO_POIN_KEY) || null;
   let customAudioPodiumData = localStorage.getItem(AUDIO_PODIUM_KEY) || null;
-  let isLogFolded = JSON.parse(localStorage.getItem(LOG_FOLD_KEY)) || false;
+  let isLogFolded = safeJsonParse(localStorage.getItem(LOG_FOLD_KEY), false);
   let tipeResetPending = null;
   let popupCenterTimer = null;
   let activeQuickPointIndex = null;
   let activeColorTagIndex = null;
 
-  let savedColWidths = JSON.parse(localStorage.getItem(COL_WIDTHS_KEY)) || {
+  let savedColWidths = Object.assign({
     no: "38px", nama: "210px", display: "180px", point: "95px"
-  };
+  }, safeJsonParse(localStorage.getItem(COL_WIDTHS_KEY), {}));
 
   /* FITUR DROPDOWN SESI */
   
@@ -6056,7 +6070,22 @@ html.theme-hazard .c-notif-badge-icon {
     document.getElementById('modalNotifSuara').style.display = 'none';
   }
 
-  const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  let audioCtx = null;
+  try {
+    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  } catch (err) {
+    console.warn("AudioContext not supported or disabled:", err);
+  }
+
+  // AUTO UNLOCK AUDIO POLICY ON FIRST USER GESTURE
+  function bukaKunciAudioBrowser() {
+    if (audioCtx && audioCtx.state === 'suspended') {
+      audioCtx.resume().catch(() => {});
+    }
+  }
+  window.addEventListener('click', bukaKunciAudioBrowser, { passive: true });
+  window.addEventListener('keydown', bukaKunciAudioBrowser, { passive: true });
+  window.addEventListener('touchstart', bukaKunciAudioBrowser, { passive: true });
   
   function apakahSuaraBolehDiputar() {
     // Mode Admin di PC selalu berbunyi agar streamer mendengar respons klik & poin
@@ -6788,7 +6817,7 @@ html.theme-hazard .c-notif-badge-icon {
       // Coba endpoint lokal terlebih dahulu, jika 404/gagal otomatis beralih ke endpoint live Vercel
       let res = await fetch(`/api/cari-roblox?username=${encodeURIComponent(rawInput)}`).catch(() => null);
       if (!res || !res.ok) {
-        res = await fetch(`https://papan-skor-tiktok.vercel.app/api/cari-roblox?username=${encodeURIComponent(rawInput)}`).catch(() => null);
+        res = await fetch(`https://papan-skor-tiktok-pi.vercel.app/api/cari-roblox?username=${encodeURIComponent(rawInput)}`).catch(() => null);
       }
       if (!res || !res.ok) {
         res = await fetch(`https://skor-sohe.vercel.app/api/cari-roblox?username=${encodeURIComponent(rawInput)}`).catch(() => null);
