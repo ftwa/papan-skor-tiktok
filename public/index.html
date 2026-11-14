@@ -13,16 +13,21 @@
     (function() {
       const urlParams = new URLSearchParams(window.location.search);
       const raw = (urlParams.get('view') || urlParams.get('overlay') || 'admin').toLowerCase();
+      let modeClass = 'mode-admin';
       if (['tabel', 'table', 'scoreboard', 'board'].includes(raw)) {
+        modeClass = 'mode-tabel';
         document.documentElement.classList.add('mode-tabel');
         if (urlParams.get('log') === 'true' || urlParams.get('with_log') === 'true') {
           document.documentElement.classList.add('show-log');
         }
       } else if (['podium', 'winner', 'champions', 'juara'].includes(raw)) {
+        modeClass = 'mode-podium';
         document.documentElement.classList.add('mode-podium');
       } else if (['notif', 'toast', 'alert'].includes(raw)) {
+        modeClass = 'mode-notif';
         document.documentElement.classList.add('mode-notif');
       } else if (['log', 'logs', 'aktivitas', 'activity'].includes(raw)) {
+        modeClass = 'mode-log';
         document.documentElement.classList.add('mode-log');
       } else {
         document.documentElement.classList.add('mode-admin');
@@ -32,6 +37,16 @@
           }
         } catch (_) {}
       }
+
+      // Pastikan body langsung mendapat class mode saat terbentuk
+      document.addEventListener('DOMContentLoaded', function() {
+        if (document.body) {
+          document.body.classList.add(modeClass);
+          if (document.documentElement.classList.contains('show-log')) {
+            document.body.classList.add('show-log');
+          }
+        }
+      });
 
       // Deteksi awal tema aktif agar tampilan langsung sinkron tanpa flicker
       try {
@@ -4299,7 +4314,75 @@ html.theme-hazard .c-notif-badge-icon {
   100% { transform: scale(1.1); box-shadow: 0 0 35px #ef4444, 0 0 60px #fcee0a; }
 }
 
-</style>
+
+    /* ==============================================================================
+       TIKTOK LIVE STUDIO & OBS STREAM OVERLAYS (ABSOLUTE TRANSPARENCY ENFORCER)
+       ============================================================================== */
+    html.mode-tabel, html.mode-tabel body,
+    html.mode-notif, html.mode-notif body,
+    html.mode-log, html.mode-log body,
+    html.mode-podium, html.mode-podium body,
+    html[class*="mode-"], html[class*="mode-"] body,
+    body.mode-tabel, body.mode-notif, body.mode-log, body.mode-podium,
+    body[class*="mode-"],
+    html[class*="theme-"][class*="mode-"],
+    html[class*="theme-"][class*="mode-"] body,
+    html[class*="theme-"] body[class*="mode-"],
+    html[class*="theme-"].mode-tabel body,
+    html[class*="theme-"].mode-notif body,
+    html[class*="theme-"].mode-log body,
+    html[class*="theme-"].mode-podium body {
+      background: transparent !important;
+      background-color: transparent !important;
+      background-image: none !important;
+      box-shadow: none !important;
+    }
+
+    html[class*="mode-"] .container,
+    html[class*="theme-"][class*="mode-"] .container,
+    html.mode-tabel .container,
+    html.mode-notif .container,
+    html.mode-log .container,
+    html.mode-podium .container {
+      background: transparent !important;
+      background-color: transparent !important;
+      background-image: none !important;
+      border: none !important;
+      box-shadow: none !important;
+    }
+
+    /* Background Podium di mode streaming TikTok Studio WAJIB TRANSPARAN */
+    html.mode-podium #winnerOverlay,
+    html[class*="mode-"] #winnerOverlay,
+    html[class*="theme-"].mode-podium #winnerOverlay,
+    html.mode-podium.theme-comic #winnerOverlay,
+    html.mode-podium.theme-cyber #winnerOverlay,
+    html.mode-podium.theme-arcade #winnerOverlay,
+    html.mode-podium.theme-hazard #winnerOverlay,
+    html.mode-podium.theme-imperial #winnerOverlay,
+    html.mode-podium.theme-matrix #winnerOverlay,
+    html.mode-podium.theme-aquatic #winnerOverlay {
+      background: transparent !important;
+      background-color: transparent !important;
+      background-image: none !important;
+      backdrop-filter: none !important;
+    }
+
+    /* Penempatan Center Notif Popup di mode-notif agar 100% pas di tengah */
+    html.mode-notif #centerNotifPopup {
+      position: absolute !important;
+      top: 50% !important;
+      left: 50% !important;
+      transform: translate(-50%, -50%) scale(0.9) !important;
+      margin: 0 !important;
+    }
+    html.mode-notif #centerNotifPopup.show {
+      transform: translate(-50%, -50%) scale(1) !important;
+      opacity: 1 !important;
+      visibility: visible !important;
+    }
+
+  </style>
 <link rel="stylesheet" href="themes.css">
 </head>
 <body class="view-match">
@@ -5189,7 +5272,7 @@ html.theme-hazard .c-notif-badge-icon {
     } else if (msg.type === 'UPDATE_DATA') {
       if (msg.db) {
         db = msg.db;
-        if (msg.db.activeTheme && msg.db.activeTheme !== temaAktif && !new URLSearchParams(window.location.search).get('theme')) {
+        if (msg.db.activeTheme && msg.db.activeTheme !== temaAktif) {
           terapkanTema(msg.db.activeTheme, false);
         }
         if (currentViewMode === 'tabel' || currentViewMode === 'admin') {
@@ -6040,6 +6123,14 @@ html.theme-hazard .c-notif-badge-icon {
     document.documentElement.classList.add('theme-' + temaAktif);
     document.body.classList.add('theme-' + temaAktif);
 
+    // PASTIKAN CLASS MODE STREAMING TETAP MELEKAT SEMPURNA DI HTML DAN BODY
+    if (typeof currentViewMode !== 'undefined' && currentViewMode && currentViewMode !== 'admin') {
+      document.documentElement.classList.add('mode-' + currentViewMode);
+      if (document.body) {
+        document.body.classList.add('mode-' + currentViewMode);
+      }
+    }
+
     perbaruiUIModalTema();
     perbaruiHeaderPodiumTema();
     const lblTema = document.getElementById('labelTemaAktif');
@@ -6048,6 +6139,26 @@ html.theme-hazard .c-notif-badge-icon {
     const badgeChair = document.getElementById('modalChairBadgeIcon');
     if (badgeChair) {
       badgeChair.innerText = ICON_TEMA_MAP[temaAktif] || '🪑';
+    }
+
+    // SINKRONISASI RENDERING & SKALA TABEL / PODIUM SAAT TEMA BERGANTI (ANTI-GLITCH & ANTI-TERPOTONG)
+    if (typeof currentViewMode !== 'undefined' && (currentViewMode === 'tabel' || currentViewMode === 'admin')) {
+      if (typeof renderIsiTabel === 'function') renderIsiTabel();
+      if (typeof autoScaleTabel === 'function') {
+        autoScaleTabel();
+        requestAnimationFrame(autoScaleTabel);
+        setTimeout(autoScaleTabel, 50);
+        setTimeout(autoScaleTabel, 150);
+        setTimeout(autoScaleTabel, 300);
+      }
+    }
+    if (typeof currentViewMode !== 'undefined' && (currentViewMode === 'podium' || currentViewMode === 'admin')) {
+      if (typeof autoScalePodium === 'function') {
+        autoScalePodium();
+        requestAnimationFrame(autoScalePodium);
+        setTimeout(autoScalePodium, 50);
+        setTimeout(autoScalePodium, 150);
+      }
     }
 
     if (siarkan) {
@@ -6267,10 +6378,11 @@ html.theme-hazard .c-notif-badge-icon {
     // agar dapat diakses dari TikTok Studio tanpa kendala port lokal / IP 127.0.0.1 dari MasterPapanSkor.exe
     const base = 'https://papan-skor-tiktok-pi.vercel.app/';
 
-    const urlTabel = `${base}?room=${encodeURIComponent(CURRENT_ROOM)}&view=tabel`;
-    const urlPodium = `${base}?room=${encodeURIComponent(CURRENT_ROOM)}&view=podium`;
-    const urlNotif = `${base}?room=${encodeURIComponent(CURRENT_ROOM)}&view=notif`;
-    const urlLog = `${base}?room=${encodeURIComponent(CURRENT_ROOM)}&view=log`;
+    const themeParam = `&theme=${encodeURIComponent(temaAktif || 'cyber')}`;
+    const urlTabel = `${base}?room=${encodeURIComponent(CURRENT_ROOM)}&view=tabel${themeParam}`;
+    const urlPodium = `${base}?room=${encodeURIComponent(CURRENT_ROOM)}&view=podium${themeParam}`;
+    const urlNotif = `${base}?room=${encodeURIComponent(CURRENT_ROOM)}&view=notif${themeParam}`;
+    const urlLog = `${base}?room=${encodeURIComponent(CURRENT_ROOM)}&view=log${themeParam}`;
 
     const elTabel = document.getElementById('linkOverlayTabel');
     const elPodium = document.getElementById('linkOverlayPodium');
