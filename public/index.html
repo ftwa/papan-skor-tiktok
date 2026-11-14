@@ -54,6 +54,9 @@
 
         document.documentElement.classList.add('mode-notif');
 
+      } else if (['screen', 'screens', 'transisi', 'transition', 'starting', 'break'].includes(raw)) {
+        modeClass = 'mode-screen';
+        document.documentElement.classList.add('mode-screen');
       } else if (['log', 'logs', 'aktivitas', 'activity'].includes(raw)) {
 
         modeClass = 'mode-log';
@@ -1165,6 +1168,269 @@
        PRESTIGIOUS AWARDS CEREMONY PODIUM (HALL OF CHAMPIONS)
 
        ======================================================== */
+
+    
+    /* =========================================================
+       LAYAR TRANSISI SIARAN (STARTING SOON & INTERMISSION BREAK)
+       ========================================================= */
+    .transition-overlay {
+      position: fixed; inset: 0;
+      background: radial-gradient(circle at center, #0f172a 0%, #020617 100%);
+      backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);
+      display: none; flex-direction: column; justify-content: center; align-items: center;
+      z-index: 99990; padding: 0 !important; overflow: hidden !important;
+      color: #ffffff; font-family: 'Outfit', sans-serif;
+    }
+    .transition-overlay.active {
+      display: flex;
+      animation: fadeInModal 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+    .btn-close-trans {
+      position: absolute; top: 20px; right: 24px;
+      background: rgba(239, 68, 68, 0.2); color: #f87171;
+      border: 1.5px solid #ef4444; border-radius: 999px;
+      padding: 7px 18px; font-size: 13px; font-weight: 800;
+      cursor: pointer; z-index: 100;
+      transition: all 0.2s ease;
+      box-shadow: 0 4px 15px rgba(239, 68, 68, 0.3);
+    }
+    .btn-close-trans:hover {
+      background: #ef4444; color: #ffffff;
+      transform: scale(1.05);
+    }
+    .trans-stage-scaler {
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      width: 100%; max-width: 900px; padding: 20px; text-align: center;
+      transform-origin: center center;
+    }
+    .trans-badge-tag {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 6px 18px; border-radius: 999px;
+      background: rgba(56, 189, 248, 0.15); border: 1.5px solid #38bdf8;
+      color: #38bdf8; font-size: 12px; font-weight: 900; letter-spacing: 2px;
+      text-transform: uppercase; margin-bottom: 16px;
+      box-shadow: 0 0 20px rgba(56, 189, 248, 0.35);
+      animation: pulseGlow 2s infinite ease-in-out;
+    }
+    .trans-center-visual {
+      position: relative; width: 100px; height: 100px;
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 12px;
+    }
+    .trans-radar-ring {
+      position: absolute; inset: 0; border-radius: 50%;
+      border: 2px dashed rgba(56, 189, 248, 0.6);
+      animation: rotateRadar 10s linear infinite;
+    }
+    @keyframes rotateRadar {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+    .trans-icon-hero {
+      font-size: 52px; filter: drop-shadow(0 0 20px #38bdf8);
+      animation: heroFloat 2.5s ease-in-out infinite alternate;
+    }
+    @keyframes heroFloat {
+      0% { transform: translateY(0px) scale(1); }
+      100% { transform: translateY(-8px) scale(1.08); }
+    }
+    .trans-main-title {
+      font-size: 46px; font-weight: 900; letter-spacing: 3px;
+      color: #ffffff; text-shadow: 0 0 35px rgba(56, 189, 248, 0.7);
+      margin: 0 0 6px 0; text-transform: uppercase; line-height: 1.1;
+    }
+    .trans-sub-title {
+      font-size: 15px; font-weight: 700; color: #94a3b8;
+      letter-spacing: 1.5px; text-transform: uppercase;
+      margin-bottom: 24px;
+    }
+    .trans-timer-box {
+      background: rgba(15, 23, 42, 0.85); border: 2px solid rgba(56, 189, 248, 0.5);
+      border-radius: 20px; padding: 18px 36px; margin-bottom: 22px;
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6), 0 0 30px rgba(56, 189, 248, 0.25);
+      display: flex; flex-direction: column; align-items: center;
+      min-width: 340px;
+    }
+    .trans-timer-label {
+      font-size: 11px; font-weight: 900; color: #64748b; letter-spacing: 2px;
+      text-transform: uppercase; margin-bottom: 4px;
+    }
+    .trans-timer-clock {
+      font-family: 'JetBrains Mono', monospace; font-size: 64px; font-weight: 900;
+      color: #38bdf8; text-shadow: 0 0 25px rgba(56, 189, 248, 0.8);
+      letter-spacing: 4px; line-height: 1; margin: 4px 0 12px 0;
+    }
+    .trans-timer-controls {
+      display: flex; align-items: center; gap: 8px; flex-wrap: wrap; justify-content: center;
+    }
+    .trans-btn-ctrl {
+      background: rgba(30, 41, 59, 0.8); color: #e2e8f0;
+      border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 6px;
+      padding: 5px 12px; font-size: 11px; font-weight: 800; cursor: pointer;
+      transition: all 0.15s ease;
+    }
+    .trans-btn-ctrl:hover {
+      background: #38bdf8; color: #020617; border-color: #38bdf8; transform: translateY(-1px);
+    }
+    .trans-leaders-roster {
+      width: 100%; max-width: 720px; margin-bottom: 20px;
+    }
+    .trans-leaders-title {
+      font-size: 13px; font-weight: 900; color: #facc15; letter-spacing: 1.5px;
+      margin-bottom: 10px; text-transform: uppercase;
+    }
+    .trans-leaders-cards {
+      display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;
+    }
+    .trans-leader-card {
+      flex: 1; min-width: 180px; max-width: 220px;
+      background: rgba(15, 23, 42, 0.85); border: 1.5px solid rgba(255, 255, 255, 0.15);
+      border-radius: 12px; padding: 10px; display: flex; align-items: center; gap: 10px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.5);
+    }
+    .trans-leader-card.rank-1 { border-color: #facc15; box-shadow: 0 0 20px rgba(250, 204, 21, 0.35); }
+    .trans-leader-card.rank-2 { border-color: #94a3b8; }
+    .trans-leader-card.rank-3 { border-color: #fb923c; }
+    .trans-leader-rank {
+      font-size: 20px; font-weight: 900;
+    }
+    .trans-leader-info {
+      display: flex; flex-direction: column; min-width: 0; text-align: left;
+    }
+    .trans-leader-name {
+      font-size: 13px; font-weight: 800; color: #ffffff; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+    }
+    .trans-leader-pts {
+      font-size: 11px; font-weight: 700; color: #facc15;
+    }
+    .trans-ticker-bar {
+      width: 100%; max-width: 780px;
+      background: rgba(15, 23, 42, 0.9); border: 1.5px solid rgba(56, 189, 248, 0.4);
+      border-radius: 999px; padding: 8px 18px; display: flex; align-items: center; gap: 12px;
+      overflow: hidden; box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+    }
+    .trans-ticker-badge {
+      background: #38bdf8; color: #020617; font-size: 10.5px; font-weight: 900;
+      padding: 3px 10px; border-radius: 999px; letter-spacing: 1px; flex-shrink: 0;
+    }
+    .trans-ticker-track {
+      flex: 1; overflow: hidden; white-space: nowrap;
+    }
+    .trans-ticker-text {
+      display: inline-block; font-size: 12px; font-weight: 700; color: #e2e8f0;
+      letter-spacing: 0.5px; animation: transMarquee 25s linear infinite;
+    }
+    @keyframes transMarquee {
+      0% { transform: translateX(100%); }
+      100% { transform: translateX(-100%); }
+    }
+
+    /* THEME OVERRIDES FOR TRANSITION OVERLAY */
+    /* 1. COMIC POP-ART */
+    html.theme-comic #transitionOverlay {
+      background: #ea580c !important;
+      background: radial-gradient(circle at center, #fde047 0%, #ea580c 100%) !important;
+    }
+    html.theme-comic #transitionOverlay::before {
+      content: ''; position: absolute; inset: 0;
+      background-image: radial-gradient(#000000 15%, transparent 16%);
+      background-size: 20px 20px; opacity: 0.12; pointer-events: none;
+    }
+    html.theme-comic .trans-main-title {
+      font-family: 'Bangers', cursive !important; font-size: 56px !important;
+      color: #ffffff !important;
+      text-shadow: 4px 4px 0px #000000, -2px -2px 0px #000000, 2px -2px 0px #000000 !important;
+      letter-spacing: 3px !important;
+    }
+    html.theme-comic .trans-badge-tag {
+      background: #ff1744 !important; color: #ffffff !important;
+      border: 3px solid #000000 !important; box-shadow: 3px 3px 0px #000000 !important;
+      font-family: 'Bangers', cursive !important; font-size: 14px !important;
+    }
+    html.theme-comic .trans-timer-box {
+      background: #ffffff !important; border: 4px solid #000000 !important;
+      box-shadow: 8px 8px 0px #000000 !important; border-radius: 18px !important;
+    }
+    html.theme-comic .trans-timer-clock {
+      font-family: 'Bangers', cursive !important; font-size: 72px !important;
+      color: #dc2626 !important; text-shadow: 3px 3px 0px #fde047 !important;
+    }
+    html.theme-comic .trans-btn-ctrl,
+    html.theme-comic .btn-close-trans {
+      background: #ffe600 !important; color: #000000 !important;
+      border: 2.5px solid #000000 !important; box-shadow: 3px 3px 0px #000000 !important;
+      font-family: 'Bangers', cursive !important; font-size: 14px !important;
+    }
+    html.theme-comic .trans-ticker-bar {
+      background: #ffffff !important; border: 3px solid #000000 !important;
+      box-shadow: 5px 5px 0px #000000 !important;
+    }
+    html.theme-comic .trans-ticker-badge {
+      background: #ff1744 !important; color: #ffffff !important;
+      font-family: 'Bangers', cursive !important;
+    }
+    html.theme-comic .trans-ticker-text {
+      color: #000000 !important; font-family: 'Fredoka', sans-serif !important; font-weight: 800 !important;
+    }
+
+    /* 2. AQUATIC */
+    html.theme-aquatic #transitionOverlay {
+      background: radial-gradient(circle at center, #0284c7 0%, #082f49 100%) !important;
+    }
+    html.theme-aquatic .trans-main-title {
+      color: #e0f2fe !important; text-shadow: 0 0 35px #38bdf8 !important;
+    }
+    html.theme-aquatic .trans-timer-clock {
+      color: #38bdf8 !important; text-shadow: 0 0 30px #0284c7 !important;
+    }
+
+    /* 3. RETRO ARCADE */
+    html.theme-arcade #transitionOverlay {
+      background: #090014 !important;
+    }
+    html.theme-arcade .trans-main-title {
+      font-family: 'Press Start 2P', monospace !important; font-size: 28px !important;
+      color: #f43f5e !important; text-shadow: 0 0 25px #ec4899 !important;
+    }
+    html.theme-arcade .trans-timer-clock {
+      font-family: 'Press Start 2P', monospace !important; font-size: 42px !important;
+      color: #facc15 !important;
+    }
+
+    /* 4. HAZARD */
+    html.theme-hazard #transitionOverlay {
+      background: radial-gradient(circle at center, #1c1917 0%, #0c0a09 100%) !important;
+    }
+    html.theme-hazard .trans-main-title {
+      color: #fcee0a !important; text-shadow: 0 0 30px rgba(252, 238, 10, 0.8) !important;
+    }
+    html.theme-hazard .trans-timer-clock {
+      color: #fcee0a !important; text-shadow: 0 0 25px rgba(252, 238, 10, 0.9) !important;
+    }
+
+    /* 5. IMPERIAL */
+    html.theme-imperial #transitionOverlay {
+      background: radial-gradient(circle at center, #7f1d1d 0%, #450a0a 100%) !important;
+    }
+    html.theme-imperial .trans-main-title {
+      font-family: 'Cinzel', serif !important; color: #fef08a !important;
+      text-shadow: 0 0 35px rgba(234, 179, 8, 0.9) !important;
+    }
+    html.theme-imperial .trans-timer-clock {
+      color: #facc15 !important; font-family: 'Cinzel', serif !important;
+    }
+
+    /* 6. MATRIX */
+    html.theme-matrix #transitionOverlay {
+      background: #021a08 !important;
+    }
+    html.theme-matrix .trans-main-title {
+      font-family: 'JetBrains Mono', monospace !important; color: #22c55e !important;
+      text-shadow: 0 0 30px #22c55e !important;
+    }
+    html.theme-matrix .trans-timer-clock {
+      color: #4ade80 !important; font-family: 'JetBrains Mono', monospace !important;
+    }
 
     .winner-overlay {
 
@@ -9607,6 +9873,25 @@ html.theme-hazard .c-notif-badge-icon {
 
 
 
+            <div class="dropdown" id="dropdownTransisi">
+        <button id="btnTransisiMenu" class="btn-action-soft" style="background:#4338ca; border-color:#6366f1; color:#e0e7ff; font-weight:800;" onclick="toggleDropdownTransisi(event)" title="Layar Transisi Siaran (Starting Soon / Intermission Break)">
+          🎬 TRANSISI ▾
+        </button>
+        <div class="dropdown-content" style="min-width: 220px; right: 0; left: auto;">
+          <div style="padding: 6px 12px; font-size: 10px; font-weight: 900; color: #818cf8; letter-spacing: 1px; border-bottom: 1px solid rgba(255,255,255,0.1);">LAYAR TRANSISI SIARAN</div>
+          <button type="button" onclick="bukaLayarTransisi('starting', 5, true)">
+            <span>⏳</span> <span>Starting Soon (5 Mnt)</span>
+          </button>
+          <button type="button" onclick="bukaLayarTransisi('break', 3, true)">
+            <span>☕</span> <span>Intermission Break (3 Mnt)</span>
+          </button>
+          <div style="border-top: 1px solid rgba(255,255,255,0.1); margin: 3px 0;"></div>
+          <button type="button" onclick="tutupLayarTransisi(true)" style="color:#ef4444 !important;">
+            <span>🎣</span> <span>Kembali ke Skor (Live)</span>
+          </button>
+        </div>
+      </div>
+
       <button id="btnUrutkanManual" class="btn-sort-manual" onclick="eksekusiUrutkanManual()" title="Urutkan ranking sekarang">
 
         URUTKAN
@@ -9635,21 +9920,7 @@ html.theme-hazard .c-notif-badge-icon {
 
 
 
-    <!-- BANNER KLASEMEN PERTARUNGAN TIM (MUNCUL OTOMATIS SAAT MODE TIM AKTIF) -->
-  <div class="team-standings-banner" id="teamStandingsBanner" style="display: none;">
-    <div class="team-standings-header-row">
-      <div class="t-badge-live">
-        <span class="live-dot-pulse"></span>
-        <span>⚔️ KLASEMEN PERTARUNGAN TIM</span>
-      </div>
-      <button type="button" class="btn-edit-teams-quick" onclick="bukaModalKelolaTim()" title="Ubah Nama & Warna Tim">
-        ✏️ Custom Tim
-      </button>
-    </div>
-    <div class="team-cards-grid" id="teamCardsGrid">
-      <!-- Diisi dinamis -->
-    </div>
-  </div>
+  
 
   <!-- TABEL 20 KURSI -->
 
@@ -10319,6 +10590,25 @@ html.theme-hazard .c-notif-badge-icon {
 
 
 
+        <!-- CARD 5: LAYAR TRANSISI SIARAN -->
+    <div class="stream-link-card">
+      <div class="stream-card-header">
+        <div class="stream-card-title">
+          <span class="stream-icon">🎬</span>
+          <span class="stream-name">Overlay Layar Transisi Siaran (Starting / Break)</span>
+        </div>
+        <span class="stream-rec-badge">1080 × 600 px (Fullscreen Layar Siaran)</span>
+      </div>
+      <p class="stream-card-sub">Layar transisi otomatis (Starting Soon & Intermission Break) dengan hitung mundur waktu dan rekap sementara saat istirahat babak.</p>
+      <div class="stream-input-wrap">
+        <input type="text" readonly id="linkOverlayTransisi" class="stream-url-input" onclick="this.select()">
+        <button class="btn-copy-link" onclick="salinLinkOverlay('transisi')">SALIN</button>
+      </div>
+      <div class="stream-card-actions">
+        <a id="previewOverlayTransisi" href="#" target="_blank" class="stream-link-btn">Buka di Tab Baru ↗</a>
+      </div>
+    </div>
+
     <!-- CARD 4: LOG AKTIVITAS -->
 
     <div class="stream-link-card">
@@ -10490,6 +10780,53 @@ html.theme-hazard .c-notif-badge-icon {
   </div>
 </div>
 
+
+<!-- OVERLAY LAYAR TRANSISI SIARAN (STARTING SOON & BREAK TIME) -->
+<div class="transition-overlay" id="transitionOverlay">
+  <div class="trans-bg-fx" id="transBgFx"></div>
+  <button type="button" class="btn-close-trans" onclick="tutupLayarTransisi(true)" title="Kembali ke Skor (Esc)">✕ KEMBALI KE SKOR</button>
+
+  <div class="trans-stage-scaler" id="transStageScaler">
+    <div class="trans-badge-tag" id="transBadgeTag">⏳ TOURNAMENT PREPARATION // SIARAN SEGERA DIMULAI</div>
+    
+    <div class="trans-center-visual" id="transVisualWrap">
+      <div class="trans-radar-ring"></div>
+      <div class="trans-icon-hero" id="transHeroIcon">⏳</div>
+    </div>
+
+    <h1 class="trans-main-title" id="transMainTitle">TOURNAMENT STARTING SOON</h1>
+    <div class="trans-sub-title" id="transSubTitle">SESI 1 · 20 KURSI PESERTA · PERSIAPAN & PENGECEKAN JALUR</div>
+
+    <!-- LIVE COUNTDOWN TIMER -->
+    <div class="trans-timer-box">
+      <div class="trans-timer-label">WAKTU HITUNG MUNDUR</div>
+      <div class="trans-timer-clock" id="transTimerClock">05:00</div>
+      <div class="trans-timer-controls" id="transTimerControls">
+        <button type="button" class="trans-btn-ctrl" onclick="bukaLayarTransisi('starting', 5, true)" id="btnTransModeStarting" style="background:rgba(56,189,248,0.25); border-color:#38bdf8;">⏳ Starting (5m)</button>
+        <button type="button" class="trans-btn-ctrl" onclick="bukaLayarTransisi('break', 3, true)" id="btnTransModeBreak" style="background:rgba(250,204,21,0.25); border-color:#facc15;">☕ Break (3m)</button>
+        <span style="display:inline-block; width:1px; height:18px; background:rgba(255,255,255,0.2); margin:0 4px;"></span>
+        <button type="button" class="trans-btn-ctrl" onclick="sesuaikanWaktuTransisi(-60)">-1 Mnt</button>
+        <button type="button" class="trans-btn-ctrl" onclick="sesuaikanWaktuTransisi(60)">+1 Mnt</button>
+        <button type="button" class="trans-btn-ctrl" id="btnToggleTimerTrans" onclick="toggleTimerTransisi()">⏸ Pause</button>
+        <button type="button" class="trans-btn-ctrl" onclick="resetTimerTransisi()">🔄 Reset</button>
+      </div>
+    </div>
+
+    <!-- REKAP SEMENTARA (MUNCUL DI MODE BREAK) -->
+    <div class="trans-leaders-roster" id="transLeadersRoster" style="display:none;">
+      <div class="trans-leaders-title">🏆 KLASEMEN SEMENTARA (TOP 3)</div>
+      <div class="trans-leaders-cards" id="transLeadersCards"></div>
+    </div>
+
+    <!-- LIVE RUNNING MESSAGE / MARQUEE TICKER -->
+    <div class="trans-ticker-bar">
+      <div class="trans-ticker-badge">📢 INFO LIVE</div>
+      <div class="trans-ticker-track">
+        <span class="trans-ticker-text" id="transTickerText">🎣 SELAMAT DATANG DI TURNAMEN MANCING GALATAMA ROBLOX! TAP-TAP LAYAR & SHARE LIVE UNTUK DUKUNG PEMAIN DAN TIM FAVORIT KALIAN! 🏆</span>
+      </div>
+    </div>
+  </div>
+</div>
 
 <!-- OVERLAY PODIUM WINNER (LUXURY BRIGHT AWARDS CEREMONY THEME) -->
 
@@ -10784,6 +11121,8 @@ html.theme-hazard .c-notif-badge-icon {
 
     currentViewMode = 'notif';
 
+  } else if (['screen', 'screens', 'transisi', 'transition', 'starting', 'break'].includes(rawView)) {
+    currentViewMode = 'screen';
   } else if (['log', 'logs', 'aktivitas', 'activity'].includes(rawView)) {
 
     currentViewMode = 'log';
@@ -11197,6 +11536,19 @@ html.theme-hazard .c-notif-badge-icon {
         siarkanPesanSync({ type: 'UPDATE_DATA', db: db });
 
         siarkanPesanSync({ type: 'CHANGE_THEME', theme: temaAktif });
+        try {
+          if (transState && transState.active) {
+            siarkanPesanSync({
+              type: 'SET_TRANSITION_SCREEN',
+              active: true,
+              mode: transState.mode,
+              remainingSeconds: transState.remainingSeconds,
+              initialSeconds: transState.initialSeconds,
+              isPaused: transState.isPaused,
+              endTimestamp: transState.endTimestamp
+            });
+          }
+        } catch (_) {}
 
         try {
 
@@ -11336,6 +11688,21 @@ html.theme-hazard .c-notif-badge-icon {
 
       }
 
+    } else if (msg.type === 'SET_TRANSITION_SCREEN') {
+      if (currentViewMode === 'admin' || currentViewMode === 'tabel' || currentViewMode === 'screen') {
+        if (msg.active) {
+          tampilkanLayarTransisiDariSync(msg);
+        } else {
+          tutupLayarTransisi(false);
+        }
+      }
+    } else if (msg.type === 'SYNC_TRANSITION_TIMER') {
+      if (currentViewMode === 'admin' || currentViewMode === 'tabel' || currentViewMode === 'screen') {
+        transState.remainingSeconds = msg.remainingSeconds;
+        transState.isPaused = msg.isPaused;
+        transState.endTimestamp = msg.endTimestamp;
+        updateTimerTransisiUI();
+      }
     } else if (msg.type === 'CLOSE_PODIUM') {
 
       if (currentViewMode === 'podium' || currentViewMode === 'admin') {
@@ -11611,6 +11978,7 @@ html.theme-hazard .c-notif-badge-icon {
       podiumResizeObs = new ResizeObserver(() => {
 
         autoScalePodium();
+    autoScaleTransition();
 
       });
 
@@ -13500,6 +13868,7 @@ html.theme-hazard .c-notif-badge-icon {
   window.addEventListener('keydown', (e) => {
 
     if (e.key === 'Escape') {
+      tutupLayarTransisi(true);
 
       tutupModalKelolaTim();
       tutupModalNama();
@@ -13559,6 +13928,14 @@ html.theme-hazard .c-notif-badge-icon {
     const elNotif = document.getElementById('linkOverlayNotif');
 
     const elLog = document.getElementById('linkOverlayLog');
+    const elTransisi = document.getElementById('linkOverlayTransisi');
+
+    const urlTransisi = `${base}?room=${encodeURIComponent(CURRENT_ROOM)}&view=screen${themeParam}`;
+    if (elTransisi) {
+      elTransisi.value = urlTransisi;
+      const prev = document.getElementById('previewOverlayTransisi');
+      if (prev) prev.href = urlTransisi;
+    }
 
 
 
@@ -14557,6 +14934,314 @@ html.theme-hazard .c-notif-badge-icon {
 
   }
 
+  /* =========================================================
+     LAYAR TRANSISI SIARAN (STARTING SOON & INTERMISSION BREAK)
+     ========================================================= */
+  const TRANSITION_STATE_KEY = 'galatama_transition_state_' + CURRENT_ROOM;
+  let transTimerInterval = null;
+  let transState = {
+    active: false,
+    mode: 'starting', // 'starting' | 'break'
+    remainingSeconds: 300,
+    initialSeconds: 300,
+    isPaused: false,
+    endTimestamp: 0,
+    title: '',
+    subtitle: ''
+  };
+
+  function toggleDropdownTransisi(e) {
+    if (e) e.stopPropagation();
+    const el = document.getElementById('dropdownTransisi');
+    if (!el) return;
+    const wasOpen = el.classList.contains('show');
+    tutupSemuaDropdown();
+    if (!wasOpen) el.classList.add('show');
+  }
+
+  function bukaLayarTransisi(mode = 'starting', durasiMenit = 5, isBroadcast = true) {
+    tutupSemuaDropdown();
+    tutupQuickPointPopover();
+    tutupMiniColorPicker();
+
+    transState.active = true;
+    transState.mode = mode;
+    transState.remainingSeconds = durasiMenit * 60;
+    transState.initialSeconds = durasiMenit * 60;
+    transState.isPaused = false;
+    transState.endTimestamp = Date.now() + (transState.remainingSeconds * 1000);
+
+    terapkanTampilanTransisi();
+    mulaiLoopTimerTransisi();
+
+    try {
+      localStorage.setItem(TRANSITION_STATE_KEY, JSON.stringify(transState));
+    } catch (_) {}
+
+    if (isBroadcast) {
+      siarkanPesanSync({
+        type: 'SET_TRANSITION_SCREEN',
+        active: true,
+        mode: transState.mode,
+        remainingSeconds: transState.remainingSeconds,
+        initialSeconds: transState.initialSeconds,
+        isPaused: transState.isPaused,
+        endTimestamp: transState.endTimestamp
+      });
+    }
+  }
+
+    function dapatkanLabelSesiTransisi() {
+    const raw = String((db && db.activeSession) || 1).trim();
+    return raw.toUpperCase().startsWith('SESI') ? raw.toUpperCase() : ('SESI ' + raw);
+  }
+
+  function terapkanTampilanTransisi() {
+    const overlay = document.getElementById('transitionOverlay');
+    if (!overlay) return;
+
+    const tagEl = document.getElementById('transBadgeTag');
+    const iconEl = document.getElementById('transHeroIcon');
+    const titleEl = document.getElementById('transMainTitle');
+    const subEl = document.getElementById('transSubTitle');
+    const rosterEl = document.getElementById('transLeadersRoster');
+    const btnPause = document.getElementById('btnToggleTimerTrans');
+
+    if (transState.mode === 'break') {
+      if (tagEl) tagEl.innerText = '☕ INTERMISSION BREAK // ISTIRAHAT BABAK';
+      if (iconEl) iconEl.innerText = '☕';
+      if (titleEl) titleEl.innerText = 'ISTIRAHAT BABAK & REKAP';
+      if (subEl) subEl.innerText = 'BABAK SELESAI · KLASEMEN SEMENTARA · PERSIAPAN BABAK BERIKUTNYA';
+      if (rosterEl) {
+        rosterEl.style.display = 'block';
+        renderRekapSementaraTransisi();
+      }
+    } else {
+      if (tagEl) tagEl.innerText = '⏳ TOURNAMENT PREPARATION // SIARAN SEGERA DIMULAI';
+      if (iconEl) iconEl.innerText = '⏳';
+      if (titleEl) titleEl.innerText = 'TOURNAMENT STARTING SOON';
+      if (subEl) subEl.innerText = dapatkanLabelSesiTransisi() + ' · 20 KURSI PESERTA · PERSIAPAN & PENGECEKAN JALUR';
+      if (rosterEl) {
+        rosterEl.style.display = 'none';
+      }
+    }
+
+    if (btnPause) {
+      btnPause.innerHTML = transState.isPaused ? '▶ Resume' : '⏸ Pause';
+    }
+
+    overlay.classList.add('active');
+    updateTimerTransisiUI();
+    autoScaleTransition();
+  }
+
+  function tutupLayarTransisi(isBroadcast = true) {
+    transState.active = false;
+    if (transTimerInterval) {
+      clearInterval(transTimerInterval);
+      transTimerInterval = null;
+    }
+    const overlay = document.getElementById('transitionOverlay');
+    if (overlay) overlay.classList.remove('active');
+
+    try {
+      localStorage.setItem(TRANSITION_STATE_KEY, JSON.stringify({ active: false }));
+    } catch (_) {}
+
+    if (isBroadcast) {
+      siarkanPesanSync({
+        type: 'SET_TRANSITION_SCREEN',
+        active: false
+      });
+    }
+  }
+
+  function mulaiLoopTimerTransisi() {
+    if (transTimerInterval) clearInterval(transTimerInterval);
+
+    transTimerInterval = setInterval(() => {
+      if (!transState.active || transState.isPaused) return;
+
+      if (transState.endTimestamp > 0) {
+        const diffSec = Math.round((transState.endTimestamp - Date.now()) / 1000);
+        transState.remainingSeconds = Math.max(0, diffSec);
+      } else {
+        transState.remainingSeconds = Math.max(0, transState.remainingSeconds - 1);
+      }
+
+      updateTimerTransisiUI();
+    }, 1000);
+  }
+
+  function updateTimerTransisiUI() {
+    const clockEl = document.getElementById('transTimerClock');
+    if (!clockEl) return;
+
+    const sec = Math.max(0, transState.remainingSeconds || 0);
+    const m = Math.floor(sec / 60);
+    const s = sec % 60;
+    const formatted = `${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
+    clockEl.innerText = formatted;
+    if (sec <= 0) {
+      clockEl.style.color = '#ef4444';
+      clockEl.innerText = '00:00';
+    } else {
+      clockEl.style.color = '';
+    }
+  }
+
+  function toggleTimerTransisi() {
+    transState.isPaused = !transState.isPaused;
+    if (!transState.isPaused) {
+      transState.endTimestamp = Date.now() + (transState.remainingSeconds * 1000);
+    }
+    const btnPause = document.getElementById('btnToggleTimerTrans');
+    if (btnPause) {
+      btnPause.innerHTML = transState.isPaused ? '▶ Resume' : '⏸ Pause';
+    }
+    siarkanPesanSync({
+      type: 'SYNC_TRANSITION_TIMER',
+      remainingSeconds: transState.remainingSeconds,
+      isPaused: transState.isPaused,
+      endTimestamp: transState.endTimestamp
+    });
+  }
+
+  function sesuaikanWaktuTransisi(deltaSec) {
+    transState.remainingSeconds = Math.max(0, (transState.remainingSeconds || 0) + deltaSec);
+    transState.endTimestamp = Date.now() + (transState.remainingSeconds * 1000);
+    updateTimerTransisiUI();
+    siarkanPesanSync({
+      type: 'SYNC_TRANSITION_TIMER',
+      remainingSeconds: transState.remainingSeconds,
+      isPaused: transState.isPaused,
+      endTimestamp: transState.endTimestamp
+    });
+  }
+
+  function resetTimerTransisi() {
+    transState.remainingSeconds = transState.initialSeconds || 300;
+    transState.isPaused = false;
+    transState.endTimestamp = Date.now() + (transState.remainingSeconds * 1000);
+    const btnPause = document.getElementById('btnToggleTimerTrans');
+    if (btnPause) btnPause.innerHTML = '⏸ Pause';
+    updateTimerTransisiUI();
+    siarkanPesanSync({
+      type: 'SYNC_TRANSITION_TIMER',
+      remainingSeconds: transState.remainingSeconds,
+      isPaused: transState.isPaused,
+      endTimestamp: transState.endTimestamp
+    });
+  }
+
+  function renderRekapSementaraTransisi() {
+    const cardsEl = document.getElementById('transLeadersCards');
+    if (!cardsEl) return;
+
+    const currData = getActiveData();
+    const isTeam = !!(db.teamConfig && db.teamConfig.enabled && db.teamConfig.teams && db.teamConfig.teams.length > 0);
+
+    let listTop = [];
+    if (isTeam) {
+      const teamsData = db.teamConfig.teams.map((team, idx) => {
+        const totalPoints = hitungPoinTim(team);
+        const chairs = team.chairs || [];
+        const members = chairs.map(c => (c === 19 ? currData.host : currData.players[c])).filter(Boolean);
+        const punyaIsi = (p) => Boolean((p.user && p.user.trim()) || (p.robloxUser && p.robloxUser.trim()) || (p.nick && p.nick.trim()) || (p.poin && p.poin > 0));
+        const activeMembers = members.filter(punyaIsi);
+        const sortedMembers = [...activeMembers].sort((a, b) => (b.poin || 0) - (a.poin || 0));
+        const mvp = sortedMembers[0] || members[0] || null;
+        return {
+          isTeam: true,
+          name: team.name || `TIM ${idx + 1}`,
+          color: team.color || '#38bdf8',
+          icon: team.icon || '🛡️',
+          poin: totalPoints,
+          mvpName: mvp ? (mvp.nick || mvp.user || mvp.robloxUser || 'Pemain') : '',
+          avatar: mvp ? mvp.avatar : ''
+        };
+      });
+      listTop = teamsData.sort((a, b) => (b.poin || 0) - (a.poin || 0)).slice(0, 3);
+    } else {
+      const candidates = [...currData.players].filter(p => (p.user || p.nick || p.robloxUser || (p.poin && p.poin > 0)));
+      listTop = candidates.sort((a, b) => (b.poin || 0) - (a.poin || 0)).slice(0, 3).map((p) => ({
+        isTeam: false,
+        name: p.nick || p.user || p.robloxUser || `Kursi #${p.id + 1}`,
+        poin: p.poin || 0,
+        avatar: p.avatar || '',
+        chair: p.id + 1
+      }));
+    }
+
+    const rankIcons = ['🥇', '🥈', '🥉'];
+    const rankClasses = ['rank-1', 'rank-2', 'rank-3'];
+
+    if (!listTop.length) {
+      cardsEl.innerHTML = '<div style="color:#94a3b8; font-size:12px; font-weight:700;">Belum ada data poin peserta di sesi ini</div>';
+      return;
+    }
+
+    cardsEl.innerHTML = listTop.map((item, idx) => {
+      const medal = rankIcons[idx] || `#${idx + 1}`;
+      const rClass = rankClasses[idx] || '';
+      const avHtml = item.avatar 
+        ? `<img src="${item.avatar}" style="width:34px; height:34px; border-radius:50%; object-fit:cover; border:1.5px solid ${idx===0?'#facc15':'rgba(255,255,255,0.2)'};" alt="Avatar">`
+        : `<span style="font-size:22px; width:34px; height:34px; display:inline-flex; align-items:center; justify-content:center; background:rgba(255,255,255,0.08); border-radius:50%;">${item.icon || '👤'}</span>`;
+      
+      const subText = item.isTeam 
+        ? `MVP: ${item.mvpName || '-'}` 
+        : `Kursi ${item.chair}`;
+
+      return `
+        <div class="trans-leader-card ${rClass}">
+          <div class="trans-leader-rank">${medal}</div>
+          ${avHtml}
+          <div class="trans-leader-info">
+            <div class="trans-leader-name" title="${item.name}">${item.name}</div>
+            <div class="trans-leader-pts">${(item.poin || 0).toLocaleString('id-ID')} PTS <span style="opacity:0.7; font-size:10px;">· ${subText}</span></div>
+          </div>
+        </div>
+      `;
+    }).join('');
+  }
+
+  function autoScaleTransition() {
+    const scaler = document.getElementById('transStageScaler');
+    if (!scaler) return;
+    const targetW = 900;
+    const targetH = 600;
+    const winW = window.innerWidth || document.documentElement.clientWidth || 1080;
+    const winH = window.innerHeight || document.documentElement.clientHeight || 720;
+    const scaleX = (winW - 24) / targetW;
+    const scaleY = (winH - 24) / targetH;
+    let scale = Math.min(scaleX, scaleY);
+    if (scale < 0.2) scale = 0.2;
+    if (scale > 2.2) scale = 2.2;
+    scaler.style.transform = `scale(${scale})`;
+  }
+
+  function tampilkanLayarTransisiDariSync(msg) {
+    transState.active = true;
+    transState.mode = msg.mode || 'starting';
+    transState.initialSeconds = msg.initialSeconds || 300;
+    transState.isPaused = !!msg.isPaused;
+    transState.endTimestamp = msg.endTimestamp || 0;
+
+    if (!transState.isPaused && transState.endTimestamp > 0) {
+      transState.remainingSeconds = Math.max(0, Math.round((transState.endTimestamp - Date.now()) / 1000));
+    } else {
+      transState.remainingSeconds = msg.remainingSeconds !== undefined ? msg.remainingSeconds : 300;
+    }
+
+    terapkanTampilanTransisi();
+    mulaiLoopTimerTransisi();
+  }
+
+  function salinLinkOverlay(tipe) {
+    salinLinkStream('linkOverlayTransisi', event ? event.target : null);
+  }
+
+
 
 
   function mulaiAnimasiPetasan() {
@@ -15314,9 +15999,8 @@ html.theme-hazard .c-notif-badge-icon {
   }
 
   function renderKlasemenTim() {
-    const banner = document.getElementById('teamStandingsBanner');
-    const grid = document.getElementById('teamCardsGrid');
-    if (!banner || !grid) return;
+    // Banner klasemen tim di atas tabel dihapus sesuai permintaan user
+    return;
 
     if (!db.teamConfig || !db.teamConfig.enabled || !db.teamConfig.teams || db.teamConfig.teams.length === 0) {
       banner.style.display = 'none';
@@ -15697,9 +16381,6 @@ html.theme-hazard .c-notif-badge-icon {
         if (scoreEl) scoreEl.innerText = `${pts} PTS`;
       });
       renderKlasemenTim();
-    } else {
-      const banner = document.getElementById('teamStandingsBanner');
-      if (banner) banner.style.display = 'none';
     }
   }
 
@@ -16551,6 +17232,32 @@ html.theme-hazard .c-notif-badge-icon {
     }
 
 
+
+    if (currentViewMode === 'screen') {
+      const urlP = new URLSearchParams(window.location.search);
+      const viewParam = (urlP.get('view') || urlP.get('overlay') || 'screen').toLowerCase();
+      const initialMode = (viewParam === 'break' || urlP.get('mode') === 'break') ? 'break' : 'starting';
+
+      try {
+        const savedTrans = JSON.parse(localStorage.getItem(TRANSITION_STATE_KEY) || 'null');
+        if (savedTrans && savedTrans.active) {
+          tampilkanLayarTransisiDariSync(savedTrans);
+        } else {
+          bukaLayarTransisi(initialMode, 5, false);
+        }
+      } catch (_) {
+        bukaLayarTransisi(initialMode, 5, false);
+      }
+      autoScaleTransition();
+      setTimeout(autoScaleTransition, 100);
+    } else {
+      try {
+        const savedTrans = JSON.parse(localStorage.getItem(TRANSITION_STATE_KEY) || 'null');
+        if (savedTrans && savedTrans.active) {
+          tampilkanLayarTransisiDariSync(savedTrans);
+        }
+      } catch (_) {}
+    }
 
     tambahLogAktivitas('SISTEM', `Scoreboard Siap (Mode: ${currentViewMode.toUpperCase()}) - Sesi: ${db.activeSession}`, 'system', null, null, null, false);
 
