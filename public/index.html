@@ -2068,19 +2068,33 @@
       background: #f1f5f9 !important;
       color: #000000 !important;
     }
-    html.theme-comic .rank-1,
+    html.theme-comic .rank-badge.rank-1,
     html.theme-comic tr.rank-1-row .rank-badge {
       background: #ffe600 !important;
       color: #000000 !important;
       border-color: #000000 !important;
     }
-    html.theme-comic .rank-2 {
+    html.theme-comic .rank-badge.rank-2,
+    html.theme-comic tr.rank-2-row .rank-badge {
       background: #00e5ff !important;
       color: #000000 !important;
+      border-color: #000000 !important;
     }
-    html.theme-comic .rank-3 {
+    html.theme-comic .rank-badge.rank-3,
+    html.theme-comic tr.rank-3-row .rank-badge {
       background: #ff9100 !important;
       color: #000000 !important;
+      border-color: #000000 !important;
+    }
+
+    /* Pastikan podium comic tidak tertimpa warna background kaku */
+    html.theme-comic .podium-card,
+    html.theme-comic .podium-card.rank-1,
+    html.theme-comic .podium-card.rank-2,
+    html.theme-comic .podium-card.rank-3 {
+      background: transparent !important;
+      border: none !important;
+      box-shadow: none !important;
     }
 
     /* Avatar Lingkaran Comic */
@@ -2792,9 +2806,12 @@ html.theme-comic #winnerOverlay::before {
 }
 html.theme-comic .winner-title {
   font-family: 'Bangers', cursive !important;
-  font-size: 52px !important;
+  font-size: 54px !important;
   color: #ffffff !important;
-  text-shadow: 4px 4px 0px #000000, -2px -2px 0px #000000, 2px -2px 0px #000000, -2px 2px 0px #000000 !important;
+  -webkit-text-fill-color: #ffffff !important;
+  -webkit-background-clip: unset !important;
+  background: none !important;
+  text-shadow: 4px 4px 0px #000000, -3px -3px 0px #000000, 3px -3px 0px #000000, -3px 3px 0px #000000, 0px 4px 0px #000000, 4px 0px 0px #000000 !important;
 }
 html.theme-comic .winner-trophy-badge {
   font-family: 'Bangers', cursive !important;
@@ -6385,10 +6402,13 @@ html.theme-hazard .c-notif-badge-icon {
 
     const closeBtn = overlay.querySelector('.btn-close-winner');
     const shotBtn = document.getElementById('btnShotPodium');
+    const auras = overlay.querySelectorAll('.winner-gojo-aura');
 
     // Sembunyikan tombol aksi agar screenshot podium bersih
     if (closeBtn) closeBtn.style.visibility = 'hidden';
     if (shotBtn) shotBtn.style.visibility = 'hidden';
+    // Sembunyikan aura radial-gradient karena html2canvas merendernya sebagai kotak kaku
+    auras.forEach(a => { a.style.visibility = 'hidden'; });
 
     const notif = document.getElementById('notifAutoSave');
     if (notif) {
@@ -6402,17 +6422,81 @@ html.theme-hazard .c-notif-badge-icon {
       const tgl = new Date().toISOString().slice(0, 10);
       const filename = `Podium_Juara_Sesi${sesi}_${room}_${tgl}.png`;
 
+      // Deteksi tema aktif
+      const themeClass = Array.from(document.documentElement.classList).find(c => c.startsWith('theme-')) || 'theme-cyber';
+      const activeTheme = themeClass.replace('theme-', '');
+
+      const PODIUM_BG_CONFIG = {
+        comic: { c1: '#fde047', c2: '#ea580c', dots: true },
+        cyber: { c1: '#142a53', c2: '#0a162b', dots: false },
+        aquatic: { c1: '#075985', c2: '#021729', dots: false },
+        arcade: { c1: '#2e085c', c2: '#0c0220', dots: false },
+        hazard: { c1: '#1f1f05', c2: '#0a0a0a', dots: false },
+        imperial: { c1: '#540e0e', c2: '#2b0606', dots: false },
+        matrix: { c1: '#052e16', c2: '#020a04', dots: false }
+      };
+
+      const bgConf = PODIUM_BG_CONFIG[activeTheme] || PODIUM_BG_CONFIG['comic'];
+
       const targetEl = document.getElementById('podiumStageScaler') || overlay;
 
-      const canvas = await html2canvas(targetEl, {
+      const stageCanvas = await html2canvas(targetEl, {
         scale: 2,
         useCORS: true,
-        backgroundColor: null, // Pertahankan background asli podium
+        backgroundColor: null, // Biarkan panggung transparan agar bisa dilapisi background tema
         logging: false
       });
 
-      const dataUrl = canvas.toDataURL('image/png');
-      canvas.toBlob((blob) => {
+      // Buat canvas komposit dengan rasio elegan dan background radial gradient tema asli
+      const paddingX = 80;
+      const paddingY = 60;
+      const finalWidth = stageCanvas.width + (paddingX * 2);
+      const finalHeight = stageCanvas.height + (paddingY * 2);
+
+      const finalCanvas = document.createElement('canvas');
+      finalCanvas.width = finalWidth;
+      finalCanvas.height = finalHeight;
+      const ctx = finalCanvas.getContext('2d');
+
+      // 1. Gambar latar belakang tema (radial gradient halus)
+      const grad = ctx.createRadialGradient(
+        finalWidth / 2, finalHeight / 2, 50,
+        finalWidth / 2, finalHeight / 2, Math.max(finalWidth, finalHeight) / 1.35
+      );
+      grad.addColorStop(0, bgConf.c1);
+      grad.addColorStop(1, bgConf.c2);
+      ctx.fillStyle = grad;
+      ctx.fillRect(0, 0, finalWidth, finalHeight);
+
+      // 2. Khusus Comic Pop-Art: Gambar pola bintik halftone komik yang legendaris
+      if (bgConf.dots) {
+        ctx.fillStyle = 'rgba(0, 0, 0, 0.08)';
+        const dotGap = 28;
+        const dotR = 2.5;
+        for (let x = 0; x < finalWidth; x += dotGap) {
+          for (let y = 0; y < finalHeight; y += dotGap) {
+            ctx.beginPath();
+            ctx.arc(x, y, dotR, 0, Math.PI * 2);
+            ctx.fill();
+          }
+        }
+      }
+
+      // 3. Tambahkan efek vignette halus di tepi bingkai
+      const vignette = ctx.createRadialGradient(
+        finalWidth / 2, finalHeight / 2, Math.max(finalWidth, finalHeight) * 0.45,
+        finalWidth / 2, finalHeight / 2, Math.max(finalWidth, finalHeight) * 0.75
+      );
+      vignette.addColorStop(0, 'rgba(0,0,0,0)');
+      vignette.addColorStop(1, 'rgba(0,0,0,0.35)');
+      ctx.fillStyle = vignette;
+      ctx.fillRect(0, 0, finalWidth, finalHeight);
+
+      // 4. Gambar panggung juara transparan tepat di tengah
+      ctx.drawImage(stageCanvas, paddingX, paddingY);
+
+      const dataUrl = finalCanvas.toDataURL('image/png');
+      finalCanvas.toBlob((blob) => {
         bukaModalScreenshot(dataUrl, blob, filename, `🏆 Foto Podium Juara - Sesi ${sesi}`);
       }, 'image/png');
 
@@ -6423,6 +6507,7 @@ html.theme-hazard .c-notif-badge-icon {
     } finally {
       if (closeBtn) closeBtn.style.visibility = '';
       if (shotBtn) shotBtn.style.visibility = '';
+      auras.forEach(a => { a.style.visibility = ''; });
       if (notif) notif.style.display = 'none';
     }
   }
