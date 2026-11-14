@@ -9581,18 +9581,50 @@ html.theme-hazard .c-notif-badge-icon {
     .team-divider-wrap {
       display: flex;
       align-items: center;
-      justify-content: space-between;
+      justify-content: center; /* Posisikan nama tim di tengah */
+      position: relative;
       width: 100%;
+      padding: 4px 10px;
     }
     .team-divider-name {
-      font-size: 11px;
+      font-size: 15px; /* Diperbesar agar jelas terlihat */
       font-weight: 900;
       color: var(--team-color, #38bdf8);
-      display: flex;
+      display: inline-flex;
       align-items: center;
-      gap: 6px;
-      letter-spacing: 0.8px;
+      justify-content: center;
+      gap: 8px;
+      letter-spacing: 1.2px;
       text-transform: uppercase;
+      cursor: pointer;
+      padding: 3px 12px;
+      border-radius: 6px;
+      transition: all 0.15s ease;
+    }
+    .team-divider-name:hover {
+      background: rgba(255, 255, 255, 0.1);
+      transform: scale(1.04);
+      filter: brightness(1.2);
+    }
+    .team-edit-icon {
+      font-size: 11px;
+      opacity: 0.55;
+      transition: opacity 0.15s ease;
+    }
+    .team-divider-name:hover .team-edit-icon {
+      opacity: 1;
+    }
+    .team-divider-score {
+      position: absolute;
+      right: 10px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11.5px;
+      font-weight: 900;
+      color: #ffffff;
+      background: rgba(0, 0, 0, 0.5);
+      padding: 2px 8px;
+      border-radius: 4px;
+      border: 1px solid var(--team-color, #38bdf8);
     }
     .team-divider-score {
       font-family: 'JetBrains Mono', monospace;
@@ -9776,6 +9808,9 @@ html.theme-hazard .c-notif-badge-icon {
           </button>
           <button type="button" onclick="bukaLayarTransisi('break', 3, true); tutupSemuaDropdown();">
             <span>☕</span> <span>Intermission Break (3 Mnt)</span>
+          </button>
+          <button type="button" onclick="bukaModalCustomTransisi(); tutupSemuaDropdown();" style="color: #818cf8 !important;">
+            <span>✏️</span> <span>Kustomisasi Teks Transisi...</span>
           </button>
           <div class="dropdown-divider-line"></div>
           <button type="button" onclick="tutupLayarTransisi(true); tutupSemuaDropdown();" style="color: #ef4444 !important;">
@@ -10780,6 +10815,117 @@ html.theme-hazard .c-notif-badge-icon {
 
 
 <!-- MODAL KELOLA NAMA & WARNA TIM -->
+
+<!-- MODAL KUSTOMISASI TEKS TRANSISI SIARAN -->
+<div class="modal-overlay" id="modalCustomTransisi" onclick="tutupModalDiLuar(event)" style="z-index: 99999;">
+  <div class="modal-box-hud" style="width: 540px; max-width: 95vw;">
+    <div class="modal-header-hud">
+      <div class="modal-title-wrap">
+        <span class="modal-sub-hud">BROADCAST TRANSITION SETTINGS</span>
+        <span class="modal-title-hud">🎬 Kustomisasi Teks Layar Transisi</span>
+      </div>
+      <button class="btn-close-hud" onclick="tutupModalCustomTransisi()" title="Tutup (Esc)">✕</button>
+    </div>
+
+    <div style="font-size: 12px; color: var(--text-sub); margin: 6px 0 12px; line-height: 1.4;">
+      Sesuaikan kalimat dan kata-kata yang tampil di layar siaran Starting Soon, Intermission Break, dan Ticker Pengumuman live.
+    </div>
+
+    <!-- TABS -->
+    <div style="display:flex; gap:6px; margin-bottom:12px; border-bottom:1px solid rgba(255,255,255,0.1); padding-bottom:6px;">
+      <button type="button" class="btn-action-soft active" id="tabTransStarting" onclick="gantiTabTransisi('starting')" style="flex:1;">⏳ Starting Soon</button>
+      <button type="button" class="btn-action-soft" id="tabTransBreak" onclick="gantiTabTransisi('break')" style="flex:1;">☕ Intermission Break</button>
+      <button type="button" class="btn-action-soft" id="tabTransTicker" onclick="gantiTabTransisi('ticker')" style="flex:1;">📢 Ticker Berita</button>
+    </div>
+
+    <!-- TAB 1: STARTING SOON -->
+    <div id="panelTransStarting" class="tab-trans-panel">
+      <div class="hud-field-group" style="margin-bottom:10px;">
+        <label class="hud-label">Badge Atas</label>
+        <input type="text" id="inputTransStartingBadge" class="hud-input" placeholder="Contoh: TOURNAMENT PREPARATION // SIARAN SEGERA DIMULAI">
+      </div>
+      <div class="hud-field-group" style="margin-bottom:10px;">
+        <label class="hud-label">Judul Utama</label>
+        <input type="text" id="inputTransStartingTitle" class="hud-input" placeholder="Contoh: TOURNAMENT STARTING SOON">
+      </div>
+      <div class="hud-field-group" style="margin-bottom:10px;">
+        <label class="hud-label">Subtitle / Sesi Info</label>
+        <input type="text" id="inputTransStartingSub" class="hud-input" placeholder="Contoh: SESI 1 · 20 KURSI PESERTA · PERSIAPAN & PENGECEKAN JALUR">
+      </div>
+    </div>
+
+    <!-- TAB 2: INTERMISSION BREAK -->
+    <div id="panelTransBreak" class="tab-trans-panel" style="display:none;">
+      <div class="hud-field-group" style="margin-bottom:10px;">
+        <label class="hud-label">Badge Atas</label>
+        <input type="text" id="inputTransBreakBadge" class="hud-input" placeholder="Contoh: INTERMISSION BREAK // ISTIRAHAT BABAK">
+      </div>
+      <div class="hud-field-group" style="margin-bottom:10px;">
+        <label class="hud-label">Judul Utama</label>
+        <input type="text" id="inputTransBreakTitle" class="hud-input" placeholder="Contoh: ISTIRAHAT BABAK & REKAP">
+      </div>
+      <div class="hud-field-group" style="margin-bottom:10px;">
+        <label class="hud-label">Subtitle / Info Babak</label>
+        <input type="text" id="inputTransBreakSub" class="hud-input" placeholder="Contoh: BABAK SELESAI · KLASEMEN SEMENTARA · PERSIAPAN BABAK BERIKUTNYA">
+      </div>
+    </div>
+
+    <!-- TAB 3: TICKER / MARQUEE -->
+    <div id="panelTransTicker" class="tab-trans-panel" style="display:none;">
+      <div class="hud-field-group" style="margin-bottom:10px;">
+        <label class="hud-label">Teks Berjalan (Running Marquee)</label>
+        <textarea id="inputTransTickerText" class="hud-input" style="height:70px; resize:vertical;" placeholder="Tulis pengumuman live, info hadiah, sponsor, atau ajakan like & follow..."></textarea>
+      </div>
+    </div>
+
+    <div style="margin-top: 14px; display: flex; justify-content: space-between; gap: 8px;">
+      <button type="button" class="btn-hud-reset" onclick="resetTeksTransisiDefault()">
+        <span>🔄</span> Reset Default
+      </button>
+      <div style="display: flex; gap: 8px;">
+        <button type="button" class="btn-action-soft" onclick="tutupModalCustomTransisi()">Batal</button>
+        <button type="button" class="hud-btn-primary" onclick="simpanTeksTransisiKustom()">
+          <span>💾</span> Simpan & Terapkan
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL EDIT NAMA SATU TIM (CEPAT DARI TABEL) -->
+<div class="modal-overlay" id="modalEditSatuTim" onclick="tutupModalDiLuar(event)" style="z-index: 99999;">
+  <div class="modal-box-hud" style="width: 380px; max-width: 95vw;">
+    <div class="modal-header-hud">
+      <div class="modal-title-wrap">
+        <span class="modal-sub-hud">EDIT NAMA TIM</span>
+        <span class="modal-title-hud" id="titleEditSatuTim">⚔️ Ubah Nama Tim</span>
+      </div>
+      <button class="btn-close-hud" onclick="tutupModalEditSatuTim()" title="Tutup (Esc)">✕</button>
+    </div>
+
+    <form onsubmit="event.preventDefault(); simpanEditSatuTim();">
+      <div class="hud-field-group" style="margin-top: 10px;">
+        <label class="hud-label">Nama Tim</label>
+        <input type="text" id="inputNamaSatuTim" class="hud-input" placeholder="Masukkan nama tim..." autocomplete="off" required style="font-size: 14px; font-weight: 800;">
+      </div>
+
+      <div class="hud-field-group" style="margin-top: 10px;">
+        <label class="hud-label">Pilih Warna Identitas Tim</label>
+        <div class="team-edit-palette" id="paletteSatuTim" style="display:flex; gap:6px; margin-top:4px; flex-wrap:wrap;">
+          <!-- Swatches -->
+        </div>
+      </div>
+
+      <div style="margin-top: 16px; display: flex; justify-content: flex-end; gap: 8px;">
+        <button type="button" class="btn-action-soft" onclick="tutupModalEditSatuTim()">Batal</button>
+        <button type="submit" class="hud-btn-primary">
+          <span>💾</span> Simpan
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+
 <div class="modal-overlay" id="modalKelolaTim" onclick="tutupModalDiLuar(event)">
   <div class="modal-box-hud modal-team-manage-box">
     <div class="modal-header-hud">
@@ -10841,6 +10987,8 @@ html.theme-hazard .c-notif-badge-icon {
         <button type="button" class="trans-btn-ctrl" onclick="sesuaikanWaktuTransisi(60)">+1 Mnt</button>
         <button type="button" class="trans-btn-ctrl" id="btnToggleTimerTrans" onclick="toggleTimerTransisi()">⏸ Pause</button>
         <button type="button" class="trans-btn-ctrl" onclick="resetTimerTransisi()">🔄 Reset</button>
+        <span style="display:inline-block; width:1px; height:18px; background:rgba(255,255,255,0.2); margin:0 4px;"></span>
+        <button type="button" class="trans-btn-ctrl" onclick="bukaModalCustomTransisi()" style="background:rgba(99,102,241,0.3); border-color:#818cf8;">✏️ Edit Teks</button>
       </div>
     </div>
 
@@ -12804,8 +12952,7 @@ html.theme-hazard .c-notif-badge-icon {
 
 
 
-    const isTeamMode = !!(db && db.teamConfig && db.teamConfig.enabled);
-    if (idx === 19 || isTeamMode) {
+    if (idx === 19) {
       simpanDB();
       renderIsiTabel();
     } else {
@@ -14995,6 +15142,181 @@ html.theme-hazard .c-notif-badge-icon {
     toggleDropdownSettings(e);
   }
 
+  
+  /* =========================================================
+     KUSTOMISASI TEKS LAYAR TRANSISI SIARAN (REAL-TIME SYNC)
+     ========================================================= */
+  const TRANS_TEXTS_KEY = 'galatama_trans_texts_v1_' + CURRENT_ROOM;
+
+  function dapatkanTeksTransisiDefault() {
+    return {
+      startingBadge: '⏳ TOURNAMENT PREPARATION // SIARAN SEGERA DIMULAI',
+      startingTitle: 'TOURNAMENT STARTING SOON',
+      startingSub: dapatkanLabelSesiTransisi() + ' · 20 KURSI PESERTA · PERSIAPAN & PENGECEKAN JALUR',
+      breakBadge: '☕ INTERMISSION BREAK // ISTIRAHAT BABAK',
+      breakTitle: 'ISTIRAHAT BABAK & REKAP',
+      breakSub: 'BABAK SELESAI · KLASEMEN SEMENTARA · PERSIAPAN BABAK BERIKUTNYA',
+      tickerText: '🎣 SELAMAT DATANG DI TURNAMEN MANCING GALATAMA ROBLOX! TAP-TAP LAYAR & SHARE LIVE UNTUK DUKUNG PEMAIN DAN TIM FAVORIT KALIAN! 🏆'
+    };
+  }
+
+  function muatTeksTransisi() {
+    try {
+      const saved = JSON.parse(localStorage.getItem(TRANS_TEXTS_KEY) || 'null');
+      if (saved && typeof saved === 'object') {
+        return { ...dapatkanTeksTransisiDefault(), ...saved };
+      }
+    } catch (_) {}
+    return dapatkanTeksTransisiDefault();
+  }
+
+  let transCustomTexts = muatTeksTransisi();
+
+  function bukaModalCustomTransisi() {
+    if (currentViewMode !== 'admin') return;
+    tutupSemuaDropdown();
+    transCustomTexts = muatTeksTransisi();
+
+    document.getElementById('inputTransStartingBadge').value = transCustomTexts.startingBadge || '';
+    document.getElementById('inputTransStartingTitle').value = transCustomTexts.startingTitle || '';
+    document.getElementById('inputTransStartingSub').value = transCustomTexts.startingSub || '';
+
+    document.getElementById('inputTransBreakBadge').value = transCustomTexts.breakBadge || '';
+    document.getElementById('inputTransBreakTitle').value = transCustomTexts.breakTitle || '';
+    document.getElementById('inputTransBreakSub').value = transCustomTexts.breakSub || '';
+
+    document.getElementById('inputTransTickerText').value = transCustomTexts.tickerText || '';
+
+    gantiTabTransisi('starting');
+    const modal = document.getElementById('modalCustomTransisi');
+    if (modal) modal.style.display = 'flex';
+  }
+
+  function tutupModalCustomTransisi() {
+    const modal = document.getElementById('modalCustomTransisi');
+    if (modal) modal.style.display = 'none';
+  }
+
+  function gantiTabTransisi(tabName) {
+    document.querySelectorAll('.tab-trans-panel').forEach(p => p.style.display = 'none');
+    document.getElementById('tabTransStarting').classList.remove('active');
+    document.getElementById('tabTransBreak').classList.remove('active');
+    document.getElementById('tabTransTicker').classList.remove('active');
+
+    if (tabName === 'break') {
+      document.getElementById('panelTransBreak').style.display = 'block';
+      document.getElementById('tabTransBreak').classList.add('active');
+    } else if (tabName === 'ticker') {
+      document.getElementById('panelTransTicker').style.display = 'block';
+      document.getElementById('tabTransTicker').classList.add('active');
+    } else {
+      document.getElementById('panelTransStarting').style.display = 'block';
+      document.getElementById('tabTransStarting').classList.add('active');
+    }
+  }
+
+  function simpanTeksTransisiKustom() {
+    transCustomTexts.startingBadge = document.getElementById('inputTransStartingBadge').value.trim() || dapatkanTeksTransisiDefault().startingBadge;
+    transCustomTexts.startingTitle = document.getElementById('inputTransStartingTitle').value.trim() || dapatkanTeksTransisiDefault().startingTitle;
+    transCustomTexts.startingSub = document.getElementById('inputTransStartingSub').value.trim() || dapatkanTeksTransisiDefault().startingSub;
+
+    transCustomTexts.breakBadge = document.getElementById('inputTransBreakBadge').value.trim() || dapatkanTeksTransisiDefault().breakBadge;
+    transCustomTexts.breakTitle = document.getElementById('inputTransBreakTitle').value.trim() || dapatkanTeksTransisiDefault().breakTitle;
+    transCustomTexts.breakSub = document.getElementById('inputTransBreakSub').value.trim() || dapatkanTeksTransisiDefault().breakSub;
+
+    transCustomTexts.tickerText = document.getElementById('inputTransTickerText').value.trim() || dapatkanTeksTransisiDefault().tickerText;
+
+    try {
+      localStorage.setItem(TRANS_TEXTS_KEY, JSON.stringify(transCustomTexts));
+    } catch (_) {}
+
+    terapkanTampilanTransisi();
+    siarkanPesanSync({ type: 'UPDATE_TRANS_TEXTS', transCustomTexts: transCustomTexts });
+    tutupModalCustomTransisi();
+    tambahLogAktivitas('TRANSISI', 'Kustomisasi teks layar siaran disimpan', 'system');
+  }
+
+  function resetTeksTransisiDefault() {
+    transCustomTexts = dapatkanTeksTransisiDefault();
+    document.getElementById('inputTransStartingBadge').value = transCustomTexts.startingBadge;
+    document.getElementById('inputTransStartingTitle').value = transCustomTexts.startingTitle;
+    document.getElementById('inputTransStartingSub').value = transCustomTexts.startingSub;
+
+    document.getElementById('inputTransBreakBadge').value = transCustomTexts.breakBadge;
+    document.getElementById('inputTransBreakTitle').value = transCustomTexts.breakTitle;
+    document.getElementById('inputTransBreakSub').value = transCustomTexts.breakSub;
+
+    document.getElementById('inputTransTickerText').value = transCustomTexts.tickerText;
+  }
+
+  /* =========================================================
+     MODAL EDIT SATU NAMA TIM (LANGSUNG KLIK DARI TABEL)
+     ========================================================= */
+  let editingSingleTeamIndex = null;
+  let selectedSingleTeamColor = '#38bdf8';
+
+  function bukaModalEditSatuTim(teamIdx) {
+    if (currentViewMode !== 'admin') return;
+    if (!db.teamConfig || !db.teamConfig.teams || !db.teamConfig.teams[teamIdx]) return;
+    const team = db.teamConfig.teams[teamIdx];
+    editingSingleTeamIndex = teamIdx;
+    selectedSingleTeamColor = team.color || '#38bdf8';
+
+    document.getElementById('titleEditSatuTim').innerText = `⚔️ Ubah Nama ${team.name}`;
+    const inputEl = document.getElementById('inputNamaSatuTim');
+    inputEl.value = team.name;
+
+    const paletteEl = document.getElementById('paletteSatuTim');
+    if (paletteEl) {
+      const colors = ['#38bdf8', '#f43f5e', '#a855f7', '#22c55e', '#eab308', '#f97316', '#06b6d4', '#ec4899', '#ffffff'];
+      paletteEl.innerHTML = colors.map(col => `
+        <span class="team-color-swatch ${col === selectedSingleTeamColor ? 'active' : ''}" 
+              style="background:${col}; width:24px; height:24px; border-radius:50%; cursor:pointer; display:inline-block; border:2px solid ${col === selectedSingleTeamColor ? '#ffffff' : 'transparent'}; box-shadow:0 0 8px ${col};"
+              onclick="pilihWarnaSatuTim('${col}', this)"></span>
+      `).join('');
+    }
+
+    const modal = document.getElementById('modalEditSatuTim');
+    if (modal) modal.style.display = 'flex';
+    setTimeout(() => inputEl.focus(), 50);
+  }
+
+  function pilihWarnaSatuTim(col, el) {
+    selectedSingleTeamColor = col;
+    document.querySelectorAll('#paletteSatuTim .team-color-swatch').forEach(s => {
+      s.classList.remove('active');
+      s.style.borderColor = 'transparent';
+    });
+    if (el) {
+      el.classList.add('active');
+      el.style.borderColor = '#ffffff';
+    }
+  }
+
+  function simpanEditSatuTim() {
+    if (editingSingleTeamIndex === null) return;
+    const inputEl = document.getElementById('inputNamaSatuTim');
+    const newName = inputEl.value.trim();
+    if (!newName) return;
+
+    const team = db.teamConfig.teams[editingSingleTeamIndex];
+    if (team) {
+      team.name = newName;
+      team.color = selectedSingleTeamColor;
+    }
+    simpanDB();
+    renderIsiTabel();
+    siarkanPesanSync({ type: 'SET_TEAM_MODE', teamConfig: db.teamConfig });
+    tutupModalEditSatuTim();
+    tambahLogAktivitas('TIM', `Nama tim diubah: ${newName}`, 'system');
+  }
+
+  function tutupModalEditSatuTim() {
+    editingSingleTeamIndex = null;
+    const modal = document.getElementById('modalEditSatuTim');
+    if (modal) modal.style.display = 'none';
+  }
+
   function bukaLayarTransisi(mode = 'starting', durasiMenit = 5, isBroadcast = true) {
     tutupSemuaDropdown();
     tutupQuickPointPopover();
@@ -15043,20 +15365,25 @@ html.theme-hazard .c-notif-badge-icon {
     const rosterEl = document.getElementById('transLeadersRoster');
     const btnPause = document.getElementById('btnToggleTimerTrans');
 
+    const tickerEl = document.getElementById('transTickerText');
+    if (tickerEl) {
+      tickerEl.innerText = (transCustomTexts && transCustomTexts.tickerText) ? transCustomTexts.tickerText : '🎣 SELAMAT DATANG DI TURNAMEN MANCING GALATAMA ROBLOX! TAP-TAP LAYAR & SHARE LIVE UNTUK DUKUNG PEMAIN DAN TIM FAVORIT KALIAN! 🏆';
+    }
+
     if (transState.mode === 'break') {
-      if (tagEl) tagEl.innerText = '☕ INTERMISSION BREAK // ISTIRAHAT BABAK';
+      if (tagEl) tagEl.innerText = (transCustomTexts && transCustomTexts.breakBadge) ? transCustomTexts.breakBadge : '☕ INTERMISSION BREAK // ISTIRAHAT BABAK';
       if (iconEl) iconEl.innerText = '☕';
-      if (titleEl) titleEl.innerText = 'ISTIRAHAT BABAK & REKAP';
-      if (subEl) subEl.innerText = 'BABAK SELESAI · KLASEMEN SEMENTARA · PERSIAPAN BABAK BERIKUTNYA';
+      if (titleEl) titleEl.innerText = (transCustomTexts && transCustomTexts.breakTitle) ? transCustomTexts.breakTitle : 'ISTIRAHAT BABAK & REKAP';
+      if (subEl) subEl.innerText = (transCustomTexts && transCustomTexts.breakSub) ? transCustomTexts.breakSub : 'BABAK SELESAI · KLASEMEN SEMENTARA · PERSIAPAN BABAK BERIKUTNYA';
       if (rosterEl) {
         rosterEl.style.display = 'block';
         renderRekapSementaraTransisi();
       }
     } else {
-      if (tagEl) tagEl.innerText = '⏳ TOURNAMENT PREPARATION // SIARAN SEGERA DIMULAI';
+      if (tagEl) tagEl.innerText = (transCustomTexts && transCustomTexts.startingBadge) ? transCustomTexts.startingBadge : '⏳ TOURNAMENT PREPARATION // SIARAN SEGERA DIMULAI';
       if (iconEl) iconEl.innerText = '⏳';
-      if (titleEl) titleEl.innerText = 'TOURNAMENT STARTING SOON';
-      if (subEl) subEl.innerText = dapatkanLabelSesiTransisi() + ' · 20 KURSI PESERTA · PERSIAPAN & PENGECEKAN JALUR';
+      if (titleEl) titleEl.innerText = (transCustomTexts && transCustomTexts.startingTitle) ? transCustomTexts.startingTitle : 'TOURNAMENT STARTING SOON';
+      if (subEl) subEl.innerText = (transCustomTexts && transCustomTexts.startingSub) ? transCustomTexts.startingSub : (dapatkanLabelSesiTransisi() + ' · 20 KURSI PESERTA · PERSIAPAN & PENGECEKAN JALUR');
       if (rosterEl) {
         rosterEl.style.display = 'none';
       }
@@ -16199,7 +16526,11 @@ html.theme-hazard .c-notif-badge-icon {
       trDiv.innerHTML = `
         <td colspan="4" class="team-divider-cell">
           <div class="team-divider-wrap">
-            <span class="team-divider-name">${escapeHtml(team.icon || '🛡️')} ${escapeHtml(team.name)} <span style="font-size:9.5px; opacity:0.8; font-weight:700;">(${escapeHtml(team.chairRange)})</span></span>
+            <span class="team-divider-name" onclick="bukaModalEditSatuTim(${team.teamIndex})" title="Klik untuk ubah nama ${escapeHtml(team.name)}">
+              <span>${escapeHtml(team.icon || '⚔️')}</span>
+              <span>${escapeHtml(team.name)}</span>
+              <span class="team-edit-icon">✏️</span>
+            </span>
             <span class="team-divider-score" id="teamDividerScore_${team.teamIndex}">0 PTS</span>
           </div>
         </td>
@@ -16421,42 +16752,162 @@ html.theme-hazard .c-notif-badge-icon {
   }
 
   function urutkanOtomatis() {
-    for (let i = 0; i < 19; i++) {
-      const el = document.getElementById(`row-kursi-${i}`);
-      if (el) { el.classList.remove('moving-row'); el.style.transform = ''; }
-    }
-
     const currData = getActiveData();
     const isTeam = !!(db.teamConfig && db.teamConfig.enabled && db.teamConfig.teams && db.teamConfig.teams.length > 0);
 
-    const punyaIsi = (p) => Boolean((p.user && p.user.trim()) || (p.robloxUser && p.robloxUser.trim()) || (p.nick && p.nick.trim()));
+    // FLIP Animation: Rekam posisi visual sebelum pengurutan
+    const prevRects = new Map();
+    for (let i = 0; i < 19; i++) {
+      const el = document.getElementById(`row-kursi-${i}`);
+      if (el) {
+        el.classList.remove('moving-row');
+        el.style.transform = '';
+        prevRects.set(`row-kursi-${i}`, el.getBoundingClientRect());
+      }
+    }
+    document.querySelectorAll('.team-divider-row').forEach(el => {
+      el.classList.remove('moving-row');
+      el.style.transform = '';
+      prevRects.set(el.id, el.getBoundingClientRect());
+    });
+
+    const punyaIsi = (p) => Boolean((p.user && p.user.trim()) || (p.robloxUser && p.robloxUser.trim()) || (p.nick && p.nick.trim()) || (p.poin && p.poin > 0));
     currData.players.forEach(p => { p.isReady = punyaIsi(p); });
 
     if (isTeam) {
-      // Pada mode pertarungan tim: urutkan pemain internal DI DALAM masing-masing tim
-      // agar pemain tidak berpindah tim, sementara ranking internal tim tetap teratur rapi!
+      // 1. Urutkan anggota internal masing-masing tim berdasarkan poin
       db.teamConfig.teams.forEach(team => {
         const validChairs = team.chairs.filter(c => c < 19);
         if (validChairs.length > 0) {
           const teamPlayers = validChairs.map(c => currData.players[c]);
-          const aktif = teamPlayers.filter(p => punyaIsi(p));
+          const aktif = teamPlayers.filter(p => punyaIsi(p)).sort((a, b) => (b.poin || 0) - (a.poin || 0));
           const kosong = teamPlayers.filter(p => !punyaIsi(p));
-          aktif.sort((a, b) => b.poin - a.poin);
           const sortedGroup = [...aktif, ...kosong];
           validChairs.forEach((c, idx) => {
             currData.players[c] = sortedGroup[idx];
           });
         }
       });
+
+      // 2. Urutkan tim per 1 tim utuh berdasarkan akumulasi total poin tim tertinggi
+      const sortedTeams = [...db.teamConfig.teams].sort((a, b) => {
+        const ptsA = hitungPoinTim(a);
+        const ptsB = hitungPoinTim(b);
+        if (ptsB !== ptsA) return ptsB - ptsA;
+        return a.teamIndex - b.teamIndex;
+      });
+
+      // Ambil slot kursi awal untuk masing-masing peringkat
+      const originalTeamSlots = db.teamConfig.teams.map(t => ({
+        chairs: [...t.chairs]
+      }));
+
+      // Bungkus data tim beserta paket pemainnya
+      const teamPackages = sortedTeams.map(t => {
+        const players = t.chairs.map(c => (c === 19 ? { ...currData.host } : { ...currData.players[c] }));
+        return {
+          id: t.id,
+          teamIndex: t.teamIndex,
+          name: t.name,
+          color: t.color,
+          icon: t.icon,
+          players: players
+        };
+      });
+
+      // Petakan kembali paket tim ke slot kursi berurutan (tim pemuncak di atas)
+      teamPackages.forEach((pkg, rankIdx) => {
+        const targetSlot = originalTeamSlots[rankIdx];
+        db.teamConfig.teams[rankIdx] = {
+          id: pkg.id,
+          teamIndex: rankIdx,
+          name: pkg.name,
+          color: pkg.color,
+          icon: pkg.icon,
+          chairs: targetSlot.chairs
+        };
+
+        targetSlot.chairs.forEach((c, pIdx) => {
+          if (c === 19) {
+            currData.host = pkg.players[pIdx];
+          } else {
+            currData.players[c] = pkg.players[pIdx];
+          }
+        });
+      });
+
     } else {
+      // MODE INDIVIDU: Urutkan pemain tunggal
       const aktifSiap = currData.players.filter(p => punyaIsi(p));
       const kursiKosong = currData.players.filter(p => !punyaIsi(p));
-      aktifSiap.sort((a, b) => b.poin - a.poin);
+      aktifSiap.sort((a, b) => (b.poin || 0) - (a.poin || 0));
       currData.players = [...aktifSiap, ...kursiKosong];
     }
 
-    simpanDB(); 
+    simpanDB();
     renderIsiTabel();
+
+    // Jalankan FLIP Transition agar baris bergeser mulus
+    requestAnimationFrame(() => {
+      let anyMoved = false;
+      for (let i = 0; i < 19; i++) {
+        const el = document.getElementById(`row-kursi-${i}`);
+        if (el && prevRects.has(`row-kursi-${i}`)) {
+          const prev = prevRects.get(`row-kursi-${i}`);
+          const curr = el.getBoundingClientRect();
+          const dy = prev.top - curr.top;
+          const dx = prev.left - curr.left;
+          if (Math.abs(dy) > 1 || Math.abs(dx) > 1) {
+            el.style.transform = `translate(${dx}px, ${dy}px)`;
+            el.style.transition = 'none';
+            anyMoved = true;
+          }
+        }
+      }
+
+      document.querySelectorAll('.team-divider-row').forEach(el => {
+        if (prevRects.has(el.id)) {
+          const prev = prevRects.get(el.id);
+          const curr = el.getBoundingClientRect();
+          const dy = prev.top - curr.top;
+          const dx = prev.left - curr.left;
+          if (Math.abs(dy) > 1 || Math.abs(dx) > 1) {
+            el.style.transform = `translate(${dx}px, ${dy}px)`;
+            el.style.transition = 'none';
+            anyMoved = true;
+          }
+        }
+      });
+
+      if (anyMoved) {
+        document.body.offsetHeight; // Force reflow
+        requestAnimationFrame(() => {
+          for (let i = 0; i < 19; i++) {
+            const el = document.getElementById(`row-kursi-${i}`);
+            if (el && el.style.transform) {
+              el.classList.add('moving-row');
+              el.style.transform = '';
+              setTimeout(() => {
+                if (el) { el.classList.remove('moving-row'); el.style.transform = ''; }
+              }, 550);
+            }
+          }
+          document.querySelectorAll('.team-divider-row').forEach(el => {
+            if (el.style.transform) {
+              el.classList.add('moving-row');
+              el.style.transform = '';
+              setTimeout(() => {
+                if (el) { el.classList.remove('moving-row'); el.style.transform = ''; }
+              }, 550);
+            }
+          });
+        });
+      }
+    });
+
+    if (isTeam) {
+      siarkanPesanSync({ type: 'SET_TEAM_MODE', teamConfig: db.teamConfig });
+    }
   }
 
   function tambahLogAktivitas(entitas, keterangan, tipe = 'system', poinAwal = null, poinAkhir = null, delta = null, isBroadcast = true) {
