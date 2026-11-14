@@ -1,3 +1,97 @@
+
+/* ==============================================================================
+   CRITICAL GLOBAL RULE: POPUP NOTIFIKASI HANYA BOLEH MUNCUL KETIKA MEMILIKI .show
+   ============================================================================== */
+.center-notif-popup:not(.show) {
+  opacity: 0 !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+  animation: none !important;
+  transform: translate(-50%, -50%) scale(0.85) !important;
+}
+
+/* COMIC POP-ART POPUP ANIMATION (HANYA AKTIF SAAT .show) */
+html.theme-comic .center-notif-popup.show {
+  opacity: 1 !important;
+  visibility: visible !important;
+  pointer-events: auto !important;
+  transform: translate(-50%, -50%) rotate(-2deg) scale(1) !important;
+  animation: comicBoomPop 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards !important;
+}
+html.theme-comic .center-notif-popup .c-notif-tag {
+  color: #000000 !important;
+  background: #fde047 !important;
+  border: 2px solid #000000 !important;
+  box-shadow: 2px 2px 0px #000000 !important;
+  font-family: 'Bangers', cursive !important;
+  letter-spacing: 1px !important;
+}
+html.theme-comic .center-notif-popup .c-notif-pts-box {
+  background: #ffffff !important;
+  border: 3px solid #000000 !important;
+  box-shadow: 3px 3px 0px #000000 !important;
+}
+html.theme-comic .center-notif-popup .c-notif-pts-main {
+  color: #ef4444 !important;
+  font-family: 'Bangers', cursive !important;
+  text-shadow: 2px 2px 0px #fde047 !important;
+}
+html.theme-comic .center-notif-popup .c-notif-pts-total {
+  color: #000000 !important;
+  font-family: 'Bangers', cursive !important;
+}
+
+/* RETRO ARCADE POPUP ANIMATION (HANYA AKTIF SAAT .show) */
+html.theme-arcade .center-notif-popup.show {
+  opacity: 1 !important;
+  visibility: visible !important;
+  pointer-events: auto !important;
+  animation: arcadePixelGlitch 0.25s steps(4) forwards !important;
+  transform: translate(-50%, -50%) scale(1) !important;
+}
+
+/* AQUATIC OCEAN POPUP ANIMATION (HANYA AKTIF SAAT .show) */
+html.theme-aquatic .center-notif-popup.show {
+  opacity: 1 !important;
+  visibility: visible !important;
+  pointer-events: auto !important;
+  animation: aquaticWaveRise 0.3s ease-out forwards !important;
+  transform: translate(-50%, -50%) scale(1) !important;
+}
+
+/* CYBER HAZARD POPUP (HANYA AKTIF SAAT .show) */
+html.theme-hazard .center-notif-popup.show {
+  opacity: 1 !important;
+  visibility: visible !important;
+  pointer-events: auto !important;
+  transform: translate(-50%, -50%) scale(1) !important;
+}
+
+/* IMPERIAL RED POPUP (HANYA AKTIF SAAT .show) */
+html.theme-imperial .center-notif-popup.show {
+  opacity: 1 !important;
+  visibility: visible !important;
+  pointer-events: auto !important;
+  transform: translate(-50%, -50%) scale(1) !important;
+}
+
+/* MATRIX HACKER POPUP (HANYA AKTIF SAAT .show) */
+html.theme-matrix .center-notif-popup.show {
+  opacity: 1 !important;
+  visibility: visible !important;
+  pointer-events: auto !important;
+  transform: translate(-50%, -50%) scale(1) !important;
+}
+
+/* CYBER HUD POPUP (HANYA AKTIF SAAT .show) */
+html.theme-cyber .center-notif-popup.show,
+html:not([class*="theme-"]) .center-notif-popup.show {
+  opacity: 1 !important;
+  visibility: visible !important;
+  pointer-events: auto !important;
+  transform: translate(-50%, -50%) scale(1) !important;
+}
+
 /* ==============================================================================
    THEMES CSS V6 - REVOLUSI UI NOTIFIKASI TANGKAPAN IKAN & PODIUM (20 TEMA UNIK)
    ============================================================================== */
@@ -322,7 +416,7 @@ html.theme-comic .center-notif-popup {
   border-radius: 22px !important;
   box-shadow: 10px 10px 0px #000000, 0 25px 50px rgba(0,0,0,0.45) !important;
   clip-path: none !important;
-  animation: comicBoomPop 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards !important;
+  animation: none !important;
   padding: 16px 14px !important;
   z-index: 99999 !important;
 }
@@ -536,7 +630,7 @@ html.theme-arcade .center-notif-popup {
   border-radius: 0px !important;
   box-shadow: 0 0 40px rgba(255, 0, 127, 0.8), inset 0 0 25px rgba(0, 240, 255, 0.4) !important;
   clip-path: none !important;
-  animation: arcadePixelGlitch 0.25s steps(4) forwards !important;
+  animation: none !important;
   padding: 16px 14px !important;
   z-index: 99999 !important;
 }
@@ -964,7 +1058,7 @@ html.theme-aquatic .center-notif-popup {
   border-radius: 28px !important;
   box-shadow: 0 20px 60px rgba(0,0,0,0.9), 0 0 45px rgba(0, 245, 212, 0.55), inset 0 0 25px rgba(0, 180, 216, 0.3) !important;
   clip-path: none !important;
-  animation: aquaticWaveRise 0.3s ease-out forwards !important;
+  animation: none !important;
   padding: 16px 14px !important;
   z-index: 99999 !important;
 }
