@@ -4382,8 +4382,91 @@ html.theme-hazard .c-notif-badge-icon {
       letter-spacing: 1px !important;
     }
 
+  
+    /* ==============================================================================
+       WARNA LATAR BELAKANG PODIUM PEMENANG SAAT AKTIF DI OBS & TIKTOK LIVE STUDIO
+       Menjamin warna background megah tema (oranye komik, neon cyber, dll) SELALU MUNCUL
+       100% tanpa pernah transparan saat podium sedang aktif!
+       ============================================================================== */
+    html.theme-comic #winnerOverlay.active,
+    html.mode-podium.theme-comic #winnerOverlay.active,
+    html[class*="theme-comic"] #winnerOverlay.active {
+      background-color: #ea580c !important;
+      background: radial-gradient(circle at center, #fde047 0%, #ea580c 100%) !important;
+      display: flex !important;
+      opacity: 1 !important;
+      visibility: visible !important;
+    }
+    html.theme-comic #winnerOverlay.active::before,
+    html.mode-podium.theme-comic #winnerOverlay.active::before,
+    html[class*="theme-comic"] #winnerOverlay.active::before {
+      content: '' !important;
+      position: absolute !important;
+      inset: 0 !important;
+      background-image: radial-gradient(#000000 15%, transparent 16%) !important;
+      background-size: 20px 20px !important;
+      opacity: 0.1 !important;
+      pointer-events: none !important;
+      display: block !important;
+      z-index: 1 !important;
+    }
+
+    html.theme-cyber #winnerOverlay.active,
+    html.mode-podium.theme-cyber #winnerOverlay.active,
+    html[class*="theme-cyber"] #winnerOverlay.active {
+      background-color: #030814 !important;
+      background: radial-gradient(circle at center, #0a2540 0%, #030814 100%) !important;
+      display: flex !important;
+      opacity: 1 !important;
+    }
+
+    html.theme-arcade #winnerOverlay.active,
+    html.mode-podium.theme-arcade #winnerOverlay.active,
+    html[class*="theme-arcade"] #winnerOverlay.active {
+      background-color: #0c0220 !important;
+      background: radial-gradient(circle at center, #2e085c 0%, #0c0220 100%) !important;
+      display: flex !important;
+      opacity: 1 !important;
+    }
+
+    html.theme-hazard #winnerOverlay.active,
+    html.mode-podium.theme-hazard #winnerOverlay.active,
+    html[class*="theme-hazard"] #winnerOverlay.active {
+      background-color: #0b0b0b !important;
+      background: radial-gradient(circle at center, #2e2805 0%, #0b0b0b 100%) !important;
+      display: flex !important;
+      opacity: 1 !important;
+    }
+
+    html.theme-imperial #winnerOverlay.active,
+    html.mode-podium.theme-imperial #winnerOverlay.active,
+    html[class*="theme-imperial"] #winnerOverlay.active {
+      background-color: #2b0606 !important;
+      background: radial-gradient(circle at center, #540e0e 0%, #2b0606 100%) !important;
+      display: flex !important;
+      opacity: 1 !important;
+    }
+
+    html.theme-matrix #winnerOverlay.active,
+    html.mode-podium.theme-matrix #winnerOverlay.active,
+    html[class*="theme-matrix"] #winnerOverlay.active {
+      background-color: #020a04 !important;
+      background: radial-gradient(circle at center, #083315 0%, #020a04 100%) !important;
+      display: flex !important;
+      opacity: 1 !important;
+    }
+
+    html.theme-aquatic #winnerOverlay.active,
+    html.mode-podium.theme-aquatic #winnerOverlay.active,
+    html[class*="theme-aquatic"] #winnerOverlay.active {
+      background-color: #021729 !important;
+      background: radial-gradient(circle at center, #075985 0%, #021729 100%) !important;
+      display: flex !important;
+      opacity: 1 !important;
+    }
+
   </style>
-<link rel="stylesheet" href="themes.css">
+<link rel="stylesheet" href="themes.css?v=20261114_1910">
 </head>
 <body class="view-match">
 
