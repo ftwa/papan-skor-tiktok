@@ -1662,6 +1662,66 @@
 
 
 
+        .winner-headshot-render {
+      width: 140px !important;
+      height: 140px !important;
+      border-radius: 50% !important;
+      object-fit: cover !important;
+      border: 3.5px solid #ffffff !important;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.55), 0 0 25px rgba(56, 189, 248, 0.4) !important;
+      margin-bottom: 20px !important;
+      background: rgba(15, 23, 42, 0.6) !important;
+    }
+    .rank-1 .winner-headshot-render {
+      width: 175px !important;
+      height: 175px !important;
+      border-color: #fde047 !important;
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.65), 0 0 35px rgba(250, 204, 21, 0.6) !important;
+    }
+    .rank-2 .winner-headshot-render {
+      border-color: #e0f2fe !important;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.55), 0 0 30px rgba(56, 189, 248, 0.5) !important;
+    }
+    .rank-3 .winner-headshot-render {
+      border-color: #ffedd5 !important;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.55), 0 0 30px rgba(251, 146, 60, 0.5) !important;
+    }
+
+    /* Team Member Mini Chips on Podium Card */
+    .podium-team-members-row {
+      display: none;
+      flex-wrap: wrap;
+      gap: 4px;
+      justify-content: center;
+      align-items: center;
+      margin: 6px 0 2px 0;
+      max-width: 95%;
+    }
+    .win-member-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 2px 7px;
+      border-radius: 999px;
+      background: rgba(15, 23, 42, 0.75);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      font-size: 10px;
+      color: #f8fafc;
+      font-weight: 700;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
+    }
+    .win-member-chip-img {
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+    .win-member-chip-pts {
+      color: #facc15;
+      font-weight: 900;
+      font-size: 9px;
+    }
+
     .winner-3d-full-img {
 
       max-width: 100%; object-fit: contain;
@@ -4608,6 +4668,26 @@
 
       text-shadow: 2px 2px 0px #ffe600 !important;
 
+    }
+
+        /* Team Member Chips di Podium Comic */
+    html.theme-comic .win-member-chip {
+      background: #ffffff !important;
+      color: #000000 !important;
+      border: 2px solid #000000 !important;
+      box-shadow: 2px 2px 0px #000000 !important;
+      font-family: 'Fredoka', sans-serif !important;
+      font-weight: 700 !important;
+    }
+    html.theme-comic .win-member-chip-pts {
+      color: #d50000 !important;
+      font-family: 'Bangers', cursive !important;
+      font-size: 11px !important;
+    }
+    html.theme-comic .winner-headshot-render {
+      border: 3.5px solid #000000 !important;
+      box-shadow: 5px 5px 0px #000000 !important;
+      background: #ffffff !important;
     }
 
     html.theme-comic .podium-score-lbl {
@@ -10396,6 +10476,7 @@ html.theme-hazard .c-notif-badge-icon {
           <div class="player-display-name" id="winName2">-</div>
 
           <div class="player-username-pill" id="winNick2">-</div>
+          <div class="podium-team-members-row" id="winTeamMembers2"></div>
 
           <div class="podium-score-pill">
 
@@ -10440,6 +10521,7 @@ html.theme-hazard .c-notif-badge-icon {
           <div class="player-display-name" id="winName1">-</div>
 
           <div class="player-username-pill" id="winNick1">-</div>
+          <div class="podium-team-members-row" id="winTeamMembers1"></div>
 
           <div class="podium-score-pill">
 
@@ -10484,6 +10566,7 @@ html.theme-hazard .c-notif-badge-icon {
           <div class="player-display-name" id="winName3">-</div>
 
           <div class="player-username-pill" id="winNick3">-</div>
+          <div class="podium-team-members-row" id="winTeamMembers3"></div>
 
           <div class="podium-score-pill">
 
@@ -11043,7 +11126,7 @@ html.theme-hazard .c-notif-badge-icon {
 
           if (savedPodium && savedPodium.active) {
 
-            siarkanPesanSync({ type: 'OPEN_PODIUM', p1: savedPodium.p1, p2: savedPodium.p2, p3: savedPodium.p3 });
+            siarkanPesanSync({ type: 'OPEN_PODIUM', p1: savedPodium.p1, p2: savedPodium.p2, p3: savedPodium.p3, isTeam: savedPodium.isTeam });
 
           }
 
@@ -11171,7 +11254,7 @@ html.theme-hazard .c-notif-badge-icon {
 
       if (currentViewMode === 'podium' || currentViewMode === 'admin') {
 
-        tampilkanLayarPemenangDariSync(msg.p1, msg.p2, msg.p3);
+        tampilkanLayarPemenangDariSync(msg.p1, msg.p2, msg.p3, msg.isTeam);
 
       }
 
@@ -11519,30 +11602,26 @@ html.theme-hazard .c-notif-badge-icon {
 
 
 
-  function tampilkanLayarPemenangDariSync(p1, p2, p3) {
-
+  function tampilkanLayarPemenangDariSync(p1, p2, p3, isTeam = false) {
     pasangDataJuaraPodium(1, p1);
-
     pasangDataJuaraPodium(2, p2);
-
     pasangDataJuaraPodium(3, p3);
 
+    const trophyBadge = document.getElementById('winTrophyBadge');
+    if (trophyBadge) {
+      const modeTeamActive = isTeam || (p1 && p1.isTeam) || (db.teamConfig && db.teamConfig.enabled);
+      trophyBadge.innerText = modeTeamActive ? '🏆 JUARA PERTARUNGAN TIM 🏆' : '🏆 GRAND FINALS CEREMONY 🏆';
+    }
+
     document.body.classList.add('winner-overlay-open');
-
     document.getElementById('winnerOverlay').classList.add('active');
-
     autoScalePodium();
-
     requestAnimationFrame(autoScalePodium);
-
     setTimeout(autoScalePodium, 50);
-
     setTimeout(autoScalePodium, 200);
 
     putarTerompetDanTepukTangan();
-
     mulaiAnimasiPetasan();
-
   }
 
 
@@ -12247,7 +12326,13 @@ html.theme-hazard .c-notif-badge-icon {
 
 
 
-    if (idx === 19) { simpanDB(); renderIsiTabel(); } else { urutkanOtomatis(); }
+    const isTeamMode = !!(db && db.teamConfig && db.teamConfig.enabled);
+    if (idx === 19 || isTeamMode) {
+      simpanDB();
+      renderIsiTabel();
+    } else {
+      urutkanOtomatis();
+    }
 
     tambahLogAktivitas(namaTampil, `Poin +${delta}`, 'system', awal, p.poin, Math.abs(delta));
 
@@ -12305,7 +12390,13 @@ html.theme-hazard .c-notif-badge-icon {
 
 
 
-    if (idx === 19) { simpanDB(); renderIsiTabel(); } else { urutkanOtomatis(); }
+    const isTeamMode = !!(db && db.teamConfig && db.teamConfig.enabled);
+    if (idx === 19 || isTeamMode) {
+      simpanDB();
+      renderIsiTabel();
+    } else {
+      urutkanOtomatis();
+    }
 
     tambahLogAktivitas(namaTampil, `Total poin disetel ke ${p.poin}`, 'system', awal, p.poin, Math.abs(selisih));
 
@@ -12464,15 +12555,22 @@ html.theme-hazard .c-notif-badge-icon {
 
 
   function eksekusiUrutkanManual() {
-
     tutupQuickPointPopover();
-
     tutupMiniColorPicker();
-
     urutkanOtomatis();
-
+    const btn = document.getElementById('btnUrutkanManual');
+    if (btn) {
+      const origText = btn.innerText;
+      btn.innerText = '✔ TERURUT';
+      btn.style.borderColor = '#4ade80';
+      btn.style.color = '#4ade80';
+      setTimeout(() => {
+        btn.innerText = origText;
+        btn.style.borderColor = '';
+        btn.style.color = '';
+      }, 1200);
+    }
     tambahLogAktivitas('SKOR', 'Papan skor berhasil diurutkan', 'system');
-
   }
 
 
@@ -14094,227 +14192,266 @@ html.theme-hazard .c-notif-badge-icon {
 
 
 
-  function pasangAvatarPodium(elemId, avatarUrl, nama, fallbackRank = 1, headshotUrl = null, robloxUser = '') {
-
+  function pasangAvatarPodium(elemId, avatarUrl, nama, fallbackRank = 1, headshotUrl = null, robloxUser = '', pData = null) {
     const box = document.getElementById(elemId);
-
     if (!box) return;
 
-
-
     if (!avatarUrl && headshotUrl) {
-
       avatarUrl = headshotUrl;
-
     }
-
-
 
     if (!avatarUrl) {
-
-      box.innerHTML = `
-
-        <div class="winner-empty-slot" style="display:flex; flex-direction:column; align-items:center; justify-content:center; height:100%; opacity:0.35;">
-
-          <span style="font-size:42px;">👤</span>
-
-          <span style="font-size:12px; font-weight:700; color:#94a3b8; margin-top:4px;">${escapeHtml(nama || 'KOSONG')}</span>
-
-        </div>
-
-      `;
-
-      return;
-
-    }
-
-
-
-    let srcFinal = avatarUrl;
-
-    if (srcFinal && srcFinal.includes('/Avatar/Png')) {
-
-      srcFinal = srcFinal.replace(/\/420\/420\//, '/720/720/').replace(/\/352\/352\//, '/720/720/');
-
-    }
-
-
-
-    const isHeadshotOnly = srcFinal.includes('AvatarHeadshot') || srcFinal.includes('ui-avatars.com');
-
-    const imgClass = isHeadshotOnly ? 'winner-3d-full-img winner-headshot-render' : 'winner-3d-full-img';
-
-
-
-    box.innerHTML = `<img src="${escapeHtml(srcFinal)}" class="${imgClass}" alt="${escapeHtml(nama || 'Winner')}" onerror="this.onerror=null; this.src='https://ui-avatars.com/api/?name=${encodeURIComponent(nama || 'Winner')}&background=0284c7&color=fff&rounded=true&bold=true'; this.className='winner-3d-full-img winner-headshot-render';">`;
-
-  }
-
-
-
-  function dapatkanFullBody3dAvatar(p, rank = 1) {
-
-    if (!p) return '';
-
-    if (p.avatar3d && p.avatar3d.includes('Avatar') && !p.avatar3d.includes('AvatarHeadshot')) {
-
-      return p.avatar3d.replace(/\/420\/420\//, '/720/720/').replace(/\/352\/352\//, '/720/720/');
-
-    }
-
-
-
-    if (p.avatar && p.avatar.includes('rbxcdn.com')) {
-
-      if (p.avatar.includes('/Avatar/') && !p.avatar.includes('AvatarHeadshot')) {
-
-        return p.avatar.replace(/\/420\/420\//, '/720/720/').replace(/\/352\/352\//, '/720/720/');
-
+      if (pData && pData.isTeam) {
+        const teamColor = pData.color || '#38bdf8';
+        box.innerHTML = `
+          <div class="winner-team-crest" style="display:flex; flex-direction:column; align-items:center; justify-content:center; height:100%; margin-bottom:15px; animation:champAuraPulse 3s infinite ease-in-out;">
+            <div style="width:115px; height:115px; border-radius:50%; background:radial-gradient(circle, ${teamColor}55 0%, ${teamColor}15 70%, transparent 100%); border:3.5px solid ${teamColor}; display:flex; align-items:center; justify-content:center; box-shadow:0 0 35px ${teamColor}77;">
+              <span style="font-size:54px; filter:drop-shadow(0 0 12px ${teamColor});">${pData.icon || '🛡️'}</span>
+            </div>
+            <span style="font-size:13px; font-weight:900; color:${teamColor}; margin-top:10px; text-transform:uppercase; letter-spacing:1px; filter:drop-shadow(0 0 6px rgba(0,0,0,0.8)); font-family:'Fredoka',sans-serif;">${escapeHtml(pData.name || 'TIM')}</span>
+          </div>
+        `;
+        return;
       }
 
-      return p.avatar;
-
+      box.innerHTML = `
+        <div class="winner-empty-slot" style="display:flex; flex-direction:column; align-items:center; justify-content:center; height:100%; opacity:0.35;">
+          <span style="font-size:42px;">👤</span>
+          <span style="font-size:12px; font-weight:700; color:#94a3b8; margin-top:4px;">${escapeHtml(nama || 'KOSONG')}</span>
+        </div>
+      `;
+      return;
     }
 
+    let srcFinal = avatarUrl;
+    if (srcFinal && srcFinal.includes('/Avatar/Png')) {
+      srcFinal = srcFinal.replace(/\/420\/420\//, '/720/720/').replace(/\/352\/352\//, '/720/720/');
+    }
 
+    const isHeadshotOnly = srcFinal.includes('AvatarHeadshot') || srcFinal.includes('ui-avatars.com') || srcFinal.includes('/avatar-headshot/');
+    const imgClass = isHeadshotOnly ? 'winner-3d-full-img winner-headshot-render' : 'winner-3d-full-img';
+
+    box.innerHTML = `<img src="${escapeHtml(srcFinal)}" class="${imgClass}" alt="${escapeHtml(nama || 'Winner')}" onerror="this.onerror=null; this.src='https://ui-avatars.com/api/?name=${encodeURIComponent(nama || 'Winner')}&background=0284c7&color=fff&rounded=true&bold=true'; this.className='winner-3d-full-img winner-headshot-render';">`;
+  }
+
+  function dapatkanFullBody3dAvatar(p, rank = 1) {
+    if (!p) return '';
+    if (p.avatar3d && p.avatar3d.includes('Avatar') && !p.avatar3d.includes('AvatarHeadshot')) {
+      return p.avatar3d.replace(/\/420\/420\//, '/720/720/').replace(/\/352\/352\//, '/720/720/');
+    }
+
+    if (p.avatar && p.avatar.includes('rbxcdn.com')) {
+      if (p.avatar.includes('/Avatar/') && !p.avatar.includes('AvatarHeadshot')) {
+        return p.avatar.replace(/\/420\/420\//, '/720/720/').replace(/\/352\/352\//, '/720/720/');
+      }
+      return p.avatar;
+    }
 
     if (p.avatar && !p.avatar.includes('ui-avatars')) {
-
       return p.avatar;
-
     }
-
     return '';
-
   }
-
-
 
   function pasangDataJuaraPodium(rank, pData) {
-
     const nameEl = document.getElementById(`winName${rank}`);
-
     const nickEl = document.getElementById(`winNick${rank}`);
-
     const scoreEl = document.getElementById(`winScore${rank}`);
-
-
+    const cardEl = document.querySelector(`.podium-card.rank-${rank}`);
+    const ribbonEl = cardEl ? cardEl.querySelector('.podium-rank-ribbon') : null;
+    const membersRow = document.getElementById(`winTeamMembers${rank}`);
 
     if (pData) {
+      if (pData.isTeam) {
+        // --- MODE TIM: JUARA TIM ---
+        const teamColor = pData.color || '#38bdf8';
+        const teamIcon = pData.icon || '🛡️';
+        const teamName = pData.name || `TIM ${rank}`;
+        const scoreVal = (pData.poin !== undefined && pData.poin !== null) ? pData.poin : 0;
 
-      const namaDisplay = pData.nick || pData.user || pData.robloxUser || `Juara ${rank}`;
+        if (nameEl) {
+          nameEl.innerHTML = `<span style="display:inline-flex; align-items:center; gap:6px; justify-content:center; max-width:100%;"><span style="font-size:1.15em;">${teamIcon}</span> <span style="color:${escapeHtml(teamColor)}; filter:drop-shadow(0 0 10px ${escapeHtml(teamColor)}55);">${escapeHtml(teamName)}</span></span>`;
+        }
 
-      const usernameTag = pData.robloxUser ? `@${pData.robloxUser.replace(/^@+/, '')}` : (pData.user ? `@${pData.user}` : '-');
+        if (nickEl) {
+          let subText = pData.chairRange || `${pData.membersCount || ''} Pemain`;
+          if (pData.mvpName) {
+            subText = `👑 MVP: @${pData.mvpUser ? pData.mvpUser.replace(/^@+/,'') : pData.mvpName} (${pData.mvpPoin} pts)`;
+          }
+          nickEl.innerText = subText;
+          nickEl.title = pData.chairRange || '';
+        }
 
-      const scoreVal = (pData.poin !== undefined && pData.poin !== null) ? pData.poin : 0;
+        if (scoreEl) scoreEl.innerText = scoreVal;
 
+        if (ribbonEl) {
+          if (rank === 1) ribbonEl.innerHTML = `👑 1ST TEAM CHAMPION`;
+          else if (rank === 2) ribbonEl.innerHTML = `🥈 2ND TEAM PLACE`;
+          else if (rank === 3) ribbonEl.innerHTML = `🥉 3RD TEAM PLACE`;
+        }
 
+        if (membersRow) {
+          if (pData.teamMembers && pData.teamMembers.length > 0) {
+            membersRow.style.display = 'flex';
+            membersRow.innerHTML = pData.teamMembers.slice(0, 5).map(m => `
+              <div class="win-member-chip" title="${escapeHtml(m.name)}: ${m.poin} pts">
+                ${m.avatar ? `<img src="${escapeHtml(m.avatar)}" class="win-member-chip-img" onerror="this.style.display='none';">` : ''}
+                <span class="win-member-chip-name">${escapeHtml(m.name.length > 8 ? m.name.slice(0,7)+'…' : m.name)}</span>
+                <span class="win-member-chip-pts">${m.poin}</span>
+              </div>
+            `).join('');
+          } else {
+            membersRow.style.display = 'none';
+            membersRow.innerHTML = '';
+          }
+        }
 
-      if (nameEl) nameEl.innerText = namaDisplay;
+        const avUrl = pData.avatar3d || (pData.avatar ? pData.avatar : '');
+        pasangAvatarPodium(`winAvatarBox${rank}`, avUrl, teamName, rank, pData.avatar, pData.robloxUser, pData);
+      } else {
+        // --- MODE INDIVIDU: JUARA SOLO ---
+        const namaDisplay = pData.nick || pData.user || pData.robloxUser || `Juara ${rank}`;
+        const usernameTag = pData.robloxUser ? `@${pData.robloxUser.replace(/^@+/, '')}` : (pData.user ? `@${pData.user}` : '-');
+        const scoreVal = (pData.poin !== undefined && pData.poin !== null) ? pData.poin : 0;
 
-      if (nickEl) nickEl.innerText = usernameTag;
+        if (nameEl) nameEl.innerText = namaDisplay;
+        if (nickEl) {
+          nickEl.innerText = usernameTag;
+          nickEl.title = '';
+        }
+        if (scoreEl) scoreEl.innerText = scoreVal;
 
-      if (scoreEl) scoreEl.innerText = scoreVal;
+        if (ribbonEl) {
+          if (rank === 1) ribbonEl.innerHTML = `👑 1ST CHAMPION`;
+          else if (rank === 2) ribbonEl.innerHTML = `🥈 2ND PLACE`;
+          else if (rank === 3) ribbonEl.innerHTML = `🥉 3RD PLACE`;
+        }
 
+        if (membersRow) {
+          membersRow.style.display = 'none';
+          membersRow.innerHTML = '';
+        }
 
-
-      const avUrl = pData.avatar3d || dapatkanFullBody3dAvatar(pData, rank);
-
-      pasangAvatarPodium(`winAvatarBox${rank}`, avUrl, namaDisplay, rank, pData.avatar, pData.robloxUser || pData.user);
-
+        const avUrl = pData.avatar3d || dapatkanFullBody3dAvatar(pData, rank);
+        pasangAvatarPodium(`winAvatarBox${rank}`, avUrl, namaDisplay, rank, pData.avatar, pData.robloxUser || pData.user, null);
+      }
     } else {
-
       if (nameEl) nameEl.innerText = 'Belum Ada';
-
-      if (nickEl) nickEl.innerText = '@standby';
-
+      if (nickEl) {
+        nickEl.innerText = '@standby';
+        nickEl.title = '';
+      }
       if (scoreEl) scoreEl.innerText = '0';
-
+      if (ribbonEl) {
+        if (rank === 1) ribbonEl.innerHTML = `👑 1ST CHAMPION`;
+        else if (rank === 2) ribbonEl.innerHTML = `🥈 2ND PLACE`;
+        else if (rank === 3) ribbonEl.innerHTML = `🥉 3RD PLACE`;
+      }
+      if (membersRow) {
+        membersRow.style.display = 'none';
+        membersRow.innerHTML = '';
+      }
       pasangAvatarPodium(`winAvatarBox${rank}`, '', '', rank);
-
     }
-
   }
-
-
 
   let fireworksInterval = null;
 
-
-
   function tampilkanLayarPemenang(isBroadcast = true) {
-
     tutupQuickPointPopover();
-
     tutupMiniColorPicker();
-
     const currData = getActiveData();
+    const isTeam = !!(db.teamConfig && db.teamConfig.enabled && db.teamConfig.teams && db.teamConfig.teams.length > 0);
 
-    // Ambil pemain nyata dari kursi turnamen (yang memiliki nama terisi atau memiliki skor)
+    let p1 = null, p2 = null, p3 = null;
 
-    const candidates = [...currData.players].filter(p => (p.user || p.nick || p.robloxUser || (p.poin && p.poin > 0)));
+    if (isTeam) {
+      // MODE TIM: Kumpulkan data tiap tim beserta total poin dan MVP
+      const teamsData = db.teamConfig.teams.map((team, idx) => {
+        const totalPoints = hitungPoinTim(team);
+        const chairs = team.chairs || [];
+        const members = chairs.map(c => (c === 19 ? currData.host : currData.players[c])).filter(Boolean);
+        const punyaIsi = (p) => Boolean((p.user && p.user.trim()) || (p.robloxUser && p.robloxUser.trim()) || (p.nick && p.nick.trim()) || (p.poin && p.poin > 0));
+        const activeMembers = members.filter(punyaIsi);
+        
+        // Urutkan anggota tim berdasarkan poin tertinggi
+        const sortedMembers = [...activeMembers].sort((a, b) => (b.poin || 0) - (a.poin || 0));
+        // Cari anggota dengan avatar (prioritas skor tertinggi yang punya avatar)
+        const mvpWithAvatar = sortedMembers.find(m => (m.avatar3d && m.avatar3d.trim()) || (m.avatar && m.avatar.trim())) || sortedMembers[0] || members[0] || null;
+        const mvp = sortedMembers[0] || members[0] || null;
 
-    // Urutkan berdasarkan poin tertinggi
+        const av3d = mvpWithAvatar ? (mvpWithAvatar.avatar3d || dapatkanFullBody3dAvatar(mvpWithAvatar)) : (mvp ? (mvp.avatar3d || dapatkanFullBody3dAvatar(mvp)) : '');
+        const avHead = mvpWithAvatar ? mvpWithAvatar.avatar : (mvp ? mvp.avatar : '');
+        const rbxUser = mvpWithAvatar ? (mvpWithAvatar.robloxUser || mvpWithAvatar.user || '') : (mvp ? (mvp.robloxUser || mvp.user || '') : '');
 
-    const sorted = candidates.sort((a, b) => (b.poin || 0) - (a.poin || 0));
+        return {
+          isTeam: true,
+          teamId: team.id,
+          teamIndex: idx,
+          name: team.name || `TIM ${idx + 1}`,
+          color: team.color || '#38bdf8',
+          icon: team.icon || '🛡️',
+          poin: totalPoints,
+          chairRange: team.chairRange || `Kursi ${chairs[0] + 1} - ${chairs[chairs.length - 1] + 1}`,
+          membersCount: chairs.length,
+          activeCount: activeMembers.length,
+          mvpName: mvp ? (mvp.nick || mvp.user || mvp.robloxUser || 'Pemain') : '',
+          mvpUser: mvp ? (mvp.robloxUser || mvp.user || '') : '',
+          mvpPoin: mvp ? (mvp.poin || 0) : 0,
+          avatar: avHead,
+          avatar3d: av3d,
+          robloxUser: rbxUser,
+          teamMembers: sortedMembers.map(m => ({
+            name: m.nick || m.user || m.robloxUser || 'Pemain',
+            user: m.robloxUser || m.user || '',
+            avatar: m.avatar || '',
+            poin: m.poin || 0
+          }))
+        };
+      });
 
-    
-
-    // Juara 1, 2, 3 murni dari data tabel nyata - 100% bebas dari dummy test
-
-    const p1 = sorted[0] || null;
-
-    const p2 = sorted[1] || null;
-
-    const p3 = sorted[2] || null;
-
-
-
-    pasangDataJuaraPodium(1, p1);
-
-    pasangDataJuaraPodium(2, p2);
-
-    pasangDataJuaraPodium(3, p3);
-
-
-
-    document.body.classList.add('winner-overlay-open');
-
-    document.getElementById('winnerOverlay').classList.add('active');
-
-    autoScalePodium();
-
-    requestAnimationFrame(autoScalePodium);
-
-    setTimeout(autoScalePodium, 50);
-
-    setTimeout(autoScalePodium, 200);
-
-
-
-    putarTerompetDanTepukTangan();
-
-    mulaiAnimasiPetasan();
-
-
-
-    try {
-
-      localStorage.setItem(PODIUM_STATE_KEY, JSON.stringify({ active: true, p1, p2, p3 }));
-
-    } catch (_) {}
-
-
-
-    if (isBroadcast) {
-
-      siarkanPesanSync({ type: 'OPEN_PODIUM', p1, p2, p3 });
-
+      // Urutkan tim berdasarkan total akumulasi poin tim tertinggi
+      const sortedTeams = teamsData.sort((a, b) => (b.poin || 0) - (a.poin || 0));
+      p1 = sortedTeams[0] || null;
+      p2 = sortedTeams[1] || null;
+      p3 = sortedTeams[2] || null;
+    } else {
+      // Mode Individu: Ambil pemain nyata dari kursi turnamen
+      const candidates = [...currData.players].filter(p => (p.user || p.nick || p.robloxUser || (p.poin && p.poin > 0)));
+      const sorted = candidates.sort((a, b) => (b.poin || 0) - (a.poin || 0));
+      p1 = sorted[0] || null;
+      p2 = sorted[1] || null;
+      p3 = sorted[2] || null;
     }
 
+    pasangDataJuaraPodium(1, p1);
+    pasangDataJuaraPodium(2, p2);
+    pasangDataJuaraPodium(3, p3);
+
+    // Update Trophy Badge judul
+    const trophyBadge = document.getElementById('winTrophyBadge');
+    if (trophyBadge) {
+      trophyBadge.innerText = isTeam ? '🏆 JUARA PERTARUNGAN TIM 🏆' : '🏆 GRAND FINALS CEREMONY 🏆';
+    }
+
+    document.body.classList.add('winner-overlay-open');
+    document.getElementById('winnerOverlay').classList.add('active');
+    autoScalePodium();
+    requestAnimationFrame(autoScalePodium);
+    setTimeout(autoScalePodium, 50);
+    setTimeout(autoScalePodium, 200);
+
+    putarTerompetDanTepukTangan();
+    mulaiAnimasiPetasan();
+
+    try {
+      localStorage.setItem(PODIUM_STATE_KEY, JSON.stringify({ active: true, p1, p2, p3, isTeam }));
+    } catch (_) {}
+
+    if (isBroadcast) {
+      siarkanPesanSync({ type: 'OPEN_PODIUM', p1, p2, p3, isTeam });
+    }
   }
-
-
 
   function tutupLayarPemenang(isBroadcast = true) {
 
@@ -16326,7 +16463,7 @@ html.theme-hazard .c-notif-badge-icon {
 
         if (savedPodium && savedPodium.active && savedPodium.p1 && savedPodium.p1.user !== 'ApinnTnR') {
 
-          tampilkanLayarPemenangDariSync(savedPodium.p1, savedPodium.p2, savedPodium.p3);
+          tampilkanLayarPemenangDariSync(savedPodium.p1, savedPodium.p2, savedPodium.p3, savedPodium.isTeam);
 
         }
 
