@@ -15514,13 +15514,11 @@ html.theme-hazard .c-notif-badge-icon {
         tr.classList.add(`tag-${p.colorTag}`);
       }
 
-      let teamBadgeHtml = '';
       if (isTeam) {
         const t = dapatkanTimDariKursi(idx);
         if (t) {
           tr.style.setProperty('--row-team-color', t.color);
           tr.classList.add('has-team');
-          teamBadgeHtml = `<span class="badge-team-tag" style="background:${t.color}24; color:${t.color}; border:1px solid ${t.color}66;">${escapeHtml(t.name)}</span>`;
         } else {
           tr.classList.remove('has-team');
         }
@@ -15544,7 +15542,6 @@ html.theme-hazard .c-notif-badge-icon {
           <div style="padding-left:4px; display:flex; align-items:center; justify-content:space-between;">
             <div style="display:flex; align-items:center; gap:2px; min-width:0; overflow:hidden;">
               <span class="name-tiktok ${!p.user ? 'name-empty' : ''}">${p.user || '(Kosong)'}</span>
-              ${teamBadgeHtml}
             </div>
             <div style="display:flex; align-items:center; flex-shrink:0;">${badgePayHtml}</div>
           </div>`;
