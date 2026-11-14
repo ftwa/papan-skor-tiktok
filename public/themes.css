@@ -119,7 +119,7 @@ html:not([class*="theme-"]) .center-notif-popup.show {
 /* --------------------------------------------------------------------------
    TEMA: CYBER HUD NEON (cyber)
    -------------------------------------------------------------------------- */
-html.theme-cyber, html.theme-cyber body {
+html.theme-cyber:not([class*="mode-"]), html.theme-cyber:not([class*="mode-"]) body:not([class*="mode-"]) {
   background: #050b14 !important;
   color: #f8fafc !important;
   font-family: 'Outfit', sans-serif !important;
@@ -333,7 +333,7 @@ html.theme-cyber .log-item-user { color: #00f0ff !important; font-weight: 800; }
 /* --------------------------------------------------------------------------
    TEMA: COMIC POP-ART (comic)
    -------------------------------------------------------------------------- */
-html.theme-comic, html.theme-comic body {
+html.theme-comic:not([class*="mode-"]), html.theme-comic:not([class*="mode-"]) body:not([class*="mode-"]) {
   background: #fffde7 !important;
   color: #000000 !important;
   font-family: 'Fredoka', sans-serif !important;
@@ -565,7 +565,7 @@ html.theme-comic .log-item-user { color: #dc2626 !important; font-weight: 800; }
 /* --------------------------------------------------------------------------
    TEMA: RETRO 80S ARCADE (arcade)
    -------------------------------------------------------------------------- */
-html.theme-arcade, html.theme-arcade body {
+html.theme-arcade:not([class*="mode-"]), html.theme-arcade:not([class*="mode-"]) body:not([class*="mode-"]) {
   background: #0d0221 !important;
   color: #ffee00 !important;
   font-family: 'Press Start 2P', monospace !important;
@@ -779,7 +779,7 @@ html.theme-arcade .log-item-user { color: #ff007f !important; font-weight: 800; 
 /* --------------------------------------------------------------------------
    TEMA: GOLD LUXURY ROYALE (luxury)
    -------------------------------------------------------------------------- */
-html.theme-luxury, html.theme-luxury body {
+html.theme-luxury:not([class*="mode-"]), html.theme-luxury:not([class*="mode-"]) body:not([class*="mode-"]) {
   background: #09090b !important;
   color: #fef3c7 !important;
   font-family: 'Cinzel', serif !important;
@@ -993,7 +993,7 @@ html.theme-luxury .log-item-user { color: #d4af37 !important; font-weight: 800; 
 /* --------------------------------------------------------------------------
    TEMA: AQUATIC PRO FISHING (aquatic)
    -------------------------------------------------------------------------- */
-html.theme-aquatic, html.theme-aquatic body {
+html.theme-aquatic:not([class*="mode-"]), html.theme-aquatic:not([class*="mode-"]) body:not([class*="mode-"]) {
   background: #021729 !important;
   color: #e0f2fe !important;
   font-family: 'Outfit', sans-serif !important;
@@ -1207,7 +1207,7 @@ html.theme-aquatic .log-item-user { color: #00f5d4 !important; font-weight: 800;
 /* --------------------------------------------------------------------------
    TEMA: MECHA TECHWEAR ANIME (mecha)
    -------------------------------------------------------------------------- */
-html.theme-mecha, html.theme-mecha body {
+html.theme-mecha:not([class*="mode-"]), html.theme-mecha:not([class*="mode-"]) body:not([class*="mode-"]) {
   background: #0f0f11 !important;
   color: #ffffff !important;
   font-family: 'Outfit', sans-serif !important;
@@ -1421,7 +1421,7 @@ html.theme-mecha .log-item-user { color: #e6ff00 !important; font-weight: 800; }
 /* --------------------------------------------------------------------------
    TEMA: CYBER HAZARD 2077 (hazard)
    -------------------------------------------------------------------------- */
-html.theme-hazard, html.theme-hazard body {
+html.theme-hazard:not([class*="mode-"]), html.theme-hazard:not([class*="mode-"]) body:not([class*="mode-"]) {
   background: #0b0b0b !important;
   color: #fcee0a !important;
   font-family: 'Outfit', sans-serif !important;
@@ -1635,7 +1635,7 @@ html.theme-hazard .log-item-user { color: #fcee0a !important; font-weight: 800; 
 /* --------------------------------------------------------------------------
    TEMA: MAGMA INFERNO FLAME (inferno)
    -------------------------------------------------------------------------- */
-html.theme-inferno, html.theme-inferno body {
+html.theme-inferno:not([class*="mode-"]), html.theme-inferno:not([class*="mode-"]) body:not([class*="mode-"]) {
   background: #140404 !important;
   color: #fef08a !important;
   font-family: 'Outfit', sans-serif !important;
@@ -1849,7 +1849,7 @@ html.theme-inferno .log-item-user { color: #ff4500 !important; font-weight: 800;
 /* --------------------------------------------------------------------------
    TEMA: FROSTED GLASS CLEAN (glass)
    -------------------------------------------------------------------------- */
-html.theme-glass, html.theme-glass body {
+html.theme-glass:not([class*="mode-"]), html.theme-glass:not([class*="mode-"]) body:not([class*="mode-"]) {
   background: #050811 !important;
   color: #ffffff !important;
   font-family: 'Outfit', sans-serif !important;
@@ -2063,7 +2063,7 @@ html.theme-glass .log-item-user { color: #38bdf8 !important; font-weight: 800; }
 /* --------------------------------------------------------------------------
    TEMA: PASTEL VAPORWAVE LOFI (vaporwave)
    -------------------------------------------------------------------------- */
-html.theme-vaporwave, html.theme-vaporwave body {
+html.theme-vaporwave:not([class*="mode-"]), html.theme-vaporwave:not([class*="mode-"]) body:not([class*="mode-"]) {
   background: #211038 !important;
   color: #fed7aa !important;
   font-family: 'Outfit', sans-serif !important;
@@ -2277,7 +2277,7 @@ html.theme-vaporwave .log-item-user { color: #f472b6 !important; font-weight: 80
 /* --------------------------------------------------------------------------
    TEMA: MATRIX TERMINAL HACKER (matrix)
    -------------------------------------------------------------------------- */
-html.theme-matrix, html.theme-matrix body {
+html.theme-matrix:not([class*="mode-"]), html.theme-matrix:not([class*="mode-"]) body:not([class*="mode-"]) {
   background: #020a04 !important;
   color: #86efac !important;
   font-family: 'JetBrains Mono', monospace !important;
@@ -2491,7 +2491,7 @@ html.theme-matrix .log-item-user { color: #00ff66 !important; font-weight: 800; 
 /* --------------------------------------------------------------------------
    TEMA: COSMIC GALAXY NEBULA (cosmic)
    -------------------------------------------------------------------------- */
-html.theme-cosmic, html.theme-cosmic body {
+html.theme-cosmic:not([class*="mode-"]), html.theme-cosmic:not([class*="mode-"]) body:not([class*="mode-"]) {
   background: #070719 !important;
   color: #f5f3ff !important;
   font-family: 'Outfit', sans-serif !important;
@@ -2705,7 +2705,7 @@ html.theme-cosmic .log-item-user { color: #c084fc !important; font-weight: 800; 
 /* --------------------------------------------------------------------------
    TEMA: F1 PIT STOP TELEMETRY (racing)
    -------------------------------------------------------------------------- */
-html.theme-racing, html.theme-racing body {
+html.theme-racing:not([class*="mode-"]), html.theme-racing:not([class*="mode-"]) body:not([class*="mode-"]) {
   background: #0f0f11 !important;
   color: #ffffff !important;
   font-family: 'Outfit', sans-serif !important;
@@ -2919,7 +2919,7 @@ html.theme-racing .log-item-user { color: #ef4444 !important; font-weight: 800; 
 /* --------------------------------------------------------------------------
    TEMA: RUSTIC WOOD & CAMP (rustic)
    -------------------------------------------------------------------------- */
-html.theme-rustic, html.theme-rustic body {
+html.theme-rustic:not([class*="mode-"]), html.theme-rustic:not([class*="mode-"]) body:not([class*="mode-"]) {
   background: #1c140d !important;
   color: #fefae0 !important;
   font-family: 'Outfit', sans-serif !important;
@@ -3133,7 +3133,7 @@ html.theme-rustic .log-item-user { color: #d4a373 !important; font-weight: 800; 
 /* --------------------------------------------------------------------------
    TEMA: MEDIEVAL GUILD QUEST (fantasy)
    -------------------------------------------------------------------------- */
-html.theme-fantasy, html.theme-fantasy body {
+html.theme-fantasy:not([class*="mode-"]), html.theme-fantasy:not([class*="mode-"]) body:not([class*="mode-"]) {
   background: #18120b !important;
   color: #fef08a !important;
   font-family: 'Cinzel', serif !important;
@@ -3347,7 +3347,7 @@ html.theme-fantasy .log-item-user { color: #ca8a04 !important; font-weight: 800;
 /* --------------------------------------------------------------------------
    TEMA: FROSTBITE ARCTIC ICE (frostbite)
    -------------------------------------------------------------------------- */
-html.theme-frostbite, html.theme-frostbite body {
+html.theme-frostbite:not([class*="mode-"]), html.theme-frostbite:not([class*="mode-"]) body:not([class*="mode-"]) {
   background: #03121f !important;
   color: #f0f9ff !important;
   font-family: 'Outfit', sans-serif !important;
@@ -3561,7 +3561,7 @@ html.theme-frostbite .log-item-user { color: #7dd3fc !important; font-weight: 80
 /* --------------------------------------------------------------------------
    TEMA: IMPERIAL DYNASTY RED (imperial)
    -------------------------------------------------------------------------- */
-html.theme-imperial, html.theme-imperial body {
+html.theme-imperial:not([class*="mode-"]), html.theme-imperial:not([class*="mode-"]) body:not([class*="mode-"]) {
   background: #2b0606 !important;
   color: #fef08a !important;
   font-family: 'Cinzel', serif !important;
@@ -3775,7 +3775,7 @@ html.theme-imperial .log-item-user { color: #eab308 !important; font-weight: 800
 /* --------------------------------------------------------------------------
    TEMA: CYBER DUNE SCI-FI (dune)
    -------------------------------------------------------------------------- */
-html.theme-dune, html.theme-dune body {
+html.theme-dune:not([class*="mode-"]), html.theme-dune:not([class*="mode-"]) body:not([class*="mode-"]) {
   background: #1c1008 !important;
   color: #ffedd5 !important;
   font-family: 'Outfit', sans-serif !important;
@@ -3989,7 +3989,7 @@ html.theme-dune .log-item-user { color: #ea580c !important; font-weight: 800; }
 /* --------------------------------------------------------------------------
    TEMA: CLOCKWORK STEAMPUNK (steampunk)
    -------------------------------------------------------------------------- */
-html.theme-steampunk, html.theme-steampunk body {
+html.theme-steampunk:not([class*="mode-"]), html.theme-steampunk:not([class*="mode-"]) body:not([class*="mode-"]) {
   background: #1c1510 !important;
   color: #fef3c7 !important;
   font-family: 'Cinzel', serif !important;
@@ -4203,7 +4203,7 @@ html.theme-steampunk .log-item-user { color: #b45309 !important; font-weight: 80
 /* --------------------------------------------------------------------------
    TEMA: Y2K CHROME CYBER-GOTH (chrome)
    -------------------------------------------------------------------------- */
-html.theme-chrome, html.theme-chrome body {
+html.theme-chrome:not([class*="mode-"]), html.theme-chrome:not([class*="mode-"]) body:not([class*="mode-"]) {
   background: #09090b !important;
   color: #ffffff !important;
   font-family: 'Outfit', sans-serif !important;
@@ -5869,4 +5869,87 @@ html.theme-imperial .winner-title {
   color: #fef08a !important;
   font-family: 'Cinzel', serif !important;
   text-shadow: 0 0 30px rgba(234, 179, 8, 0.8) !important;
+}
+
+
+/* ==============================================================================
+   TIKTOK LIVE STUDIO & OBS STREAM OVERLAYS (ABSOLUTE TRANSPARENCY ENFORCER)
+   Memastikan semua link overlay (?view=tabel, ?view=notif, ?view=podium, ?view=log)
+   SELALU 100% TRANSPARAN di SEMUA TEMA tanpa terkecuali!
+   ============================================================================== */
+html.mode-tabel, html.mode-tabel body,
+html.mode-notif, html.mode-notif body,
+html.mode-log, html.mode-log body,
+html.mode-podium, html.mode-podium body,
+html[class*="mode-"], html[class*="mode-"] body,
+body.mode-tabel, body.mode-notif, body.mode-log, body.mode-podium,
+body[class*="mode-"],
+html[class*="theme-"][class*="mode-"],
+html[class*="theme-"][class*="mode-"] body,
+html[class*="theme-"] body[class*="mode-"],
+html[class*="theme-"].mode-tabel body,
+html[class*="theme-"].mode-notif body,
+html[class*="theme-"].mode-log body,
+html[class*="theme-"].mode-podium body {
+  background: transparent !important;
+  background-color: transparent !important;
+  background-image: none !important;
+  box-shadow: none !important;
+}
+
+/* Container di mode overlay TikTok Studio selalu transparan tanpa border/bayangan pembungkus */
+html[class*="mode-"] .container,
+html[class*="theme-"][class*="mode-"] .container,
+html.mode-tabel .container,
+html.mode-notif .container,
+html.mode-log .container,
+html.mode-podium .container {
+  background: transparent !important;
+  background-color: transparent !important;
+  background-image: none !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+/* Di mode overlay tabel, sembunyikan semua elemen admin */
+html.mode-tabel .top-bar,
+html.mode-tabel #modalPresetPoin,
+html.mode-tabel #modalPengaturanAudio,
+html.mode-tabel #modalConfirmResetTabel,
+html.mode-tabel #modalLinkStream,
+html.mode-tabel .color-picker-mini,
+html.mode-tabel .col-resizer {
+  display: none !important;
+}
+
+
+/* Background Podium di mode streaming TikTok Studio WAJIB TRANSPARAN (Semua Tema) */
+html.mode-podium #winnerOverlay,
+html[class*="mode-"] #winnerOverlay,
+html[class*="theme-"].mode-podium #winnerOverlay,
+html.mode-podium.theme-comic #winnerOverlay,
+html.mode-podium.theme-cyber #winnerOverlay,
+html.mode-podium.theme-arcade #winnerOverlay,
+html.mode-podium.theme-hazard #winnerOverlay,
+html.mode-podium.theme-imperial #winnerOverlay,
+html.mode-podium.theme-matrix #winnerOverlay,
+html.mode-podium.theme-aquatic #winnerOverlay {
+  background: transparent !important;
+  background-color: transparent !important;
+  background-image: none !important;
+  backdrop-filter: none !important;
+}
+
+/* Penempatan Center Notif Popup di mode-notif agar 100% pas di tengah */
+html.mode-notif #centerNotifPopup {
+  position: absolute !important;
+  top: 50% !important;
+  left: 50% !important;
+  transform: translate(-50%, -50%) scale(0.9) !important;
+  margin: 0 !important;
+}
+html.mode-notif #centerNotifPopup.show {
+  transform: translate(-50%, -50%) scale(1) !important;
+  opacity: 1 !important;
+  visibility: visible !important;
 }
