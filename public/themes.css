@@ -1,15 +1,14 @@
 /* ==========================================================================
-   20 TEMA LENGKAP PAPAN SKOR TIKTOK LIVE STREAM & OBS OVERLAY (ENGINE V2)
-   Setiap tema memiliki Desain Tabel, Popup Notifikasi, dan Podium Juara
-   yang SEPENUHNYA BERBEDA secara visual, tipografi, tekstur, & animasi!
+   20 TEMA LENGKAP PAPAN SKOR TIKTOK LIVE STREAM & OBS OVERLAY (ENGINE V3)
+   Fitur Warna Baris Kustom (Tag Colors) 100% Aktif & Prioritas Tinggi di Semua Tema!
    ========================================================================== */
 
-/* GENERAL RESET AGAR TD MENGIKUTI TEMA */
-html[class*="theme-"]:not(.theme-cyber) td {
-  background: transparent !important;
+/* GENERAL RESET AGAR TD MENGIKUTI TEMA / TAG WARNA */
+html[class*="theme-"]:not(.theme-cyber) table tbody tr:not([class*="tag-"]) td {
+  background: transparent;
 }
-html[class*="theme-"]:not(.theme-cyber) tbody tr:nth-child(even) td {
-  background: transparent !important;
+html[class*="theme-"]:not(.theme-cyber) table tbody tr:not([class*="tag-"]):nth-child(even) td {
+  background: transparent;
 }
 
 /* ANIMASI GLOBAL TIAP TEMA */
@@ -131,32 +130,32 @@ html.theme-comic table th {
   letter-spacing: 1px !important;
 }
 
-/* BARIS & SEL TABEL EKSPLISIT (ANTI OVERRIDE OLEH CSS DASAR) */
-html.theme-comic table tbody tr td {
+/* BARIS & SEL TABEL EKSPLISIT DENGAN :not([class*="tag-"]) (FITUR UBAH WARNA BARIS 100% AMAN!) */
+html.theme-comic table tbody tr:not([class*="tag-"]) td {
   background: #ffffff !important;
   color: #0a0a0a !important;
   border-bottom: 1px solid rgba(255,255,255,0.08) !important;
   border-right: 1px solid rgba(255,255,255,0.06) !important;
   font-family: 'Fredoka', 'Outfit', sans-serif !important;
 }
-html.theme-comic table tbody tr:nth-child(even) td {
+html.theme-comic table tbody tr:not([class*="tag-"]):nth-child(even) td {
   background: #fffde7 !important;
 }
-html.theme-comic table tbody tr:hover td {
+html.theme-comic table tbody tr:not([class*="tag-"]):hover td {
   background: #cffafe !important;
 }
-html.theme-comic table tbody tr.is-leader td,
-html.theme-comic table tbody tr.rank-1-row td {
+html.theme-comic table tbody tr:not([class*="tag-"]).is-leader td,
+html.theme-comic table tbody tr:not([class*="tag-"]).rank-1-row td {
   background: #fef08a !important;
   border-left: 5px solid #eab308 !important;
 }
-html.theme-comic table tbody tr.host-row td {
+html.theme-comic table tbody tr:not([class*="tag-"]).host-row td {
   background: #ffedd5 !important;
   border-top: 2px dashed #ffe600 !important;
 }
 
-/* NOMOR URUT */
-html.theme-comic .td-no {
+/* NOMOR URUT (HANYA JIKA TIDAK DITAG WARNA) */
+html.theme-comic table tbody tr:not([class*="tag-"]) .td-no {
   background: #fde047 !important;
   color: #000000 !important;
   font-family: 'Bangers', cursive !important;
@@ -165,16 +164,16 @@ html.theme-comic .td-no {
 }
 
 /* NAMA PLAYER & SKOR */
-html.theme-comic .name-tiktok {
+html.theme-comic table tbody tr:not([class*="tag-"]) .name-tiktok {
   color: #0a0a0a !important;
   font-family: 'Fredoka', 'Outfit', sans-serif !important;
   font-weight: 800 !important;
 }
-html.theme-comic .name-roblox-display {
+html.theme-comic table tbody tr:not([class*="tag-"]) .name-roblox-display {
   color: #334155 !important;
   font-family: 'Fredoka', 'Outfit', sans-serif !important;
 }
-html.theme-comic .score-val {
+html.theme-comic table tbody tr:not([class*="tag-"]) .score-val {
   color: #dc2626 !important;
   font-family: 'Bangers', cursive !important;
   font-size: 22px !important;
@@ -198,9 +197,7 @@ html.theme-comic .quick-point-popover {
   border-radius: 14px !important;
 }
 
-/* ==========================================================================
-   POPUP NOTIFIKASI TENGAH (.center-notif-popup) UNIK
-   ========================================================================== */
+/* NOTIFIKASI TENGAH UNIK */
 html.theme-comic .center-notif-popup {
   background: #fde047 !important;
   border: 4.5px solid #000000 !important;
@@ -240,9 +237,7 @@ html.theme-comic .c-notif-pts-total {
   font-weight: 700 !important;
 }
 
-/* ==========================================================================
-   LAYAR PODIUM PEMENANG (#winnerOverlay) UNIK
-   ========================================================================== */
+/* LAYAR PODIUM JUARA UNIK */
 html.theme-comic #winnerOverlay {
   background: radial-gradient(circle at center, #fde047 0%, #f97316 100%) !important;
 }
@@ -383,32 +378,32 @@ html.theme-arcade table th {
   letter-spacing: 1px !important;
 }
 
-/* BARIS & SEL TABEL EKSPLISIT (ANTI OVERRIDE OLEH CSS DASAR) */
-html.theme-arcade table tbody tr td {
+/* BARIS & SEL TABEL EKSPLISIT DENGAN :not([class*="tag-"]) (FITUR UBAH WARNA BARIS 100% AMAN!) */
+html.theme-arcade table tbody tr:not([class*="tag-"]) td {
   background: #180838 !important;
   color: #ffee00 !important;
   border-bottom: 1px solid rgba(255,255,255,0.08) !important;
   border-right: 1px solid rgba(255,255,255,0.06) !important;
   font-family: 'Press Start 2P', monospace !important;
 }
-html.theme-arcade table tbody tr:nth-child(even) td {
+html.theme-arcade table tbody tr:not([class*="tag-"]):nth-child(even) td {
   background: #220b4d !important;
 }
-html.theme-arcade table tbody tr:hover td {
+html.theme-arcade table tbody tr:not([class*="tag-"]):hover td {
   background: #390d6b !important;
 }
-html.theme-arcade table tbody tr.is-leader td,
-html.theme-arcade table tbody tr.rank-1-row td {
+html.theme-arcade table tbody tr:not([class*="tag-"]).is-leader td,
+html.theme-arcade table tbody tr:not([class*="tag-"]).rank-1-row td {
   background: rgba(255, 0, 127, 0.4) !important;
   border-left: 5px solid #ffee00 !important;
 }
-html.theme-arcade table tbody tr.host-row td {
+html.theme-arcade table tbody tr:not([class*="tag-"]).host-row td {
   background: #3b1154 !important;
   border-top: 2px dashed #ff007f !important;
 }
 
-/* NOMOR URUT */
-html.theme-arcade .td-no {
+/* NOMOR URUT (HANYA JIKA TIDAK DITAG WARNA) */
+html.theme-arcade table tbody tr:not([class*="tag-"]) .td-no {
   background: #2a0845 !important;
   color: #00f0ff !important;
   font-family: 'Press Start 2P', monospace !important;
@@ -417,16 +412,16 @@ html.theme-arcade .td-no {
 }
 
 /* NAMA PLAYER & SKOR */
-html.theme-arcade .name-tiktok {
+html.theme-arcade table tbody tr:not([class*="tag-"]) .name-tiktok {
   color: #ffee00 !important;
   font-family: 'Press Start 2P', monospace !important;
   font-weight: 800 !important;
 }
-html.theme-arcade .name-roblox-display {
+html.theme-arcade table tbody tr:not([class*="tag-"]) .name-roblox-display {
   color: #00f0ff !important;
   font-family: 'Press Start 2P', monospace !important;
 }
-html.theme-arcade .score-val {
+html.theme-arcade table tbody tr:not([class*="tag-"]) .score-val {
   color: #ffee00 !important;
   font-family: 'Press Start 2P', monospace !important;
   font-size: 22px !important;
@@ -450,9 +445,7 @@ html.theme-arcade .quick-point-popover {
   border-radius: 0px !important;
 }
 
-/* ==========================================================================
-   POPUP NOTIFIKASI TENGAH (.center-notif-popup) UNIK
-   ========================================================================== */
+/* NOTIFIKASI TENGAH UNIK */
 html.theme-arcade .center-notif-popup {
   background: #11052c !important;
   border: 4px solid #ff007f !important;
@@ -492,9 +485,7 @@ html.theme-arcade .c-notif-pts-total {
   font-weight: 700 !important;
 }
 
-/* ==========================================================================
-   LAYAR PODIUM PEMENANG (#winnerOverlay) UNIK
-   ========================================================================== */
+/* LAYAR PODIUM JUARA UNIK */
 html.theme-arcade #winnerOverlay {
   background: radial-gradient(circle at center, #2d0c5a 0%, #0d0221 100%) !important;
 }
@@ -635,32 +626,32 @@ html.theme-luxury table th {
   letter-spacing: 1px !important;
 }
 
-/* BARIS & SEL TABEL EKSPLISIT (ANTI OVERRIDE OLEH CSS DASAR) */
-html.theme-luxury table tbody tr td {
+/* BARIS & SEL TABEL EKSPLISIT DENGAN :not([class*="tag-"]) (FITUR UBAH WARNA BARIS 100% AMAN!) */
+html.theme-luxury table tbody tr:not([class*="tag-"]) td {
   background: #121217 !important;
   color: #fef3c7 !important;
   border-bottom: 1px solid rgba(255,255,255,0.08) !important;
   border-right: 1px solid rgba(255,255,255,0.06) !important;
   font-family: 'Cinzel', serif !important;
 }
-html.theme-luxury table tbody tr:nth-child(even) td {
+html.theme-luxury table tbody tr:not([class*="tag-"]):nth-child(even) td {
   background: #181820 !important;
 }
-html.theme-luxury table tbody tr:hover td {
+html.theme-luxury table tbody tr:not([class*="tag-"]):hover td {
   background: rgba(212, 175, 55, 0.15) !important;
 }
-html.theme-luxury table tbody tr.is-leader td,
-html.theme-luxury table tbody tr.rank-1-row td {
+html.theme-luxury table tbody tr:not([class*="tag-"]).is-leader td,
+html.theme-luxury table tbody tr:not([class*="tag-"]).rank-1-row td {
   background: linear-gradient(90deg, rgba(212, 175, 55, 0.28) 0%, transparent 100%) !important;
   border-left: 5px solid #d4af37 !important;
 }
-html.theme-luxury table tbody tr.host-row td {
+html.theme-luxury table tbody tr:not([class*="tag-"]).host-row td {
   background: #231c0e !important;
   border-top: 2px dashed #d4af37 !important;
 }
 
-/* NOMOR URUT */
-html.theme-luxury .td-no {
+/* NOMOR URUT (HANYA JIKA TIDAK DITAG WARNA) */
+html.theme-luxury table tbody tr:not([class*="tag-"]) .td-no {
   background: #1a1814 !important;
   color: #d4af37 !important;
   font-family: 'Cinzel', serif !important;
@@ -669,16 +660,16 @@ html.theme-luxury .td-no {
 }
 
 /* NAMA PLAYER & SKOR */
-html.theme-luxury .name-tiktok {
+html.theme-luxury table tbody tr:not([class*="tag-"]) .name-tiktok {
   color: #fef3c7 !important;
   font-family: 'Cinzel', serif !important;
   font-weight: 800 !important;
 }
-html.theme-luxury .name-roblox-display {
+html.theme-luxury table tbody tr:not([class*="tag-"]) .name-roblox-display {
   color: #d1d5db !important;
   font-family: 'Cinzel', serif !important;
 }
-html.theme-luxury .score-val {
+html.theme-luxury table tbody tr:not([class*="tag-"]) .score-val {
   color: #facc15 !important;
   font-family: 'Cinzel', serif !important;
   font-size: 22px !important;
@@ -702,9 +693,7 @@ html.theme-luxury .quick-point-popover {
   border-radius: 8px !important;
 }
 
-/* ==========================================================================
-   POPUP NOTIFIKASI TENGAH (.center-notif-popup) UNIK
-   ========================================================================== */
+/* NOTIFIKASI TENGAH UNIK */
 html.theme-luxury .center-notif-popup {
   background: linear-gradient(135deg, #181512 0%, #0d0c0a 100%) !important;
   border: 2px solid #d4af37 !important;
@@ -744,9 +733,7 @@ html.theme-luxury .c-notif-pts-total {
   font-weight: 700 !important;
 }
 
-/* ==========================================================================
-   LAYAR PODIUM PEMENANG (#winnerOverlay) UNIK
-   ========================================================================== */
+/* LAYAR PODIUM JUARA UNIK */
 html.theme-luxury #winnerOverlay {
   background: radial-gradient(circle at center, #2e1015 0%, #09090b 85%) !important;
 }
@@ -887,32 +874,32 @@ html.theme-aquatic table th {
   letter-spacing: 1px !important;
 }
 
-/* BARIS & SEL TABEL EKSPLISIT (ANTI OVERRIDE OLEH CSS DASAR) */
-html.theme-aquatic table tbody tr td {
+/* BARIS & SEL TABEL EKSPLISIT DENGAN :not([class*="tag-"]) (FITUR UBAH WARNA BARIS 100% AMAN!) */
+html.theme-aquatic table tbody tr:not([class*="tag-"]) td {
   background: rgba(5, 33, 56, 0.95) !important;
   color: #f0fdfa !important;
   border-bottom: 1px solid rgba(255,255,255,0.08) !important;
   border-right: 1px solid rgba(255,255,255,0.06) !important;
   font-family: 'Rajdhani', sans-serif !important;
 }
-html.theme-aquatic table tbody tr:nth-child(even) td {
+html.theme-aquatic table tbody tr:not([class*="tag-"]):nth-child(even) td {
   background: rgba(8, 48, 80, 0.85) !important;
 }
-html.theme-aquatic table tbody tr:hover td {
+html.theme-aquatic table tbody tr:not([class*="tag-"]):hover td {
   background: rgba(14, 116, 144, 0.4) !important;
 }
-html.theme-aquatic table tbody tr.is-leader td,
-html.theme-aquatic table tbody tr.rank-1-row td {
+html.theme-aquatic table tbody tr:not([class*="tag-"]).is-leader td,
+html.theme-aquatic table tbody tr:not([class*="tag-"]).rank-1-row td {
   background: rgba(0, 245, 212, 0.22) !important;
   border-left: 5px solid #00f5d4 !important;
 }
-html.theme-aquatic table tbody tr.host-row td {
+html.theme-aquatic table tbody tr:not([class*="tag-"]).host-row td {
   background: #0c4a6e !important;
   border-top: 2px dashed #00f5d4 !important;
 }
 
-/* NOMOR URUT */
-html.theme-aquatic .td-no {
+/* NOMOR URUT (HANYA JIKA TIDAK DITAG WARNA) */
+html.theme-aquatic table tbody tr:not([class*="tag-"]) .td-no {
   background: #052640 !important;
   color: #00f5d4 !important;
   font-family: 'Rajdhani', sans-serif !important;
@@ -921,16 +908,16 @@ html.theme-aquatic .td-no {
 }
 
 /* NAMA PLAYER & SKOR */
-html.theme-aquatic .name-tiktok {
+html.theme-aquatic table tbody tr:not([class*="tag-"]) .name-tiktok {
   color: #f0fdfa !important;
   font-family: 'Rajdhani', sans-serif !important;
   font-weight: 800 !important;
 }
-html.theme-aquatic .name-roblox-display {
+html.theme-aquatic table tbody tr:not([class*="tag-"]) .name-roblox-display {
   color: #7dd3fc !important;
   font-family: 'Rajdhani', sans-serif !important;
 }
-html.theme-aquatic .score-val {
+html.theme-aquatic table tbody tr:not([class*="tag-"]) .score-val {
   color: #00f5d4 !important;
   font-family: 'Rajdhani', sans-serif !important;
   font-size: 22px !important;
@@ -954,9 +941,7 @@ html.theme-aquatic .quick-point-popover {
   border-radius: 12px !important;
 }
 
-/* ==========================================================================
-   POPUP NOTIFIKASI TENGAH (.center-notif-popup) UNIK
-   ========================================================================== */
+/* NOTIFIKASI TENGAH UNIK */
 html.theme-aquatic .center-notif-popup {
   background: radial-gradient(circle at center, #073b61 0%, #021729 100%) !important;
   border: 2px solid #00f5d4 !important;
@@ -996,9 +981,7 @@ html.theme-aquatic .c-notif-pts-total {
   font-weight: 700 !important;
 }
 
-/* ==========================================================================
-   LAYAR PODIUM PEMENANG (#winnerOverlay) UNIK
-   ========================================================================== */
+/* LAYAR PODIUM JUARA UNIK */
 html.theme-aquatic #winnerOverlay {
   background: radial-gradient(circle at center, #084c78 0%, #021729 90%) !important;
 }
@@ -1139,32 +1122,32 @@ html.theme-mecha table th {
   letter-spacing: 1px !important;
 }
 
-/* BARIS & SEL TABEL EKSPLISIT (ANTI OVERRIDE OLEH CSS DASAR) */
-html.theme-mecha table tbody tr td {
+/* BARIS & SEL TABEL EKSPLISIT DENGAN :not([class*="tag-"]) (FITUR UBAH WARNA BARIS 100% AMAN!) */
+html.theme-mecha table tbody tr:not([class*="tag-"]) td {
   background: #151821 !important;
   color: #f0f0f0 !important;
   border-bottom: 1px solid rgba(255,255,255,0.08) !important;
   border-right: 1px solid rgba(255,255,255,0.06) !important;
   font-family: 'Orbitron', sans-serif !important;
 }
-html.theme-mecha table tbody tr:nth-child(even) td {
+html.theme-mecha table tbody tr:not([class*="tag-"]):nth-child(even) td {
   background: #1c212c !important;
 }
-html.theme-mecha table tbody tr:hover td {
+html.theme-mecha table tbody tr:not([class*="tag-"]):hover td {
   background: rgba(230, 255, 0, 0.15) !important;
 }
-html.theme-mecha table tbody tr.is-leader td,
-html.theme-mecha table tbody tr.rank-1-row td {
+html.theme-mecha table tbody tr:not([class*="tag-"]).is-leader td,
+html.theme-mecha table tbody tr:not([class*="tag-"]).rank-1-row td {
   background: rgba(230, 255, 0, 0.22) !important;
   border-left: 5px solid #e6ff00 !important;
 }
-html.theme-mecha table tbody tr.host-row td {
+html.theme-mecha table tbody tr:not([class*="tag-"]).host-row td {
   background: #2a303f !important;
   border-top: 2px dashed #e6ff00 !important;
 }
 
-/* NOMOR URUT */
-html.theme-mecha .td-no {
+/* NOMOR URUT (HANYA JIKA TIDAK DITAG WARNA) */
+html.theme-mecha table tbody tr:not([class*="tag-"]) .td-no {
   background: #12141a !important;
   color: #e6ff00 !important;
   font-family: 'Orbitron', sans-serif !important;
@@ -1173,16 +1156,16 @@ html.theme-mecha .td-no {
 }
 
 /* NAMA PLAYER & SKOR */
-html.theme-mecha .name-tiktok {
+html.theme-mecha table tbody tr:not([class*="tag-"]) .name-tiktok {
   color: #f0f0f0 !important;
   font-family: 'Orbitron', sans-serif !important;
   font-weight: 800 !important;
 }
-html.theme-mecha .name-roblox-display {
+html.theme-mecha table tbody tr:not([class*="tag-"]) .name-roblox-display {
   color: #c5c6c7 !important;
   font-family: 'Orbitron', sans-serif !important;
 }
-html.theme-mecha .score-val {
+html.theme-mecha table tbody tr:not([class*="tag-"]) .score-val {
   color: #e6ff00 !important;
   font-family: 'Orbitron', sans-serif !important;
   font-size: 22px !important;
@@ -1206,9 +1189,7 @@ html.theme-mecha .quick-point-popover {
   border-radius: 0px !important;
 }
 
-/* ==========================================================================
-   POPUP NOTIFIKASI TENGAH (.center-notif-popup) UNIK
-   ========================================================================== */
+/* NOTIFIKASI TENGAH UNIK */
 html.theme-mecha .center-notif-popup {
   background: #14171d !important;
   border: 2px solid #e6ff00 !important;
@@ -1248,9 +1229,7 @@ html.theme-mecha .c-notif-pts-total {
   font-weight: 700 !important;
 }
 
-/* ==========================================================================
-   LAYAR PODIUM PEMENANG (#winnerOverlay) UNIK
-   ========================================================================== */
+/* LAYAR PODIUM JUARA UNIK */
 html.theme-mecha #winnerOverlay {
   background: radial-gradient(circle at center, #1f2833 0%, #0b0c10 100%) !important;
 }
@@ -1391,32 +1370,32 @@ html.theme-hazard table th {
   letter-spacing: 1px !important;
 }
 
-/* BARIS & SEL TABEL EKSPLISIT (ANTI OVERRIDE OLEH CSS DASAR) */
-html.theme-hazard table tbody tr td {
+/* BARIS & SEL TABEL EKSPLISIT DENGAN :not([class*="tag-"]) (FITUR UBAH WARNA BARIS 100% AMAN!) */
+html.theme-hazard table tbody tr:not([class*="tag-"]) td {
   background: #151518 !important;
   color: #fcee0a !important;
   border-bottom: 1px solid rgba(255,255,255,0.08) !important;
   border-right: 1px solid rgba(255,255,255,0.06) !important;
   font-family: 'Rajdhani', sans-serif !important;
 }
-html.theme-hazard table tbody tr:nth-child(even) td {
+html.theme-hazard table tbody tr:not([class*="tag-"]):nth-child(even) td {
   background: #1c1c22 !important;
 }
-html.theme-hazard table tbody tr:hover td {
+html.theme-hazard table tbody tr:not([class*="tag-"]):hover td {
   background: rgba(252, 238, 10, 0.2) !important;
 }
-html.theme-hazard table tbody tr.is-leader td,
-html.theme-hazard table tbody tr.rank-1-row td {
+html.theme-hazard table tbody tr:not([class*="tag-"]).is-leader td,
+html.theme-hazard table tbody tr:not([class*="tag-"]).rank-1-row td {
   background: rgba(252, 238, 10, 0.25) !important;
   border-left: 5px solid #fcee0a !important;
 }
-html.theme-hazard table tbody tr.host-row td {
+html.theme-hazard table tbody tr:not([class*="tag-"]).host-row td {
   background: #2a2a33 !important;
   border-top: 2px dashed #fcee0a !important;
 }
 
-/* NOMOR URUT */
-html.theme-hazard .td-no {
+/* NOMOR URUT (HANYA JIKA TIDAK DITAG WARNA) */
+html.theme-hazard table tbody tr:not([class*="tag-"]) .td-no {
   background: #121215 !important;
   color: #fcee0a !important;
   font-family: 'Rajdhani', sans-serif !important;
@@ -1425,16 +1404,16 @@ html.theme-hazard .td-no {
 }
 
 /* NAMA PLAYER & SKOR */
-html.theme-hazard .name-tiktok {
+html.theme-hazard table tbody tr:not([class*="tag-"]) .name-tiktok {
   color: #fcee0a !important;
   font-family: 'Rajdhani', sans-serif !important;
   font-weight: 800 !important;
 }
-html.theme-hazard .name-roblox-display {
+html.theme-hazard table tbody tr:not([class*="tag-"]) .name-roblox-display {
   color: #d4d4d8 !important;
   font-family: 'Rajdhani', sans-serif !important;
 }
-html.theme-hazard .score-val {
+html.theme-hazard table tbody tr:not([class*="tag-"]) .score-val {
   color: #fcee0a !important;
   font-family: 'Rajdhani', sans-serif !important;
   font-size: 22px !important;
@@ -1458,9 +1437,7 @@ html.theme-hazard .quick-point-popover {
   border-radius: 4px !important;
 }
 
-/* ==========================================================================
-   POPUP NOTIFIKASI TENGAH (.center-notif-popup) UNIK
-   ========================================================================== */
+/* NOTIFIKASI TENGAH UNIK */
 html.theme-hazard .center-notif-popup {
   background: #141418 !important;
   border: 3px solid #fcee0a !important;
@@ -1500,9 +1477,7 @@ html.theme-hazard .c-notif-pts-total {
   font-weight: 700 !important;
 }
 
-/* ==========================================================================
-   LAYAR PODIUM PEMENANG (#winnerOverlay) UNIK
-   ========================================================================== */
+/* LAYAR PODIUM JUARA UNIK */
 html.theme-hazard #winnerOverlay {
   background: radial-gradient(circle at center, #272710 0%, #09090b 85%) !important;
 }
@@ -1643,32 +1618,32 @@ html.theme-inferno table th {
   letter-spacing: 1px !important;
 }
 
-/* BARIS & SEL TABEL EKSPLISIT (ANTI OVERRIDE OLEH CSS DASAR) */
-html.theme-inferno table tbody tr td {
+/* BARIS & SEL TABEL EKSPLISIT DENGAN :not([class*="tag-"]) (FITUR UBAH WARNA BARIS 100% AMAN!) */
+html.theme-inferno table tbody tr:not([class*="tag-"]) td {
   background: #1e0808 !important;
   color: #fef08a !important;
   border-bottom: 1px solid rgba(255,255,255,0.08) !important;
   border-right: 1px solid rgba(255,255,255,0.06) !important;
   font-family: 'Rajdhani', sans-serif !important;
 }
-html.theme-inferno table tbody tr:nth-child(even) td {
+html.theme-inferno table tbody tr:not([class*="tag-"]):nth-child(even) td {
   background: #280c0c !important;
 }
-html.theme-inferno table tbody tr:hover td {
+html.theme-inferno table tbody tr:not([class*="tag-"]):hover td {
   background: rgba(255, 69, 0, 0.25) !important;
 }
-html.theme-inferno table tbody tr.is-leader td,
-html.theme-inferno table tbody tr.rank-1-row td {
+html.theme-inferno table tbody tr:not([class*="tag-"]).is-leader td,
+html.theme-inferno table tbody tr:not([class*="tag-"]).rank-1-row td {
   background: rgba(255, 69, 0, 0.3) !important;
   border-left: 5px solid #facc15 !important;
 }
-html.theme-inferno table tbody tr.host-row td {
+html.theme-inferno table tbody tr:not([class*="tag-"]).host-row td {
   background: #3f0e0e !important;
   border-top: 2px dashed #ff4500 !important;
 }
 
-/* NOMOR URUT */
-html.theme-inferno .td-no {
+/* NOMOR URUT (HANYA JIKA TIDAK DITAG WARNA) */
+html.theme-inferno table tbody tr:not([class*="tag-"]) .td-no {
   background: #1f0606 !important;
   color: #ff9900 !important;
   font-family: 'Rajdhani', sans-serif !important;
@@ -1677,16 +1652,16 @@ html.theme-inferno .td-no {
 }
 
 /* NAMA PLAYER & SKOR */
-html.theme-inferno .name-tiktok {
+html.theme-inferno table tbody tr:not([class*="tag-"]) .name-tiktok {
   color: #fef08a !important;
   font-family: 'Rajdhani', sans-serif !important;
   font-weight: 800 !important;
 }
-html.theme-inferno .name-roblox-display {
+html.theme-inferno table tbody tr:not([class*="tag-"]) .name-roblox-display {
   color: #fed7aa !important;
   font-family: 'Rajdhani', sans-serif !important;
 }
-html.theme-inferno .score-val {
+html.theme-inferno table tbody tr:not([class*="tag-"]) .score-val {
   color: #facc15 !important;
   font-family: 'Rajdhani', sans-serif !important;
   font-size: 22px !important;
@@ -1710,9 +1685,7 @@ html.theme-inferno .quick-point-popover {
   border-radius: 10px !important;
 }
 
-/* ==========================================================================
-   POPUP NOTIFIKASI TENGAH (.center-notif-popup) UNIK
-   ========================================================================== */
+/* NOTIFIKASI TENGAH UNIK */
 html.theme-inferno .center-notif-popup {
   background: radial-gradient(circle at center, #3d0d0c 0%, #140404 100%) !important;
   border: 2.5px solid #ff4500 !important;
@@ -1752,9 +1725,7 @@ html.theme-inferno .c-notif-pts-total {
   font-weight: 700 !important;
 }
 
-/* ==========================================================================
-   LAYAR PODIUM PEMENANG (#winnerOverlay) UNIK
-   ========================================================================== */
+/* LAYAR PODIUM JUARA UNIK */
 html.theme-inferno #winnerOverlay {
   background: radial-gradient(circle at center, #3b0d0c 0%, #140404 85%) !important;
 }
@@ -1895,32 +1866,32 @@ html.theme-glass table th {
   letter-spacing: 1px !important;
 }
 
-/* BARIS & SEL TABEL EKSPLISIT (ANTI OVERRIDE OLEH CSS DASAR) */
-html.theme-glass table tbody tr td {
+/* BARIS & SEL TABEL EKSPLISIT DENGAN :not([class*="tag-"]) (FITUR UBAH WARNA BARIS 100% AMAN!) */
+html.theme-glass table tbody tr:not([class*="tag-"]) td {
   background: rgba(255, 255, 255, 0.03) !important;
   color: #ffffff !important;
   border-bottom: 1px solid rgba(255,255,255,0.08) !important;
   border-right: 1px solid rgba(255,255,255,0.06) !important;
   font-family: 'Outfit', sans-serif !important;
 }
-html.theme-glass table tbody tr:nth-child(even) td {
+html.theme-glass table tbody tr:not([class*="tag-"]):nth-child(even) td {
   background: rgba(255, 255, 255, 0.06) !important;
 }
-html.theme-glass table tbody tr:hover td {
+html.theme-glass table tbody tr:not([class*="tag-"]):hover td {
   background: rgba(255, 255, 255, 0.12) !important;
 }
-html.theme-glass table tbody tr.is-leader td,
-html.theme-glass table tbody tr.rank-1-row td {
+html.theme-glass table tbody tr:not([class*="tag-"]).is-leader td,
+html.theme-glass table tbody tr:not([class*="tag-"]).rank-1-row td {
   background: rgba(56, 189, 248, 0.18) !important;
   border-left: 5px solid #38bdf8 !important;
 }
-html.theme-glass table tbody tr.host-row td {
+html.theme-glass table tbody tr:not([class*="tag-"]).host-row td {
   background: rgba(255, 255, 255, 0.12) !important;
   border-top: 2px dashed #38bdf8 !important;
 }
 
-/* NOMOR URUT */
-html.theme-glass .td-no {
+/* NOMOR URUT (HANYA JIKA TIDAK DITAG WARNA) */
+html.theme-glass table tbody tr:not([class*="tag-"]) .td-no {
   background: rgba(255, 255, 255, 0.04) !important;
   color: #38bdf8 !important;
   font-family: 'Outfit', sans-serif !important;
@@ -1929,16 +1900,16 @@ html.theme-glass .td-no {
 }
 
 /* NAMA PLAYER & SKOR */
-html.theme-glass .name-tiktok {
+html.theme-glass table tbody tr:not([class*="tag-"]) .name-tiktok {
   color: #ffffff !important;
   font-family: 'Outfit', sans-serif !important;
   font-weight: 800 !important;
 }
-html.theme-glass .name-roblox-display {
+html.theme-glass table tbody tr:not([class*="tag-"]) .name-roblox-display {
   color: #cbd5e1 !important;
   font-family: 'Outfit', sans-serif !important;
 }
-html.theme-glass .score-val {
+html.theme-glass table tbody tr:not([class*="tag-"]) .score-val {
   color: #38bdf8 !important;
   font-family: 'Outfit', sans-serif !important;
   font-size: 22px !important;
@@ -1962,9 +1933,7 @@ html.theme-glass .quick-point-popover {
   border-radius: 16px !important;
 }
 
-/* ==========================================================================
-   POPUP NOTIFIKASI TENGAH (.center-notif-popup) UNIK
-   ========================================================================== */
+/* NOTIFIKASI TENGAH UNIK */
 html.theme-glass .center-notif-popup {
   background: rgba(15, 23, 42, 0.75) !important;
   border: 1.5px solid rgba(255, 255, 255, 0.3) !important;
@@ -2004,9 +1973,7 @@ html.theme-glass .c-notif-pts-total {
   font-weight: 700 !important;
 }
 
-/* ==========================================================================
-   LAYAR PODIUM PEMENANG (#winnerOverlay) UNIK
-   ========================================================================== */
+/* LAYAR PODIUM JUARA UNIK */
 html.theme-glass #winnerOverlay {
   background: radial-gradient(circle at center, #1e293b 0%, #050811 85%) !important;
 }
@@ -2147,32 +2114,32 @@ html.theme-matrix table th {
   letter-spacing: 1px !important;
 }
 
-/* BARIS & SEL TABEL EKSPLISIT (ANTI OVERRIDE OLEH CSS DASAR) */
-html.theme-matrix table tbody tr td {
+/* BARIS & SEL TABEL EKSPLISIT DENGAN :not([class*="tag-"]) (FITUR UBAH WARNA BARIS 100% AMAN!) */
+html.theme-matrix table tbody tr:not([class*="tag-"]) td {
   background: #04170a !important;
   color: #00ff66 !important;
   border-bottom: 1px solid rgba(255,255,255,0.08) !important;
   border-right: 1px solid rgba(255,255,255,0.06) !important;
   font-family: 'VT323', monospace !important;
 }
-html.theme-matrix table tbody tr:nth-child(even) td {
+html.theme-matrix table tbody tr:not([class*="tag-"]):nth-child(even) td {
   background: #07210e !important;
 }
-html.theme-matrix table tbody tr:hover td {
+html.theme-matrix table tbody tr:not([class*="tag-"]):hover td {
   background: rgba(0, 255, 102, 0.2) !important;
 }
-html.theme-matrix table tbody tr.is-leader td,
-html.theme-matrix table tbody tr.rank-1-row td {
+html.theme-matrix table tbody tr:not([class*="tag-"]).is-leader td,
+html.theme-matrix table tbody tr:not([class*="tag-"]).rank-1-row td {
   background: rgba(0, 255, 102, 0.25) !important;
   border-left: 5px solid #00ff66 !important;
 }
-html.theme-matrix table tbody tr.host-row td {
+html.theme-matrix table tbody tr:not([class*="tag-"]).host-row td {
   background: #082d13 !important;
   border-top: 2px dashed #00ff66 !important;
 }
 
-/* NOMOR URUT */
-html.theme-matrix .td-no {
+/* NOMOR URUT (HANYA JIKA TIDAK DITAG WARNA) */
+html.theme-matrix table tbody tr:not([class*="tag-"]) .td-no {
   background: #031206 !important;
   color: #00ff66 !important;
   font-family: 'VT323', monospace !important;
@@ -2181,16 +2148,16 @@ html.theme-matrix .td-no {
 }
 
 /* NAMA PLAYER & SKOR */
-html.theme-matrix .name-tiktok {
+html.theme-matrix table tbody tr:not([class*="tag-"]) .name-tiktok {
   color: #00ff66 !important;
   font-family: 'VT323', monospace !important;
   font-weight: 800 !important;
 }
-html.theme-matrix .name-roblox-display {
+html.theme-matrix table tbody tr:not([class*="tag-"]) .name-roblox-display {
   color: #86efac !important;
   font-family: 'VT323', monospace !important;
 }
-html.theme-matrix .score-val {
+html.theme-matrix table tbody tr:not([class*="tag-"]) .score-val {
   color: #00ff66 !important;
   font-family: 'VT323', monospace !important;
   font-size: 22px !important;
@@ -2214,9 +2181,7 @@ html.theme-matrix .quick-point-popover {
   border-radius: 0px !important;
 }
 
-/* ==========================================================================
-   POPUP NOTIFIKASI TENGAH (.center-notif-popup) UNIK
-   ========================================================================== */
+/* NOTIFIKASI TENGAH UNIK */
 html.theme-matrix .center-notif-popup {
   background: #031206 !important;
   border: 2.5px solid #00ff66 !important;
@@ -2256,9 +2221,7 @@ html.theme-matrix .c-notif-pts-total {
   font-weight: 700 !important;
 }
 
-/* ==========================================================================
-   LAYAR PODIUM PEMENANG (#winnerOverlay) UNIK
-   ========================================================================== */
+/* LAYAR PODIUM JUARA UNIK */
 html.theme-matrix #winnerOverlay {
   background: radial-gradient(circle at center, #05240c 0%, #020a04 90%) !important;
 }
@@ -2399,32 +2362,32 @@ html.theme-racing table th {
   letter-spacing: 1px !important;
 }
 
-/* BARIS & SEL TABEL EKSPLISIT (ANTI OVERRIDE OLEH CSS DASAR) */
-html.theme-racing table tbody tr td {
+/* BARIS & SEL TABEL EKSPLISIT DENGAN :not([class*="tag-"]) (FITUR UBAH WARNA BARIS 100% AMAN!) */
+html.theme-racing table tbody tr:not([class*="tag-"]) td {
   background: #16161d !important;
   color: #f8fafc !important;
   border-bottom: 1px solid rgba(255,255,255,0.08) !important;
   border-right: 1px solid rgba(255,255,255,0.06) !important;
   font-family: 'Rajdhani', sans-serif !important;
 }
-html.theme-racing table tbody tr:nth-child(even) td {
+html.theme-racing table tbody tr:not([class*="tag-"]):nth-child(even) td {
   background: #1f1f2a !important;
 }
-html.theme-racing table tbody tr:hover td {
+html.theme-racing table tbody tr:not([class*="tag-"]):hover td {
   background: rgba(239, 68, 68, 0.2) !important;
 }
-html.theme-racing table tbody tr.is-leader td,
-html.theme-racing table tbody tr.rank-1-row td {
+html.theme-racing table tbody tr:not([class*="tag-"]).is-leader td,
+html.theme-racing table tbody tr:not([class*="tag-"]).rank-1-row td {
   background: rgba(239, 68, 68, 0.25) !important;
   border-left: 5px solid #22c55e !important;
 }
-html.theme-racing table tbody tr.host-row td {
+html.theme-racing table tbody tr:not([class*="tag-"]).host-row td {
   background: #2c1a1a !important;
   border-top: 2px dashed #ef4444 !important;
 }
 
-/* NOMOR URUT */
-html.theme-racing .td-no {
+/* NOMOR URUT (HANYA JIKA TIDAK DITAG WARNA) */
+html.theme-racing table tbody tr:not([class*="tag-"]) .td-no {
   background: #131317 !important;
   color: #ef4444 !important;
   font-family: 'Rajdhani', sans-serif !important;
@@ -2433,16 +2396,16 @@ html.theme-racing .td-no {
 }
 
 /* NAMA PLAYER & SKOR */
-html.theme-racing .name-tiktok {
+html.theme-racing table tbody tr:not([class*="tag-"]) .name-tiktok {
   color: #f8fafc !important;
   font-family: 'Rajdhani', sans-serif !important;
   font-weight: 800 !important;
 }
-html.theme-racing .name-roblox-display {
+html.theme-racing table tbody tr:not([class*="tag-"]) .name-roblox-display {
   color: #94a3b8 !important;
   font-family: 'Rajdhani', sans-serif !important;
 }
-html.theme-racing .score-val {
+html.theme-racing table tbody tr:not([class*="tag-"]) .score-val {
   color: #22c55e !important;
   font-family: 'Rajdhani', sans-serif !important;
   font-size: 22px !important;
@@ -2466,9 +2429,7 @@ html.theme-racing .quick-point-popover {
   border-radius: 6px !important;
 }
 
-/* ==========================================================================
-   POPUP NOTIFIKASI TENGAH (.center-notif-popup) UNIK
-   ========================================================================== */
+/* NOTIFIKASI TENGAH UNIK */
 html.theme-racing .center-notif-popup {
   background: #141419 !important;
   border: 2.5px solid #ef4444 !important;
@@ -2508,9 +2469,7 @@ html.theme-racing .c-notif-pts-total {
   font-weight: 700 !important;
 }
 
-/* ==========================================================================
-   LAYAR PODIUM PEMENANG (#winnerOverlay) UNIK
-   ========================================================================== */
+/* LAYAR PODIUM JUARA UNIK */
 html.theme-racing #winnerOverlay {
   background: radial-gradient(circle at center, #2e1012 0%, #0f0f11 85%) !important;
 }
@@ -2651,32 +2610,32 @@ html.theme-cosmic table th {
   letter-spacing: 1px !important;
 }
 
-/* BARIS & SEL TABEL EKSPLISIT (ANTI OVERRIDE OLEH CSS DASAR) */
-html.theme-cosmic table tbody tr td {
+/* BARIS & SEL TABEL EKSPLISIT DENGAN :not([class*="tag-"]) (FITUR UBAH WARNA BARIS 100% AMAN!) */
+html.theme-cosmic table tbody tr:not([class*="tag-"]) td {
   background: #111030 !important;
   color: #f5f3ff !important;
   border-bottom: 1px solid rgba(255,255,255,0.08) !important;
   border-right: 1px solid rgba(255,255,255,0.06) !important;
   font-family: 'Space Grotesk', sans-serif !important;
 }
-html.theme-cosmic table tbody tr:nth-child(even) td {
+html.theme-cosmic table tbody tr:not([class*="tag-"]):nth-child(even) td {
   background: #171542 !important;
 }
-html.theme-cosmic table tbody tr:hover td {
+html.theme-cosmic table tbody tr:not([class*="tag-"]):hover td {
   background: rgba(139, 92, 246, 0.25) !important;
 }
-html.theme-cosmic table tbody tr.is-leader td,
-html.theme-cosmic table tbody tr.rank-1-row td {
+html.theme-cosmic table tbody tr:not([class*="tag-"]).is-leader td,
+html.theme-cosmic table tbody tr:not([class*="tag-"]).rank-1-row td {
   background: rgba(139, 92, 246, 0.25) !important;
   border-left: 5px solid #c084fc !important;
 }
-html.theme-cosmic table tbody tr.host-row td {
+html.theme-cosmic table tbody tr:not([class*="tag-"]).host-row td {
   background: #271452 !important;
   border-top: 2px dashed #8b5cf6 !important;
 }
 
-/* NOMOR URUT */
-html.theme-cosmic .td-no {
+/* NOMOR URUT (HANYA JIKA TIDAK DITAG WARNA) */
+html.theme-cosmic table tbody tr:not([class*="tag-"]) .td-no {
   background: #0b0a24 !important;
   color: #c084fc !important;
   font-family: 'Space Grotesk', sans-serif !important;
@@ -2685,16 +2644,16 @@ html.theme-cosmic .td-no {
 }
 
 /* NAMA PLAYER & SKOR */
-html.theme-cosmic .name-tiktok {
+html.theme-cosmic table tbody tr:not([class*="tag-"]) .name-tiktok {
   color: #f5f3ff !important;
   font-family: 'Space Grotesk', sans-serif !important;
   font-weight: 800 !important;
 }
-html.theme-cosmic .name-roblox-display {
+html.theme-cosmic table tbody tr:not([class*="tag-"]) .name-roblox-display {
   color: #c4b5fd !important;
   font-family: 'Space Grotesk', sans-serif !important;
 }
-html.theme-cosmic .score-val {
+html.theme-cosmic table tbody tr:not([class*="tag-"]) .score-val {
   color: #c084fc !important;
   font-family: 'Space Grotesk', sans-serif !important;
   font-size: 22px !important;
@@ -2718,9 +2677,7 @@ html.theme-cosmic .quick-point-popover {
   border-radius: 12px !important;
 }
 
-/* ==========================================================================
-   POPUP NOTIFIKASI TENGAH (.center-notif-popup) UNIK
-   ========================================================================== */
+/* NOTIFIKASI TENGAH UNIK */
 html.theme-cosmic .center-notif-popup {
   background: radial-gradient(circle at center, #26164f 0%, #0d0c26 100%) !important;
   border: 2px solid #8b5cf6 !important;
@@ -2760,9 +2717,7 @@ html.theme-cosmic .c-notif-pts-total {
   font-weight: 700 !important;
 }
 
-/* ==========================================================================
-   LAYAR PODIUM PEMENANG (#winnerOverlay) UNIK
-   ========================================================================== */
+/* LAYAR PODIUM JUARA UNIK */
 html.theme-cosmic #winnerOverlay {
   background: radial-gradient(circle at center, #291257 0%, #070719 85%) !important;
 }
@@ -2903,32 +2858,32 @@ html.theme-vaporwave table th {
   letter-spacing: 1px !important;
 }
 
-/* BARIS & SEL TABEL EKSPLISIT (ANTI OVERRIDE OLEH CSS DASAR) */
-html.theme-vaporwave table tbody tr td {
+/* BARIS & SEL TABEL EKSPLISIT DENGAN :not([class*="tag-"]) (FITUR UBAH WARNA BARIS 100% AMAN!) */
+html.theme-vaporwave table tbody tr:not([class*="tag-"]) td {
   background: #2c1547 !important;
   color: #fce7f3 !important;
   border-bottom: 1px solid rgba(255,255,255,0.08) !important;
   border-right: 1px solid rgba(255,255,255,0.06) !important;
   font-family: 'Outfit', sans-serif !important;
 }
-html.theme-vaporwave table tbody tr:nth-child(even) td {
+html.theme-vaporwave table tbody tr:not([class*="tag-"]):nth-child(even) td {
   background: #381c5c !important;
 }
-html.theme-vaporwave table tbody tr:hover td {
+html.theme-vaporwave table tbody tr:not([class*="tag-"]):hover td {
   background: rgba(244, 114, 182, 0.25) !important;
 }
-html.theme-vaporwave table tbody tr.is-leader td,
-html.theme-vaporwave table tbody tr.rank-1-row td {
+html.theme-vaporwave table tbody tr:not([class*="tag-"]).is-leader td,
+html.theme-vaporwave table tbody tr:not([class*="tag-"]).rank-1-row td {
   background: rgba(244, 114, 182, 0.3) !important;
   border-left: 5px solid #fb923c !important;
 }
-html.theme-vaporwave table tbody tr.host-row td {
+html.theme-vaporwave table tbody tr:not([class*="tag-"]).host-row td {
   background: #482475 !important;
   border-top: 2px dashed #f472b6 !important;
 }
 
-/* NOMOR URUT */
-html.theme-vaporwave .td-no {
+/* NOMOR URUT (HANYA JIKA TIDAK DITAG WARNA) */
+html.theme-vaporwave table tbody tr:not([class*="tag-"]) .td-no {
   background: #1c0d30 !important;
   color: #f472b6 !important;
   font-family: 'Outfit', sans-serif !important;
@@ -2937,16 +2892,16 @@ html.theme-vaporwave .td-no {
 }
 
 /* NAMA PLAYER & SKOR */
-html.theme-vaporwave .name-tiktok {
+html.theme-vaporwave table tbody tr:not([class*="tag-"]) .name-tiktok {
   color: #fce7f3 !important;
   font-family: 'Outfit', sans-serif !important;
   font-weight: 800 !important;
 }
-html.theme-vaporwave .name-roblox-display {
+html.theme-vaporwave table tbody tr:not([class*="tag-"]) .name-roblox-display {
   color: #fed7aa !important;
   font-family: 'Outfit', sans-serif !important;
 }
-html.theme-vaporwave .score-val {
+html.theme-vaporwave table tbody tr:not([class*="tag-"]) .score-val {
   color: #f472b6 !important;
   font-family: 'Outfit', sans-serif !important;
   font-size: 22px !important;
@@ -2970,9 +2925,7 @@ html.theme-vaporwave .quick-point-popover {
   border-radius: 14px !important;
 }
 
-/* ==========================================================================
-   POPUP NOTIFIKASI TENGAH (.center-notif-popup) UNIK
-   ========================================================================== */
+/* NOTIFIKASI TENGAH UNIK */
 html.theme-vaporwave .center-notif-popup {
   background: #341a54 !important;
   border: 2px solid #f472b6 !important;
@@ -3012,9 +2965,7 @@ html.theme-vaporwave .c-notif-pts-total {
   font-weight: 700 !important;
 }
 
-/* ==========================================================================
-   LAYAR PODIUM PEMENANG (#winnerOverlay) UNIK
-   ========================================================================== */
+/* LAYAR PODIUM JUARA UNIK */
 html.theme-vaporwave #winnerOverlay {
   background: radial-gradient(circle at center, #581c87 0%, #211038 85%) !important;
 }
@@ -3155,32 +3106,32 @@ html.theme-rustic table th {
   letter-spacing: 1px !important;
 }
 
-/* BARIS & SEL TABEL EKSPLISIT (ANTI OVERRIDE OLEH CSS DASAR) */
-html.theme-rustic table tbody tr td {
+/* BARIS & SEL TABEL EKSPLISIT DENGAN :not([class*="tag-"]) (FITUR UBAH WARNA BARIS 100% AMAN!) */
+html.theme-rustic table tbody tr:not([class*="tag-"]) td {
   background: #231810 !important;
   color: #fefae0 !important;
   border-bottom: 1px solid rgba(255,255,255,0.08) !important;
   border-right: 1px solid rgba(255,255,255,0.06) !important;
   font-family: 'Outfit', sans-serif !important;
 }
-html.theme-rustic table tbody tr:nth-child(even) td {
+html.theme-rustic table tbody tr:not([class*="tag-"]):nth-child(even) td {
   background: #2e2015 !important;
 }
-html.theme-rustic table tbody tr:hover td {
+html.theme-rustic table tbody tr:not([class*="tag-"]):hover td {
   background: rgba(212, 163, 115, 0.2) !important;
 }
-html.theme-rustic table tbody tr.is-leader td,
-html.theme-rustic table tbody tr.rank-1-row td {
+html.theme-rustic table tbody tr:not([class*="tag-"]).is-leader td,
+html.theme-rustic table tbody tr:not([class*="tag-"]).rank-1-row td {
   background: rgba(212, 163, 115, 0.25) !important;
   border-left: 5px solid #d4a373 !important;
 }
-html.theme-rustic table tbody tr.host-row td {
+html.theme-rustic table tbody tr:not([class*="tag-"]).host-row td {
   background: #3d2b1d !important;
   border-top: 2px dashed #d4a373 !important;
 }
 
-/* NOMOR URUT */
-html.theme-rustic .td-no {
+/* NOMOR URUT (HANYA JIKA TIDAK DITAG WARNA) */
+html.theme-rustic table tbody tr:not([class*="tag-"]) .td-no {
   background: #18110b !important;
   color: #d4a373 !important;
   font-family: 'Outfit', sans-serif !important;
@@ -3189,16 +3140,16 @@ html.theme-rustic .td-no {
 }
 
 /* NAMA PLAYER & SKOR */
-html.theme-rustic .name-tiktok {
+html.theme-rustic table tbody tr:not([class*="tag-"]) .name-tiktok {
   color: #fefae0 !important;
   font-family: 'Outfit', sans-serif !important;
   font-weight: 800 !important;
 }
-html.theme-rustic .name-roblox-display {
+html.theme-rustic table tbody tr:not([class*="tag-"]) .name-roblox-display {
   color: #faedcd !important;
   font-family: 'Outfit', sans-serif !important;
 }
-html.theme-rustic .score-val {
+html.theme-rustic table tbody tr:not([class*="tag-"]) .score-val {
   color: #d4a373 !important;
   font-family: 'Outfit', sans-serif !important;
   font-size: 22px !important;
@@ -3222,9 +3173,7 @@ html.theme-rustic .quick-point-popover {
   border-radius: 8px !important;
 }
 
-/* ==========================================================================
-   POPUP NOTIFIKASI TENGAH (.center-notif-popup) UNIK
-   ========================================================================== */
+/* NOTIFIKASI TENGAH UNIK */
 html.theme-rustic .center-notif-popup {
   background: #2c1e14 !important;
   border: 2px solid #d4a373 !important;
@@ -3264,9 +3213,7 @@ html.theme-rustic .c-notif-pts-total {
   font-weight: 700 !important;
 }
 
-/* ==========================================================================
-   LAYAR PODIUM PEMENANG (#winnerOverlay) UNIK
-   ========================================================================== */
+/* LAYAR PODIUM JUARA UNIK */
 html.theme-rustic #winnerOverlay {
   background: radial-gradient(circle at center, #451a03 0%, #1c140d 85%) !important;
 }
@@ -3407,32 +3354,32 @@ html.theme-fantasy table th {
   letter-spacing: 1px !important;
 }
 
-/* BARIS & SEL TABEL EKSPLISIT (ANTI OVERRIDE OLEH CSS DASAR) */
-html.theme-fantasy table tbody tr td {
+/* BARIS & SEL TABEL EKSPLISIT DENGAN :not([class*="tag-"]) (FITUR UBAH WARNA BARIS 100% AMAN!) */
+html.theme-fantasy table tbody tr:not([class*="tag-"]) td {
   background: #1f170f !important;
   color: #fef08a !important;
   border-bottom: 1px solid rgba(255,255,255,0.08) !important;
   border-right: 1px solid rgba(255,255,255,0.06) !important;
   font-family: 'Cinzel', serif !important;
 }
-html.theme-fantasy table tbody tr:nth-child(even) td {
+html.theme-fantasy table tbody tr:not([class*="tag-"]):nth-child(even) td {
   background: #2b1f15 !important;
 }
-html.theme-fantasy table tbody tr:hover td {
+html.theme-fantasy table tbody tr:not([class*="tag-"]):hover td {
   background: rgba(202, 138, 4, 0.2) !important;
 }
-html.theme-fantasy table tbody tr.is-leader td,
-html.theme-fantasy table tbody tr.rank-1-row td {
+html.theme-fantasy table tbody tr:not([class*="tag-"]).is-leader td,
+html.theme-fantasy table tbody tr:not([class*="tag-"]).rank-1-row td {
   background: rgba(202, 138, 4, 0.28) !important;
   border-left: 5px solid #eab308 !important;
 }
-html.theme-fantasy table tbody tr.host-row td {
+html.theme-fantasy table tbody tr:not([class*="tag-"]).host-row td {
   background: #3f2e1e !important;
   border-top: 2px dashed #ca8a04 !important;
 }
 
-/* NOMOR URUT */
-html.theme-fantasy .td-no {
+/* NOMOR URUT (HANYA JIKA TIDAK DITAG WARNA) */
+html.theme-fantasy table tbody tr:not([class*="tag-"]) .td-no {
   background: #140e08 !important;
   color: #ca8a04 !important;
   font-family: 'Cinzel', serif !important;
@@ -3441,16 +3388,16 @@ html.theme-fantasy .td-no {
 }
 
 /* NAMA PLAYER & SKOR */
-html.theme-fantasy .name-tiktok {
+html.theme-fantasy table tbody tr:not([class*="tag-"]) .name-tiktok {
   color: #fef08a !important;
   font-family: 'Cinzel', serif !important;
   font-weight: 800 !important;
 }
-html.theme-fantasy .name-roblox-display {
+html.theme-fantasy table tbody tr:not([class*="tag-"]) .name-roblox-display {
   color: #fef9c3 !important;
   font-family: 'Cinzel', serif !important;
 }
-html.theme-fantasy .score-val {
+html.theme-fantasy table tbody tr:not([class*="tag-"]) .score-val {
   color: #eab308 !important;
   font-family: 'Cinzel', serif !important;
   font-size: 22px !important;
@@ -3474,9 +3421,7 @@ html.theme-fantasy .quick-point-popover {
   border-radius: 6px !important;
 }
 
-/* ==========================================================================
-   POPUP NOTIFIKASI TENGAH (.center-notif-popup) UNIK
-   ========================================================================== */
+/* NOTIFIKASI TENGAH UNIK */
 html.theme-fantasy .center-notif-popup {
   background: #261c12 !important;
   border: 2px solid #eab308 !important;
@@ -3516,9 +3461,7 @@ html.theme-fantasy .c-notif-pts-total {
   font-weight: 700 !important;
 }
 
-/* ==========================================================================
-   LAYAR PODIUM PEMENANG (#winnerOverlay) UNIK
-   ========================================================================== */
+/* LAYAR PODIUM JUARA UNIK */
 html.theme-fantasy #winnerOverlay {
   background: radial-gradient(circle at center, #451a03 0%, #18120b 85%) !important;
 }
@@ -3659,32 +3602,32 @@ html.theme-frostbite table th {
   letter-spacing: 1px !important;
 }
 
-/* BARIS & SEL TABEL EKSPLISIT (ANTI OVERRIDE OLEH CSS DASAR) */
-html.theme-frostbite table tbody tr td {
+/* BARIS & SEL TABEL EKSPLISIT DENGAN :not([class*="tag-"]) (FITUR UBAH WARNA BARIS 100% AMAN!) */
+html.theme-frostbite table tbody tr:not([class*="tag-"]) td {
   background: #051c30 !important;
   color: #f0f9ff !important;
   border-bottom: 1px solid rgba(255,255,255,0.08) !important;
   border-right: 1px solid rgba(255,255,255,0.06) !important;
   font-family: 'Outfit', sans-serif !important;
 }
-html.theme-frostbite table tbody tr:nth-child(even) td {
+html.theme-frostbite table tbody tr:not([class*="tag-"]):nth-child(even) td {
   background: #0a2947 !important;
 }
-html.theme-frostbite table tbody tr:hover td {
+html.theme-frostbite table tbody tr:not([class*="tag-"]):hover td {
   background: rgba(56, 189, 248, 0.25) !important;
 }
-html.theme-frostbite table tbody tr.is-leader td,
-html.theme-frostbite table tbody tr.rank-1-row td {
+html.theme-frostbite table tbody tr:not([class*="tag-"]).is-leader td,
+html.theme-frostbite table tbody tr:not([class*="tag-"]).rank-1-row td {
   background: rgba(56, 189, 248, 0.25) !important;
   border-left: 5px solid #7dd3fc !important;
 }
-html.theme-frostbite table tbody tr.host-row td {
+html.theme-frostbite table tbody tr:not([class*="tag-"]).host-row td {
   background: #0b3960 !important;
   border-top: 2px dashed #38bdf8 !important;
 }
 
-/* NOMOR URUT */
-html.theme-frostbite .td-no {
+/* NOMOR URUT (HANYA JIKA TIDAK DITAG WARNA) */
+html.theme-frostbite table tbody tr:not([class*="tag-"]) .td-no {
   background: #02101c !important;
   color: #7dd3fc !important;
   font-family: 'Outfit', sans-serif !important;
@@ -3693,16 +3636,16 @@ html.theme-frostbite .td-no {
 }
 
 /* NAMA PLAYER & SKOR */
-html.theme-frostbite .name-tiktok {
+html.theme-frostbite table tbody tr:not([class*="tag-"]) .name-tiktok {
   color: #f0f9ff !important;
   font-family: 'Outfit', sans-serif !important;
   font-weight: 800 !important;
 }
-html.theme-frostbite .name-roblox-display {
+html.theme-frostbite table tbody tr:not([class*="tag-"]) .name-roblox-display {
   color: #bae6fd !important;
   font-family: 'Outfit', sans-serif !important;
 }
-html.theme-frostbite .score-val {
+html.theme-frostbite table tbody tr:not([class*="tag-"]) .score-val {
   color: #38bdf8 !important;
   font-family: 'Outfit', sans-serif !important;
   font-size: 22px !important;
@@ -3726,9 +3669,7 @@ html.theme-frostbite .quick-point-popover {
   border-radius: 12px !important;
 }
 
-/* ==========================================================================
-   POPUP NOTIFIKASI TENGAH (.center-notif-popup) UNIK
-   ========================================================================== */
+/* NOTIFIKASI TENGAH UNIK */
 html.theme-frostbite .center-notif-popup {
   background: #07243d !important;
   border: 2px solid #38bdf8 !important;
@@ -3768,9 +3709,7 @@ html.theme-frostbite .c-notif-pts-total {
   font-weight: 700 !important;
 }
 
-/* ==========================================================================
-   LAYAR PODIUM PEMENANG (#winnerOverlay) UNIK
-   ========================================================================== */
+/* LAYAR PODIUM JUARA UNIK */
 html.theme-frostbite #winnerOverlay {
   background: radial-gradient(circle at center, #0c4a6e 0%, #03121f 85%) !important;
 }
@@ -3911,32 +3850,32 @@ html.theme-imperial table th {
   letter-spacing: 1px !important;
 }
 
-/* BARIS & SEL TABEL EKSPLISIT (ANTI OVERRIDE OLEH CSS DASAR) */
-html.theme-imperial table tbody tr td {
+/* BARIS & SEL TABEL EKSPLISIT DENGAN :not([class*="tag-"]) (FITUR UBAH WARNA BARIS 100% AMAN!) */
+html.theme-imperial table tbody tr:not([class*="tag-"]) td {
   background: #330707 !important;
   color: #fef08a !important;
   border-bottom: 1px solid rgba(255,255,255,0.08) !important;
   border-right: 1px solid rgba(255,255,255,0.06) !important;
   font-family: 'Cinzel', serif !important;
 }
-html.theme-imperial table tbody tr:nth-child(even) td {
+html.theme-imperial table tbody tr:not([class*="tag-"]):nth-child(even) td {
   background: #4a0b0b !important;
 }
-html.theme-imperial table tbody tr:hover td {
+html.theme-imperial table tbody tr:not([class*="tag-"]):hover td {
   background: rgba(234, 179, 8, 0.2) !important;
 }
-html.theme-imperial table tbody tr.is-leader td,
-html.theme-imperial table tbody tr.rank-1-row td {
+html.theme-imperial table tbody tr:not([class*="tag-"]).is-leader td,
+html.theme-imperial table tbody tr:not([class*="tag-"]).rank-1-row td {
   background: rgba(234, 179, 8, 0.28) !important;
   border-left: 5px solid #eab308 !important;
 }
-html.theme-imperial table tbody tr.host-row td {
+html.theme-imperial table tbody tr:not([class*="tag-"]).host-row td {
   background: #5c0d0d !important;
   border-top: 2px dashed #eab308 !important;
 }
 
-/* NOMOR URUT */
-html.theme-imperial .td-no {
+/* NOMOR URUT (HANYA JIKA TIDAK DITAG WARNA) */
+html.theme-imperial table tbody tr:not([class*="tag-"]) .td-no {
   background: #220505 !important;
   color: #eab308 !important;
   font-family: 'Cinzel', serif !important;
@@ -3945,16 +3884,16 @@ html.theme-imperial .td-no {
 }
 
 /* NAMA PLAYER & SKOR */
-html.theme-imperial .name-tiktok {
+html.theme-imperial table tbody tr:not([class*="tag-"]) .name-tiktok {
   color: #fef08a !important;
   font-family: 'Cinzel', serif !important;
   font-weight: 800 !important;
 }
-html.theme-imperial .name-roblox-display {
+html.theme-imperial table tbody tr:not([class*="tag-"]) .name-roblox-display {
   color: #fef9c3 !important;
   font-family: 'Cinzel', serif !important;
 }
-html.theme-imperial .score-val {
+html.theme-imperial table tbody tr:not([class*="tag-"]) .score-val {
   color: #eab308 !important;
   font-family: 'Cinzel', serif !important;
   font-size: 22px !important;
@@ -3978,9 +3917,7 @@ html.theme-imperial .quick-point-popover {
   border-radius: 6px !important;
 }
 
-/* ==========================================================================
-   POPUP NOTIFIKASI TENGAH (.center-notif-popup) UNIK
-   ========================================================================== */
+/* NOTIFIKASI TENGAH UNIK */
 html.theme-imperial .center-notif-popup {
   background: #400909 !important;
   border: 2px solid #eab308 !important;
@@ -4020,9 +3957,7 @@ html.theme-imperial .c-notif-pts-total {
   font-weight: 700 !important;
 }
 
-/* ==========================================================================
-   LAYAR PODIUM PEMENANG (#winnerOverlay) UNIK
-   ========================================================================== */
+/* LAYAR PODIUM JUARA UNIK */
 html.theme-imperial #winnerOverlay {
   background: radial-gradient(circle at center, #500724 0%, #2b0606 85%) !important;
 }
@@ -4163,32 +4098,32 @@ html.theme-dune table th {
   letter-spacing: 1px !important;
 }
 
-/* BARIS & SEL TABEL EKSPLISIT (ANTI OVERRIDE OLEH CSS DASAR) */
-html.theme-dune table tbody tr td {
+/* BARIS & SEL TABEL EKSPLISIT DENGAN :not([class*="tag-"]) (FITUR UBAH WARNA BARIS 100% AMAN!) */
+html.theme-dune table tbody tr:not([class*="tag-"]) td {
   background: #24140a !important;
   color: #ffedd5 !important;
   border-bottom: 1px solid rgba(255,255,255,0.08) !important;
   border-right: 1px solid rgba(255,255,255,0.06) !important;
   font-family: 'Rajdhani', sans-serif !important;
 }
-html.theme-dune table tbody tr:nth-child(even) td {
+html.theme-dune table tbody tr:not([class*="tag-"]):nth-child(even) td {
   background: #382010 !important;
 }
-html.theme-dune table tbody tr:hover td {
+html.theme-dune table tbody tr:not([class*="tag-"]):hover td {
   background: rgba(234, 88, 12, 0.2) !important;
 }
-html.theme-dune table tbody tr.is-leader td,
-html.theme-dune table tbody tr.rank-1-row td {
+html.theme-dune table tbody tr:not([class*="tag-"]).is-leader td,
+html.theme-dune table tbody tr:not([class*="tag-"]).rank-1-row td {
   background: rgba(234, 88, 12, 0.25) !important;
   border-left: 5px solid #fdba74 !important;
 }
-html.theme-dune table tbody tr.host-row td {
+html.theme-dune table tbody tr:not([class*="tag-"]).host-row td {
   background: #452613 !important;
   border-top: 2px dashed #ea580c !important;
 }
 
-/* NOMOR URUT */
-html.theme-dune .td-no {
+/* NOMOR URUT (HANYA JIKA TIDAK DITAG WARNA) */
+html.theme-dune table tbody tr:not([class*="tag-"]) .td-no {
   background: #170d06 !important;
   color: #ea580c !important;
   font-family: 'Rajdhani', sans-serif !important;
@@ -4197,16 +4132,16 @@ html.theme-dune .td-no {
 }
 
 /* NAMA PLAYER & SKOR */
-html.theme-dune .name-tiktok {
+html.theme-dune table tbody tr:not([class*="tag-"]) .name-tiktok {
   color: #ffedd5 !important;
   font-family: 'Rajdhani', sans-serif !important;
   font-weight: 800 !important;
 }
-html.theme-dune .name-roblox-display {
+html.theme-dune table tbody tr:not([class*="tag-"]) .name-roblox-display {
   color: #fed7aa !important;
   font-family: 'Rajdhani', sans-serif !important;
 }
-html.theme-dune .score-val {
+html.theme-dune table tbody tr:not([class*="tag-"]) .score-val {
   color: #ea580c !important;
   font-family: 'Rajdhani', sans-serif !important;
   font-size: 22px !important;
@@ -4230,9 +4165,7 @@ html.theme-dune .quick-point-popover {
   border-radius: 8px !important;
 }
 
-/* ==========================================================================
-   POPUP NOTIFIKASI TENGAH (.center-notif-popup) UNIK
-   ========================================================================== */
+/* NOTIFIKASI TENGAH UNIK */
 html.theme-dune .center-notif-popup {
   background: #2e1a0d !important;
   border: 2px solid #ea580c !important;
@@ -4272,9 +4205,7 @@ html.theme-dune .c-notif-pts-total {
   font-weight: 700 !important;
 }
 
-/* ==========================================================================
-   LAYAR PODIUM PEMENANG (#winnerOverlay) UNIK
-   ========================================================================== */
+/* LAYAR PODIUM JUARA UNIK */
 html.theme-dune #winnerOverlay {
   background: radial-gradient(circle at center, #431407 0%, #1c1008 85%) !important;
 }
@@ -4415,32 +4346,32 @@ html.theme-steampunk table th {
   letter-spacing: 1px !important;
 }
 
-/* BARIS & SEL TABEL EKSPLISIT (ANTI OVERRIDE OLEH CSS DASAR) */
-html.theme-steampunk table tbody tr td {
+/* BARIS & SEL TABEL EKSPLISIT DENGAN :not([class*="tag-"]) (FITUR UBAH WARNA BARIS 100% AMAN!) */
+html.theme-steampunk table tbody tr:not([class*="tag-"]) td {
   background: #241b14 !important;
   color: #fef3c7 !important;
   border-bottom: 1px solid rgba(255,255,255,0.08) !important;
   border-right: 1px solid rgba(255,255,255,0.06) !important;
   font-family: 'Cinzel', serif !important;
 }
-html.theme-steampunk table tbody tr:nth-child(even) td {
+html.theme-steampunk table tbody tr:not([class*="tag-"]):nth-child(even) td {
   background: #33271e !important;
 }
-html.theme-steampunk table tbody tr:hover td {
+html.theme-steampunk table tbody tr:not([class*="tag-"]):hover td {
   background: rgba(217, 119, 6, 0.2) !important;
 }
-html.theme-steampunk table tbody tr.is-leader td,
-html.theme-steampunk table tbody tr.rank-1-row td {
+html.theme-steampunk table tbody tr:not([class*="tag-"]).is-leader td,
+html.theme-steampunk table tbody tr:not([class*="tag-"]).rank-1-row td {
   background: rgba(217, 119, 6, 0.25) !important;
   border-left: 5px solid #d97706 !important;
 }
-html.theme-steampunk table tbody tr.host-row td {
+html.theme-steampunk table tbody tr:not([class*="tag-"]).host-row td {
   background: #423226 !important;
   border-top: 2px dashed #d97706 !important;
 }
 
-/* NOMOR URUT */
-html.theme-steampunk .td-no {
+/* NOMOR URUT (HANYA JIKA TIDAK DITAG WARNA) */
+html.theme-steampunk table tbody tr:not([class*="tag-"]) .td-no {
   background: #16100c !important;
   color: #d97706 !important;
   font-family: 'Cinzel', serif !important;
@@ -4449,16 +4380,16 @@ html.theme-steampunk .td-no {
 }
 
 /* NAMA PLAYER & SKOR */
-html.theme-steampunk .name-tiktok {
+html.theme-steampunk table tbody tr:not([class*="tag-"]) .name-tiktok {
   color: #fef3c7 !important;
   font-family: 'Cinzel', serif !important;
   font-weight: 800 !important;
 }
-html.theme-steampunk .name-roblox-display {
+html.theme-steampunk table tbody tr:not([class*="tag-"]) .name-roblox-display {
   color: #fed7aa !important;
   font-family: 'Cinzel', serif !important;
 }
-html.theme-steampunk .score-val {
+html.theme-steampunk table tbody tr:not([class*="tag-"]) .score-val {
   color: #d97706 !important;
   font-family: 'Cinzel', serif !important;
   font-size: 22px !important;
@@ -4482,9 +4413,7 @@ html.theme-steampunk .quick-point-popover {
   border-radius: 6px !important;
 }
 
-/* ==========================================================================
-   POPUP NOTIFIKASI TENGAH (.center-notif-popup) UNIK
-   ========================================================================== */
+/* NOTIFIKASI TENGAH UNIK */
 html.theme-steampunk .center-notif-popup {
   background: #2d221a !important;
   border: 2px solid #d97706 !important;
@@ -4524,9 +4453,7 @@ html.theme-steampunk .c-notif-pts-total {
   font-weight: 700 !important;
 }
 
-/* ==========================================================================
-   LAYAR PODIUM PEMENANG (#winnerOverlay) UNIK
-   ========================================================================== */
+/* LAYAR PODIUM JUARA UNIK */
 html.theme-steampunk #winnerOverlay {
   background: radial-gradient(circle at center, #451a03 0%, #1c1510 85%) !important;
 }
@@ -4667,32 +4594,32 @@ html.theme-chrome table th {
   letter-spacing: 1px !important;
 }
 
-/* BARIS & SEL TABEL EKSPLISIT (ANTI OVERRIDE OLEH CSS DASAR) */
-html.theme-chrome table tbody tr td {
+/* BARIS & SEL TABEL EKSPLISIT DENGAN :not([class*="tag-"]) (FITUR UBAH WARNA BARIS 100% AMAN!) */
+html.theme-chrome table tbody tr:not([class*="tag-"]) td {
   background: #121215 !important;
   color: #ffffff !important;
   border-bottom: 1px solid rgba(255,255,255,0.08) !important;
   border-right: 1px solid rgba(255,255,255,0.06) !important;
   font-family: 'Orbitron', sans-serif !important;
 }
-html.theme-chrome table tbody tr:nth-child(even) td {
+html.theme-chrome table tbody tr:not([class*="tag-"]):nth-child(even) td {
   background: #1d1d22 !important;
 }
-html.theme-chrome table tbody tr:hover td {
+html.theme-chrome table tbody tr:not([class*="tag-"]):hover td {
   background: rgba(203, 213, 225, 0.2) !important;
 }
-html.theme-chrome table tbody tr.is-leader td,
-html.theme-chrome table tbody tr.rank-1-row td {
+html.theme-chrome table tbody tr:not([class*="tag-"]).is-leader td,
+html.theme-chrome table tbody tr:not([class*="tag-"]).rank-1-row td {
   background: rgba(203, 213, 225, 0.25) !important;
   border-left: 5px solid #c084fc !important;
 }
-html.theme-chrome table tbody tr.host-row td {
+html.theme-chrome table tbody tr:not([class*="tag-"]).host-row td {
   background: #27272a !important;
   border-top: 2px dashed #cbd5e1 !important;
 }
 
-/* NOMOR URUT */
-html.theme-chrome .td-no {
+/* NOMOR URUT (HANYA JIKA TIDAK DITAG WARNA) */
+html.theme-chrome table tbody tr:not([class*="tag-"]) .td-no {
   background: #101014 !important;
   color: #cbd5e1 !important;
   font-family: 'Orbitron', sans-serif !important;
@@ -4701,16 +4628,16 @@ html.theme-chrome .td-no {
 }
 
 /* NAMA PLAYER & SKOR */
-html.theme-chrome .name-tiktok {
+html.theme-chrome table tbody tr:not([class*="tag-"]) .name-tiktok {
   color: #ffffff !important;
   font-family: 'Orbitron', sans-serif !important;
   font-weight: 800 !important;
 }
-html.theme-chrome .name-roblox-display {
+html.theme-chrome table tbody tr:not([class*="tag-"]) .name-roblox-display {
   color: #e2e8f0 !important;
   font-family: 'Orbitron', sans-serif !important;
 }
-html.theme-chrome .score-val {
+html.theme-chrome table tbody tr:not([class*="tag-"]) .score-val {
   color: #c084fc !important;
   font-family: 'Orbitron', sans-serif !important;
   font-size: 22px !important;
@@ -4734,9 +4661,7 @@ html.theme-chrome .quick-point-popover {
   border-radius: 14px !important;
 }
 
-/* ==========================================================================
-   POPUP NOTIFIKASI TENGAH (.center-notif-popup) UNIK
-   ========================================================================== */
+/* NOTIFIKASI TENGAH UNIK */
 html.theme-chrome .center-notif-popup {
   background: #18181b !important;
   border: 2px solid #cbd5e1 !important;
@@ -4776,9 +4701,7 @@ html.theme-chrome .c-notif-pts-total {
   font-weight: 700 !important;
 }
 
-/* ==========================================================================
-   LAYAR PODIUM PEMENANG (#winnerOverlay) UNIK
-   ========================================================================== */
+/* LAYAR PODIUM JUARA UNIK */
 html.theme-chrome #winnerOverlay {
   background: radial-gradient(circle at center, #2e1065 0%, #09090b 85%) !important;
 }
@@ -4841,4 +4764,85 @@ html.theme-chrome .btn-shot-podium {
   font-family: 'Orbitron', sans-serif !important;
   font-weight: 900 !important;
   border-radius: 6px !important;
+}
+
+
+/* ==========================================================================
+   WARNA LATAR KUSTOM TIAP BARIS (TAG-BLUE, TAG-PINK, DLL) DI SEMUA TEMA
+   Selector berprioritas tinggi ini menjamin warna baris 100% muncul di tema apa pun!
+   ========================================================================== */
+
+/* TAG BLUE (BIRU LANGIT) */
+html table tbody tr.tag-blue td, 
+html table tbody tr.tag-blue.host-row td { 
+  background: #bfdbfe !important; 
+  color: #0f172a !important; 
+  border-bottom: 1px solid #93c5fd !important; 
+  border-right-color: #93c5fd !important;
+}
+html table tbody tr.tag-blue .name-tiktok { color: #0f172a !important; font-weight: 800 !important; }
+html table tbody tr.tag-blue .name-roblox-display { color: #1e40af !important; font-weight: 700 !important; }
+html table tbody tr.tag-blue .td-no { background: #93c5fd !important; color: #1e3a8a !important; }
+html table tbody tr.tag-blue .score-val { background: #ffffff !important; color: #0f172a !important; border-color: #93c5fd !important; text-shadow: none !important; }
+html table tbody tr.tag-blue .pay-status-tag.ready { background: #ffffff !important; color: #475569 !important; border-color: #cbd5e1 !important; }
+
+/* TAG PINK (PINK PASTEL) */
+html table tbody tr.tag-pink td, 
+html table tbody tr.tag-pink.host-row td { 
+  background: #fbcfe8 !important; 
+  color: #0f172a !important; 
+  border-bottom: 1px solid #f472b6 !important; 
+  border-right-color: #f472b6 !important;
+}
+html table tbody tr.tag-pink .name-tiktok { color: #831843 !important; font-weight: 800 !important; }
+html table tbody tr.tag-pink .name-roblox-display { color: #9d174d !important; font-weight: 700 !important; }
+html table tbody tr.tag-pink .td-no { background: #f472b6 !important; color: #ffffff !important; }
+html table tbody tr.tag-pink .score-val { background: #ffffff !important; color: #831843 !important; border-color: #f472b6 !important; text-shadow: none !important; }
+html table tbody tr.tag-pink .pay-status-tag.ready { background: #ffffff !important; color: #831843 !important; border-color: #fbcfe8 !important; }
+
+/* TAG PURPLE (UNGU CYBER) */
+html table tbody tr.tag-purple td, 
+html table tbody tr.tag-purple.host-row td { 
+  background: #4c1d95 !important; 
+  color: #f5f3ff !important; 
+  border-bottom: 1px solid #7c3aed !important; 
+  border-right-color: #7c3aed !important;
+}
+html table tbody tr.tag-purple .name-tiktok { color: #ffffff !important; font-weight: 800 !important; }
+html table tbody tr.tag-purple .name-roblox-display { color: #ddd6fe !important; font-weight: 700 !important; }
+html table tbody tr.tag-purple .td-no { background: #7c3aed !important; color: #ffffff !important; }
+html table tbody tr.tag-purple .score-val { background: #2e1065 !important; color: #ffffff !important; border-color: #a78bfa !important; text-shadow: none !important; }
+html table tbody tr.tag-purple .pay-status-tag.ready { background: #3b0764 !important; color: #e9d5ff !important; border-color: #7c3aed !important; }
+
+/* TAG RED (MERAH SOLID) */
+html table tbody tr.tag-red td, 
+html table tbody tr.tag-red.host-row td { 
+  background: #e11d48 !important; 
+  color: #ffffff !important; 
+  border-bottom: 1px solid #be123c !important; 
+  border-right-color: #be123c !important;
+}
+html table tbody tr.tag-red .name-tiktok { color: #ffffff !important; font-weight: 900 !important; }
+html table tbody tr.tag-red .name-roblox-display { color: #ffe4e6 !important; font-weight: 700 !important; }
+html table tbody tr.tag-red .td-no { background: #be123c !important; color: #ffffff !important; }
+html table tbody tr.tag-red .score-val { background: #881337 !important; color: #ffffff !important; border-color: #f43f5e !important; text-shadow: none !important; }
+html table tbody tr.tag-red .pay-status-tag.ready { background: #9f1239 !important; color: #ffe4e6 !important; border-color: #be123c !important; }
+
+/* TAG YELLOW (KUNING CYBER) */
+html table tbody tr.tag-yellow td, 
+html table tbody tr.tag-yellow.host-row td { 
+  background: #fef08a !important; 
+  color: #713f12 !important; 
+  border-bottom: 1px solid #facc15 !important; 
+  border-right-color: #facc15 !important;
+}
+html table tbody tr.tag-yellow .name-tiktok { color: #713f12 !important; font-weight: 900 !important; }
+html table tbody tr.tag-yellow .name-roblox-display { color: #854d0e !important; font-weight: 800 !important; }
+html table tbody tr.tag-yellow .td-no { background: #facc15 !important; color: #713f12 !important; }
+html table tbody tr.tag-yellow .score-val { background: #ffffff !important; color: #713f12 !important; border-color: #facc15 !important; text-shadow: none !important; }
+html table tbody tr.tag-yellow .pay-status-tag.ready { background: #ffffff !important; color: #854d0e !important; border-color: #fef08a !important; }
+
+/* HOVER PADA BARIS YANG SUDAH DITAG */
+html table tbody tr[class*="tag-"]:hover td {
+  filter: brightness(1.08) !important;
 }
