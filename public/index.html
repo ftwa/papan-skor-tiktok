@@ -198,6 +198,16 @@
     .dropdown.show .dropdown-content,
     .dropdown-content.show { display: block !important; }
 
+    
+    /* ATURAN MUTLAK: POPUP TANPA CLASS .show HARUS 100% TERSEMBUNYI TANPA ANIMASI */
+    .center-notif-popup:not(.show) {
+      opacity: 0 !important;
+      visibility: hidden !important;
+      pointer-events: none !important;
+      animation: none !important;
+      transform: translate(-50%, -50%) scale(0.85) !important;
+    }
+
     /* POPUP NOTIFIKASI CYBER HUD */
     .center-notif-popup {
       position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%) scale(0.9);
@@ -5993,17 +6003,25 @@ html.theme-hazard .c-notif-badge-icon {
       }
     } catch (_) {}
 
+    // Reset popup notifikasi seketika jika sedang terbuka saat ganti tema
+    if (typeof popupCenterTimer !== 'undefined' && popupCenterTimer) {
+      clearTimeout(popupCenterTimer);
+      popupCenterTimer = null;
+    }
+    const notifPopupEl = document.getElementById('centerNotifPopup');
+    if (notifPopupEl) {
+      notifPopupEl.classList.remove('show');
+    }
+
     // Hapus semua class tema sebelumnya dari html dan body
     DAFTAR_SEMUA_TEMA.forEach(t => {
       document.documentElement.classList.remove('theme-' + t.id);
       document.body.classList.remove('theme-' + t.id);
     });
 
-    // Terapkan class tema yang dipilih jika bukan default 'cyber'
-    if (temaAktif !== 'cyber') {
-      document.documentElement.classList.add('theme-' + temaAktif);
-      document.body.classList.add('theme-' + temaAktif);
-    }
+    // Terapkan class tema yang dipilih untuk SEMUA tema termasuk 'cyber' agar selektor CSS konsisten
+    document.documentElement.classList.add('theme-' + temaAktif);
+    document.body.classList.add('theme-' + temaAktif);
 
     perbaruiUIModalTema();
     perbaruiHeaderPodiumTema();
