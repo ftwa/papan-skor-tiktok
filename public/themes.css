@@ -5562,3 +5562,163 @@ html.theme-cyber #modalInputNama .btn-hud-save {
   font-weight: 900 !important;
   box-shadow: 0 0 20px rgba(0, 243, 255, 0.4) !important;
 }
+
+
+/* ==========================================================================
+   IMPERIAL DYNASTY RED (SPECIAL THEME) NOTIF & MODAL ENHANCEMENTS
+   ========================================================================== */
+
+/* POPUP NOTIFIKASI IKAN & POIN IMPERIAL RED */
+html.theme-imperial #centerNotifPopup {
+  background: linear-gradient(145deg, #3d0808 0%, #1f0303 100%) !important;
+  border: 3px solid #eab308 !important;
+  border-radius: 16px !important;
+  box-shadow: 0 0 45px rgba(234, 179, 8, 0.45), 0 20px 50px rgba(0, 0, 0, 0.9) !important;
+  color: #fef08a !important;
+  font-family: 'Cinzel', serif !important;
+  padding: 16px 22px !important;
+}
+html.theme-imperial .c-notif-top-deco,
+html.theme-imperial .c-notif-bottom-deco {
+  display: block !important;
+  width: 100% !important;
+  height: 3px !important;
+  background: linear-gradient(90deg, transparent, #eab308, #fef08a, #eab308, transparent) !important;
+  margin: 4px 0 !important;
+}
+html.theme-imperial .c-notif-badge-icon {
+  background: linear-gradient(135deg, #7f1d1d, #b91c1c) !important;
+  border: 2px solid #eab308 !important;
+  color: #fef08a !important;
+  box-shadow: 0 0 20px #eab308 !important;
+}
+html.theme-imperial .c-notif-tag {
+  color: #eab308 !important;
+  font-family: 'Cinzel', serif !important;
+  font-weight: 900 !important;
+  letter-spacing: 2px !important;
+  font-size: 11px !important;
+}
+html.theme-imperial .c-notif-name {
+  color: #ffffff !important;
+  font-family: 'Cinzel', serif !important;
+  font-size: 21px !important;
+  font-weight: 900 !important;
+  text-shadow: 0 0 15px rgba(234, 179, 8, 0.6) !important;
+}
+html.theme-imperial .c-notif-pts-main {
+  color: #fef08a !important;
+  font-family: 'Cinzel', serif !important;
+  font-weight: 900 !important;
+  text-shadow: 0 0 20px rgba(234, 179, 8, 0.8) !important;
+}
+html.theme-imperial .c-notif-pts-total {
+  color: #facc15 !important;
+  font-family: 'Cinzel', serif !important;
+}
+
+/* MODAL EDIT KURSI IMPERIAL RED */
+html.theme-imperial #modalInputNama .modal-box-hud {
+  background: linear-gradient(145deg, #2e0707 0%, #150303 100%) !important;
+  border: 2.5px solid #eab308 !important;
+  border-radius: 16px !important;
+  box-shadow: 0 0 45px rgba(234, 179, 8, 0.4), inset 0 0 30px rgba(234, 179, 8, 0.1) !important;
+  padding: 18px 20px !important;
+}
+html.theme-imperial #modalInputNama .modal-chair-badge-icon {
+  background: linear-gradient(135deg, #7f1d1d, #991b1b) !important;
+  border: 2px solid #eab308 !important;
+  box-shadow: 0 0 20px #eab308 !important;
+  color: #fef08a !important;
+  margin-top: -24px !important;
+}
+html.theme-imperial #modalInputNama .modal-header-hud {
+  border-bottom: 1.5px solid rgba(234, 179, 8, 0.4) !important;
+}
+html.theme-imperial #modalInputNama .modal-sub-hud {
+  color: #eab308 !important;
+  font-family: 'Cinzel', serif !important;
+  font-weight: 800 !important;
+  letter-spacing: 2px !important;
+}
+html.theme-imperial #modalInputNama .modal-title-hud {
+  font-family: 'Cinzel', serif !important;
+  font-size: 20px !important;
+  font-weight: 900 !important;
+  color: #fef08a !important;
+  text-shadow: 0 0 10px rgba(234, 179, 8, 0.5) !important;
+}
+html.theme-imperial #modalInputNama .btn-close-hud {
+  background: rgba(234, 179, 8, 0.15) !important;
+  color: #fef08a !important;
+  border: 1.5px solid #eab308 !important;
+  border-radius: 50% !important;
+}
+html.theme-imperial #modalInputNama .hud-player-card {
+  background: rgba(45, 10, 10, 0.9) !important;
+  border: 1.5px solid rgba(234, 179, 8, 0.4) !important;
+  border-radius: 12px !important;
+}
+html.theme-imperial #modalInputNama .hud-avatar-box {
+  border: 2px solid #eab308 !important;
+  box-shadow: 0 0 15px rgba(234, 179, 8, 0.4) !important;
+}
+html.theme-imperial #modalInputNama .hud-nick-txt {
+  color: #fef08a !important;
+  font-family: 'Cinzel', serif !important;
+  font-size: 16px !important;
+}
+html.theme-imperial #modalInputNama .hud-user-txt {
+  color: #facc15 !important;
+  font-family: 'Outfit', sans-serif !important;
+}
+html.theme-imperial #modalInputNama .hud-label {
+  color: #eab308 !important;
+  font-family: 'Cinzel', serif !important;
+  font-size: 10px !important;
+  letter-spacing: 1px !important;
+}
+html.theme-imperial #modalInputNama .hud-input {
+  background: #1f0404 !important;
+  border: 1.5px solid rgba(234, 179, 8, 0.45) !important;
+  color: #fef08a !important;
+  font-family: 'Outfit', sans-serif !important;
+  border-radius: 8px !important;
+}
+html.theme-imperial #modalInputNama .hud-btn-search {
+  background: linear-gradient(135deg, #ca8a04, #eab308) !important;
+  color: #000000 !important;
+  border: 1.5px solid #fef08a !important;
+  font-family: 'Cinzel', serif !important;
+  font-weight: 800 !important;
+  border-radius: 8px !important;
+}
+html.theme-imperial #modalInputNama .btn-hud-reset {
+  background: #3b0d0d !important;
+  color: #eab308 !important;
+  border: 1.5px solid rgba(234, 179, 8, 0.4) !important;
+  font-family: 'Cinzel', serif !important;
+  border-radius: 10px !important;
+}
+html.theme-imperial #modalInputNama .btn-hud-save {
+  background: linear-gradient(135deg, #ca8a04 0%, #dc2626 100%) !important;
+  color: #ffffff !important;
+  border: 1.5px solid #fef08a !important;
+  font-family: 'Cinzel', serif !important;
+  font-weight: 900 !important;
+  letter-spacing: 2px !important;
+  border-radius: 10px !important;
+  box-shadow: 0 0 25px rgba(234, 179, 8, 0.45) !important;
+}
+
+/* PODIUM OVERLAY IMPERIAL RED */
+html.theme-imperial .podium-glass-card {
+  background: rgba(43, 6, 6, 0.88) !important;
+  border: 2px solid #eab308 !important;
+  box-shadow: 0 0 35px rgba(234, 179, 8, 0.35) !important;
+}
+html.theme-imperial .winner-title {
+  color: #fef08a !important;
+  font-family: 'Cinzel', serif !important;
+  text-shadow: 0 0 30px rgba(234, 179, 8, 0.8) !important;
+}
