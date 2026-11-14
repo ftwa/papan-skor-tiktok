@@ -195,7 +195,8 @@
     }
     .dropdown-content .btn-tambah-sesi:hover { background: #1d305a; color: #ffffff; }
     
-    .dropdown.show .dropdown-content { display: block; }
+    .dropdown.show .dropdown-content,
+    .dropdown-content.show { display: block !important; }
 
     /* POPUP NOTIFIKASI CYBER HUD */
     .center-notif-popup {
@@ -616,6 +617,23 @@
       background: #ef4444; border-color: #fca5a5;
       transform: scale(1.1) rotate(90deg);
       box-shadow: 0 0 20px rgba(239, 68, 68, 0.7);
+    }
+
+    .btn-shot-podium {
+      position: absolute; top: 22px; right: 80px;
+      background: rgba(56, 189, 248, 0.2);
+      border: 1.5px solid rgba(56, 189, 248, 0.5);
+      color: #ffffff; width: 44px !important; height: 44px !important; border-radius: 50%;
+      font-size: 20px !important; font-weight: 800; cursor: pointer;
+      display: flex !important; align-items: center !important; justify-content: center !important;
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1); z-index: 30;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+      padding: 0 !important; line-height: 1 !important;
+    }
+    .btn-shot-podium:hover {
+      background: #0284c7; border-color: #38bdf8;
+      transform: scale(1.1);
+      box-shadow: 0 0 20px rgba(56, 189, 248, 0.7);
     }
 
     /* Prestigious Ceremony Header */
@@ -1301,7 +1319,8 @@
     html.mode-podium #winnerOverlay.active {
       display: flex !important;
     }
-    html.mode-podium .btn-close-winner {
+    html.mode-podium .btn-close-winner,
+    html.mode-podium .btn-shot-podium {
       display: none !important;
     }
 
@@ -4219,7 +4238,7 @@ html.theme-comic .score-val {
       <button class="btn-action-soft" onclick="bukaModalPoin()">Point Preset</button>
       <button class="btn-action-soft" onclick="bukaModalNotifSuara()">Settings Audio</button>
       <button class="btn-action-soft btn-theme-toggle" onclick="bukaModalPilihTema()" title="Ganti Gaya Desain & Tema Papan Skor">🎨 TEMA</button>
-      <button class="btn-action-soft btn-shot-table" onclick="ambilScreenshotTabel()" title="Ambil Foto Klasemen Bersih untuk Diposting">📸 FOTO TABEL</button>
+      <button class="btn-action-soft btn-shot-table" onclick="ambilScreenshotTabel()" title="Ambil Foto Tabel Papan Skor (Tanpa Tombol/Background Transparan)" style="font-size: 15px; padding: 5px 12px;">📸</button>
       
       <!-- DROPDOWN RESET -->
       <div class="dropdown" id="dropdownReset">
@@ -4280,10 +4299,6 @@ html.theme-comic .score-val {
 
       <button class="btn-notif-trigger" onclick="tesPopupTengahManual()" title="Tes Tampilan Notifikasi Tengah">
         🔔 NOTIF
-      </button>
-
-      <button type="button" class="btn-action-soft btn-logout-direct" onclick="eksekusiLogoutUser()" title="Keluar dari akun admin" style="border-color: rgba(239, 68, 68, 0.5); color: #fca5a5; font-weight: 800;">
-        🚪 LOGOUT
       </button>
     </div>
   </div>
@@ -4689,6 +4704,7 @@ html.theme-comic .score-val {
 <div class="winner-overlay" id="winnerOverlay">
   <div class="winner-light-beams"></div>
   <canvas id="fireworksCanvas"></canvas>
+  <button type="button" class="btn-shot-podium" id="btnShotPodium" onclick="ambilScreenshotPodium()" title="Ambil Foto Layar Juara">📸</button>
   <button class="btn-close-winner" onclick="tutupLayarPemenang()" title="Tutup Layar Pemenang">✕</button>
 
   <div class="podium-stage-scaler" id="podiumStageScaler">
@@ -4697,9 +4713,6 @@ html.theme-comic .score-val {
       <h1 class="winner-title">HALL OF CHAMPIONS</h1>
       <div class="winner-title-divider">
         <span>★ ★ ★</span>
-      </div>
-      <div style="margin-top: 10px; display: flex; justify-content: center; gap: 8px;">
-        <button type="button" class="btn-action-soft btn-shot-podium" id="btnShotPodium" onclick="ambilScreenshotPodium()" style="font-weight: 800; padding: 6px 18px; border-radius: 20px; font-size: 13px; z-index: 10;">📸 FOTO PODIUM JUARA</button>
       </div>
     </div>
     
@@ -5894,7 +5907,10 @@ html.theme-comic .score-val {
     localStorage.setItem(DB_KEY, JSON.stringify(db)); 
     siarkanPesanSync({ type: 'UPDATE_DATA', db: db });
   }
-  function tutupSemuaDropdown() { document.querySelectorAll('.dropdown').forEach(d => d.classList.remove('show')); }
+  function tutupSemuaDropdown() { 
+    document.querySelectorAll('.dropdown').forEach(d => d.classList.remove('show')); 
+    document.querySelectorAll('.dropdown-content').forEach(d => d.classList.remove('show')); 
+  }
 
   function toggleDropdownReset(e) {
     e.stopPropagation(); const el = document.getElementById('dropdownReset');
@@ -7030,11 +7046,16 @@ html.theme-comic .score-val {
       bukaModalAuth('login');
       return;
     }
+    const el = document.getElementById('dropdownUserAuth');
     const drop = document.getElementById('listDropdownUser');
-    if (!drop) return;
-    const isOpen = drop.classList.contains('show');
+    if (!el && !drop) return;
+    const wasOpen = (el && el.classList.contains('show')) || (drop && drop.classList.contains('show'));
     tutupSemuaDropdown();
-    if (!isOpen) drop.classList.add('show');
+    if (!wasOpen) {
+      if (el) el.classList.add('show');
+      if (drop) drop.classList.add('show');
+      perbaruiUIUserHeader();
+    }
   }
 
   async function eksekusiLoginSubmit() {
