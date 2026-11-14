@@ -1,3 +1,26 @@
+@keyframes comicBorderGoyang {
+  0% {
+    transform: translate(-50%, -50%) rotate(-4deg) scale(1);
+    box-shadow: 12px 12px 0px #000000, 0 25px 50px rgba(0,0,0,0.45);
+  }
+  25% {
+    transform: translate(-50%, calc(-50% - 7px)) rotate(2deg) scale(1.025);
+    box-shadow: 6px 14px 0px #000000, 0 30px 55px rgba(0,0,0,0.5);
+  }
+  50% {
+    transform: translate(-50%, -50%) rotate(4.5deg) scale(1.01);
+    box-shadow: -10px 12px 0px #000000, 0 25px 50px rgba(0,0,0,0.45);
+  }
+  75% {
+    transform: translate(-50%, calc(-50% + 6px)) rotate(-2deg) scale(1.02);
+    box-shadow: 14px 8px 0px #000000, 0 20px 45px rgba(0,0,0,0.4);
+  }
+  100% {
+    transform: translate(-50%, -50%) rotate(-4deg) scale(1);
+    box-shadow: 12px 12px 0px #000000, 0 25px 50px rgba(0,0,0,0.45);
+  }
+}
+
 
 @keyframes comicBoomPop {
   0% {
@@ -53,8 +76,7 @@ html.theme-comic .center-notif-popup.show {
   opacity: 1 !important;
   visibility: visible !important;
   pointer-events: auto !important;
-  transform: translate(-50%, -50%) rotate(-2deg) scale(1) !important;
-  animation: comicBoomPop 0.32s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards, comicActiveWobble 2.4s ease-in-out 0.32s infinite alternate !important;
+  animation: comicBorderGoyang 1.2s ease-in-out infinite !important;
 }
 @keyframes comicActiveWobble {
   0% {
@@ -486,8 +508,7 @@ html.theme-comic .center-notif-popup.show {
   opacity: 1 !important;
   visibility: visible !important;
   pointer-events: auto !important;
-  transform: translate(-50%, -50%) rotate(-2deg) scale(1) !important;
-  animation: comicBoomPop 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards, comicBigWobble 2s ease-in-out 0.35s infinite alternate !important;
+  animation: comicBorderGoyang 1.2s ease-in-out infinite !important;
 }
 html.theme-comic .center-notif-popup.show .c-notif-badge-icon {
   display: block !important;
