@@ -237,6 +237,54 @@ html.theme-comic .c-notif-pts-total {
   font-weight: 700 !important;
 }
 
+/* LOG PANEL TEMA KHUSUS */
+html.theme-comic .log-panel {
+  background: #ffffff !important;
+  border: 3.5px solid #000000 !important;
+  box-shadow: 6px 6px 0px #000000 !important;
+  border-radius: 14px !important;
+}
+html.theme-comic .log-header {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15) !important;
+}
+html.theme-comic .log-title {
+  color: #ffe600 !important;
+  font-family: 'Bangers', cursive !important;
+  letter-spacing: 1px !important;
+}
+html.theme-comic .btn-clear-log {
+  background: rgba(255, 255, 255, 0.08) !important;
+  border: 1px solid #ffe600 !important;
+  color: #0a0a0a !important;
+  font-family: 'Bangers', cursive !important;
+  border-radius: 4px !important;
+}
+html.theme-comic .log-item {
+  background: #ffffff !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  border-left: 3.5px solid #ffe600 !important;
+  color: #0a0a0a !important;
+  font-family: 'Fredoka', 'Outfit', sans-serif !important;
+}
+html.theme-comic .log-item-time {
+  color: #334155 !important;
+  opacity: 0.85 !important;
+}
+html.theme-comic .log-item-user {
+  color: #ffe600 !important;
+  font-weight: 800 !important;
+}
+html.theme-comic .log-item-text {
+  color: #0a0a0a !important;
+}
+html.theme-comic .log-item-pts {
+  background: #ffe600 !important;
+  color: #000000 !important;
+  font-family: 'Bangers', cursive !important;
+  font-weight: 800 !important;
+  border-radius: 4px !important;
+}
+
 /* LAYAR PODIUM JUARA UNIK */
 html.theme-comic #winnerOverlay {
   background: radial-gradient(circle at center, #fde047 0%, #f97316 100%) !important;
@@ -483,6 +531,54 @@ html.theme-arcade .c-notif-pts-total {
   color: #00f0ff !important;
   font-family: 'Press Start 2P', monospace !important;
   font-weight: 700 !important;
+}
+
+/* LOG PANEL TEMA KHUSUS */
+html.theme-arcade .log-panel {
+  background: #19053b !important;
+  border: 3px solid #00f0ff !important;
+  box-shadow: 0 0 20px rgba(0, 240, 255, 0.5), inset 0 0 15px rgba(255, 0, 127, 0.3) !important;
+  border-radius: 0px !important;
+}
+html.theme-arcade .log-header {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15) !important;
+}
+html.theme-arcade .log-title {
+  color: #ff007f !important;
+  font-family: 'Press Start 2P', monospace !important;
+  letter-spacing: 1px !important;
+}
+html.theme-arcade .btn-clear-log {
+  background: rgba(255, 255, 255, 0.08) !important;
+  border: 1px solid #ff007f !important;
+  color: #ffee00 !important;
+  font-family: 'Press Start 2P', monospace !important;
+  border-radius: 4px !important;
+}
+html.theme-arcade .log-item {
+  background: #180838 !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  border-left: 3.5px solid #ff007f !important;
+  color: #ffee00 !important;
+  font-family: 'Press Start 2P', monospace !important;
+}
+html.theme-arcade .log-item-time {
+  color: #00f0ff !important;
+  opacity: 0.85 !important;
+}
+html.theme-arcade .log-item-user {
+  color: #ff007f !important;
+  font-weight: 800 !important;
+}
+html.theme-arcade .log-item-text {
+  color: #ffee00 !important;
+}
+html.theme-arcade .log-item-pts {
+  background: #ff007f !important;
+  color: #000000 !important;
+  font-family: 'Press Start 2P', monospace !important;
+  font-weight: 800 !important;
+  border-radius: 4px !important;
 }
 
 /* LAYAR PODIUM JUARA UNIK */
@@ -733,6 +829,54 @@ html.theme-luxury .c-notif-pts-total {
   font-weight: 700 !important;
 }
 
+/* LOG PANEL TEMA KHUSUS */
+html.theme-luxury .log-panel {
+  background: #141418 !important;
+  border: 1.5px solid #d4af37 !important;
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.9), 0 0 25px rgba(212, 175, 55, 0.2) !important;
+  border-radius: 8px !important;
+}
+html.theme-luxury .log-header {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15) !important;
+}
+html.theme-luxury .log-title {
+  color: #d4af37 !important;
+  font-family: 'Cinzel', serif !important;
+  letter-spacing: 1px !important;
+}
+html.theme-luxury .btn-clear-log {
+  background: rgba(255, 255, 255, 0.08) !important;
+  border: 1px solid #d4af37 !important;
+  color: #fef3c7 !important;
+  font-family: 'Cinzel', serif !important;
+  border-radius: 4px !important;
+}
+html.theme-luxury .log-item {
+  background: #121217 !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  border-left: 3.5px solid #d4af37 !important;
+  color: #fef3c7 !important;
+  font-family: 'Cinzel', serif !important;
+}
+html.theme-luxury .log-item-time {
+  color: #d1d5db !important;
+  opacity: 0.85 !important;
+}
+html.theme-luxury .log-item-user {
+  color: #d4af37 !important;
+  font-weight: 800 !important;
+}
+html.theme-luxury .log-item-text {
+  color: #fef3c7 !important;
+}
+html.theme-luxury .log-item-pts {
+  background: #d4af37 !important;
+  color: #000000 !important;
+  font-family: 'Cinzel', serif !important;
+  font-weight: 800 !important;
+  border-radius: 4px !important;
+}
+
 /* LAYAR PODIUM JUARA UNIK */
 html.theme-luxury #winnerOverlay {
   background: radial-gradient(circle at center, #2e1015 0%, #09090b 85%) !important;
@@ -979,6 +1123,54 @@ html.theme-aquatic .c-notif-pts-total {
   color: #7dd3fc !important;
   font-family: 'Rajdhani', sans-serif !important;
   font-weight: 700 !important;
+}
+
+/* LOG PANEL TEMA KHUSUS */
+html.theme-aquatic .log-panel {
+  background: #062b47 !important;
+  border: 1.5px solid #00f5d4 !important;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7), 0 0 20px rgba(0, 245, 212, 0.25) !important;
+  border-radius: 12px !important;
+}
+html.theme-aquatic .log-header {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15) !important;
+}
+html.theme-aquatic .log-title {
+  color: #00f5d4 !important;
+  font-family: 'Rajdhani', sans-serif !important;
+  letter-spacing: 1px !important;
+}
+html.theme-aquatic .btn-clear-log {
+  background: rgba(255, 255, 255, 0.08) !important;
+  border: 1px solid #00f5d4 !important;
+  color: #f0fdfa !important;
+  font-family: 'Rajdhani', sans-serif !important;
+  border-radius: 4px !important;
+}
+html.theme-aquatic .log-item {
+  background: rgba(5, 33, 56, 0.95) !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  border-left: 3.5px solid #00f5d4 !important;
+  color: #f0fdfa !important;
+  font-family: 'Rajdhani', sans-serif !important;
+}
+html.theme-aquatic .log-item-time {
+  color: #7dd3fc !important;
+  opacity: 0.85 !important;
+}
+html.theme-aquatic .log-item-user {
+  color: #00f5d4 !important;
+  font-weight: 800 !important;
+}
+html.theme-aquatic .log-item-text {
+  color: #f0fdfa !important;
+}
+html.theme-aquatic .log-item-pts {
+  background: #00f5d4 !important;
+  color: #000000 !important;
+  font-family: 'Rajdhani', sans-serif !important;
+  font-weight: 800 !important;
+  border-radius: 4px !important;
 }
 
 /* LAYAR PODIUM JUARA UNIK */
@@ -1229,6 +1421,54 @@ html.theme-mecha .c-notif-pts-total {
   font-weight: 700 !important;
 }
 
+/* LOG PANEL TEMA KHUSUS */
+html.theme-mecha .log-panel {
+  background: #1f2833 !important;
+  border: 2px solid #e6ff00 !important;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8), 0 0 20px rgba(230, 255, 0, 0.2) !important;
+  border-radius: 0px !important;
+}
+html.theme-mecha .log-header {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15) !important;
+}
+html.theme-mecha .log-title {
+  color: #e6ff00 !important;
+  font-family: 'Orbitron', sans-serif !important;
+  letter-spacing: 1px !important;
+}
+html.theme-mecha .btn-clear-log {
+  background: rgba(255, 255, 255, 0.08) !important;
+  border: 1px solid #e6ff00 !important;
+  color: #f0f0f0 !important;
+  font-family: 'Orbitron', sans-serif !important;
+  border-radius: 4px !important;
+}
+html.theme-mecha .log-item {
+  background: #151821 !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  border-left: 3.5px solid #e6ff00 !important;
+  color: #f0f0f0 !important;
+  font-family: 'Orbitron', sans-serif !important;
+}
+html.theme-mecha .log-item-time {
+  color: #c5c6c7 !important;
+  opacity: 0.85 !important;
+}
+html.theme-mecha .log-item-user {
+  color: #e6ff00 !important;
+  font-weight: 800 !important;
+}
+html.theme-mecha .log-item-text {
+  color: #f0f0f0 !important;
+}
+html.theme-mecha .log-item-pts {
+  background: #e6ff00 !important;
+  color: #000000 !important;
+  font-family: 'Orbitron', sans-serif !important;
+  font-weight: 800 !important;
+  border-radius: 4px !important;
+}
+
 /* LAYAR PODIUM JUARA UNIK */
 html.theme-mecha #winnerOverlay {
   background: radial-gradient(circle at center, #1f2833 0%, #0b0c10 100%) !important;
@@ -1475,6 +1715,54 @@ html.theme-hazard .c-notif-pts-total {
   color: #d4d4d8 !important;
   font-family: 'Rajdhani', sans-serif !important;
   font-weight: 700 !important;
+}
+
+/* LOG PANEL TEMA KHUSUS */
+html.theme-hazard .log-panel {
+  background: #18181b !important;
+  border: 3px solid #fcee0a !important;
+  box-shadow: 0 10px 35px rgba(0, 0, 0, 0.9), 0 0 25px rgba(252, 238, 10, 0.3) !important;
+  border-radius: 4px !important;
+}
+html.theme-hazard .log-header {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15) !important;
+}
+html.theme-hazard .log-title {
+  color: #fcee0a !important;
+  font-family: 'Rajdhani', sans-serif !important;
+  letter-spacing: 1px !important;
+}
+html.theme-hazard .btn-clear-log {
+  background: rgba(255, 255, 255, 0.08) !important;
+  border: 1px solid #fcee0a !important;
+  color: #fcee0a !important;
+  font-family: 'Rajdhani', sans-serif !important;
+  border-radius: 4px !important;
+}
+html.theme-hazard .log-item {
+  background: #151518 !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  border-left: 3.5px solid #fcee0a !important;
+  color: #fcee0a !important;
+  font-family: 'Rajdhani', sans-serif !important;
+}
+html.theme-hazard .log-item-time {
+  color: #d4d4d8 !important;
+  opacity: 0.85 !important;
+}
+html.theme-hazard .log-item-user {
+  color: #fcee0a !important;
+  font-weight: 800 !important;
+}
+html.theme-hazard .log-item-text {
+  color: #fcee0a !important;
+}
+html.theme-hazard .log-item-pts {
+  background: #fcee0a !important;
+  color: #000000 !important;
+  font-family: 'Rajdhani', sans-serif !important;
+  font-weight: 800 !important;
+  border-radius: 4px !important;
 }
 
 /* LAYAR PODIUM JUARA UNIK */
@@ -1725,6 +2013,54 @@ html.theme-inferno .c-notif-pts-total {
   font-weight: 700 !important;
 }
 
+/* LOG PANEL TEMA KHUSUS */
+html.theme-inferno .log-panel {
+  background: #260a0a !important;
+  border: 2px solid #ff4500 !important;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.9), 0 0 25px rgba(255, 69, 0, 0.35) !important;
+  border-radius: 10px !important;
+}
+html.theme-inferno .log-header {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15) !important;
+}
+html.theme-inferno .log-title {
+  color: #ff4500 !important;
+  font-family: 'Rajdhani', sans-serif !important;
+  letter-spacing: 1px !important;
+}
+html.theme-inferno .btn-clear-log {
+  background: rgba(255, 255, 255, 0.08) !important;
+  border: 1px solid #ff4500 !important;
+  color: #fef08a !important;
+  font-family: 'Rajdhani', sans-serif !important;
+  border-radius: 4px !important;
+}
+html.theme-inferno .log-item {
+  background: #1e0808 !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  border-left: 3.5px solid #ff4500 !important;
+  color: #fef08a !important;
+  font-family: 'Rajdhani', sans-serif !important;
+}
+html.theme-inferno .log-item-time {
+  color: #fed7aa !important;
+  opacity: 0.85 !important;
+}
+html.theme-inferno .log-item-user {
+  color: #ff4500 !important;
+  font-weight: 800 !important;
+}
+html.theme-inferno .log-item-text {
+  color: #fef08a !important;
+}
+html.theme-inferno .log-item-pts {
+  background: #ff4500 !important;
+  color: #000000 !important;
+  font-family: 'Rajdhani', sans-serif !important;
+  font-weight: 800 !important;
+  border-radius: 4px !important;
+}
+
 /* LAYAR PODIUM JUARA UNIK */
 html.theme-inferno #winnerOverlay {
   background: radial-gradient(circle at center, #3b0d0c 0%, #140404 85%) !important;
@@ -1971,6 +2307,54 @@ html.theme-glass .c-notif-pts-total {
   color: #cbd5e1 !important;
   font-family: 'Outfit', sans-serif !important;
   font-weight: 700 !important;
+}
+
+/* LOG PANEL TEMA KHUSUS */
+html.theme-glass .log-panel {
+  background: rgba(15, 23, 42, 0.65) !important;
+  border: 1px solid rgba(255, 255, 255, 0.25) !important;
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.6) !important;
+  border-radius: 16px !important;
+}
+html.theme-glass .log-header {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15) !important;
+}
+html.theme-glass .log-title {
+  color: #38bdf8 !important;
+  font-family: 'Outfit', sans-serif !important;
+  letter-spacing: 1px !important;
+}
+html.theme-glass .btn-clear-log {
+  background: rgba(255, 255, 255, 0.08) !important;
+  border: 1px solid #38bdf8 !important;
+  color: #ffffff !important;
+  font-family: 'Outfit', sans-serif !important;
+  border-radius: 4px !important;
+}
+html.theme-glass .log-item {
+  background: rgba(255, 255, 255, 0.03) !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  border-left: 3.5px solid #38bdf8 !important;
+  color: #ffffff !important;
+  font-family: 'Outfit', sans-serif !important;
+}
+html.theme-glass .log-item-time {
+  color: #cbd5e1 !important;
+  opacity: 0.85 !important;
+}
+html.theme-glass .log-item-user {
+  color: #38bdf8 !important;
+  font-weight: 800 !important;
+}
+html.theme-glass .log-item-text {
+  color: #ffffff !important;
+}
+html.theme-glass .log-item-pts {
+  background: #38bdf8 !important;
+  color: #000000 !important;
+  font-family: 'Outfit', sans-serif !important;
+  font-weight: 800 !important;
+  border-radius: 4px !important;
 }
 
 /* LAYAR PODIUM JUARA UNIK */
@@ -2221,6 +2605,54 @@ html.theme-matrix .c-notif-pts-total {
   font-weight: 700 !important;
 }
 
+/* LOG PANEL TEMA KHUSUS */
+html.theme-matrix .log-panel {
+  background: #041a0b !important;
+  border: 2px solid #00ff66 !important;
+  box-shadow: 0 0 25px rgba(0, 255, 102, 0.35), inset 0 0 15px rgba(0, 255, 102, 0.15) !important;
+  border-radius: 0px !important;
+}
+html.theme-matrix .log-header {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15) !important;
+}
+html.theme-matrix .log-title {
+  color: #00ff66 !important;
+  font-family: 'VT323', monospace !important;
+  letter-spacing: 1px !important;
+}
+html.theme-matrix .btn-clear-log {
+  background: rgba(255, 255, 255, 0.08) !important;
+  border: 1px solid #00ff66 !important;
+  color: #00ff66 !important;
+  font-family: 'VT323', monospace !important;
+  border-radius: 4px !important;
+}
+html.theme-matrix .log-item {
+  background: #04170a !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  border-left: 3.5px solid #00ff66 !important;
+  color: #00ff66 !important;
+  font-family: 'VT323', monospace !important;
+}
+html.theme-matrix .log-item-time {
+  color: #86efac !important;
+  opacity: 0.85 !important;
+}
+html.theme-matrix .log-item-user {
+  color: #00ff66 !important;
+  font-weight: 800 !important;
+}
+html.theme-matrix .log-item-text {
+  color: #00ff66 !important;
+}
+html.theme-matrix .log-item-pts {
+  background: #00ff66 !important;
+  color: #000000 !important;
+  font-family: 'VT323', monospace !important;
+  font-weight: 800 !important;
+  border-radius: 4px !important;
+}
+
 /* LAYAR PODIUM JUARA UNIK */
 html.theme-matrix #winnerOverlay {
   background: radial-gradient(circle at center, #05240c 0%, #020a04 90%) !important;
@@ -2467,6 +2899,54 @@ html.theme-racing .c-notif-pts-total {
   color: #94a3b8 !important;
   font-family: 'Rajdhani', sans-serif !important;
   font-weight: 700 !important;
+}
+
+/* LOG PANEL TEMA KHUSUS */
+html.theme-racing .log-panel {
+  background: #181820 !important;
+  border: 2px solid #ef4444 !important;
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.85), 0 0 20px rgba(239, 68, 68, 0.25) !important;
+  border-radius: 6px !important;
+}
+html.theme-racing .log-header {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15) !important;
+}
+html.theme-racing .log-title {
+  color: #ef4444 !important;
+  font-family: 'Rajdhani', sans-serif !important;
+  letter-spacing: 1px !important;
+}
+html.theme-racing .btn-clear-log {
+  background: rgba(255, 255, 255, 0.08) !important;
+  border: 1px solid #ef4444 !important;
+  color: #f8fafc !important;
+  font-family: 'Rajdhani', sans-serif !important;
+  border-radius: 4px !important;
+}
+html.theme-racing .log-item {
+  background: #16161d !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  border-left: 3.5px solid #ef4444 !important;
+  color: #f8fafc !important;
+  font-family: 'Rajdhani', sans-serif !important;
+}
+html.theme-racing .log-item-time {
+  color: #94a3b8 !important;
+  opacity: 0.85 !important;
+}
+html.theme-racing .log-item-user {
+  color: #ef4444 !important;
+  font-weight: 800 !important;
+}
+html.theme-racing .log-item-text {
+  color: #f8fafc !important;
+}
+html.theme-racing .log-item-pts {
+  background: #ef4444 !important;
+  color: #000000 !important;
+  font-family: 'Rajdhani', sans-serif !important;
+  font-weight: 800 !important;
+  border-radius: 4px !important;
 }
 
 /* LAYAR PODIUM JUARA UNIK */
@@ -2717,6 +3197,54 @@ html.theme-cosmic .c-notif-pts-total {
   font-weight: 700 !important;
 }
 
+/* LOG PANEL TEMA KHUSUS */
+html.theme-cosmic .log-panel {
+  background: #131233 !important;
+  border: 1.5px solid #8b5cf6 !important;
+  box-shadow: 0 10px 35px rgba(0, 0, 0, 0.8), 0 0 25px rgba(139, 92, 246, 0.25) !important;
+  border-radius: 12px !important;
+}
+html.theme-cosmic .log-header {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15) !important;
+}
+html.theme-cosmic .log-title {
+  color: #8b5cf6 !important;
+  font-family: 'Space Grotesk', sans-serif !important;
+  letter-spacing: 1px !important;
+}
+html.theme-cosmic .btn-clear-log {
+  background: rgba(255, 255, 255, 0.08) !important;
+  border: 1px solid #8b5cf6 !important;
+  color: #f5f3ff !important;
+  font-family: 'Space Grotesk', sans-serif !important;
+  border-radius: 4px !important;
+}
+html.theme-cosmic .log-item {
+  background: #111030 !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  border-left: 3.5px solid #8b5cf6 !important;
+  color: #f5f3ff !important;
+  font-family: 'Space Grotesk', sans-serif !important;
+}
+html.theme-cosmic .log-item-time {
+  color: #c4b5fd !important;
+  opacity: 0.85 !important;
+}
+html.theme-cosmic .log-item-user {
+  color: #8b5cf6 !important;
+  font-weight: 800 !important;
+}
+html.theme-cosmic .log-item-text {
+  color: #f5f3ff !important;
+}
+html.theme-cosmic .log-item-pts {
+  background: #8b5cf6 !important;
+  color: #000000 !important;
+  font-family: 'Space Grotesk', sans-serif !important;
+  font-weight: 800 !important;
+  border-radius: 4px !important;
+}
+
 /* LAYAR PODIUM JUARA UNIK */
 html.theme-cosmic #winnerOverlay {
   background: radial-gradient(circle at center, #291257 0%, #070719 85%) !important;
@@ -2963,6 +3491,54 @@ html.theme-vaporwave .c-notif-pts-total {
   color: #fed7aa !important;
   font-family: 'Outfit', sans-serif !important;
   font-weight: 700 !important;
+}
+
+/* LOG PANEL TEMA KHUSUS */
+html.theme-vaporwave .log-panel {
+  background: #341a54 !important;
+  border: 1.5px solid #f472b6 !important;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.7), 0 0 20px rgba(244, 114, 182, 0.3) !important;
+  border-radius: 14px !important;
+}
+html.theme-vaporwave .log-header {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15) !important;
+}
+html.theme-vaporwave .log-title {
+  color: #f472b6 !important;
+  font-family: 'Outfit', sans-serif !important;
+  letter-spacing: 1px !important;
+}
+html.theme-vaporwave .btn-clear-log {
+  background: rgba(255, 255, 255, 0.08) !important;
+  border: 1px solid #f472b6 !important;
+  color: #fce7f3 !important;
+  font-family: 'Outfit', sans-serif !important;
+  border-radius: 4px !important;
+}
+html.theme-vaporwave .log-item {
+  background: #2c1547 !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  border-left: 3.5px solid #f472b6 !important;
+  color: #fce7f3 !important;
+  font-family: 'Outfit', sans-serif !important;
+}
+html.theme-vaporwave .log-item-time {
+  color: #fed7aa !important;
+  opacity: 0.85 !important;
+}
+html.theme-vaporwave .log-item-user {
+  color: #f472b6 !important;
+  font-weight: 800 !important;
+}
+html.theme-vaporwave .log-item-text {
+  color: #fce7f3 !important;
+}
+html.theme-vaporwave .log-item-pts {
+  background: #f472b6 !important;
+  color: #000000 !important;
+  font-family: 'Outfit', sans-serif !important;
+  font-weight: 800 !important;
+  border-radius: 4px !important;
 }
 
 /* LAYAR PODIUM JUARA UNIK */
@@ -3213,6 +3789,54 @@ html.theme-rustic .c-notif-pts-total {
   font-weight: 700 !important;
 }
 
+/* LOG PANEL TEMA KHUSUS */
+html.theme-rustic .log-panel {
+  background: #2c1e14 !important;
+  border: 2px solid #8b5e34 !important;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.8) !important;
+  border-radius: 8px !important;
+}
+html.theme-rustic .log-header {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15) !important;
+}
+html.theme-rustic .log-title {
+  color: #d4a373 !important;
+  font-family: 'Outfit', sans-serif !important;
+  letter-spacing: 1px !important;
+}
+html.theme-rustic .btn-clear-log {
+  background: rgba(255, 255, 255, 0.08) !important;
+  border: 1px solid #d4a373 !important;
+  color: #fefae0 !important;
+  font-family: 'Outfit', sans-serif !important;
+  border-radius: 4px !important;
+}
+html.theme-rustic .log-item {
+  background: #231810 !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  border-left: 3.5px solid #d4a373 !important;
+  color: #fefae0 !important;
+  font-family: 'Outfit', sans-serif !important;
+}
+html.theme-rustic .log-item-time {
+  color: #faedcd !important;
+  opacity: 0.85 !important;
+}
+html.theme-rustic .log-item-user {
+  color: #d4a373 !important;
+  font-weight: 800 !important;
+}
+html.theme-rustic .log-item-text {
+  color: #fefae0 !important;
+}
+html.theme-rustic .log-item-pts {
+  background: #d4a373 !important;
+  color: #000000 !important;
+  font-family: 'Outfit', sans-serif !important;
+  font-weight: 800 !important;
+  border-radius: 4px !important;
+}
+
 /* LAYAR PODIUM JUARA UNIK */
 html.theme-rustic #winnerOverlay {
   background: radial-gradient(circle at center, #451a03 0%, #1c140d 85%) !important;
@@ -3459,6 +4083,54 @@ html.theme-fantasy .c-notif-pts-total {
   color: #fef9c3 !important;
   font-family: 'Cinzel', serif !important;
   font-weight: 700 !important;
+}
+
+/* LOG PANEL TEMA KHUSUS */
+html.theme-fantasy .log-panel {
+  background: #261c12 !important;
+  border: 2px solid #ca8a04 !important;
+  box-shadow: 0 10px 35px rgba(0,0,0,0.85) !important;
+  border-radius: 6px !important;
+}
+html.theme-fantasy .log-header {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15) !important;
+}
+html.theme-fantasy .log-title {
+  color: #ca8a04 !important;
+  font-family: 'Cinzel', serif !important;
+  letter-spacing: 1px !important;
+}
+html.theme-fantasy .btn-clear-log {
+  background: rgba(255, 255, 255, 0.08) !important;
+  border: 1px solid #ca8a04 !important;
+  color: #fef08a !important;
+  font-family: 'Cinzel', serif !important;
+  border-radius: 4px !important;
+}
+html.theme-fantasy .log-item {
+  background: #1f170f !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  border-left: 3.5px solid #ca8a04 !important;
+  color: #fef08a !important;
+  font-family: 'Cinzel', serif !important;
+}
+html.theme-fantasy .log-item-time {
+  color: #fef9c3 !important;
+  opacity: 0.85 !important;
+}
+html.theme-fantasy .log-item-user {
+  color: #ca8a04 !important;
+  font-weight: 800 !important;
+}
+html.theme-fantasy .log-item-text {
+  color: #fef08a !important;
+}
+html.theme-fantasy .log-item-pts {
+  background: #ca8a04 !important;
+  color: #000000 !important;
+  font-family: 'Cinzel', serif !important;
+  font-weight: 800 !important;
+  border-radius: 4px !important;
 }
 
 /* LAYAR PODIUM JUARA UNIK */
@@ -3709,6 +4381,54 @@ html.theme-frostbite .c-notif-pts-total {
   font-weight: 700 !important;
 }
 
+/* LOG PANEL TEMA KHUSUS */
+html.theme-frostbite .log-panel {
+  background: #07243d !important;
+  border: 1.5px solid #38bdf8 !important;
+  box-shadow: 0 10px 35px rgba(0,0,0,0.8), 0 0 25px rgba(56, 189, 248, 0.3) !important;
+  border-radius: 12px !important;
+}
+html.theme-frostbite .log-header {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15) !important;
+}
+html.theme-frostbite .log-title {
+  color: #38bdf8 !important;
+  font-family: 'Outfit', sans-serif !important;
+  letter-spacing: 1px !important;
+}
+html.theme-frostbite .btn-clear-log {
+  background: rgba(255, 255, 255, 0.08) !important;
+  border: 1px solid #38bdf8 !important;
+  color: #f0f9ff !important;
+  font-family: 'Outfit', sans-serif !important;
+  border-radius: 4px !important;
+}
+html.theme-frostbite .log-item {
+  background: #051c30 !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  border-left: 3.5px solid #38bdf8 !important;
+  color: #f0f9ff !important;
+  font-family: 'Outfit', sans-serif !important;
+}
+html.theme-frostbite .log-item-time {
+  color: #bae6fd !important;
+  opacity: 0.85 !important;
+}
+html.theme-frostbite .log-item-user {
+  color: #38bdf8 !important;
+  font-weight: 800 !important;
+}
+html.theme-frostbite .log-item-text {
+  color: #f0f9ff !important;
+}
+html.theme-frostbite .log-item-pts {
+  background: #38bdf8 !important;
+  color: #000000 !important;
+  font-family: 'Outfit', sans-serif !important;
+  font-weight: 800 !important;
+  border-radius: 4px !important;
+}
+
 /* LAYAR PODIUM JUARA UNIK */
 html.theme-frostbite #winnerOverlay {
   background: radial-gradient(circle at center, #0c4a6e 0%, #03121f 85%) !important;
@@ -3955,6 +4675,54 @@ html.theme-imperial .c-notif-pts-total {
   color: #fef9c3 !important;
   font-family: 'Cinzel', serif !important;
   font-weight: 700 !important;
+}
+
+/* LOG PANEL TEMA KHUSUS */
+html.theme-imperial .log-panel {
+  background: #400909 !important;
+  border: 2px solid #eab308 !important;
+  box-shadow: 0 10px 35px rgba(0,0,0,0.85), 0 0 20px rgba(234, 179, 8, 0.25) !important;
+  border-radius: 6px !important;
+}
+html.theme-imperial .log-header {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15) !important;
+}
+html.theme-imperial .log-title {
+  color: #eab308 !important;
+  font-family: 'Cinzel', serif !important;
+  letter-spacing: 1px !important;
+}
+html.theme-imperial .btn-clear-log {
+  background: rgba(255, 255, 255, 0.08) !important;
+  border: 1px solid #eab308 !important;
+  color: #fef08a !important;
+  font-family: 'Cinzel', serif !important;
+  border-radius: 4px !important;
+}
+html.theme-imperial .log-item {
+  background: #330707 !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  border-left: 3.5px solid #eab308 !important;
+  color: #fef08a !important;
+  font-family: 'Cinzel', serif !important;
+}
+html.theme-imperial .log-item-time {
+  color: #fef9c3 !important;
+  opacity: 0.85 !important;
+}
+html.theme-imperial .log-item-user {
+  color: #eab308 !important;
+  font-weight: 800 !important;
+}
+html.theme-imperial .log-item-text {
+  color: #fef08a !important;
+}
+html.theme-imperial .log-item-pts {
+  background: #eab308 !important;
+  color: #000000 !important;
+  font-family: 'Cinzel', serif !important;
+  font-weight: 800 !important;
+  border-radius: 4px !important;
 }
 
 /* LAYAR PODIUM JUARA UNIK */
@@ -4205,6 +4973,54 @@ html.theme-dune .c-notif-pts-total {
   font-weight: 700 !important;
 }
 
+/* LOG PANEL TEMA KHUSUS */
+html.theme-dune .log-panel {
+  background: #2e1a0d !important;
+  border: 2px solid #ea580c !important;
+  box-shadow: 0 10px 35px rgba(0,0,0,0.85) !important;
+  border-radius: 8px !important;
+}
+html.theme-dune .log-header {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15) !important;
+}
+html.theme-dune .log-title {
+  color: #ea580c !important;
+  font-family: 'Rajdhani', sans-serif !important;
+  letter-spacing: 1px !important;
+}
+html.theme-dune .btn-clear-log {
+  background: rgba(255, 255, 255, 0.08) !important;
+  border: 1px solid #ea580c !important;
+  color: #ffedd5 !important;
+  font-family: 'Rajdhani', sans-serif !important;
+  border-radius: 4px !important;
+}
+html.theme-dune .log-item {
+  background: #24140a !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  border-left: 3.5px solid #ea580c !important;
+  color: #ffedd5 !important;
+  font-family: 'Rajdhani', sans-serif !important;
+}
+html.theme-dune .log-item-time {
+  color: #fed7aa !important;
+  opacity: 0.85 !important;
+}
+html.theme-dune .log-item-user {
+  color: #ea580c !important;
+  font-weight: 800 !important;
+}
+html.theme-dune .log-item-text {
+  color: #ffedd5 !important;
+}
+html.theme-dune .log-item-pts {
+  background: #ea580c !important;
+  color: #000000 !important;
+  font-family: 'Rajdhani', sans-serif !important;
+  font-weight: 800 !important;
+  border-radius: 4px !important;
+}
+
 /* LAYAR PODIUM JUARA UNIK */
 html.theme-dune #winnerOverlay {
   background: radial-gradient(circle at center, #431407 0%, #1c1008 85%) !important;
@@ -4453,6 +5269,54 @@ html.theme-steampunk .c-notif-pts-total {
   font-weight: 700 !important;
 }
 
+/* LOG PANEL TEMA KHUSUS */
+html.theme-steampunk .log-panel {
+  background: #2d221a !important;
+  border: 2px solid #b45309 !important;
+  box-shadow: 0 10px 35px rgba(0,0,0,0.85) !important;
+  border-radius: 6px !important;
+}
+html.theme-steampunk .log-header {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15) !important;
+}
+html.theme-steampunk .log-title {
+  color: #d97706 !important;
+  font-family: 'Cinzel', serif !important;
+  letter-spacing: 1px !important;
+}
+html.theme-steampunk .btn-clear-log {
+  background: rgba(255, 255, 255, 0.08) !important;
+  border: 1px solid #d97706 !important;
+  color: #fef3c7 !important;
+  font-family: 'Cinzel', serif !important;
+  border-radius: 4px !important;
+}
+html.theme-steampunk .log-item {
+  background: #241b14 !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  border-left: 3.5px solid #d97706 !important;
+  color: #fef3c7 !important;
+  font-family: 'Cinzel', serif !important;
+}
+html.theme-steampunk .log-item-time {
+  color: #fed7aa !important;
+  opacity: 0.85 !important;
+}
+html.theme-steampunk .log-item-user {
+  color: #d97706 !important;
+  font-weight: 800 !important;
+}
+html.theme-steampunk .log-item-text {
+  color: #fef3c7 !important;
+}
+html.theme-steampunk .log-item-pts {
+  background: #d97706 !important;
+  color: #000000 !important;
+  font-family: 'Cinzel', serif !important;
+  font-weight: 800 !important;
+  border-radius: 4px !important;
+}
+
 /* LAYAR PODIUM JUARA UNIK */
 html.theme-steampunk #winnerOverlay {
   background: radial-gradient(circle at center, #451a03 0%, #1c1510 85%) !important;
@@ -4699,6 +5563,54 @@ html.theme-chrome .c-notif-pts-total {
   color: #e2e8f0 !important;
   font-family: 'Orbitron', sans-serif !important;
   font-weight: 700 !important;
+}
+
+/* LOG PANEL TEMA KHUSUS */
+html.theme-chrome .log-panel {
+  background: #18181b !important;
+  border: 1.5px solid #cbd5e1 !important;
+  box-shadow: 0 10px 35px rgba(0,0,0,0.9), 0 0 25px rgba(203, 213, 225, 0.3) !important;
+  border-radius: 14px !important;
+}
+html.theme-chrome .log-header {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15) !important;
+}
+html.theme-chrome .log-title {
+  color: #cbd5e1 !important;
+  font-family: 'Orbitron', sans-serif !important;
+  letter-spacing: 1px !important;
+}
+html.theme-chrome .btn-clear-log {
+  background: rgba(255, 255, 255, 0.08) !important;
+  border: 1px solid #cbd5e1 !important;
+  color: #ffffff !important;
+  font-family: 'Orbitron', sans-serif !important;
+  border-radius: 4px !important;
+}
+html.theme-chrome .log-item {
+  background: #121215 !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  border-left: 3.5px solid #cbd5e1 !important;
+  color: #ffffff !important;
+  font-family: 'Orbitron', sans-serif !important;
+}
+html.theme-chrome .log-item-time {
+  color: #e2e8f0 !important;
+  opacity: 0.85 !important;
+}
+html.theme-chrome .log-item-user {
+  color: #cbd5e1 !important;
+  font-weight: 800 !important;
+}
+html.theme-chrome .log-item-text {
+  color: #ffffff !important;
+}
+html.theme-chrome .log-item-pts {
+  background: #cbd5e1 !important;
+  color: #000000 !important;
+  font-family: 'Orbitron', sans-serif !important;
+  font-weight: 800 !important;
+  border-radius: 4px !important;
 }
 
 /* LAYAR PODIUM JUARA UNIK */
