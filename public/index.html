@@ -5708,7 +5708,12 @@ html.theme-comic .log-item-pts {
     }
 
     const tanda = deltaPoin >= 0 ? `+${deltaPoin}` : `${deltaPoin}`;
-    document.getElementById('cNotifTag').innerText = labelAtas;
+    const tMeta = THEME_NOTIF_PODIUM_META[temaAktif] || THEME_NOTIF_PODIUM_META['cyber'];
+    if ((labelAtas === "UPDATE POIN" || labelAtas === "TAMBAH POIN" || !labelAtas) && tMeta && tMeta.notif_tag) {
+      document.getElementById('cNotifTag').innerText = tMeta.notif_tag;
+    } else {
+      document.getElementById('cNotifTag').innerText = labelAtas;
+    }
     document.getElementById('cNotifPlayer').innerText = namaPemain || "PEMAIN";
     document.getElementById('cNotifPts').innerText = `${tanda} POIN`;
     document.getElementById('cNotifTotal').innerText = `Total: ${totalPoin} Poin`;
@@ -5770,6 +5775,109 @@ html.theme-comic .log-item-pts {
   const THEME_KEY = 'galatama_active_theme_' + CURRENT_ROOM;
   let temaAktif = (new URLSearchParams(window.location.search).get('theme') || (typeof db !== 'undefined' && db && db.activeTheme ? db.activeTheme : '') || localStorage.getItem(THEME_KEY) || localStorage.getItem('galatama_active_theme_global') || 'cyber').toLowerCase();
 
+    const THEME_NOTIF_PODIUM_META = {
+  "cyber": {
+    "notif_tag": "\u26a1 [ FISH STRIKE // HUD ENGAGED ] \u26a1",
+    "podium_badge": "\ud83c\udfc6 CYBER TOURNAMENT FINALS \ud83c\udfc6",
+    "podium_title": "HOLOGRAPHIC CHAMPIONS"
+  },
+  "comic": {
+    "notif_tag": "\ud83d\udca5 STRIKE! TANGKAPAN MONSTER! \ud83d\udca5",
+    "podium_badge": "\u2b50 THE GREATEST CHAMPION! \u2b50",
+    "podium_title": "HALL OF CHAMPIONS!"
+  },
+  "arcade": {
+    "notif_tag": "\u2605 BONUS ROUND STRIKE \u2605",
+    "podium_badge": "\ud83d\udc7e 1UP HIGH SCORE CEREMONY \ud83d\udc7e",
+    "podium_title": "STAGE CLEAR! ALL STARS"
+  },
+  "luxury": {
+    "notif_tag": "\ud83d\udc51 ROYAL PRIZE CATCH \ud83d\udc51",
+    "podium_badge": "\u269c\ufe0f ROYAL IMPERIAL CEREMONY \u269c\ufe0f",
+    "podium_title": "THE EMPEROR OF CHAMPIONS"
+  },
+  "aquatic": {
+    "notif_tag": "\ud83c\udfa3 STRIKE BABON EMAS LAUT DALAM \ud83d\udc1f",
+    "podium_badge": "\ud83c\udf0a OCEAN MASTER TOURNAMENT \ud83c\udf0a",
+    "podium_title": "LEGENDS OF THE DEEP SEA"
+  },
+  "mecha": {
+    "notif_tag": "\u26a1 TARGET LOCKED // STRIKE 01 \u26a1",
+    "podium_badge": "\u26a1 MECHA SQUADRON VICTORY \u26a1",
+    "podium_title": "APEX PILOT DIVISION"
+  },
+  "hazard": {
+    "notif_tag": "\u2623\ufe0f CRITICAL WARNING // STRIKE BABON \u2623\ufe0f",
+    "podium_badge": "\u26a0\ufe0f DANGER LEVEL 5 APEX \u26a0\ufe0f",
+    "podium_title": "BIOHAZARD SURVIVORS"
+  },
+  "inferno": {
+    "notif_tag": "\ud83c\udf0b LAVA ERUPTION // HOT STRIKE \ud83d\udd25",
+    "podium_badge": "\ud83d\udd25 VOLCANIC FINALS CEREMONY \ud83d\udd25",
+    "podium_title": "LORDS OF THE INFERNO"
+  },
+  "glass": {
+    "notif_tag": "\ud83d\udc8e CRYSTAL STRIKE \u2728",
+    "podium_badge": "\u2728 CRYSTAL GRAND CEREMONY \u2728",
+    "podium_title": "THE CRYSTAL CHAMPIONS"
+  },
+  "vaporwave": {
+    "notif_tag": "\ud83c\udf38 AESTHETIC CATCH // 90s VIBES \ud83c\udf34",
+    "podium_badge": "\ud83c\udf34 SUNSET BEACH FINALS \ud83c\udf38",
+    "podium_title": "SYNTHWAVE LEGENDS"
+  },
+  "cosmic": {
+    "notif_tag": "\ud83c\udf0c NOVA COSMIC STRIKE \u2728",
+    "podium_badge": "\ud83c\udf20 CELESTIAL GRAND PRIX \ud83c\udf20",
+    "podium_title": "NEBULA ASTRONOMIC STARS"
+  },
+  "racing": {
+    "notif_tag": "\ud83c\udfc1 FASTEST LAP // SECTOR 1 PURPLE \ud83c\udfce\ufe0f",
+    "podium_badge": "\ud83c\udfc1 FORMULA GRAND PRIX FINALS \ud83c\udfc1",
+    "podium_title": "GRAND PRIX PODIUM WINNERS"
+  },
+  "rustic": {
+    "notif_tag": "\ud83e\udeb5 TANGKAPAN IKAN JATI ALAM \ud83c\udf32",
+    "podium_badge": "\ud83c\udf32 MASTER OF THE WILD LAKE \ud83c\udf32",
+    "podium_title": "WILDERNESS CHAMPIONS"
+  },
+  "fantasy": {
+    "notif_tag": "\u2694\ufe0f GUILD BOUNTY COMPLETED \ud83d\udee1\ufe0f",
+    "podium_badge": "\ud83d\udee1\ufe0f THE GUILD GRAND FINALS \ud83d\udee1\ufe0f",
+    "podium_title": "CHAMPIONS OF THE REALM"
+  },
+  "frostbite": {
+    "notif_tag": "\u2744\ufe0f FROZEN GLACIER STRIKE \ud83e\uddca",
+    "podium_badge": "\ud83e\uddca THE ARCTIC CROWN FINALS \u2744\ufe0f",
+    "podium_title": "GLACIAL TITANS"
+  },
+  "imperial": {
+    "notif_tag": "\ud83c\udfee HOKI BESAR // IKAN NAGA EMAS \ud83d\udc09",
+    "podium_badge": "\ud83c\udfee DYNASTY IMPERIAL CUP \ud83c\udfee",
+    "podium_title": "DRAGON CHAMPIONS"
+  },
+  "matrix": {
+    "notif_tag": "\ud83d\udcdf [SYS_EXEC: FISH_CAPTURED] >_",
+    "podium_badge": "\ud83d\udfe2 SYSTEM ROOT ACCESS CEREMONY \ud83d\udfe2",
+    "podium_title": "ARCHITECTS OF THE CODE"
+  },
+  "dune": {
+    "notif_tag": "\ud83c\udfdc\ufe0f SANDWORM HARVEST // SPICE STRIKE \ud83e\udd82",
+    "podium_badge": "\ud83e\udd82 THE RULERS OF ARRAKIS \ud83e\udd82",
+    "podium_title": "SPICE HARVEST MONARCHS"
+  },
+  "steampunk": {
+    "notif_tag": "\ud83d\udcfb GEARWORKS STRIKE // COG VOLT \u2699\ufe0f",
+    "podium_badge": "\u2699\ufe0f GRAND STEAM ENGINE EXHIBITION \u2699\ufe0f",
+    "podium_title": "VICTORIAN CLOCKWORK APEX"
+  },
+  "chrome": {
+    "notif_tag": "\u26a1 Y2K LIQUID MERCURY CATCH \ud83d\udca7",
+    "podium_badge": "\ud83d\udca7 Y2K MILLENNIUM AWARDS \u26a1",
+    "podium_title": "LIQUID CHROME TITANS"
+  }
+};
+
   const DAFTAR_SEMUA_TEMA = [
     { id: 'cyber', nama: 'Cyber HUD Neon', namaSimpel: 'Cyber HUD', icon: '🔷', sub: 'Sci-Fi Tournament, Neon Cyan & Sapphire Blue', colors: ['#070b14', '#00f0ff', '#38bdf8', '#1e293b'], special: 'Holographic Neon' },
     { id: 'comic', nama: 'Comic Pop-Art', namaSimpel: 'Comic Pop-Art', icon: '💥', sub: 'Webtoon Manga, Bold Black Inks, Halftone Dots', colors: ['#fde047', '#00e5ff', '#ff1744', '#000000'], special: 'Halftone & Bangers' },
@@ -5820,6 +5928,15 @@ html.theme-comic .log-item-pts {
     }).join('');
   }
 
+  
+  function perbaruiHeaderPodiumTema() {
+    const meta = THEME_NOTIF_PODIUM_META[temaAktif] || THEME_NOTIF_PODIUM_META['cyber'];
+    const badgeEl = document.getElementById('winTrophyBadge');
+    const titleEl = document.querySelector('#winnerOverlay .winner-title');
+    if (badgeEl && meta && meta.podium_badge) badgeEl.innerText = meta.podium_badge;
+    if (titleEl && meta && meta.podium_title) titleEl.innerText = meta.podium_title;
+  }
+
   function terapkanTema(namaTema, siarkan = true) {
     if (!namaTema) return;
     temaAktif = namaTema.toLowerCase();
@@ -5845,6 +5962,7 @@ html.theme-comic .log-item-pts {
     }
 
     perbaruiUIModalTema();
+    perbaruiHeaderPodiumTema();
     const lblTema = document.getElementById('labelTemaAktif');
     const curT = DAFTAR_SEMUA_TEMA.find(t => t.id === temaAktif);
     if (lblTema && curT) lblTema.innerText = curT.namaSimpel || curT.nama;
