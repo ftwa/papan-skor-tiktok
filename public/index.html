@@ -7,7 +7,6 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@600;700;800;900&family=Space+Grotesk:wght@600;700&family=JetBrains+Mono:wght@700;800;900&family=Bangers&family=Fredoka:wght@600;700;800;900&family=Press+Start+2P&family=Rajdhani:wght@600;700;800&family=Cinzel:wght@700;900&family=VT323&family=Orbitron:wght@700;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="themes.css">
   
   <script>
     // Deteksi awal mode overlay instan agar CSS transparan aktif sebelum render halaman (anti-flicker)
@@ -36,9 +35,21 @@
 
       // Deteksi awal tema aktif agar tampilan langsung sinkron tanpa flicker
       try {
-        const roomName = (urlParams.get('room') || urlParams.get('user') || 'admin').toLowerCase().trim().replace(/[^a-z0-9_]/g, '');
+        let detectedRoom = (urlParams.get('room') || urlParams.get('user') || '').toLowerCase().trim().replace(/[^a-z0-9_]/g, '');
+        if (!detectedRoom) {
+          const authSaved = JSON.parse(localStorage.getItem('scoreboard_auth_user_v1') || 'null');
+          if (authSaved && authSaved.username) detectedRoom = authSaved.username.toLowerCase().trim().replace(/[^a-z0-9_]/g, '');
+        }
+        if (!detectedRoom) detectedRoom = 'admin';
+
         const urlTheme = (urlParams.get('theme') || '').toLowerCase();
-        const savedTheme = urlTheme || localStorage.getItem('galatama_active_theme_' + roomName) || localStorage.getItem('galatama_active_theme_global') || 'cyber';
+        let dbTheme = '';
+        try {
+          const dbRaw = JSON.parse(localStorage.getItem('single_leaderboard_cyber_hud_v3_' + detectedRoom) || 'null');
+          if (dbRaw && dbRaw.activeTheme) dbTheme = dbRaw.activeTheme;
+        } catch (_) {}
+
+        const savedTheme = urlTheme || dbTheme || localStorage.getItem('galatama_active_theme_' + detectedRoom) || localStorage.getItem('galatama_active_theme_global') || 'cyber';
         if (savedTheme && savedTheme !== 'cyber') {
           document.documentElement.classList.add('theme-' + savedTheme);
         }
@@ -4197,6 +4208,7 @@ html.theme-comic .score-val {
 }
 
 </style>
+<link rel="stylesheet" href="themes.css">
 </head>
 <body class="view-match">
 
@@ -5033,6 +5045,9 @@ html.theme-comic .score-val {
     } else if (msg.type === 'UPDATE_DATA') {
       if (msg.db) {
         db = msg.db;
+        if (msg.db.activeTheme && msg.db.activeTheme !== temaAktif && !new URLSearchParams(window.location.search).get('theme')) {
+          terapkanTema(msg.db.activeTheme, false);
+        }
         if (currentViewMode === 'tabel' || currentViewMode === 'admin') {
           renderIsiTabel();
           autoScaleTabel();
@@ -5636,7 +5651,7 @@ html.theme-comic .score-val {
 
   /* SISTEM PEMILIHAN & MANAJEMEN TEMA PAPAN SKOR (20 THEMES ENGINE) */
   const THEME_KEY = 'galatama_active_theme_' + CURRENT_ROOM;
-  let temaAktif = (new URLSearchParams(window.location.search).get('theme') || localStorage.getItem(THEME_KEY) || localStorage.getItem('galatama_active_theme_global') || 'cyber').toLowerCase();
+  let temaAktif = (new URLSearchParams(window.location.search).get('theme') || (typeof db !== 'undefined' && db && db.activeTheme ? db.activeTheme : '') || localStorage.getItem(THEME_KEY) || localStorage.getItem('galatama_active_theme_global') || 'cyber').toLowerCase();
 
   const DAFTAR_SEMUA_TEMA = [
     { id: 'cyber', nama: 'Cyber HUD Neon', icon: '🔷', sub: 'Sci-Fi Tournament, Neon Cyan & Sapphire Blue', colors: ['#070b14', '#00f0ff', '#38bdf8', '#1e293b'], special: 'Holographic Neon' },
@@ -5694,6 +5709,10 @@ html.theme-comic .score-val {
     try {
       localStorage.setItem(THEME_KEY, temaAktif);
       localStorage.setItem('galatama_active_theme_global', temaAktif);
+      if (typeof db !== 'undefined' && db) {
+        db.activeTheme = temaAktif;
+        localStorage.setItem(DB_KEY, JSON.stringify(db));
+      }
     } catch (_) {}
 
     // Hapus semua class tema sebelumnya dari html dan body
