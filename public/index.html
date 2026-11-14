@@ -11137,17 +11137,15 @@ html.theme-hazard .c-notif-badge-icon {
 
       }
 
-    } else if (} else if (msg.type === 'SET_TEAM_MODE') {
+    } else if (msg.type === 'SET_TEAM_MODE') {
       if (msg.teamConfig) {
         db.teamConfig = msg.teamConfig;
         perbaruiLabelModeTimUI();
-        inisialisasiTeamConfig();
-  perbaruiLabelModeTimUI();
-  inisialisasiStrukturTabel();
+        inisialisasiStrukturTabel();
         renderIsiTabel();
         autoScaleTabel();
       }
-    msg.type === 'UPDATE_DATA') {
+    } else if (msg.type === 'UPDATE_DATA') {
 
       if (msg.db) {
 
