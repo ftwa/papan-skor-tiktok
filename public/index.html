@@ -9770,7 +9770,290 @@ html.theme-hazard .c-notif-badge-icon {
       margin: 0 auto 8px auto !important;
     }
 
-</style>
+
+    /* === TEAM PODIUM MULTI-AVATARS (DUO 2 AVATAR, SQUAD 4 AVATAR, ETC) === */
+    .team-podium-avatars-stage {
+      width: 100%;
+      height: 100%;
+      position: relative;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      transform-origin: bottom center;
+    }
+    .rank-1 .team-podium-avatars-stage {
+      animation: winnerOriginalFloatRank1 3.2s ease-in-out infinite;
+    }
+    .rank-2 .team-podium-avatars-stage {
+      animation: winnerOriginalFloatRank2 3.6s ease-in-out infinite 0.4s;
+    }
+    .rank-3 .team-podium-avatars-stage {
+      animation: winnerOriginalFloatRank3 3.4s ease-in-out infinite 0.8s;
+    }
+
+    .team-avatar-slot {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-end;
+      position: relative;
+      transform-origin: bottom center;
+      transition: transform 0.3s ease;
+    }
+
+    .team-avatar-img-wrap {
+      position: relative;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+    }
+
+    /* DUO (2 AVATARS) */
+    .team-podium-avatars-stage.count-2 {
+      gap: 12px;
+      padding: 0 4px;
+    }
+    .team-podium-avatars-stage.count-2 .team-avatar-slot {
+      flex: 1;
+      max-width: 170px;
+    }
+    .team-podium-avatars-stage.count-2 .team-avatar-slot.slot-0 {
+      transform: perspective(600px) rotateY(4deg);
+    }
+    .team-podium-avatars-stage.count-2 .team-avatar-slot.slot-1 {
+      transform: perspective(600px) rotateY(-4deg);
+    }
+    .team-podium-avatars-stage.count-2 .team-3d-img {
+      max-height: 255px;
+      max-width: 155px;
+      object-fit: contain;
+      filter: drop-shadow(0 10px 18px rgba(0, 0, 0, 0.65)) drop-shadow(0 0 15px var(--team-glow, rgba(56, 189, 248, 0.5)));
+    }
+    .rank-1 .team-podium-avatars-stage.count-2 .team-3d-img {
+      max-height: 290px;
+      max-width: 175px;
+    }
+    .team-podium-avatars-stage.count-2 .team-head-img {
+      width: 110px;
+      height: 110px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 3.5px solid #ffffff;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6), 0 0 25px var(--team-glow, rgba(56, 189, 248, 0.6));
+      background: rgba(15, 23, 42, 0.7);
+      margin-bottom: 6px;
+    }
+    .rank-1 .team-podium-avatars-stage.count-2 .team-head-img {
+      width: 125px;
+      height: 125px;
+      border-color: #fde047;
+    }
+
+    /* SQUAD (4 AVATARS) */
+    .team-podium-avatars-stage.count-4 {
+      gap: 4px;
+      padding: 0 2px;
+    }
+    .team-podium-avatars-stage.count-4 .team-avatar-slot {
+      flex: 1;
+      max-width: 90px;
+      margin: 0 -3px;
+    }
+    .team-podium-avatars-stage.count-4 .team-avatar-slot.slot-0 {
+      order: 2; z-index: 4; transform: translateY(-4px) scale(1.05);
+    }
+    .team-podium-avatars-stage.count-4 .team-avatar-slot.slot-1 {
+      order: 3; z-index: 3; transform: translateY(-1px) scale(1.0);
+    }
+    .team-podium-avatars-stage.count-4 .team-avatar-slot.slot-2 {
+      order: 1; z-index: 2; transform: translateY(6px) scale(0.92); opacity: 0.95;
+    }
+    .team-podium-avatars-stage.count-4 .team-avatar-slot.slot-3 {
+      order: 4; z-index: 2; transform: translateY(6px) scale(0.92); opacity: 0.95;
+    }
+    .team-podium-avatars-stage.count-4 .team-3d-img {
+      max-height: 220px;
+      max-width: 92px;
+      object-fit: contain;
+      filter: drop-shadow(0 6px 14px rgba(0, 0, 0, 0.6)) drop-shadow(0 0 10px var(--team-glow, rgba(56, 189, 248, 0.4)));
+    }
+    .rank-1 .team-podium-avatars-stage.count-4 .team-3d-img {
+      max-height: 250px;
+      max-width: 102px;
+    }
+    .team-podium-avatars-stage.count-4 .team-head-img {
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2.5px solid #ffffff;
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.6), 0 0 16px var(--team-glow, rgba(56, 189, 248, 0.5));
+      background: rgba(15, 23, 42, 0.7);
+      margin-bottom: 4px;
+    }
+    .rank-1 .team-podium-avatars-stage.count-4 .team-head-img {
+      width: 80px;
+      height: 80px;
+      border-color: #fde047;
+    }
+
+    /* TRIO (3 AVATARS) */
+    .team-podium-avatars-stage.count-3 {
+      gap: 6px;
+    }
+    .team-podium-avatars-stage.count-3 .team-avatar-slot {
+      flex: 1;
+      max-width: 115px;
+    }
+    .team-podium-avatars-stage.count-3 .team-avatar-slot.slot-0 {
+      order: 2; z-index: 3; transform: scale(1.05);
+    }
+    .team-podium-avatars-stage.count-3 .team-avatar-slot.slot-1 {
+      order: 1; z-index: 2; transform: scale(0.95) translateY(4px);
+    }
+    .team-podium-avatars-stage.count-3 .team-avatar-slot.slot-2 {
+      order: 3; z-index: 2; transform: scale(0.95) translateY(4px);
+    }
+    .team-podium-avatars-stage.count-3 .team-3d-img {
+      max-height: 240px;
+      max-width: 115px;
+      object-fit: contain;
+    }
+    .rank-1 .team-podium-avatars-stage.count-3 .team-3d-img {
+      max-height: 270px;
+      max-width: 125px;
+    }
+    .team-podium-avatars-stage.count-3 .team-head-img {
+      width: 88px;
+      height: 88px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 3px solid #ffffff;
+    }
+
+    /* 5V5 (5 AVATARS) */
+    .team-podium-avatars-stage.count-5 {
+      gap: 2px;
+    }
+    .team-podium-avatars-stage.count-5 .team-avatar-slot {
+      flex: 1;
+      max-width: 70px;
+    }
+    .team-podium-avatars-stage.count-5 .team-3d-img {
+      max-height: 195px;
+      max-width: 70px;
+      object-fit: contain;
+    }
+    .team-podium-avatars-stage.count-5 .team-head-img {
+      width: 58px;
+      height: 58px;
+      border-radius: 50%;
+    }
+
+    /* Empty Avatar Slot Circle */
+    .team-avatar-empty-circle {
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      border: 2px dashed rgba(255, 255, 255, 0.3);
+      background: rgba(15, 23, 42, 0.45);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 6px;
+    }
+    .count-2 .team-avatar-empty-circle {
+      width: 105px;
+      height: 105px;
+    }
+    .team-avatar-empty-icon {
+      font-size: 32px;
+      opacity: 0.4;
+    }
+
+    /* Avatar Tag Pills */
+    .team-avatar-tag-pill {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      background: rgba(15, 23, 42, 0.9);
+      border: 1.5px solid rgba(255, 255, 255, 0.28);
+      border-radius: 20px;
+      padding: 3px 8px;
+      font-size: 11px;
+      font-weight: 800;
+      color: #f8fafc;
+      backdrop-filter: blur(8px);
+      white-space: nowrap;
+      max-width: 135px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+      margin-top: 4px;
+      z-index: 6;
+    }
+    .count-4 .team-avatar-tag-pill {
+      max-width: 82px;
+      padding: 2px 5px;
+      font-size: 9px;
+      gap: 2px;
+    }
+    .count-5 .team-avatar-tag-pill {
+      max-width: 65px;
+      padding: 2px 4px;
+      font-size: 8.5px;
+    }
+    .team-avatar-tag-pill .team-avatar-name {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .team-avatar-tag-pill .team-avatar-pts {
+      color: #38bdf8;
+      font-size: 0.9em;
+      flex-shrink: 0;
+    }
+
+    .team-avatar-crown {
+      position: absolute;
+      top: -16px;
+      font-size: 22px;
+      filter: drop-shadow(0 0 8px #f59e0b);
+      z-index: 10;
+      animation: bounceMini 1.5s infinite;
+    }
+
+    /* Comic theme overrides */
+    html.theme-comic .team-avatar-tag-pill {
+      background: #fde047 !important;
+      color: #000000 !important;
+      border: 2.5px solid #000000 !important;
+      box-shadow: 3px 3px 0px #000000 !important;
+      font-family: 'Bangers', cursive !important;
+      font-size: 13px !important;
+    }
+    html.theme-comic .count-4 .team-avatar-tag-pill {
+      font-size: 10.5px !important;
+      box-shadow: 2px 2px 0px #000000 !important;
+    }
+    html.theme-comic .team-head-img {
+      border: 3.5px solid #000000 !important;
+      box-shadow: 5px 5px 0px #000000 !important;
+    }
+    html.theme-comic .team-avatar-empty-circle {
+      border: 2.5px dashed #000000 !important;
+      background: #ffffff !important;
+    }
+
+    /* Arcade theme overrides */
+    html.theme-arcade .team-avatar-tag-pill {
+      font-family: 'Press Start 2P', monospace !important;
+      font-size: 7.5px !important;
+      border-color: #00f0ff !important;
+      background: #11052c !important;
+      color: #00f0ff !important;
+    }
+
+  </style>
 
 <link rel="stylesheet" href="themes.css?v=20261115_0120">
 
@@ -14826,9 +15109,64 @@ html.theme-hazard .c-notif-badge-icon {
 
 
 
+
+  function renderTeamPodiumAvatarsHtml(teamMembers, rank, pData) {
+    if (!teamMembers || teamMembers.length === 0) return '';
+    const count = teamMembers.length;
+    const teamColor = (pData && pData.color) ? pData.color : '#38bdf8';
+    const countClass = count <= 2 ? 'count-2' : (count === 3 ? 'count-3' : (count === 4 ? 'count-4' : (count <= 6 ? 'count-5' : 'count-10')));
+
+    const membersHtml = teamMembers.map((m, idx) => {
+      let src = m.avatar3d || m.avatar || '';
+      if (src && src.includes('/Avatar/Png')) {
+        src = src.replace(/\/420\/420\//, '/720/720/').replace(/\/352\/352\//, '/720/720/');
+      }
+
+      const is3d = !!(src && src.includes('/Avatar/') && !src.includes('AvatarHeadshot'));
+      if (!src && m.hasContent) {
+        src = `https://ui-avatars.com/api/?name=${encodeURIComponent(m.name)}&background=0284c7&color=fff&rounded=true&bold=true`;
+      }
+
+      const fallbackImg = `https://ui-avatars.com/api/?name=${encodeURIComponent(m.name || 'Member')}&background=0f172a&color=38bdf8&rounded=true&bold=true`;
+
+      return `
+        <div class="team-avatar-slot slot-${idx} ${m.isMvp ? 'is-mvp' : ''} ${m.hasContent ? 'has-player' : 'is-empty'}" style="--member-color: ${teamColor};">
+          ${m.isMvp ? '<span class="team-avatar-crown" title="MVP Tim">👑</span>' : ''}
+          <div class="team-avatar-img-wrap ${is3d ? 'wrap-3d' : 'wrap-head'}">
+            ${src ? `
+              <img src="${escapeHtml(src)}" 
+                   class="team-avatar-img ${is3d ? 'team-3d-img' : 'team-head-img'}" 
+                   alt="${escapeHtml(m.name)}" 
+                   onerror="this.onerror=null; this.src='${fallbackImg}'; this.className='team-avatar-img team-head-img';">
+            ` : `
+              <div class="team-avatar-empty-circle">
+                <span class="team-avatar-empty-icon">👤</span>
+              </div>
+            `}
+          </div>
+          <div class="team-avatar-tag-pill" title="${escapeHtml(m.name)}: ${m.poin} pts">
+            <span class="team-avatar-name">${escapeHtml(m.name)}</span>
+            <span class="team-avatar-pts">${m.poin}P</span>
+          </div>
+        </div>
+      `;
+    }).join('');
+
+    return `
+      <div class="team-podium-avatars-stage ${countClass}" style="--team-glow: ${teamColor};">
+        ${membersHtml}
+      </div>
+    `;
+  }
   function pasangAvatarPodium(elemId, avatarUrl, nama, fallbackRank = 1, headshotUrl = null, robloxUser = '', pData = null) {
     const box = document.getElementById(elemId);
     if (!box) return;
+
+    // Jika mode tim dan memiliki daftar anggota tim, tampilkan seluruh avatar anggota (Duo = 2 avatar, Squad = 4 avatar, dst)
+    if (pData && pData.isTeam && pData.teamMembers && pData.teamMembers.length > 0) {
+      box.innerHTML = renderTeamPodiumAvatarsHtml(pData.teamMembers, fallbackRank, pData);
+      return;
+    }
 
     if (!avatarUrl && headshotUrl) {
       avatarUrl = headshotUrl;
@@ -15018,6 +15356,30 @@ html.theme-hazard .c-notif-badge-icon {
         const avHead = mvpWithAvatar ? mvpWithAvatar.avatar : (mvp ? mvp.avatar : '');
         const rbxUser = mvpWithAvatar ? (mvpWithAvatar.robloxUser || mvpWithAvatar.user || '') : (mvp ? (mvp.robloxUser || mvp.user || '') : '');
 
+        // Siapkan seluruh anggota tim sesuai ukuran tim (Duo = 2, Squad = 4, dsb) untuk ditampilkan di podium
+        const allTeamMembers = chairs.map((c, mIdx) => {
+          const p = (c === 19 ? currData.host : currData.players[c]) || {};
+          const hasContent = Boolean((p.user && p.user.trim()) || (p.robloxUser && p.robloxUser.trim()) || (p.nick && p.nick.trim()) || (p.poin && p.poin > 0));
+          const pName = p.nick || p.user || p.robloxUser || (hasContent ? 'Pemain' : `Anggota #${mIdx + 1}`);
+          const mAv3d = p.avatar3d || dapatkanFullBody3dAvatar(p);
+          const mAvHead = p.avatar || '';
+          const isThisMvp = Boolean(mvp && (p === mvp || (p.robloxUser && p.robloxUser === mvp.robloxUser) || (p.user && p.user === mvp.user && p.user !== '')));
+
+          return {
+            chair: c,
+            memberIndex: mIdx,
+            name: pName,
+            user: p.robloxUser || p.user || '',
+            nick: p.nick || '',
+            poin: p.poin || 0,
+            hasContent: hasContent,
+            avatar: mAvHead,
+            avatar3d: mAv3d,
+            isMvp: isThisMvp,
+            colorTag: p.colorTag || ''
+          };
+        });
+
         return {
           isTeam: true,
           teamId: team.id,
@@ -15035,12 +15397,7 @@ html.theme-hazard .c-notif-badge-icon {
           avatar: avHead,
           avatar3d: av3d,
           robloxUser: rbxUser,
-          teamMembers: sortedMembers.map(m => ({
-            name: m.nick || m.user || m.robloxUser || 'Pemain',
-            user: m.robloxUser || m.user || '',
-            avatar: m.avatar || '',
-            poin: m.poin || 0
-          }))
+          teamMembers: allTeamMembers
         };
       });
 
