@@ -4466,10 +4466,12 @@ html.theme-hazard .c-notif-badge-icon {
 
 <!-- MODAL INPUT NAMA PESERTA -->
 <div class="modal-overlay" id="modalInputNama" onclick="tutupModalDiLuar(event)">
-  <div class="modal-box-hud">
+  <div class="modal-box-hud" id="boxModalInputNama">
+    <div class="modal-chair-top-deco" id="modalChairTopDeco"></div>
+    <div class="modal-chair-badge-icon" id="modalChairBadgeIcon">🪑</div>
     <div class="modal-header-hud">
       <div class="modal-title-wrap">
-        <span class="modal-sub-hud"></span>
+        <span class="modal-sub-hud" id="modalChairSubHud">PLAYER SEAT REGISTRATION</span>
         <span class="modal-title-hud" id="modalInputJudul">Kursi 1</span>
       </div>
       <button class="btn-close-hud" onclick="tutupModalNama()" title="Tutup (Esc)">✕</button>
@@ -4493,7 +4495,7 @@ html.theme-hazard .c-notif-badge-icon {
 
     <!-- FORM INPUTS -->
     <div class="hud-field-group">
-      <label class="hud-label">Roblox Account ID</label>
+      <label class="hud-label" id="lblRobloxId">Roblox Account ID</label>
       <div class="hud-input-row">
         <input type="text" id="inputUserRoblox" class="hud-input" placeholder="contoh: Username" autocomplete="off" onkeydown="if(event.key==='Enter'){event.preventDefault();mulaiCariAkunRobloxAuto();}">
         <button type="button" id="btnCariRoblox" class="hud-btn-search" onclick="mulaiCariAkunRobloxAuto()">
@@ -4504,19 +4506,20 @@ html.theme-hazard .c-notif-badge-icon {
     </div>
 
     <div class="hud-field-group">
-      <label class="hud-label">Nama Pemain (Tim / Peserta)</label>
+      <label class="hud-label" id="lblPlayerName">Nama Pemain (Tim / Peserta)</label>
       <input type="text" id="inputNamaTikTok" class="hud-input" placeholder="Ketik nama pemain..." onkeydown="if(event.key==='Enter')simpanDataModalNama()">
     </div>
 
     <div class="hud-field-group">
-      <label class="hud-label">Display Name Roblox</label>
+      <label class="hud-label" id="lblRobloxNick">Display Name Roblox</label>
       <input type="text" id="inputDisplayName" class="hud-input" placeholder="Otomatis / manual" onkeydown="if(event.key==='Enter')simpanDataModalNama()">
     </div>
 
     <div class="hud-action-row">
-      <button class="btn-hud-reset" type="button" onclick="resetFormModalNama()">Reset</button>
-      <button class="btn-hud-save" type="button" onclick="simpanDataModalNama()">Simpan</button>
+      <button class="btn-hud-reset" id="btnModalChairReset" type="button" onclick="resetFormModalNama()">Reset</button>
+      <button class="btn-hud-save" id="btnModalChairSave" type="button" onclick="simpanDataModalNama()">Simpan</button>
     </div>
+    <div class="modal-chair-bottom-deco" id="modalChairBottomDeco"></div>
   </div>
 </div>
 
@@ -4847,6 +4850,41 @@ html.theme-hazard .c-notif-badge-icon {
   const urlParams = new URLSearchParams(window.location.search);
   const rawView = (urlParams.get('view') || urlParams.get('overlay') || 'admin').toLowerCase();
   let currentViewMode = 'admin';
+
+  // GLOBAL THEME ICON MAPPER
+  const ICON_TEMA_MAP = {
+    cyber: '⚡',
+    comic: '💥',
+    arcade: '👾',
+    hazard: '☣️',
+    luxury: '👑',
+    aquatic: '🐟',
+    mecha: '⚡',
+    matrix: '💻',
+    synthwave: '🌴',
+    vaporwave: '🌴',
+    steampunk: '⚙️',
+    sakura: '🌸',
+    frost: '❄️',
+    frostbite: '❄️',
+    crimson: '🩸',
+    inferno: '🔥',
+    emerald: '🌿',
+    fantasy: '🛡️',
+    sunset: '🌇',
+    galaxy: '🌌',
+    cosmic: '🌌',
+    stealth: '♟️',
+    chrome: '💧',
+    dragon: '🐉',
+    imperial: '🏮',
+    purple: '🔮',
+    void: '🌑',
+    racing: '🏁',
+    rustic: '🪵',
+    dune: '🦂',
+    glass: '💎'
+  };
   if (['tabel', 'table', 'scoreboard', 'board'].includes(rawView)) {
     currentViewMode = 'tabel';
   } else if (['podium', 'winner', 'champions', 'juara'].includes(rawView)) {
@@ -5697,12 +5735,7 @@ html.theme-hazard .c-notif-badge-icon {
     const popup = document.getElementById('centerNotifPopup');
 
     // Icon badge tematik dinamis
-    const ICON_TEMA_MAP = {
-      cyber: '🔷', comic: '💥', arcade: '👾', luxury: '👑', aquatic: '🐟',
-      mecha: '⚡', hazard: '☣️', inferno: '🔥', glass: '💎', vaporwave: '🌴',
-      cosmic: '🌌', racing: '🏁', rustic: '🪵', fantasy: '🛡️', frostbite: '❄️',
-      imperial: '🏮', matrix: '📟', dune: '🦂', steampunk: '⚙️', chrome: '💧'
-    };
+    // Menggunakan ICON_TEMA_MAP global
     const badgeEl = document.getElementById('cNotifBadgeIcon');
     if (badgeEl) badgeEl.innerText = ICON_TEMA_MAP[temaAktif] || '⚡';
 
@@ -5973,6 +6006,10 @@ html.theme-hazard .c-notif-badge-icon {
     const lblTema = document.getElementById('labelTemaAktif');
     const curT = DAFTAR_SEMUA_TEMA.find(t => t.id === temaAktif);
     if (lblTema && curT) lblTema.innerText = curT.namaSimpel || curT.nama;
+    const badgeChair = document.getElementById('modalChairBadgeIcon');
+    if (badgeChair) {
+      badgeChair.innerText = ICON_TEMA_MAP[temaAktif] || '🪑';
+    }
 
     if (siarkan) {
       siarkanPesanSync({ type: 'CHANGE_THEME', theme: temaAktif });
@@ -6657,6 +6694,10 @@ html.theme-hazard .c-notif-badge-icon {
 
     updateModalPreviewUI(p.robloxUser || '', p.nick || '', p.avatar || '');
     document.getElementById('modalSearchStatus').innerText = '';
+    const badgeChair = document.getElementById('modalChairBadgeIcon');
+    if (badgeChair && typeof ICON_TEMA_MAP !== 'undefined') {
+      badgeChair.innerText = ICON_TEMA_MAP[temaAktif] || '🪑';
+    }
 
     document.getElementById('modalInputNama').style.display = 'flex';
     if (currentViewMode === 'admin') {
