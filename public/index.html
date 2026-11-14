@@ -4546,7 +4546,7 @@ html.theme-hazard .c-notif-badge-icon {
   <div class="modal-box-hud modal-theme-picker-box">
     <div class="modal-header-hud">
       <div class="modal-title-wrap">
-        <span class="modal-sub-hud">20 THEMES ENGINE</span>
+        <span class="modal-sub-hud">7 SPECIAL THEMES</span>
         <span class="modal-title-hud">🎨 PILIH TEMA TAMPILAN</span>
       </div>
       <button class="btn-close-hud" onclick="tutupModalPilihTema()">✕</button>
@@ -5811,9 +5811,11 @@ html.theme-hazard .c-notif-badge-icon {
     tambahLogAktivitas('SKOR', 'Papan skor berhasil diurutkan', 'system');
   }
 
-  /* SISTEM PEMILIHAN & MANAJEMEN TEMA PAPAN SKOR (20 THEMES ENGINE) */
+  /* SISTEM PEMILIHAN & MANAJEMEN TEMA PAPAN SKOR (7 SPECIAL THEMES) */
   const THEME_KEY = 'galatama_active_theme_' + CURRENT_ROOM;
-  let temaAktif = (new URLSearchParams(window.location.search).get('theme') || (typeof db !== 'undefined' && db && db.activeTheme ? db.activeTheme : '') || localStorage.getItem(THEME_KEY) || localStorage.getItem('galatama_active_theme_global') || 'cyber').toLowerCase();
+  let rawTemaAktif = (new URLSearchParams(window.location.search).get('theme') || (typeof db !== 'undefined' && db && db.activeTheme ? db.activeTheme : '') || localStorage.getItem(THEME_KEY) || localStorage.getItem('galatama_active_theme_global') || 'cyber').toLowerCase();
+  const TEMA_VALID_IDS = ['cyber', 'aquatic', 'comic', 'arcade', 'hazard', 'imperial', 'matrix'];
+  let temaAktif = TEMA_VALID_IDS.includes(rawTemaAktif) ? rawTemaAktif : 'cyber';
 
     const THEME_NOTIF_PODIUM_META = {
   "cyber": {
@@ -5919,26 +5921,13 @@ html.theme-hazard .c-notif-badge-icon {
 };
 
   const DAFTAR_SEMUA_TEMA = [
-    { id: 'cyber', nama: 'Cyber HUD Neon', namaSimpel: 'Cyber HUD', icon: '🔷', sub: 'Sci-Fi Tournament, Neon Cyan & Sapphire Blue', colors: ['#070b14', '#00f0ff', '#38bdf8', '#1e293b'], special: 'Holographic Neon' },
+    { id: 'cyber', nama: 'Cyber HUD Neon', namaSimpel: 'Cyber HUD', icon: '⚡', sub: 'Sci-Fi Tournament, Neon Cyan & Sapphire Blue', colors: ['#070b14', '#00f0ff', '#38bdf8', '#1e293b'], special: 'Holographic Neon' },
+    { id: 'aquatic', nama: 'Aquatic Pro Fishing', namaSimpel: 'Aquatic Ocean', icon: '🐟', sub: 'Deep Ocean Abyss, Aquamarine & Seafoam', colors: ['#021729', '#00f5d4', '#00b4d8', '#ffd166'], special: 'Deep Sea Wave' },
     { id: 'comic', nama: 'Comic Pop-Art', namaSimpel: 'Comic Pop-Art', icon: '💥', sub: 'Webtoon Manga, Bold Black Inks, Halftone Dots', colors: ['#fde047', '#00e5ff', '#ff1744', '#000000'], special: 'Halftone & Bangers' },
-    { id: 'aquatic', nama: 'Aquatic Pro Fishing', namaSimpel: 'Aquatic Ocean', icon: '🌊', sub: 'Deep Ocean Abyss, Aquamarine & Seafoam', colors: ['#021729', '#00f5d4', '#00b4d8', '#ffd166'], special: 'Deep Sea Wave' },
-    { id: 'arcade', nama: 'Retro 80s Arcade', namaSimpel: 'Retro Arcade', icon: '🕹️', sub: 'Synthwave 8-Bit, CRT Scanline TV, Hot Magenta', colors: ['#11052c', '#ff007f', '#00f0ff', '#ffee00'], special: '8-Bit Press Start' },
-    { id: 'luxury', nama: 'Gold Luxury Royale', namaSimpel: 'Luxury Gold', icon: '👑', sub: 'Obsidian Black, 24K Gold Foil, Regal Crest', colors: ['#09090b', '#d4af37', '#f59e0b', '#fef3c7'], special: '24K Gold Cinzel' },
-    { id: 'mecha', nama: 'Mecha Techwear Anime', namaSimpel: 'Mecha Anime', icon: '⚡', sub: 'Acid Lime, Carbon Dark, Chamfered Angle HUD', colors: ['#0f0f11', '#e6ff00', '#27272a', '#ff5500'], special: 'Chamfered 45° Decal' },
-    { id: 'rustic', nama: 'Rustic Wood & Camp', namaSimpel: 'Rustic Wood', icon: '🪵', sub: 'Kayu Jati Hangat, Kuningan Antik, Alam Asri', colors: ['#1c140d', '#8b5e34', '#d4a373', '#fefae0'], special: 'Woodgrain Teak' },
-    { id: 'hazard', nama: 'Cyber Hazard 2077', namaSimpel: 'Cyber Hazard', icon: '⚠️', sub: 'Industrial Pitch Black & Caution Yellow Stripes', colors: ['#0b0b0b', '#fcee0a', '#f59e0b', '#262626'], special: 'Caution Barricade' },
-    { id: 'inferno', nama: 'Magma Inferno Flame', namaSimpel: 'Magma Inferno', icon: '🌋', sub: 'Volcanic Basalt, Molten Lava Red & Orange', colors: ['#140404', '#ff4500', '#dc2626', '#fef08a'], special: 'Molten Lava Flame' },
-    { id: 'glass', nama: 'Frosted Glass Clean', namaSimpel: 'Frosted Glass', icon: '🧊', sub: 'Smooth iOS Glassmorphism, 24px Blur Minimalist', colors: ['#050811', '#e2e8f0', '#38bdf8', '#ffffff'], special: '24px Backdrop Blur' },
-    { id: 'vaporwave', nama: 'Pastel Vaporwave Lofi', namaSimpel: 'Vaporwave Lofi', icon: '🌸', sub: 'California Sunset Lilac, Pink Pastel & Orange', colors: ['#211038', '#f472b6', '#fb923c', '#6ee7b7'], special: 'Sunset Palm Chill' },
-    { id: 'cosmic', nama: 'Cosmic Galaxy Nebula', namaSimpel: 'Cosmic Galaxy', icon: '🌌', sub: 'Deep Indigo Space, Violet Nebula, Stardust', colors: ['#070719', '#8b5cf6', '#c084fc', '#38bdf8'], special: 'Aurora & Starlight' },
-    { id: 'racing', nama: 'F1 Pit Stop Telemetry', namaSimpel: 'Racing F1', icon: '🏎️', sub: 'Scuderia Red, Carbon Fiber, Speedometer', colors: ['#0f0f11', '#ef4444', '#f8fafc', '#22c55e'], special: 'Checkered Telemetry' },
-    { id: 'fantasy', nama: 'Medieval Guild Quest', namaSimpel: 'Medieval Quest', icon: '⚔️', sub: 'Aged Parchment, Iron Forged Rivets, RPG Quest', colors: ['#18120b', '#ca8a04', '#3f3f46', '#fef08a'], special: 'Guild Parchment' },
-    { id: 'frostbite', nama: 'Frostbite Arctic Ice', namaSimpel: 'Frostbite Ice', icon: '❄️', sub: 'Glacial Deep Navy, Crystal Ice Shards Cyan', colors: ['#03121f', '#7dd3fc', '#38bdf8', '#f0f9ff'], special: 'Crystal Frost Shards' },
+    { id: 'arcade', nama: 'Retro 80s Arcade', namaSimpel: 'Retro Arcade', icon: '👾', sub: 'Synthwave 8-Bit, CRT Scanline TV, Hot Magenta', colors: ['#11052c', '#ff007f', '#00f0ff', '#ffee00'], special: '8-Bit Press Start' },
+    { id: 'hazard', nama: 'Cyber Hazard 2077', namaSimpel: 'Cyber Hazard', icon: '☣️', sub: 'Industrial Pitch Black & Caution Yellow Stripes', colors: ['#0b0b0b', '#fcee0a', '#f59e0b', '#262626'], special: 'Caution Barricade' },
     { id: 'imperial', nama: 'Imperial Dynasty Red', namaSimpel: 'Imperial Red', icon: '🐉', sub: 'Vermilion Carmine, Royal Gold, Prosperity Hoki', colors: ['#2b0606', '#eab308', '#f59e0b', '#fef08a'], special: 'Prosperity Royal Gold' },
-    { id: 'matrix', nama: 'Matrix Terminal Hacker', namaSimpel: 'Matrix Hacker', icon: '🟢', sub: 'Phosphor Green Monospace, Falling Digital Code', colors: ['#020a04', '#00ff66', '#052e16', '#86efac'], special: 'Phosphor CRT Monospace' },
-    { id: 'dune', nama: 'Cyber Dune Sci-Fi', namaSimpel: 'Dune Sci-Fi', icon: '🏜️', sub: 'Arrakis Spice Orange, Desert Nomad Sandstorm', colors: ['#1c1008', '#ea580c', '#fdba74', '#ffedd5'], special: 'Spice Sandstorm HUD' },
-    { id: 'steampunk', nama: 'Clockwork Steampunk', namaSimpel: 'Steampunk', icon: '📻', sub: 'Aged Brass, Copper Cogs & Victorian Gauge', colors: ['#1c1510', '#b45309', '#d97706', '#fef3c7'], special: 'Victorian Brass Cogs' },
-    { id: 'chrome', nama: 'Y2K Chrome Cyber-Goth', namaSimpel: 'Y2K Chrome', icon: '⚡', sub: 'Liquid Mercury Chrome, Hologram Lavender', colors: ['#09090b', '#cbd5e1', '#ffffff', '#c084fc'], special: 'Liquid Chrome Sheen' }
+    { id: 'matrix', nama: 'Matrix Terminal Hacker', namaSimpel: 'Matrix Hacker', icon: '💻', sub: 'Phosphor Green Monospace, Falling Digital Code', colors: ['#020a04', '#00ff66', '#052e16', '#86efac'], special: 'Phosphor CRT Monospace' }
   ];
 
   function renderGridSemuaTema() {
@@ -5979,7 +5968,8 @@ html.theme-hazard .c-notif-badge-icon {
 
   function terapkanTema(namaTema, siarkan = true) {
     if (!namaTema) return;
-    temaAktif = namaTema.toLowerCase();
+    const targetTema = namaTema.toLowerCase();
+    temaAktif = ['cyber', 'aquatic', 'comic', 'arcade', 'hazard', 'imperial', 'matrix'].includes(targetTema) ? targetTema : 'cyber';
     try {
       localStorage.setItem(THEME_KEY, temaAktif);
       localStorage.setItem('galatama_active_theme_global', temaAktif);
