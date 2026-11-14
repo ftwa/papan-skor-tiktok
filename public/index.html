@@ -361,7 +361,7 @@
 
     /* MINI PALET WARNA */
     .color-picker-mini {
-      display: none; position: absolute; z-index: 36000; background: #0f172a;
+      display: none; position: fixed; z-index: 36000; background: #0f172a;
       border: 1px solid #334155; border-radius: 8px; padding: 5px 6px;
       box-shadow: 0 8px 20px rgba(0,0,0,0.65); gap: 5px; align-items: center;
     }
@@ -390,7 +390,7 @@
     tr.host-row td { background: var(--host-bg); color: var(--host-text); border-bottom: 2px solid #9333ea; }
 
     /* LATAR WARNA KUSTOM BARIS */
-    tr.tag-blue td, tr.tag-blue.host-row td { 
+    html table tbody tr.tag-blue td, html table tbody tr.tag-blue.host-row td, tr.tag-blue td, tr.tag-blue.host-row td { 
       background: #bfdbfe !important; color: #0f172a !important; 
       border-bottom: 1px solid #93c5fd !important; border-right-color: #93c5fd !important;
     }
@@ -400,7 +400,7 @@
     tr.tag-blue .score-val { background: #ffffff !important; color: #0f172a !important; border-color: #93c5fd !important; }
     tr.tag-blue .pay-status-tag.ready { background: #ffffff; color: #475569; border-color: #cbd5e1; }
 
-    tr.tag-pink td, tr.tag-pink.host-row td { 
+    html table tbody tr.tag-pink td, html table tbody tr.tag-pink.host-row td, tr.tag-pink td, tr.tag-pink.host-row td { 
       background: #fbcfe8 !important; color: #0f172a !important; 
       border-bottom: 1px solid #f472b6 !important; border-right-color: #f472b6 !important;
     }
@@ -410,7 +410,7 @@
     tr.tag-pink .score-val { background: #ffffff !important; color: #831843 !important; border-color: #f472b6 !important; }
     tr.tag-pink .pay-status-tag.ready { background: #ffffff; color: #831843; border-color: #fbcfe8; }
 
-    tr.tag-purple td, tr.tag-purple.host-row td { 
+    html table tbody tr.tag-purple td, html table tbody tr.tag-purple.host-row td, tr.tag-purple td, tr.tag-purple.host-row td { 
       background: #4c1d95 !important; color: #f5f3ff !important; 
       border-bottom: 1px solid #7c3aed !important; border-right-color: #7c3aed !important;
     }
@@ -420,7 +420,7 @@
     tr.tag-purple .score-val { background: #1e1b4b !important; color: #e9d5ff !important; border-color: #a855f7 !important; }
     tr.tag-purple .pay-status-tag.ready { background: #3b0764; color: #e9d5ff; border-color: #7c3aed; }
 
-    tr.tag-red td, tr.tag-red.host-row td { 
+    html table tbody tr.tag-red td, html table tbody tr.tag-red.host-row td, tr.tag-red td, tr.tag-red.host-row td { 
       background: #e11d48 !important; color: #ffffff !important; 
       border-bottom: 1px solid #be123c !important; border-right-color: #be123c !important;
     }
@@ -430,7 +430,7 @@
     tr.tag-red .score-val { background: #ffffff !important; color: #be123c !important; border-color: #ffffff !important; }
     tr.tag-red .pay-status-tag.ready { background: #9f1239; color: #ffe4e6; border-color: #be123c; }
 
-    tr.tag-yellow td, tr.tag-yellow.host-row td { 
+    html table tbody tr.tag-yellow td, html table tbody tr.tag-yellow.host-row td, tr.tag-yellow td, tr.tag-yellow.host-row td { 
       background: #fef08a !important; color: #713f12 !important; 
       border-bottom: 1px solid #facc15 !important; border-right-color: #facc15 !important;
     }
@@ -4166,8 +4166,8 @@ html.theme-lofi table th {
   font-family: 'Fredoka', sans-serif !important;
   font-weight: 800 !important;
 }
-html.theme-lofi table tr { background: #251c17 !important; border-bottom: 1px solid #3d2d25 !important; }
-html.theme-lofi table tr:nth-child(even) { background: #2d221c !important; }
+html.theme-lofi table tr:not([class*="tag-"]) { background: #251c17 !important; border-bottom: 1px solid #3d2d25 !important; }
+html.theme-lofi table tr:not([class*="tag-"]):nth-child(even) { background: #2d221c !important; }
 html.theme-lofi .score-val {
   color: #e6ccb8 !important;
   font-family: 'Fredoka', sans-serif !important;
@@ -4178,24 +4178,24 @@ html.theme-lofi .score-val {
 
 
 /* COMIC POP-ART SPECIFIC TD OVERRIDES (100% Harmonisasi Warna Sel) */
-html.theme-comic table tbody tr td {
+html.theme-comic table tbody tr:not([class*="tag-"]) td {
   background: #ffffff !important;
   border-bottom: 2px solid #000000 !important;
   border-right: 2px solid #000000 !important;
   color: #0a0a0a !important;
 }
-html.theme-comic table tbody tr:nth-child(even) td {
+html.theme-comic table tbody tr:not([class*="tag-"]):nth-child(even) td {
   background: #fffde7 !important;
 }
-html.theme-comic table tbody tr:hover td {
+html.theme-comic table tbody tr:not([class*="tag-"]):hover td {
   background: #cffafe !important;
 }
-html.theme-comic table tbody tr.is-leader td,
-html.theme-comic table tbody tr.rank-1-row td {
+html.theme-comic table tbody tr:not([class*="tag-"]).is-leader td,
+html.theme-comic table tbody tr:not([class*="tag-"]).rank-1-row td {
   background: #fef08a !important;
   border-bottom: 2.5px solid #000000 !important;
 }
-html.theme-comic table tbody tr.host-row td {
+html.theme-comic table tbody tr:not([class*="tag-"]).host-row td {
   background: #ffedd5 !important;
   border-top: 3px dashed #000000 !important;
 }
