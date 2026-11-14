@@ -15721,7 +15721,16 @@ html.theme-hazard .c-notif-badge-icon {
 
     document.getElementById('editPlayerIndex').value = index;
 
-    const judul = (index === 19) ? 'Kursi 20 (Host)' : `Kursi ${index + 1}`;
+    let judul = (index === 19) ? 'Kursi 20 (Host)' : `Kursi ${index + 1}`;
+    if (db.teamConfig && db.teamConfig.enabled && db.teamConfig.teams) {
+      const t = dapatkanTimDariKursi(index);
+      if (t && t.chairs) {
+        const mIdx = t.chairs.indexOf(index);
+        if (mIdx !== -1) {
+          judul = `${t.name} - Pemain #${mIdx + 1} (Kursi ${index + 1})`;
+        }
+      }
+    }
 
     document.getElementById('modalInputJudul').innerText = judul;
 
@@ -16569,10 +16578,23 @@ html.theme-hazard .c-notif-badge-icon {
         if (i < 10) tbL.appendChild(divEl); else tbR.appendChild(divEl);
       }
 
+      let noText = i + 1;
+      let noTitle = `Kursi ${i + 1}`;
+      if (isTeam) {
+        const t = dapatkanTimDariKursi(i);
+        if (t && t.chairs && t.chairs.length > 0) {
+          const mIdx = t.chairs.indexOf(i);
+          if (mIdx !== -1) {
+            noText = mIdx + 1;
+            noTitle = `${t.name} - Anggota #${mIdx + 1} (Kursi ${i + 1})`;
+          }
+        }
+      }
+
       const tr = document.createElement('tr');
       tr.id = `row-kursi-${i}`;
       tr.innerHTML = `
-        <td class="td-no">${i + 1}</td>
+        <td class="td-no" title="${escapeHtml(noTitle)}">${noText}</td>
         <td class="cell-click-popup cell-nama-target" title="Klik untuk edit data pemain">
           <div style="padding-left:4px;"><span class="name-tiktok name-empty">(Kosong)</span></div>
         </td>
@@ -16595,11 +16617,24 @@ html.theme-hazard .c-notif-badge-icon {
       tbR.appendChild(buatTeamDividerRow(teamStartChairs[19]));
     }
 
+    let noHostText = 20;
+    let noHostTitle = 'Kursi 20 (Host)';
+    if (isTeam) {
+      const tHost = dapatkanTimDariKursi(19);
+      if (tHost && tHost.chairs && tHost.chairs.length > 0) {
+        const mIdx = tHost.chairs.indexOf(19);
+        if (mIdx !== -1) {
+          noHostText = mIdx + 1;
+          noHostTitle = `${tHost.name} - Anggota #${mIdx + 1} (Kursi 20)`;
+        }
+      }
+    }
+
     const trHost = document.createElement('tr');
     trHost.className = "host-row";
     trHost.id = "row-kursi-19";
     trHost.innerHTML = `
-      <td class="td-no">20</td>
+      <td class="td-no" title="${escapeHtml(noHostTitle)}">${noHostText}</td>
       <td colspan="2" class="cell-click-popup cell-host-merged" title="Klik untuk edit data Host" onclick="bukaModalInputNama(19)">
         <div style="display:flex; align-items:center; justify-content:space-between; gap:10px; padding:0 6px;">
           <div style="display:flex; align-items:center; gap:10px; min-width:0; flex:1;">
@@ -16653,6 +16688,25 @@ html.theme-hazard .c-notif-badge-icon {
 
       const adaPemain = !!(p.user || p.robloxUser || p.nick);
       p.isReady = adaPemain;
+
+      // Update nomor baris (mode individu: 1..20, mode tim: 1..teamSize per tim, misal duo: 1, 2)
+      const tdNo = tr.querySelector('.td-no');
+      if (tdNo) {
+        if (isTeam) {
+          const t = dapatkanTimDariKursi(idx);
+          if (t && t.chairs && t.chairs.length > 0) {
+            const mIdx = t.chairs.indexOf(idx);
+            tdNo.innerText = mIdx !== -1 ? (mIdx + 1) : (idx + 1);
+            tdNo.title = mIdx !== -1 ? `${t.name} - Anggota #${mIdx + 1} (Kursi ${idx + 1})` : `Kursi ${idx + 1}`;
+          } else {
+            tdNo.innerText = idx + 1;
+            tdNo.title = `Kursi ${idx + 1}`;
+          }
+        } else {
+          tdNo.innerText = idx + 1;
+          tdNo.title = `Kursi ${idx + 1}`;
+        }
+      }
 
       tr.classList.remove('tag-blue', 'tag-pink', 'tag-purple', 'tag-red', 'tag-yellow');
       if (p.colorTag) {
@@ -16722,6 +16776,24 @@ html.theme-hazard .c-notif-badge-icon {
     const h = currData.host || { robloxUser: '', user: '', nick: '', avatar: '', poin: 0, colorTag: '' };
     const trHost = document.getElementById('row-kursi-19');
     if (trHost) {
+      const tdNoHost = trHost.querySelector('.td-no');
+      if (tdNoHost) {
+        if (isTeam) {
+          const tHost = dapatkanTimDariKursi(19);
+          if (tHost && tHost.chairs && tHost.chairs.length > 0) {
+            const mIdx = tHost.chairs.indexOf(19);
+            tdNoHost.innerText = mIdx !== -1 ? (mIdx + 1) : 20;
+            tdNoHost.title = mIdx !== -1 ? `${tHost.name} - Anggota #${mIdx + 1} (Kursi 20)` : 'Kursi 20 (Host)';
+          } else {
+            tdNoHost.innerText = 20;
+            tdNoHost.title = 'Kursi 20 (Host)';
+          }
+        } else {
+          tdNoHost.innerText = 20;
+          tdNoHost.title = 'Kursi 20 (Host)';
+        }
+      }
+
       trHost.classList.remove('tag-blue', 'tag-pink', 'tag-purple', 'tag-red', 'tag-yellow');
       if (h.colorTag) {
         trHost.classList.add(`tag-${h.colorTag}`);
