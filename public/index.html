@@ -15303,6 +15303,22 @@ html.theme-hazard .c-notif-badge-icon {
     if (team) {
       team.name = newName;
       team.color = selectedSingleTeamColor;
+
+      // Update DOM header tim secara instan
+      const headerEl = document.getElementById(`teamHeaderRow_${team.teamIndex}`);
+      if (headerEl) {
+        headerEl.style.setProperty('--team-color', team.color);
+        headerEl.style.setProperty('--team-fade', team.color + '26');
+        const nameSpan = headerEl.querySelector('.team-name-text');
+        if (nameSpan) nameSpan.innerText = newName;
+      }
+
+      // Simpan ke customNames preset
+      if (!db.teamConfig.customNames) db.teamConfig.customNames = {};
+      const size = db.teamConfig.teamSize || 2;
+      db.teamConfig.customNames[`size_${size}_team_${editingSingleTeamIndex}`] = newName;
+      if (!db.teamConfig.customColors) db.teamConfig.customColors = {};
+      db.teamConfig.customColors[`size_${size}_team_${editingSingleTeamIndex}`] = selectedSingleTeamColor;
     }
     simpanDB();
     renderIsiTabel();
@@ -16528,7 +16544,7 @@ html.theme-hazard .c-notif-badge-icon {
           <div class="team-divider-wrap">
             <span class="team-divider-name" onclick="bukaModalEditSatuTim(${team.teamIndex})" title="Klik untuk ubah nama ${escapeHtml(team.name)}">
               <span>${escapeHtml(team.icon || '⚔️')}</span>
-              <span>${escapeHtml(team.name)}</span>
+              <span class="team-name-text">${escapeHtml(team.name)}</span>
               <span class="team-edit-icon">✏️</span>
             </span>
             <span class="team-divider-score" id="teamDividerScore_${team.teamIndex}">0 PTS</span>
@@ -16755,17 +16771,9 @@ html.theme-hazard .c-notif-badge-icon {
     const currData = getActiveData();
     const isTeam = !!(db.teamConfig && db.teamConfig.enabled && db.teamConfig.teams && db.teamConfig.teams.length > 0);
 
-    // FLIP Animation: Rekam posisi visual sebelum pengurutan
+    // 1. Rekam koordinat awal semua elemen baris untuk animasi FLIP (First, Last, Invert, Play)
     const prevRects = new Map();
-    for (let i = 0; i < 19; i++) {
-      const el = document.getElementById(`row-kursi-${i}`);
-      if (el) {
-        el.classList.remove('moving-row');
-        el.style.transform = '';
-        prevRects.set(`row-kursi-${i}`, el.getBoundingClientRect());
-      }
-    }
-    document.querySelectorAll('.team-divider-row').forEach(el => {
+    document.querySelectorAll('.team-divider-row, tbody tr[id^="row-kursi-"]').forEach(el => {
       el.classList.remove('moving-row');
       el.style.transform = '';
       prevRects.set(el.id, el.getBoundingClientRect());
@@ -16775,7 +16783,8 @@ html.theme-hazard .c-notif-badge-icon {
     currData.players.forEach(p => { p.isReady = punyaIsi(p); });
 
     if (isTeam) {
-      // 1. Urutkan anggota internal masing-masing tim berdasarkan poin
+      // MODE TIM: Urutkan per 1 tim utuh berdasarkan akumulasi total poin tim tertinggi!
+      // Step A: Urutkan anggota internal masing-masing tim berdasarkan poin
       db.teamConfig.teams.forEach(team => {
         const validChairs = team.chairs.filter(c => c < 19);
         if (validChairs.length > 0) {
@@ -16789,7 +16798,7 @@ html.theme-hazard .c-notif-badge-icon {
         }
       });
 
-      // 2. Urutkan tim per 1 tim utuh berdasarkan akumulasi total poin tim tertinggi
+      // Step B: Urutkan tim-tim secara utuh berdasarkan akumulasi total poin tim tertinggi!
       const sortedTeams = [...db.teamConfig.teams].sort((a, b) => {
         const ptsA = hitungPoinTim(a);
         const ptsB = hitungPoinTim(b);
@@ -16797,44 +16806,29 @@ html.theme-hazard .c-notif-badge-icon {
         return a.teamIndex - b.teamIndex;
       });
 
-      // Ambil slot kursi awal untuk masing-masing peringkat
-      const originalTeamSlots = db.teamConfig.teams.map(t => ({
-        chairs: [...t.chairs]
-      }));
+      // Step C: Susun ulang elemen DOM tabel (bodyLeft & bodyRight) sesuai peringkat tim
+      const tbL = document.getElementById('bodyLeft');
+      const tbR = document.getElementById('bodyRight');
 
-      // Bungkus data tim beserta paket pemainnya
-      const teamPackages = sortedTeams.map(t => {
-        const players = t.chairs.map(c => (c === 19 ? { ...currData.host } : { ...currData.players[c] }));
-        return {
-          id: t.id,
-          teamIndex: t.teamIndex,
-          name: t.name,
-          color: t.color,
-          icon: t.icon,
-          players: players
-        };
-      });
+      if (tbL && tbR) {
+        const halfTeams = Math.ceil(sortedTeams.length / 2);
+        sortedTeams.forEach((team, tIdx) => {
+          const targetTb = (tIdx < halfTeams) ? tbL : tbR;
+          const headerEl = document.getElementById(`teamHeaderRow_${team.teamIndex}`);
+          if (headerEl) targetTb.appendChild(headerEl);
 
-      // Petakan kembali paket tim ke slot kursi berurutan (tim pemuncak di atas)
-      teamPackages.forEach((pkg, rankIdx) => {
-        const targetSlot = originalTeamSlots[rankIdx];
-        db.teamConfig.teams[rankIdx] = {
-          id: pkg.id,
-          teamIndex: rankIdx,
-          name: pkg.name,
-          color: pkg.color,
-          icon: pkg.icon,
-          chairs: targetSlot.chairs
-        };
-
-        targetSlot.chairs.forEach((c, pIdx) => {
-          if (c === 19) {
-            currData.host = pkg.players[pIdx];
-          } else {
-            currData.players[c] = pkg.players[pIdx];
-          }
+          team.chairs.forEach(c => {
+            if (c < 19) {
+              const rowEl = document.getElementById(`row-kursi-${c}`);
+              if (rowEl) targetTb.appendChild(rowEl);
+            }
+          });
         });
-      });
+
+        // Baris host (kursi 19 / id row-kursi-19) selalu di bagian paling bawah tabel kanan
+        const hostRow = document.getElementById('row-kursi-19');
+        if (hostRow) tbR.appendChild(hostRow);
+      }
 
     } else {
       // MODE INDIVIDU: Urutkan pemain tunggal
@@ -16847,25 +16841,10 @@ html.theme-hazard .c-notif-badge-icon {
     simpanDB();
     renderIsiTabel();
 
-    // Jalankan FLIP Transition agar baris bergeser mulus
+    // 2. Eksekusi Animasi Pergeseran FLIP (biar bergeser mulus dan terlihat jelas)
     requestAnimationFrame(() => {
       let anyMoved = false;
-      for (let i = 0; i < 19; i++) {
-        const el = document.getElementById(`row-kursi-${i}`);
-        if (el && prevRects.has(`row-kursi-${i}`)) {
-          const prev = prevRects.get(`row-kursi-${i}`);
-          const curr = el.getBoundingClientRect();
-          const dy = prev.top - curr.top;
-          const dx = prev.left - curr.left;
-          if (Math.abs(dy) > 1 || Math.abs(dx) > 1) {
-            el.style.transform = `translate(${dx}px, ${dy}px)`;
-            el.style.transition = 'none';
-            anyMoved = true;
-          }
-        }
-      }
-
-      document.querySelectorAll('.team-divider-row').forEach(el => {
+      document.querySelectorAll('.team-divider-row, tbody tr[id^="row-kursi-"]').forEach(el => {
         if (prevRects.has(el.id)) {
           const prev = prevRects.get(el.id);
           const curr = el.getBoundingClientRect();
@@ -16874,6 +16853,7 @@ html.theme-hazard .c-notif-badge-icon {
           if (Math.abs(dy) > 1 || Math.abs(dx) > 1) {
             el.style.transform = `translate(${dx}px, ${dy}px)`;
             el.style.transition = 'none';
+            el.style.zIndex = '15';
             anyMoved = true;
           }
         }
@@ -16882,22 +16862,14 @@ html.theme-hazard .c-notif-badge-icon {
       if (anyMoved) {
         document.body.offsetHeight; // Force reflow
         requestAnimationFrame(() => {
-          for (let i = 0; i < 19; i++) {
-            const el = document.getElementById(`row-kursi-${i}`);
-            if (el && el.style.transform) {
-              el.classList.add('moving-row');
-              el.style.transform = '';
-              setTimeout(() => {
-                if (el) { el.classList.remove('moving-row'); el.style.transform = ''; }
-              }, 550);
-            }
-          }
-          document.querySelectorAll('.team-divider-row').forEach(el => {
+          document.querySelectorAll('.team-divider-row, tbody tr[id^="row-kursi-"]').forEach(el => {
             if (el.style.transform) {
               el.classList.add('moving-row');
               el.style.transform = '';
               setTimeout(() => {
-                if (el) { el.classList.remove('moving-row'); el.style.transform = ''; }
+                el.classList.remove('moving-row');
+                el.style.transform = '';
+                el.style.zIndex = '';
               }, 550);
             }
           });
@@ -16908,6 +16880,7 @@ html.theme-hazard .c-notif-badge-icon {
     if (isTeam) {
       siarkanPesanSync({ type: 'SET_TEAM_MODE', teamConfig: db.teamConfig });
     }
+  }
   }
 
   function tambahLogAktivitas(entitas, keterangan, tipe = 'system', poinAwal = null, poinAkhir = null, delta = null, isBroadcast = true) {
