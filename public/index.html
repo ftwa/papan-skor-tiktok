@@ -9771,7 +9771,7 @@ html.theme-hazard .c-notif-badge-icon {
     }
 
 
-    /* === TEAM PODIUM MULTI-AVATARS (DUO 2 AVATAR, SQUAD 4 AVATAR, ETC) === */
+    /* === TEAM PODIUM MULTI-AVATARS (ENLARGED & CLEAN) === */
     .team-podium-avatars-stage {
       width: 100%;
       height: 100%;
@@ -9780,7 +9780,7 @@ html.theme-hazard .c-notif-badge-icon {
       align-items: flex-end;
       justify-content: center;
       transform-origin: bottom center;
-      padding-bottom: 24px; /* Angkat avatar & name pill agar tidak tertabrak pedestal */
+      padding-bottom: 4px;
       box-sizing: border-box;
     }
     .rank-1 .team-podium-avatars-stage {
@@ -9810,14 +9810,14 @@ html.theme-hazard .c-notif-badge-icon {
       justify-content: center;
     }
 
-    /* DUO (2 AVATARS) */
+    /* DUO (2 AVATARS) - ENLARGED */
     .team-podium-avatars-stage.count-2 {
-      gap: 12px;
+      gap: 16px;
       padding: 0 4px;
     }
     .team-podium-avatars-stage.count-2 .team-avatar-slot {
       flex: 1;
-      max-width: 170px;
+      max-width: 185px;
     }
     .team-podium-avatars-stage.count-2 .team-avatar-slot.slot-0 {
       transform: perspective(600px) rotateY(4deg);
@@ -9826,40 +9826,40 @@ html.theme-hazard .c-notif-badge-icon {
       transform: perspective(600px) rotateY(-4deg);
     }
     .team-podium-avatars-stage.count-2 .team-3d-img {
-      max-height: 255px;
-      max-width: 155px;
+      max-height: 310px; /* Diperbesar signifikan */
+      max-width: 180px;
       object-fit: contain;
-      filter: drop-shadow(0 10px 18px rgba(0, 0, 0, 0.65)) drop-shadow(0 0 15px var(--team-glow, rgba(56, 189, 248, 0.5)));
+      filter: drop-shadow(0 12px 24px rgba(0, 0, 0, 0.7)) drop-shadow(0 0 20px var(--team-glow, rgba(56, 189, 248, 0.6)));
     }
     .rank-1 .team-podium-avatars-stage.count-2 .team-3d-img {
-      max-height: 290px;
-      max-width: 175px;
+      max-height: 345px; /* Juara 1 lebih besar dan megah */
+      max-width: 195px;
     }
     .team-podium-avatars-stage.count-2 .team-head-img {
-      width: 110px;
-      height: 110px;
+      width: 140px; /* Diperbesar dari 110px */
+      height: 140px;
       border-radius: 50%;
       object-fit: cover;
-      border: 3.5px solid #ffffff;
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6), 0 0 25px var(--team-glow, rgba(56, 189, 248, 0.6));
+      border: 4px solid #ffffff;
+      box-shadow: 0 10px 28px rgba(0, 0, 0, 0.65), 0 0 30px var(--team-glow, rgba(56, 189, 248, 0.6));
       background: rgba(15, 23, 42, 0.7);
-      margin-bottom: 6px;
+      margin-bottom: 12px;
     }
     .rank-1 .team-podium-avatars-stage.count-2 .team-head-img {
-      width: 125px;
-      height: 125px;
+      width: 165px; /* Diperbesar dari 125px */
+      height: 165px;
       border-color: #fde047;
     }
 
-    /* SQUAD (4 AVATARS) */
+    /* SQUAD (4 AVATARS) - ENLARGED */
     .team-podium-avatars-stage.count-4 {
-      gap: 4px;
+      gap: 5px;
       padding: 0 2px;
     }
     .team-podium-avatars-stage.count-4 .team-avatar-slot {
       flex: 1;
-      max-width: 90px;
-      margin: 0 -3px;
+      max-width: 105px;
+      margin: 0 -4px;
     }
     .team-podium-avatars-stage.count-4 .team-avatar-slot.slot-0 {
       order: 2; z-index: 4; transform: translateY(-4px) scale(1.05);
@@ -9874,38 +9874,38 @@ html.theme-hazard .c-notif-badge-icon {
       order: 4; z-index: 2; transform: translateY(6px) scale(0.92); opacity: 0.95;
     }
     .team-podium-avatars-stage.count-4 .team-3d-img {
-      max-height: 220px;
-      max-width: 92px;
+      max-height: 270px; /* Diperbesar dari 220px */
+      max-width: 105px;
       object-fit: contain;
-      filter: drop-shadow(0 6px 14px rgba(0, 0, 0, 0.6)) drop-shadow(0 0 10px var(--team-glow, rgba(56, 189, 248, 0.4)));
+      filter: drop-shadow(0 8px 18px rgba(0, 0, 0, 0.65)) drop-shadow(0 0 14px var(--team-glow, rgba(56, 189, 248, 0.5)));
     }
     .rank-1 .team-podium-avatars-stage.count-4 .team-3d-img {
-      max-height: 250px;
-      max-width: 102px;
+      max-height: 310px; /* Diperbesar dari 250px */
+      max-width: 118px;
     }
     .team-podium-avatars-stage.count-4 .team-head-img {
-      width: 72px;
-      height: 72px;
+      width: 90px; /* Diperbesar dari 72px */
+      height: 90px;
       border-radius: 50%;
       object-fit: cover;
-      border: 2.5px solid #ffffff;
-      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.6), 0 0 16px var(--team-glow, rgba(56, 189, 248, 0.5));
+      border: 3px solid #ffffff;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6), 0 0 20px var(--team-glow, rgba(56, 189, 248, 0.55));
       background: rgba(15, 23, 42, 0.7);
-      margin-bottom: 4px;
+      margin-bottom: 8px;
     }
     .rank-1 .team-podium-avatars-stage.count-4 .team-head-img {
-      width: 80px;
-      height: 80px;
+      width: 105px; /* Diperbesar dari 80px */
+      height: 105px;
       border-color: #fde047;
     }
 
     /* TRIO (3 AVATARS) */
     .team-podium-avatars-stage.count-3 {
-      gap: 6px;
+      gap: 8px;
     }
     .team-podium-avatars-stage.count-3 .team-avatar-slot {
       flex: 1;
-      max-width: 115px;
+      max-width: 125px;
     }
     .team-podium-avatars-stage.count-3 .team-avatar-slot.slot-0 {
       order: 2; z-index: 3; transform: scale(1.05);
@@ -9917,127 +9917,134 @@ html.theme-hazard .c-notif-badge-icon {
       order: 3; z-index: 2; transform: scale(0.95) translateY(4px);
     }
     .team-podium-avatars-stage.count-3 .team-3d-img {
-      max-height: 240px;
-      max-width: 115px;
+      max-height: 280px;
+      max-width: 125px;
       object-fit: contain;
     }
     .rank-1 .team-podium-avatars-stage.count-3 .team-3d-img {
-      max-height: 270px;
-      max-width: 125px;
+      max-height: 320px;
+      max-width: 140px;
     }
     .team-podium-avatars-stage.count-3 .team-head-img {
-      width: 88px;
-      height: 88px;
+      width: 110px;
+      height: 110px;
       border-radius: 50%;
       object-fit: cover;
-      border: 3px solid #ffffff;
+      border: 3.5px solid #ffffff;
     }
 
     /* 5V5 (5 AVATARS) */
     .team-podium-avatars-stage.count-5 {
-      gap: 2px;
+      gap: 3px;
     }
     .team-podium-avatars-stage.count-5 .team-avatar-slot {
       flex: 1;
-      max-width: 70px;
+      max-width: 80px;
     }
     .team-podium-avatars-stage.count-5 .team-3d-img {
-      max-height: 195px;
-      max-width: 70px;
+      max-height: 240px;
+      max-width: 80px;
       object-fit: contain;
     }
     .team-podium-avatars-stage.count-5 .team-head-img {
-      width: 58px;
-      height: 58px;
+      width: 70px;
+      height: 70px;
       border-radius: 50%;
     }
 
     /* Empty Avatar Slot Circle */
     .team-avatar-empty-circle {
-      width: 72px;
-      height: 72px;
+      width: 85px;
+      height: 85px;
       border-radius: 50%;
       border: 2px dashed rgba(255, 255, 255, 0.3);
       background: rgba(15, 23, 42, 0.45);
       display: flex;
       align-items: center;
       justify-content: center;
-      margin-bottom: 6px;
+      margin-bottom: 8px;
     }
     .count-2 .team-avatar-empty-circle {
-      width: 105px;
-      height: 105px;
+      width: 135px;
+      height: 135px;
+      margin-bottom: 12px;
     }
     .team-avatar-empty-icon {
-      font-size: 32px;
+      font-size: 38px;
       opacity: 0.4;
     }
-
-    /* Avatar Tag Pills */
-    .team-avatar-tag-pill {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 4px;
-      background: rgba(15, 23, 42, 0.92);
-      border: 1.5px solid rgba(255, 255, 255, 0.35);
-      border-radius: 20px;
-      padding: 3px 8px;
-      font-size: 11.5px;
-      font-weight: 800;
-      color: #f8fafc;
-      backdrop-filter: blur(8px);
-      white-space: nowrap;
-      max-width: 140px;
-      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.7);
-      margin-top: 5px;
-      margin-bottom: 4px;
-      z-index: 12;
-      position: relative;
-    }
-    .count-4 .team-avatar-tag-pill {
-      max-width: 82px;
-      padding: 2px 5px;
-      font-size: 9px;
-      gap: 2px;
-    }
-    .count-5 .team-avatar-tag-pill {
-      max-width: 65px;
-      padding: 2px 4px;
-      font-size: 8.5px;
-    }
-    .team-avatar-tag-pill .team-avatar-name {
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-    }
-    .team-avatar-tag-pill .team-avatar-pts {
-      color: #38bdf8;
-      font-size: 0.9em;
-      flex-shrink: 0;
+    .count-2 .team-avatar-empty-icon {
+      font-size: 48px;
     }
 
     .team-avatar-crown {
       position: absolute;
-      top: -16px;
-      font-size: 22px;
-      filter: drop-shadow(0 0 8px #f59e0b);
+      top: -18px;
+      font-size: 26px;
+      filter: drop-shadow(0 0 10px #f59e0b);
       z-index: 10;
       animation: bounceMini 1.5s infinite;
     }
 
-    /* Comic theme overrides */
-    html.theme-comic .team-avatar-tag-pill {
-      background: #fde047 !important;
-      color: #000000 !important;
-      border: 2.5px solid #000000 !important;
-      box-shadow: 3px 3px 0px #000000 !important;
-      font-family: 'Bangers', cursive !important;
-      font-size: 13px !important;
+    /* === STACKED PLAYERS LIST UNDER TEAM NAME (NAMA TIM -> PLAYER 1 -> PLAYER 2) === */
+    .team-podium-players-list {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      margin: 6px 0 10px 0;
     }
-    html.theme-comic .count-4 .team-avatar-tag-pill {
-      font-size: 10.5px !important;
-      box-shadow: 2px 2px 0px #000000 !important;
+    .team-podium-player-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      width: 90%;
+      max-width: 230px;
+      background: rgba(15, 23, 42, 0.65);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 8px;
+      padding: 4px 12px;
+      box-sizing: border-box;
+      backdrop-filter: blur(6px);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.35);
+    }
+    .team-podium-player-name {
+      font-size: 13px;
+      font-weight: 800;
+      color: #f8fafc;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .team-podium-player-pts {
+      font-size: 11.5px;
+      font-weight: 800;
+      color: #38bdf8;
+      font-family: 'JetBrains Mono', monospace;
+      flex-shrink: 0;
+    }
+
+    /* Comic theme overrides */
+    html.theme-comic .team-podium-player-item {
+      background: #ffffff !important;
+      border: 2px solid #000000 !important;
+      box-shadow: 2.5px 2.5px 0px #000000 !important;
+      border-radius: 6px !important;
+      padding: 3px 10px !important;
+    }
+    html.theme-comic .team-podium-player-name {
+      color: #000000 !important;
+      font-family: 'Bangers', cursive !important;
+      font-size: 15px !important;
+      letter-spacing: 0.5px !important;
+    }
+    html.theme-comic .team-podium-player-pts {
+      color: #dc2626 !important;
+      font-family: 'Bangers', cursive !important;
+      font-size: 14px !important;
     }
     html.theme-comic .team-head-img {
       border: 3.5px solid #000000 !important;
@@ -10049,11 +10056,20 @@ html.theme-hazard .c-notif-badge-icon {
     }
 
     /* Arcade theme overrides */
-    html.theme-arcade .team-avatar-tag-pill {
-      font-family: 'Press Start 2P', monospace !important;
-      font-size: 7.5px !important;
-      border-color: #00f0ff !important;
+    html.theme-arcade .team-podium-player-item {
       background: #11052c !important;
+      border: 1.5px solid #00f0ff !important;
+      box-shadow: 2px 2px 0px #ff007f !important;
+      border-radius: 0px !important;
+    }
+    html.theme-arcade .team-podium-player-name {
+      font-family: 'Press Start 2P', monospace !important;
+      font-size: 8px !important;
+      color: #ffffff !important;
+    }
+    html.theme-arcade .team-podium-player-pts {
+      font-family: 'Press Start 2P', monospace !important;
+      font-size: 8px !important;
       color: #00f0ff !important;
     }
 
@@ -15148,10 +15164,6 @@ html.theme-hazard .c-notif-badge-icon {
               </div>
             `}
           </div>
-          <div class="team-avatar-tag-pill" title="${escapeHtml(m.name)}: ${m.poin} pts">
-            <span class="team-avatar-name">${escapeHtml(m.name)}</span>
-            <span class="team-avatar-pts">${m.poin}P</span>
-          </div>
         </div>
       `;
     }).join('');
@@ -15249,13 +15261,10 @@ html.theme-hazard .c-notif-badge-icon {
           nameEl.innerHTML = `<span style="display:inline-flex; align-items:center; gap:6px; justify-content:center; max-width:100%;"><span style="font-size:1.15em;">${teamIcon}</span> <span style="color:${escapeHtml(teamColor)}; filter:drop-shadow(0 0 10px ${escapeHtml(teamColor)}55);">${escapeHtml(teamName)}</span></span>`;
         }
 
+        // Tidak usah ada teks MVP di bawah nama tim
         if (nickEl) {
-          let subText = pData.chairRange || `${pData.membersCount || ''} Pemain`;
-          if (pData.mvpName) {
-            subText = `👑 MVP: @${pData.mvpUser ? pData.mvpUser.replace(/^@+/,'') : pData.mvpName} (${pData.mvpPoin} pts)`;
-          }
-          nickEl.innerText = subText;
-          nickEl.title = pData.chairRange || '';
+          nickEl.style.display = 'none';
+          nickEl.innerText = '';
         }
 
         if (scoreEl) scoreEl.innerText = scoreVal;
@@ -15266,16 +15275,23 @@ html.theme-hazard .c-notif-badge-icon {
           else if (rank === 3) ribbonEl.innerHTML = `🥉 3RD TEAM PLACE`;
         }
 
+        // Susun nama player secara vertikal di bawah nama tim:
+        // Nama Tim
+        // Player 1
+        // Player 2
         if (membersRow) {
           if (pData.teamMembers && pData.teamMembers.length > 0) {
             membersRow.style.display = 'flex';
-            membersRow.innerHTML = pData.teamMembers.slice(0, 5).map(m => `
-              <div class="win-member-chip" title="${escapeHtml(m.name)}: ${m.poin} pts">
-                ${m.avatar ? `<img src="${escapeHtml(m.avatar)}" class="win-member-chip-img" onerror="this.style.display='none';">` : ''}
-                <span class="win-member-chip-name">${escapeHtml(m.name.length > 8 ? m.name.slice(0,7)+'…' : m.name)}</span>
-                <span class="win-member-chip-pts">${m.poin}</span>
+            membersRow.innerHTML = `
+              <div class="team-podium-players-list">
+                ${pData.teamMembers.map(m => `
+                  <div class="team-podium-player-item">
+                    <span class="team-podium-player-name">${escapeHtml(m.name)}</span>
+                    <span class="team-podium-player-pts">${m.poin} pts</span>
+                  </div>
+                `).join('')}
               </div>
-            `).join('');
+            `;
           } else {
             membersRow.style.display = 'none';
             membersRow.innerHTML = '';
@@ -15292,6 +15308,7 @@ html.theme-hazard .c-notif-badge-icon {
 
         if (nameEl) nameEl.innerText = namaDisplay;
         if (nickEl) {
+          nickEl.style.display = '';
           nickEl.innerText = usernameTag;
           nickEl.title = '';
         }
