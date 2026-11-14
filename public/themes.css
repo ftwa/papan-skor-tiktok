@@ -16,7 +16,25 @@ html.theme-comic .center-notif-popup.show {
   visibility: visible !important;
   pointer-events: auto !important;
   transform: translate(-50%, -50%) rotate(-2deg) scale(1) !important;
-  animation: comicBoomPop 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards !important;
+  animation: comicBoomPop 0.32s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards, comicActiveWobble 2.4s ease-in-out 0.32s infinite alternate !important;
+}
+@keyframes comicActiveWobble {
+  0% {
+    transform: translate(-50%, -50%) rotate(-2deg) scale(1);
+  }
+  50% {
+    transform: translate(-50%, calc(-50% - 6px)) rotate(-0.5deg) scale(1.02);
+  }
+  100% {
+    transform: translate(-50%, -50%) rotate(-3.5deg) scale(0.99);
+  }
+}
+html.theme-comic .center-notif-popup.show .c-notif-pts-box {
+  animation: comicPtsBounce 1.6s ease-in-out infinite alternate !important;
+}
+@keyframes comicPtsBounce {
+  0% { transform: scale(1) rotate(0deg); }
+  100% { transform: scale(1.04) rotate(1.5deg); }
 }
 html.theme-comic .center-notif-popup .c-notif-tag {
   color: #000000 !important;
@@ -480,7 +498,25 @@ html.theme-comic .c-notif-pts-total {
    PODIUM JUARA MEGAH KHUSUS TEMA (comic)
    ============================================================================== */
 html.theme-comic #winnerOverlay {
+  background-color: #f97316 !important;
   background: radial-gradient(circle at center, #fde047 0%, #ea580c 100%) !important;
+}
+html.theme-comic .winner-title {
+  font-family: 'Bangers', cursive !important;
+  font-size: 54px !important;
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+  -webkit-background-clip: unset !important;
+  background: none !important;
+  text-shadow: 4px 4px 0px #000000, -3px -3px 0px #000000, 3px -3px 0px #000000, -3px 3px 0px #000000, 0px 4px 0px #000000, 4px 0px 0px #000000 !important;
+}
+html.theme-comic .podium-card,
+html.theme-comic .podium-card.rank-1,
+html.theme-comic .podium-card.rank-2,
+html.theme-comic .podium-card.rank-3 {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
 }
 html.theme-comic .podium-pedestal-step {
   background: #ffffff !important;
@@ -4509,6 +4545,23 @@ html.theme-hazard .c-notif-badge-icon {
   100% { transform: scale(1) rotate(-1.5deg); opacity: 1; }
 }
 
+@keyframes comicModalFloatWobble {
+  0% {
+    transform: scale(1) rotate(-1.5deg) translateY(0px);
+  }
+  50% {
+    transform: scale(1.01) rotate(-0.5deg) translateY(-4px);
+  }
+  100% {
+    transform: scale(0.995) rotate(-2.2deg) translateY(2px);
+  }
+}
+
+@keyframes comicBadgeWiggle {
+  0%, 100% { transform: rotate(5deg) scale(1); }
+  50% { transform: rotate(11deg) scale(1.08); }
+}
+
 html.theme-comic #modalInputNama .modal-box-hud {
   background: #fffdf0 !important;
   background-image: radial-gradient(#cbd5e1 1.5px, transparent 1.5px) !important;
@@ -4518,7 +4571,7 @@ html.theme-comic #modalInputNama .modal-box-hud {
   box-shadow: 12px 12px 0px #000000 !important;
   color: #000000 !important;
   transform: rotate(-1.5deg) !important;
-  animation: comicModalBounce 0.28s cubic-bezier(0.175, 0.885, 0.32, 1.275) !important;
+  animation: comicModalBounce 0.28s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards, comicModalFloatWobble 3.2s ease-in-out 0.28s infinite alternate !important;
   padding: 16px 20px !important;
   position: relative !important;
 }
@@ -4532,6 +4585,7 @@ html.theme-comic #modalInputNama .modal-chair-badge-icon {
   font-size: 26px !important;
   transform: rotate(5deg) !important;
   margin-top: -24px !important;
+  animation: comicBadgeWiggle 2.2s ease-in-out infinite !important;
 }
 html.theme-comic #modalInputNama .modal-header-hud {
   border-bottom: 3.5px solid #000000 !important;
