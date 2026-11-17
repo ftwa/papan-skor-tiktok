@@ -5974,8 +5974,9 @@ html.mode-tabel, html.mode-tabel body,
 html.mode-notif, html.mode-notif body,
 html.mode-log, html.mode-log body,
 html.mode-podium, html.mode-podium body,
+html.mode-timer, html.mode-timer body,
 html[class*="mode-"], html[class*="mode-"] body,
-body.mode-tabel, body.mode-notif, body.mode-log, body.mode-podium,
+body.mode-tabel, body.mode-notif, body.mode-log, body.mode-podium, body.mode-timer,
 body[class*="mode-"],
 html[class*="theme-"][class*="mode-"],
 html[class*="theme-"][class*="mode-"] body,
@@ -5983,7 +5984,10 @@ html[class*="theme-"] body[class*="mode-"],
 html[class*="theme-"].mode-tabel body,
 html[class*="theme-"].mode-notif body,
 html[class*="theme-"].mode-log body,
-html[class*="theme-"].mode-podium body {
+html[class*="theme-"].mode-podium body,
+html[class*="theme-"].mode-timer body,
+html.theme-comic.mode-timer body,
+html.theme-comic body.mode-timer {
   background: transparent !important;
   background-color: transparent !important;
   background-image: none !important;
@@ -5996,12 +6000,22 @@ html[class*="theme-"][class*="mode-"] .container,
 html.mode-tabel .container,
 html.mode-notif .container,
 html.mode-log .container,
-html.mode-podium .container {
+html.mode-podium .container,
+html.mode-timer .container,
+html.theme-comic.mode-timer .container {
   background: transparent !important;
   background-color: transparent !important;
   background-image: none !important;
   border: none !important;
   box-shadow: none !important;
+}
+html.mode-timer body::before,
+html.theme-comic.mode-timer body::before,
+html[class*="theme-"].mode-timer body::before,
+html.mode-timer .container::before {
+  display: none !important;
+  content: none !important;
+  background: none !important;
 }
 
 /* Di mode overlay tabel, sembunyikan semua elemen admin */
