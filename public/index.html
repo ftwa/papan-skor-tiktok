@@ -10100,7 +10100,7 @@ html.theme-hazard .c-notif-badge-icon {
 
   </style>
 
-<link rel="stylesheet" href="themes.css?v=20261118_0455">
+<link rel="stylesheet" href="themes.css?v=20261118_0458">
 
 </head>
 
@@ -12186,11 +12186,15 @@ html.theme-hazard .c-notif-badge-icon {
 
         if (currentViewMode === 'tabel') {
 
+          const prevFlip = rekamPosisiKartuPemain();
+
           if (prevTeamEnabled !== nextTeamEnabled || prevTeamSize !== nextTeamSize) {
             inisialisasiStrukturTabel();
           }
 
           renderIsiTabel();
+
+          jalankanAnimasiFlipKartu(prevFlip);
 
           autoScaleTabel();
 
@@ -17354,17 +17358,85 @@ html.theme-hazard .c-notif-badge-icon {
     }
   }
 
+  function rekamPosisiKartuPemain() {
+    const map = new Map();
+    const currData = getActiveData();
+    if (!currData || !currData.players) return map;
+    currData.players.forEach((p, idx) => {
+      if (!p || !p.id) return;
+      const el = document.getElementById(`row-kursi-${idx}`);
+      if (el) {
+        el.classList.remove('moving-row', 'moving-card-spring', 'card-overtake-up', 'card-overtake-down');
+        el.style.transform = '';
+        el.style.transition = '';
+        map.set(p.id, { rect: el.getBoundingClientRect(), idx });
+      }
+    });
+    return map;
+  }
+
+  function jalankanAnimasiFlipKartu(prevMap) {
+    if (!prevMap || prevMap.size === 0) return;
+    const currData = getActiveData();
+    if (!currData || !currData.players) return;
+
+    requestAnimationFrame(() => {
+      const movedCards = [];
+      currData.players.forEach((p, idx) => {
+        if (!p || !p.id || !prevMap.has(p.id)) return;
+        const el = document.getElementById(`row-kursi-${idx}`);
+        if (!el) return;
+        const prev = prevMap.get(p.id);
+        const curr = el.getBoundingClientRect();
+        const dx = prev.rect.left - curr.left;
+        const dy = prev.rect.top - curr.top;
+        if (Math.abs(dy) > 2 || Math.abs(dx) > 2) {
+          const climbedUp = idx < prev.idx;
+          el.style.transition = 'none';
+          el.style.transform = climbedUp
+            ? `translate(${dx}px, ${dy}px) scale(1.08) rotate(-3deg)`
+            : `translate(${dx}px, ${dy}px) scale(0.96)`;
+          el.style.zIndex = climbedUp ? '45' : '5';
+          movedCards.push({ el, climbedUp, isNewKing: climbedUp && idx === 0 });
+        }
+      });
+
+      if (movedCards.length > 0) {
+        document.body.offsetHeight;
+        requestAnimationFrame(() => {
+          movedCards.forEach(({ el, climbedUp, isNewKing }) => {
+            el.style.transition = '';
+            el.classList.add('moving-card-spring');
+            if (climbedUp) {
+              el.classList.add('card-overtake-up');
+              const existingPill = el.querySelector('.overtake-rank-pill');
+              if (existingPill) existingPill.remove();
+              const pill = document.createElement('div');
+              pill.className = 'overtake-rank-pill';
+              pill.innerText = isNewKing ? '👑 NEW #1!' : '🚀 NAIK!';
+              el.appendChild(pill);
+              setTimeout(() => { if (pill.parentNode) pill.remove(); }, 950);
+            } else {
+              el.classList.add('card-overtake-down');
+            }
+            el.style.transform = '';
+            setTimeout(() => {
+              el.classList.remove('moving-card-spring', 'card-overtake-up', 'card-overtake-down');
+              el.style.transform = '';
+              el.style.zIndex = '';
+            }, 760);
+          });
+        });
+      }
+    });
+  }
+
   function urutkanOtomatis() {
     const currData = getActiveData();
     const isTeam = !!(db.teamConfig && db.teamConfig.enabled && db.teamConfig.teams && db.teamConfig.teams.length > 0);
 
-    // 1. Rekam koordinat awal semua elemen baris untuk animasi FLIP (First, Last, Invert, Play)
-    const prevRects = new Map();
-    document.querySelectorAll('.team-divider-row, tbody tr[id^="row-kursi-"]').forEach(el => {
-      el.classList.remove('moving-row');
-      el.style.transform = '';
-      prevRects.set(el.id, el.getBoundingClientRect());
-    });
+    // 1. Rekam posisi awal berdasarkan identitas pemain (p.id) sebelum urutan diubah
+    const prevFlipMap = rekamPosisiKartuPemain();
 
     const punyaIsi = (p) => Boolean((p.user && p.user.trim()) || (p.robloxUser && p.robloxUser.trim()) || (p.nick && p.nick.trim()) || (p.poin && p.poin > 0));
     currData.players.forEach(p => { p.isReady = punyaIsi(p); });
@@ -17428,41 +17500,8 @@ html.theme-hazard .c-notif-badge-icon {
     simpanDB();
     renderIsiTabel();
 
-    // 2. Eksekusi Animasi Pergeseran FLIP (biar bergeser mulus dan terlihat jelas)
-    requestAnimationFrame(() => {
-      let anyMoved = false;
-      document.querySelectorAll('.team-divider-row, tbody tr[id^="row-kursi-"]').forEach(el => {
-        if (prevRects.has(el.id)) {
-          const prev = prevRects.get(el.id);
-          const curr = el.getBoundingClientRect();
-          const dy = prev.top - curr.top;
-          const dx = prev.left - curr.left;
-          if (Math.abs(dy) > 1 || Math.abs(dx) > 1) {
-            el.style.transform = `translate(${dx}px, ${dy}px)`;
-            el.style.transition = 'none';
-            el.style.zIndex = '15';
-            anyMoved = true;
-          }
-        }
-      });
-
-      if (anyMoved) {
-        document.body.offsetHeight; // Force reflow
-        requestAnimationFrame(() => {
-          document.querySelectorAll('.team-divider-row, tbody tr[id^="row-kursi-"]').forEach(el => {
-            if (el.style.transform) {
-              el.classList.add('moving-row');
-              el.style.transform = '';
-              setTimeout(() => {
-                el.classList.remove('moving-row');
-                el.style.transform = '';
-                el.style.zIndex = '';
-              }, 550);
-            }
-          });
-        });
-      }
-    });
+    // 2. Eksekusi Animasi Pergeseran FLIP Spring 3D berdasarkan posisi pemain sebelumnya
+    jalankanAnimasiFlipKartu(prevFlipMap);
 
     if (isTeam) {
       siarkanPesanSync({ type: 'SET_TEAM_MODE', teamConfig: db.teamConfig });
