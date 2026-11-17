@@ -10100,7 +10100,7 @@ html.theme-hazard .c-notif-badge-icon {
 
   </style>
 
-<link rel="stylesheet" href="themes.css?v=20261118_0450">
+<link rel="stylesheet" href="themes.css?v=20261118_0455">
 
 </head>
 
@@ -17248,7 +17248,9 @@ html.theme-hazard .c-notif-badge-icon {
       if (cellRoblox) {
         cellRoblox.onclick = () => bukaModalInputNama(idx);
         const avHtml = renderAvatarHtml(p.avatar, p.nick || p.user);
-        const nickHtml = `<span class="name-roblox-display ${!p.nick ? 'name-empty' : ''}">${p.nick || '-'}</span>`;
+        const displayText = p.nick || p.user || p.robloxUser || '(Kosong)';
+        const isDisplayEmpty = !(p.nick || p.user || p.robloxUser);
+        const nickHtml = `<span class="name-roblox-display ${isDisplayEmpty ? 'name-empty' : ''}">${displayText}</span>`;
         cellRoblox.innerHTML = `
           <div style="display:flex; align-items:center; gap:6px;">
             <div class="avatar-wrap">${avHtml}</div>
