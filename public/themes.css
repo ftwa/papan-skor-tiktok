@@ -7592,3 +7592,16 @@ html:not(.mode-admin) #quickPointPopover,
 html:not(.mode-admin) .in-card-flip-panel {
   display: none !important;
 }
+html.theme-comic #winnerOverlay .winner-gojo-aura,
+#winnerOverlay .winner-gojo-aura,
+.aura-rank-1, .aura-rank-2, .aura-rank-3 {
+  display: none !important;
+  opacity: 0 !important;
+  background: none !important;
+  box-shadow: none !important;
+}
+html.theme-comic #winnerOverlay .winner-3d-body-wrap,
+html.theme-comic #winnerOverlay .winner-3d-body-wrap img {
+  filter: none !important;
+  box-shadow: none !important;
+}
