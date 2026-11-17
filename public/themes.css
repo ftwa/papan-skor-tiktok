@@ -7578,7 +7578,8 @@ html.mode-timer .dtb-digits { cursor: default !important; }
 /* ========================================================= */
 /* AWARDS RANKING 3D CYLINDRICAL PODIUM OVERLAY              */
 /* ========================================================= */
-html.theme-comic #winnerOverlay {
+html.theme-comic body.theme-comic #winnerOverlay.winner-overlay,
+html.theme-comic #winnerOverlay.winner-overlay {
   background: radial-gradient(circle at 50% 20%, #881313 0%, #3b0712 52%, #0c0410 100%) !important;
   background-image: radial-gradient(circle at 50% 20%, #881313 0%, #3b0712 52%, #0c0410 100%) !important;
 }
@@ -7586,9 +7587,11 @@ html.mode-podium,
 html.mode-podium body,
 html.theme-comic.mode-podium,
 html.theme-comic.mode-podium body,
-html.theme-comic.mode-podium #winnerOverlay,
-html.mode-podium #winnerOverlay {
+html.theme-comic.mode-podium body.mode-podium #winnerOverlay.winner-overlay,
+html.theme-comic.mode-podium #winnerOverlay.winner-overlay,
+html.mode-podium #winnerOverlay.winner-overlay {
   background: transparent !important;
+  background-color: transparent !important;
   background-image: none !important;
 }
 html.theme-comic #winnerOverlay .winner-light-beams {
