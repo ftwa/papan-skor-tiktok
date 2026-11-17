@@ -10100,7 +10100,7 @@ html.theme-hazard .c-notif-badge-icon {
 
   </style>
 
-<link rel="stylesheet" href="themes.css?v=20261118_0445">
+<link rel="stylesheet" href="themes.css?v=20261118_0450">
 
 </head>
 
@@ -17229,7 +17229,7 @@ html.theme-hazard .c-notif-badge-icon {
         : '';
 
       const badgePayHtml = adaPemain
-        ? `<span class="pay-status-tag ${p.isPaid ? 'done' : 'ready'}" onclick="togglePayStatus(${idx}, event)" title="Klik untuk ganti status">${p.isPaid ? '✔' : '— READY'}</span>${colorIconHtml}`
+        ? `<span class="pay-status-tag ${p.isPaid ? 'done' : 'ready'}" onclick="togglePayStatus(${idx}, event)" title="Klik untuk ganti status">${p.isPaid ? '✔' : '-'}</span>${colorIconHtml}`
         : '';
 
       const cellNama = tr.querySelector('.cell-nama-target');
