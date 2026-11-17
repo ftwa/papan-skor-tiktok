@@ -10060,7 +10060,7 @@ html.theme-hazard .c-notif-badge-icon {
 
   </style>
 
-<link rel="stylesheet" href="themes.css?v=20261118_0418">
+<link rel="stylesheet" href="themes.css?v=20261118_0425">
 
 </head>
 
@@ -10428,11 +10428,14 @@ html.theme-hazard .c-notif-badge-icon {
 
   <div class="c-notif-top-deco" id="cNotifTopDeco"></div>
 
-  <div class="c-notif-badge-icon" id="cNotifBadgeIcon">⚡</div>
+  <div class="c-notif-avatar-box" id="cNotifAvatarBox">
+    <div class="c-notif-badge-icon" id="cNotifBadgeIcon">💥</div>
+  </div>
 
-  <span class="c-notif-tag" id="cNotifTag">UPDATE POIN</span>
-
-  <div class="c-notif-name" id="cNotifPlayer">NAMA PEMAIN</div>
+  <div class="c-notif-mid-col">
+    <span class="c-notif-tag" id="cNotifTag">UPDATE POIN</span>
+    <div class="c-notif-name" id="cNotifPlayer">NAMA PEMAIN</div>
+  </div>
 
   <div class="c-notif-pts-box">
 
@@ -12170,7 +12173,7 @@ html.theme-hazard .c-notif-badge-icon {
 
       if (currentViewMode === 'notif') {
 
-        tampilkanPopupPoinTengah(msg.namaPemain, msg.deltaPoin, msg.totalPoin, msg.labelAtas, msg.warnaTag, false);
+        tampilkanPopupPoinTengah(msg.namaPemain, msg.deltaPoin, msg.totalPoin, msg.labelAtas, msg.warnaTag, false, msg.avatarUrl || '');
 
       }
 
@@ -13224,7 +13227,7 @@ html.theme-hazard .c-notif-badge-icon {
       if (t && t.color) warnaPopup = t.color;
     }
 
-    if (selisih !== 0) tampilkanPopupPoinTengah(namaTampil, selisih, p.poin, "TAMBAH POIN", warnaPopup);
+    if (selisih !== 0) tampilkanPopupPoinTengah(namaTampil, selisih, p.poin, "TAMBAH POIN", warnaPopup, true, p.avatar || '');
 
 
 
@@ -13321,7 +13324,7 @@ html.theme-hazard .c-notif-badge-icon {
 
 
 
-  function tampilkanPopupPoinTengah(namaPemain, deltaPoin, totalPoin, labelAtas = "UPDATE POIN", warnaTag = "", isBroadcast = true) {
+  function tampilkanPopupPoinTengah(namaPemain, deltaPoin, totalPoin, labelAtas = "UPDATE POIN", warnaTag = "", isBroadcast = true, avatarUrl = '') {
 
     // 100% BLOKIR di mode-tabel: Notifikasi hanya tampil di overlay tersendiri (?view=notif)
 
@@ -13337,7 +13340,16 @@ html.theme-hazard .c-notif-badge-icon {
 
     const badgeEl = document.getElementById('cNotifBadgeIcon');
 
-    if (badgeEl) badgeEl.innerText = ICON_TEMA_MAP[temaAktif] || '⚡';
+    const avBox = document.getElementById('cNotifAvatarBox');
+    if (avBox) {
+      if (avatarUrl) {
+        avBox.innerHTML = `<img src="${avatarUrl}" class="c-notif-avatar-img" alt="Avatar">`;
+      } else {
+        avBox.innerHTML = `<div class="c-notif-badge-icon" id="cNotifBadgeIcon">${ICON_TEMA_MAP[temaAktif] || '💥'}</div>`;
+      }
+    } else if (badgeEl) {
+      badgeEl.innerText = ICON_TEMA_MAP[temaAktif] || '💥';
+    }
 
 
 
@@ -13411,7 +13423,9 @@ html.theme-hazard .c-notif-badge-icon {
 
         labelAtas: labelAtas,
 
-        warnaTag: warnaTag
+        warnaTag: warnaTag,
+
+        avatarUrl: avatarUrl
 
       });
 
