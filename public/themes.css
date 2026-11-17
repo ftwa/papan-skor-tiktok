@@ -6197,7 +6197,7 @@ html.mode-tabel.theme-comic .grid-tables,
   line-height: 1.3 !important;
 }
 
-/* Collectible Trading Card Item */
+/* Collectible Trading Card Item — #4 Podium Glory (Gold/Silver/Bronze) + RGB */
 .grid-tables tbody tr[id^="row-kursi-"] {
   display: flex !important;
   flex-direction: column !important;
@@ -6206,34 +6206,62 @@ html.mode-tabel.theme-comic .grid-tables,
   min-height: 208px !important;
   padding: 10px 8px 8px !important;
   border-radius: 14px !important;
-  background: linear-gradient(165deg, #ffffff 0%, #fffbeb 100%) !important;
-  border: 3.5px solid #000000 !important;
-  box-shadow: 4px 4px 0px #000000 !important;
+  background: #ffffff !important;
+  border: 3.5px solid var(--card-rgb, #06b6d4) !important;
+  box-shadow: 0 0 12px color-mix(in srgb, var(--card-rgb, #06b6d4) 48%, transparent), 4px 4px 0px #000000 !important;
   transition: transform 0.16s ease, box-shadow 0.16s ease !important;
   overflow: hidden !important;
 }
 
+/* Vibrant RGB Border Cycle for Seats #4–#20 */
+#bodyLeft tr[id^="row-kursi-"]:nth-child(8n+1),
+#bodyRight tr[id^="row-kursi-"]:nth-child(8n+1) { --card-rgb: #06b6d4; }
+#bodyLeft tr[id^="row-kursi-"]:nth-child(8n+2),
+#bodyRight tr[id^="row-kursi-"]:nth-child(8n+2) { --card-rgb: #ec4899; }
+#bodyLeft tr[id^="row-kursi-"]:nth-child(8n+3),
+#bodyRight tr[id^="row-kursi-"]:nth-child(8n+3) { --card-rgb: #22c55e; }
+#bodyLeft tr[id^="row-kursi-"]:nth-child(8n+4),
+#bodyRight tr[id^="row-kursi-"]:nth-child(8n+4) { --card-rgb: #a855f7; }
+#bodyLeft tr[id^="row-kursi-"]:nth-child(8n+5),
+#bodyRight tr[id^="row-kursi-"]:nth-child(8n+5) { --card-rgb: #ef4444; }
+#bodyLeft tr[id^="row-kursi-"]:nth-child(8n+6),
+#bodyRight tr[id^="row-kursi-"]:nth-child(8n+6) { --card-rgb: #3b82f6; }
+#bodyLeft tr[id^="row-kursi-"]:nth-child(8n+7),
+#bodyRight tr[id^="row-kursi-"]:nth-child(8n+7) { --card-rgb: #f97316; }
+#bodyLeft tr[id^="row-kursi-"]:nth-child(8n+8),
+#bodyRight tr[id^="row-kursi-"]:nth-child(8n+8) { --card-rgb: #eab308; }
+
 .grid-tables tbody tr[id^="row-kursi-"]:hover {
-  background: linear-gradient(165deg, #ecfeff 0%, #ffffff 100%) !important;
-  box-shadow: 6px 6px 0px #000000 !important;
+  box-shadow: 0 0 18px color-mix(in srgb, var(--card-rgb, #06b6d4) 75%, transparent), 6px 6px 0px #000000 !important;
 }
 
-/* Glowing Team Color Border & Aura */
+/* Glowing Team Color Border & Aura (overrides RGB when Team Mode active) */
 .grid-tables tbody tr[id^="row-kursi-"].has-team {
   border: 3.5px solid var(--row-team-color, #000000) !important;
   box-shadow: 0 0 14px var(--row-team-color, #fde047), 0 0 4px var(--row-team-color, #fde047), 4px 4px 0px #000000 !important;
 }
 
-/* Leader / Rank 1 Highlight */
-.grid-tables tbody tr[id^="row-kursi-"].is-leader,
+/* Podium Glory: Rank #1 Gold, #2 Silver, #3 Bronze */
 .grid-tables tbody tr[id^="row-kursi-"].rank-1-row {
-  background: linear-gradient(165deg, #fef08a 0%, #fde047 100%) !important;
-  box-shadow: 0 0 18px rgba(250, 204, 21, 0.85), 5px 5px 0px #000000 !important;
+  background: linear-gradient(165deg, #fef9c3 0%, #fde047 100%) !important;
+  border: 3.5px solid #eab308 !important;
+  box-shadow: 0 0 20px rgba(250, 204, 21, 0.85), 5px 5px 0px #000000 !important;
+}
+.grid-tables tbody tr[id^="row-kursi-"].rank-2-row {
+  background: linear-gradient(165deg, #ffffff 0%, #e2e8f0 100%) !important;
+  border: 3.5px solid #94a3b8 !important;
+  box-shadow: 0 0 16px rgba(148, 163, 184, 0.75), 5px 5px 0px #000000 !important;
+}
+.grid-tables tbody tr[id^="row-kursi-"].rank-3-row {
+  background: linear-gradient(165deg, #fff7ed 0%, #fed7aa 100%) !important;
+  border: 3.5px solid #ea580c !important;
+  box-shadow: 0 0 16px rgba(234, 88, 12, 0.65), 5px 5px 0px #000000 !important;
 }
 
 /* Host Card Accent */
 .grid-tables tbody tr.host-row {
-  background: linear-gradient(165deg, #fff7ed 0%, #ffedd5 100%) !important;
+  background: linear-gradient(165deg, #ffffff 0%, #f8fafc 100%) !important;
+  border-style: dashed !important;
 }
 
 /* Color Tag Card Overrides */
