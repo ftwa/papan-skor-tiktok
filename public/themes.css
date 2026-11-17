@@ -6332,11 +6332,14 @@ html.theme-comic .grid-tables tbody tr[id^="row-kursi-"] .avatar-placeholder {
   font-size: 32px !important;
 }
 
-.grid-tables tbody tr[id^="row-kursi-"] > td.cell-roblox-target .name-roblox-display {
+html.theme-comic .grid-tables tbody tr[id^="row-kursi-"] > td.cell-roblox-target .name-roblox-display {
   display: block !important;
   max-width: 100% !important;
-  font-size: 13px !important;
-  font-weight: 800 !important;
+  font-size: 16px !important;
+  font-weight: 900 !important;
+  line-height: 1.2 !important;
+  color: #0f172a !important;
+  opacity: 1 !important;
   text-align: center !important;
   overflow: hidden !important;
   text-overflow: ellipsis !important;
@@ -6425,9 +6428,10 @@ html.theme-comic .grid-tables tbody tr[id^="row-kursi-"] .avatar-placeholder {
 }
 
 .grid-tables tbody tr.host-row #hostRobloxTag {
-  color: #475569 !important;
-  font-size: 13px !important;
-  font-weight: 800 !important;
+  color: #0f172a !important;
+  font-size: 15px !important;
+  font-weight: 900 !important;
+  opacity: 1 !important;
   max-width: 100% !important;
 }
 
