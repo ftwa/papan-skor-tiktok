@@ -67,16 +67,6 @@
 
         document.documentElement.classList.add('mode-admin');
 
-        try {
-
-          if (!localStorage.getItem('scoreboard_auth_user_v1')) {
-
-            document.documentElement.classList.add('auth-locked');
-
-          }
-
-        } catch (_) {}
-
       }
 
 
@@ -10220,42 +10210,6 @@ html.theme-hazard .c-notif-badge-icon {
 
       <span id="syncStatusBadge" class="sync-badge disconnected"><span class="sync-badge-dot"></span> <span id="syncStatusText">OFF</span></span>
 
-      <!-- DROPDOWN USER PROFILE & ROOM ISOLATION -->
-
-      <div class="dropdown" id="dropdownUserAuth">
-
-        <button class="btn-action-soft btn-user-badge" onclick="toggleDropdownUser(event)" title="Profil Akun & Room Anda">
-
-          <span>👤</span>
-
-          <span id="topBarUserName">admin</span>
-
-          <span style="font-size:9px; opacity:0.8;">▾</span>
-
-        </button>
-
-        <div class="dropdown-content dropdown-user-content" id="listDropdownUser">
-
-          <div class="user-menu-info">
-
-            <div class="umi-title" id="menuUserDisplay">Master Admin</div>
-
-            <div class="umi-sub" id="menuUserRoom">ROOM: admin</div>
-
-          </div>
-
-          <button type="button" class="btn-danger-reset" onclick="eksekusiLogoutUser()">
-
-            <span>🚪</span> <span>Ganti Akun / Logout</span>
-
-          </button>
-
-        </div>
-
-      </div>
-
-
-
       <button class="btn-action-soft btn-stream-link"  onclick="bukaModalLinkStream()" title="Salin link modular untuk TikTok Studio & OBS">
 
         🔗 LINK
@@ -18024,49 +17978,11 @@ html.theme-hazard .c-notif-badge-icon {
 
     try { if (window.resizeTo && currentViewMode === 'admin') window.resizeTo(1060, 725); } catch (_) {}
 
-        // Cek status autentikasi user untuk mode admin master
+    // Mode pribadi: langsung buka papan skor tanpa gerbang login
 
-    if (currentViewMode === 'admin') {
+    document.documentElement.classList.remove('auth-locked');
 
-      const authUser = localStorage.getItem('scoreboard_auth_user_v1');
-
-      const authModal = document.getElementById('modalAuthUser');
-
-      if (!authUser) {
-
-        document.documentElement.classList.add('auth-locked');
-
-        document.body.classList.add('auth-locked');
-
-        if (authModal) authModal.style.setProperty('display', 'flex', 'important');
-
-        return; // Hentikan render dan inisialisasi papan skor sampai login berhasil!
-
-      } else {
-
-        document.documentElement.classList.remove('auth-locked');
-
-        document.body.classList.remove('auth-locked');
-
-        if (authModal) authModal.style.display = 'none';
-
-        perbaruiUIUserHeader();
-
-      }
-
-    } else {
-
-      document.documentElement.classList.remove('auth-locked');
-
-      document.body.classList.remove('auth-locked');
-
-      const authModal = document.getElementById('modalAuthUser');
-
-      if (authModal) authModal.style.display = 'none';
-
-    }
-
-
+    document.body.classList.remove('auth-locked');
 
     terapkanTema(temaAktif, false);
 
@@ -18173,130 +18089,6 @@ html.theme-hazard .c-notif-badge-icon {
   });
 
 </script>
-
-
-
-<!-- MODAL AUTHENTICATION & MULTI-USER ROOM SEPARATION -->
-
-<!-- MODAL AUTHENTICATION & MANDATORY LOGIN GATE (SIMPEL) -->
-
-<div id="modalAuthUser">
-
-  <div class="auth-box-hud" style="max-width: 380px; width: 92vw; padding: 28px 24px;">
-
-    <div class="auth-header" style="margin-bottom: 6px;">
-
-      <h2 class="auth-title" id="authHeaderTitle" style="font-size: 26px;">Login</h2>
-
-      <p class="auth-subtitle" id="authHeaderSub" style="margin-top: 4px; color: #94a3b8; font-size: 12px;">Masuk untuk mengakses papan skor</p>
-
-    </div>
-
-
-
-    <!-- TAB SWITCHER SIMPEL -->
-
-    <div class="auth-tabs" style="margin-bottom: 12px;">
-
-      <button type="button" class="auth-tab-btn active" id="tabBtnLogin" onclick="gantiTabAuth('login')">
-
-        <span>Login</span>
-
-      </button>
-
-      <button type="button" class="auth-tab-btn" id="tabBtnRegister" onclick="gantiTabAuth('register')">
-
-        <span>Daftar</span>
-
-      </button>
-
-    </div>
-
-
-
-    <!-- STATUS ALERT -->
-
-    <div class="auth-status-msg" id="authStatusMsg"></div>
-
-
-
-    <!-- FORM LOGIN SIMPEL -->
-
-    <form class="auth-form" id="formAuthLogin" onsubmit="event.preventDefault(); eksekusiLoginSubmit();">
-
-      <div class="auth-field">
-
-        <label class="auth-label">Nama</label>
-
-        <input type="text" id="authLoginUser" class="auth-input" placeholder="Masukkan nama..." autocomplete="username" required autofocus>
-
-      </div>
-
-
-
-      <div class="auth-field">
-
-        <label class="auth-label">Password</label>
-
-        <input type="password" id="authLoginPass" class="auth-input" placeholder="Masukkan password..." autocomplete="current-password" required>
-
-      </div>
-
-
-
-      <button type="submit" class="auth-submit-btn" id="btnSubmitLogin" style="margin-top: 10px;">
-
-        <span>Masuk</span>
-
-      </button>
-
-      <div style="text-align: center; font-size: 11px; color: #64748b; margin-top: 6px;">
-
-        Default: nama <b>admin</b> | password <b>admin123</b>
-
-      </div>
-
-    </form>
-
-
-
-    <!-- FORM DAFTAR SIMPEL -->
-
-    <form class="auth-form hidden" id="formAuthRegister" onsubmit="event.preventDefault(); eksekusiRegisterSubmit();">
-
-      <div class="auth-field">
-
-        <label class="auth-label">Nama</label>
-
-        <input type="text" id="authRegUser" class="auth-input" placeholder="Buat nama akun..." autocomplete="username" required>
-
-      </div>
-
-
-
-      <div class="auth-field">
-
-        <label class="auth-label">Password</label>
-
-        <input type="password" id="authRegPass" class="auth-input" placeholder="Buat password..." autocomplete="new-password" required>
-
-      </div>
-
-
-
-      <button type="submit" class="auth-submit-btn" id="btnSubmitRegister" style="margin-top: 10px;">
-
-        <span>Daftar Akun</span>
-
-      </button>
-
-    </form>
-
-  </div>
-
-</div>
-
-
 
 </body>
 
