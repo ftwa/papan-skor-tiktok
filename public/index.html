@@ -3122,12 +3122,21 @@
       display: none !important;
     }
 
+    html.mode-tabel #transitionOverlay {
+      display: none !important;
+    }
+
     html.mode-screen #transitionOverlay:not(.active) {
       display: none !important;
     }
 
     html.mode-screen #transitionOverlay.active {
       display: flex !important;
+    }
+
+    html.mode-screen #transitionOverlay button,
+    html.mode-screen .trans-admin-controls {
+      display: none !important;
     }
 
 
