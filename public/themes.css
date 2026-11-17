@@ -7580,9 +7580,16 @@ html.mode-timer .dtb-digits { cursor: default !important; }
 /* ========================================================= */
 html.theme-comic #winnerOverlay {
   background: radial-gradient(circle at 50% 20%, #881313 0%, #3b0712 52%, #0c0410 100%) !important;
+  background-image: radial-gradient(circle at 50% 20%, #881313 0%, #3b0712 52%, #0c0410 100%) !important;
 }
+html.mode-podium,
+html.mode-podium body,
+html.theme-comic.mode-podium,
+html.theme-comic.mode-podium body,
+html.theme-comic.mode-podium #winnerOverlay,
 html.mode-podium #winnerOverlay {
   background: transparent !important;
+  background-image: none !important;
 }
 html.theme-comic #winnerOverlay .winner-light-beams {
   opacity: 0.18 !important;
@@ -7649,10 +7656,24 @@ html.theme-comic #winnerOverlay .winner-3d-floating-stage {
   display: flex !important;
   align-items: center !important;
   justify-content: center !important;
-  padding-top: 26px !important;
-  padding-bottom: 10px !important;
+  padding-top: 38px !important;
+  padding-bottom: 12px !important;
   margin-bottom: -18px !important;
+  overflow: hidden !important;
   z-index: 2 !important;
+}
+html.theme-comic #winnerOverlay .winner-3d-body-wrap {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  max-height: 190px !important;
+}
+html.theme-comic #winnerOverlay .winner-3d-body-wrap img {
+  max-height: 175px !important;
+  max-width: 175px !important;
+  border-radius: 16px !important;
+  object-fit: contain !important;
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.55) !important;
 }
 html.theme-comic #winnerOverlay .podium-card.rank-1 .winner-3d-floating-stage { height: 290px !important; }
 html.theme-comic #winnerOverlay .podium-card.rank-2 .winner-3d-floating-stage,
