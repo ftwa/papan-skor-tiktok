@@ -10060,7 +10060,7 @@ html.theme-hazard .c-notif-badge-icon {
 
   </style>
 
-<link rel="stylesheet" href="themes.css?v=20261118_0408">
+<link rel="stylesheet" href="themes.css?v=20261118_0412">
 
 </head>
 
@@ -10088,6 +10088,17 @@ html.theme-hazard .c-notif-badge-icon {
           </button>
           <button type="button" onclick="bukaModalNotifSuara(); tutupSemuaDropdown();">
             <span>🔊</span> <span>Pengaturan Notif Suara (Audio)</span>
+          </button>
+          <div class="dropdown-divider-line"></div>
+          <div class="dropdown-header-label">🎮 GAYA TAMBAH POIN</div>
+          <button type="button" id="btnStyleStepper" onclick="setPointInputStyle('stepper'); tutupSemuaDropdown();">
+            <span>⚡</span> <span>Stepper (− / +1) & Popover</span>
+          </button>
+          <button type="button" id="btnStylePreset" onclick="setPointInputStyle('preset'); tutupSemuaDropdown();">
+            <span>🎯</span> <span>Preset Cepat (+1 / +5 / +10)</span>
+          </button>
+          <button type="button" id="btnStyleDock" onclick="setPointInputStyle('dock'); tutupSemuaDropdown();">
+            <span>🕹️</span> <span>Arcade Dock Bawah</span>
           </button>
           <div class="dropdown-divider-line"></div>
           <div class="dropdown-header-label">🎬 LAYAR TRANSISI SIARAN</div>
@@ -10337,9 +10348,9 @@ html.theme-hazard .c-notif-badge-icon {
 
 
 
-<!-- MINI PALET WARNA -->
+<!-- MINI PALET WARNA (10 WARNA + RESET) -->
 
-<div class="color-picker-mini" id="miniColorPicker" onclick="event.stopPropagation()">
+<div class="color-picker-mini" id="miniColorPicker" onclick="event.stopPropagation()" style="flex-wrap: wrap; max-width: 148px;">
 
   <span class="cp-dot c-blue" title="Biru Langit" onclick="pilihWarnaKustom('blue')"></span>
 
@@ -10349,10 +10360,38 @@ html.theme-hazard .c-notif-badge-icon {
 
   <span class="cp-dot c-red" title="Merah Solid" onclick="pilihWarnaKustom('red')"></span>
 
-  <span class="cp-dot c-yellow" title="Kuning Cyber" onclick="pilihWarnaKustom('yellow')"></span>
+  <span class="cp-dot c-yellow" title="Kuning Emas" onclick="pilihWarnaKustom('yellow')"></span>
+
+  <span class="cp-dot c-green" title="Hijau Emerald" style="background:#10b981;" onclick="pilihWarnaKustom('green')"></span>
+
+  <span class="cp-dot c-orange" title="Oranye Api" style="background:#f97316;" onclick="pilihWarnaKustom('orange')"></span>
+
+  <span class="cp-dot c-cyan" title="Cyan Neon" style="background:#06b6d4;" onclick="pilihWarnaKustom('cyan')"></span>
+
+  <span class="cp-dot c-dark" title="Hitam Obsidian" style="background:#1e293b;" onclick="pilihWarnaKustom('dark')"></span>
+
+  <span class="cp-dot c-rainbow" title="Pelangi Mythic" style="background:linear-gradient(135deg,#fde047,#f472b6,#38bdf8);" onclick="pilihWarnaKustom('rainbow')"></span>
 
   <span class="cp-dot c-reset" title="Reset Default" onclick="pilihWarnaKustom('')"></span>
 
+</div>
+
+<!-- ARCADE QUICK-SCORE DOCK (OPSIONAL STYLE 3) -->
+<div id="arcadePointDock" class="arcade-point-dock" style="display:none;">
+  <div class="apd-target-info">
+    <span class="apd-badge">TARGET 🎯</span>
+    <span class="apd-name" id="apdTargetName">Pilih Kartu Pemain</span>
+  </div>
+  <div class="apd-buttons">
+    <button type="button" class="apd-btn minus" onclick="eksekusiDockPoin(-5)">−5</button>
+    <button type="button" class="apd-btn minus" onclick="eksekusiDockPoin(-1)">−1</button>
+    <button type="button" class="apd-btn plus" onclick="eksekusiDockPoin(1)">+1</button>
+    <button type="button" class="apd-btn plus" onclick="eksekusiDockPoin(2)">+2</button>
+    <button type="button" class="apd-btn plus" onclick="eksekusiDockPoin(5)">+5</button>
+    <button type="button" class="apd-btn plus" onclick="eksekusiDockPoin(10)">+10</button>
+    <button type="button" class="apd-btn plus mega" onclick="eksekusiDockPoin(25)">+25</button>
+    <button type="button" class="apd-btn plus mega" onclick="eksekusiDockPoin(50)">+50</button>
+  </div>
 </div>
 
 
@@ -13166,7 +13205,13 @@ html.theme-hazard .c-notif-badge-icon {
 
     const namaTampil = p.nick || p.user || p.robloxUser || (idx === 19 ? 'Host' : `Kursi ${idx + 1}`);
 
-    if (selisih !== 0) tampilkanPopupPoinTengah(namaTampil, selisih, p.poin, "TAMBAH POIN", p.colorTag);
+    let warnaPopup = p.colorTag || '';
+    if (!warnaPopup && db.teamConfig && db.teamConfig.enabled && db.teamConfig.teams) {
+      const t = dapatkanTimDariKursi(idx);
+      if (t && t.color) warnaPopup = t.color;
+    }
+
+    if (selisih !== 0) tampilkanPopupPoinTengah(namaTampil, selisih, p.poin, "TAMBAH POIN", warnaPopup);
 
 
 
@@ -13289,12 +13334,16 @@ html.theme-hazard .c-notif-badge-icon {
 
 
 
-    popup.classList.remove('theme-purple', 'theme-pink', 'theme-red', 'theme-blue', 'theme-yellow');
+    popup.classList.remove('theme-purple', 'theme-pink', 'theme-red', 'theme-blue', 'theme-yellow', 'theme-green', 'theme-orange', 'theme-cyan', 'theme-dark', 'theme-rainbow', 'has-custom-accent');
+    popup.style.removeProperty('--popup-accent-color');
 
     if (warnaTag) {
-
-      popup.classList.add(`theme-${warnaTag}`);
-
+      if (typeof warnaTag === 'string' && warnaTag.startsWith('#')) {
+        popup.style.setProperty('--popup-accent-color', warnaTag);
+        popup.classList.add('has-custom-accent');
+      } else {
+        popup.classList.add(`theme-${warnaTag}`);
+      }
     }
 
 
@@ -16968,10 +17017,74 @@ html.theme-hazard .c-notif-badge-icon {
 
 
 
+  const ALL_TAG_CLASSES = ['tag-blue', 'tag-pink', 'tag-purple', 'tag-red', 'tag-yellow', 'tag-green', 'tag-orange', 'tag-cyan', 'tag-dark', 'tag-rainbow'];
+  const POINT_STYLE_KEY = 'galatama_point_style_' + CURRENT_ROOM;
+  let pointInputStyle = localStorage.getItem(POINT_STYLE_KEY) || 'stepper';
+  let selectedDockChair = 19;
+
+  function setPointInputStyle(style) {
+    pointInputStyle = ['stepper', 'preset', 'dock'].includes(style) ? style : 'stepper';
+    try { localStorage.setItem(POINT_STYLE_KEY, pointInputStyle); } catch (_) {}
+    perbaruiTombolStylePoin();
+    renderIsiTabel();
+  }
+
+  function perbaruiTombolStylePoin() {
+    const map = { stepper: 'btnStyleStepper', preset: 'btnStylePreset', dock: 'btnStyleDock' };
+    Object.keys(map).forEach(k => {
+      const btn = document.getElementById(map[k]);
+      if (btn) btn.classList.toggle('active-mode-btn', pointInputStyle === k);
+    });
+    const dock = document.getElementById('arcadePointDock');
+    if (dock) {
+      dock.style.display = (pointInputStyle === 'dock' && currentViewMode === 'admin') ? 'flex' : 'none';
+    }
+  }
+
+  function pilihTargetDock(idx) {
+    selectedDockChair = idx;
+    renderIsiTabel();
+  }
+
+  function eksekusiDockPoin(delta) {
+    const currData = getActiveData();
+    const p = (selectedDockChair === 19) ? currData.host : currData.players[selectedDockChair];
+    if (!p || (selectedDockChair !== 19 && !p.isReady)) return;
+    terapkanTambahPoin(selectedDockChair, delta);
+  }
+
+  function renderScoreBoxHtml(idx, poin, isHost = false) {
+    const scoreClass = isHost ? 'score-val host-score' : 'score-val';
+    if (pointInputStyle === 'preset') {
+      return `
+        <div class="score-box score-box-preset">
+          <button type="button" class="card-step-btn minus" onclick="event.stopPropagation(); terapkanTambahPoin(${idx}, -1)" title="Kurangi 1">−</button>
+          <div class="${scoreClass}" onclick="bukaQuickPointPopover(${idx}, event)" title="Klik untuk Poin Cepat">${poin}</div>
+          <button type="button" class="card-step-btn plus" onclick="event.stopPropagation(); terapkanTambahPoin(${idx}, 1)" title="Tambah 1">+1</button>
+          <button type="button" class="card-step-btn plus preset-5" onclick="event.stopPropagation(); terapkanTambahPoin(${idx}, 5)" title="Tambah 5">+5</button>
+          <button type="button" class="card-step-btn plus preset-10" onclick="event.stopPropagation(); terapkanTambahPoin(${idx}, 10)" title="Tambah 10">+10</button>
+        </div>`;
+    }
+    if (pointInputStyle === 'dock') {
+      return `
+        <div class="score-box score-box-dock" onclick="event.stopPropagation(); pilihTargetDock(${idx})" title="Pilih sebagai target Arcade Dock">
+          <div class="${scoreClass}">${poin}</div>
+          <span class="dock-select-pill">${selectedDockChair === idx ? '🎯 TARGET' : 'PILIH'}</span>
+        </div>`;
+    }
+    return `
+      <div class="score-box">
+        <button type="button" class="card-step-btn minus" onclick="event.stopPropagation(); terapkanTambahPoin(${idx}, -1)" title="Kurangi 1 poin">−</button>
+        <div class="${scoreClass}" onclick="bukaQuickPointPopover(${idx}, event)" title="Klik untuk Poin Cepat">${poin}</div>
+        <button type="button" class="card-step-btn plus" onclick="event.stopPropagation(); terapkanTambahPoin(${idx}, 1)" title="Tambah 1 poin">+</button>
+      </div>`;
+  }
+
   function renderIsiTabel() {
     const currData = getActiveData();
     const lblSesi = document.getElementById('labelSesiAktif');
     if (lblSesi) lblSesi.innerText = db.activeSession;
+    perbaruiTombolStylePoin();
 
     const isTeam = !!(db.teamConfig && db.teamConfig.enabled && db.teamConfig.teams && db.teamConfig.teams.length > 0);
 
@@ -17001,9 +17114,12 @@ html.theme-hazard .c-notif-badge-icon {
         }
       }
 
-      tr.classList.remove('tag-blue', 'tag-pink', 'tag-purple', 'tag-red', 'tag-yellow');
+      tr.classList.remove(...ALL_TAG_CLASSES, 'dock-target-active');
       if (p.colorTag) {
         tr.classList.add(`tag-${p.colorTag}`);
+      }
+      if (pointInputStyle === 'dock' && selectedDockChair === idx && p.isReady) {
+        tr.classList.add('dock-target-active');
       }
 
       if (isTeam) {
@@ -17054,14 +17170,7 @@ html.theme-hazard .c-notif-badge-icon {
       const colPoint = tr.querySelector('.col-point');
       if (colPoint) {
         if (p.isReady) {
-          colPoint.innerHTML = `
-            <div class="score-box">
-              <button type="button" class="card-step-btn minus" onclick="event.stopPropagation(); terapkanTambahPoin(${idx}, -1)" title="Kurangi 1 poin">−</button>
-              <div class="score-val" title="Klik untuk Poin Cepat">${p.poin}</div>
-              <button type="button" class="card-step-btn plus" onclick="event.stopPropagation(); terapkanTambahPoin(${idx}, 1)" title="Tambah 1 poin">+</button>
-            </div>`;
-          const sv = colPoint.querySelector('.score-val');
-          if (sv) sv.onclick = (ev) => bukaQuickPointPopover(idx, ev);
+          colPoint.innerHTML = renderScoreBoxHtml(idx, p.poin, false);
         } else {
           colPoint.innerHTML = `
             <div class="score-box">
@@ -17095,9 +17204,12 @@ html.theme-hazard .c-notif-badge-icon {
         }
       }
 
-      trHost.classList.remove('tag-blue', 'tag-pink', 'tag-purple', 'tag-red', 'tag-yellow');
+      trHost.classList.remove(...ALL_TAG_CLASSES, 'dock-target-active');
       if (h.colorTag) {
         trHost.classList.add(`tag-${h.colorTag}`);
+      }
+      if (pointInputStyle === 'dock' && selectedDockChair === 19) {
+        trHost.classList.add('dock-target-active');
       }
 
       if (isTeam) {
@@ -17126,8 +17238,19 @@ html.theme-hazard .c-notif-badge-icon {
         hostTag.innerText = h.robloxUser ? `@${h.robloxUser}` : (h.user ? `@${h.user}` : '@host');
       }
 
-      const hostScoreEl = trHost.querySelector('.host-score');
-      if (hostScoreEl) hostScoreEl.innerText = h.poin;
+      const colPointHost = trHost.querySelector('.col-point');
+      if (colPointHost) {
+        colPointHost.innerHTML = renderScoreBoxHtml(19, h.poin, true);
+      }
+
+      if (pointInputStyle === 'dock') {
+        const dockNameEl = document.getElementById('apdTargetName');
+        if (dockNameEl) {
+          const tp = (selectedDockChair === 19) ? h : currData.players[selectedDockChair];
+          const tLabel = tp ? (tp.nick || tp.user || tp.robloxUser || (selectedDockChair === 19 ? 'HOST' : `Kursi ${selectedDockChair + 1}`)) : 'Pilih Kartu';
+          dockNameEl.innerText = `${tLabel} (${tp ? (tp.poin || 0) : 0} PTS)`;
+        }
+      }
     }
 
     if (isTeam) {
