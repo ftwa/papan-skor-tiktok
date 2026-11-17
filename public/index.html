@@ -10106,7 +10106,7 @@ html.theme-hazard .c-notif-badge-icon {
 
   </style>
 
-<link rel="stylesheet" href="themes.css?v=20261118_0612">
+<link rel="stylesheet" href="themes.css?v=20261118_0620">
 
 </head>
 
@@ -12354,71 +12354,8 @@ html.theme-hazard .c-notif-badge-icon {
       }
 
     } else if (msg.type === 'OPEN_QUICK_POINT') {
-
-      if (currentViewMode === 'tabel') {
-
-        const tr = document.getElementById(msg.chair === 19 ? 'row-kursi-19' : ('row-kursi-' + msg.chair));
-
-        const scoreCell = tr ? (tr.querySelector('.score-val') || tr) : null;
-
-        
-
-        activeQuickPointIndex = msg.chair;
-
-        renderTombolQuickPoint();
-
-
-
-        const namaTampil = msg.nama || ('Kursi ' + (msg.chair + 1));
-
-        const poinTampil = (msg.poin !== undefined) ? msg.poin : 0;
-
-        const qpTitleEl = document.getElementById('qpPlayerTitle');
-
-        if (qpTitleEl) qpTitleEl.innerText = `${namaTampil} (${poinTampil} Pts)`;
-
-        const qpInputEl = document.getElementById('qpDirectInput');
-
-        if (qpInputEl) qpInputEl.value = poinTampil;
-
-
-
-        const pop = document.getElementById('quickPointPopover');
-
-        if (pop) {
-
-          pop.classList.add('show');
-
-          if (scoreCell) {
-
-            const rect = scoreCell.getBoundingClientRect();
-
-            const popWidth = 235;
-
-            const popHeight = pop.offsetHeight || 150;
-
-
-
-            let leftPos = rect.left - popWidth - 10;
-
-            if (leftPos < 10) leftPos = Math.min(window.innerWidth - popWidth - 10, rect.right + 10);
-
-            let topPos = rect.top - (popHeight / 2) + (rect.height / 2);
-
-            topPos = Math.max(10, Math.min(window.innerHeight - popHeight - 10, topPos));
-
-
-
-            pop.style.left = leftPos + 'px';
-
-            pop.style.top = topPos + 'px';
-
-          }
-
-        }
-
-      }
-
+      // Popup poin hanya untuk layar Admin; jangan tampilkan di overlay TikTok Studio
+      tutupQuickPointPopover(false);
     } else if (msg.type === 'CLOSE_QUICK_POINT') {
 
       if (currentViewMode === 'tabel') {
@@ -13249,23 +13186,6 @@ html.theme-hazard .c-notif-badge-icon {
     tr.appendChild(panel);
     const inp = document.getElementById('inCardDirectInput');
     if (inp) { inp.focus(); inp.select(); }
-
-    if (isBroadcast) {
-
-      siarkanPesanSync({
-
-        type: 'OPEN_QUICK_POINT',
-
-        chair: index,
-
-        poin: p.poin,
-
-        nama: namaTampil
-
-      });
-
-    }
-
   }
 
 
