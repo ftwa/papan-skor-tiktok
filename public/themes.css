@@ -6429,6 +6429,10 @@ html.theme-comic .grid-tables tbody tr[id^="row-kursi-"] .avatar-placeholder {
   max-width: 100% !important;
 }
 
+html.theme-comic .grid-tables tbody tr[class*="tag-"]:hover td {
+  filter: none !important;
+}
+
 /* High-Contrast White/Gold Text for Dark Purple & Dark Red Cards (including Host) */
 html.theme-comic .grid-tables tbody tr.tag-purple .name-tiktok,
 html.theme-comic .grid-tables tbody tr.tag-red .name-tiktok,
@@ -6525,7 +6529,22 @@ html.theme-comic .grid-tables tbody tr.tag-red #hostRobloxTag {
   box-shadow: 1px 1px 0px #000000 !important;
 }
 
-/* Clean Broadcast Overlay (hide controls in stream-only mode) */
+/* Clean Broadcast Overlay (hide controls in stream-only mode & fit all 20 cards cleanly) */
+html.mode-tabel.theme-comic .container {
+  height: auto !important;
+  max-height: none !important;
+  overflow: visible !important;
+}
+
+html.mode-tabel.theme-comic .grid-tables {
+  gap: 10px !important;
+}
+
+html.mode-tabel.theme-comic .grid-tables tbody tr[id^="row-kursi-"] {
+  min-height: 156px !important;
+  padding: 8px 6px 6px !important;
+}
+
 html.mode-tabel .card-step-btn,
 html.mode-tabel .btn-color-palette {
   display: none !important;
