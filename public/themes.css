@@ -6108,3 +6108,393 @@ html.mode-notif #centerNotifPopup.show {
       display: flex !important;
       opacity: 1 !important;
     }
+
+
+/* ==========================================================================
+   BLOX TRADING CARD GRID (KARTU KOLEKSI ROBLOX COMIC POP-ART)
+   Mengubah 20 baris tabel menjadi 20 Kartu Koleksi Vertikal dengan
+   border warna tim menyala dan angka skor besar di tiap kartu.
+   ========================================================================== */
+
+.grid-tables {
+  display: grid !important;
+  grid-template-columns: repeat(5, minmax(0, 1fr)) !important;
+  gap: 12px !important;
+  width: 100% !important;
+  padding: 4px !important;
+  align-items: stretch !important;
+}
+
+@media (max-width: 900px) {
+  .grid-tables {
+    grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+  }
+}
+
+@media (max-width: 640px) {
+  .grid-tables {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+}
+
+.grid-tables > .table-container,
+.grid-tables > .table-container > table,
+.grid-tables > .table-container > table > tbody {
+  display: contents !important;
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+.grid-tables > .table-container > table > thead,
+.grid-tables > .table-container > table > colgroup {
+  display: none !important;
+}
+
+/* Team Divider Row: Full-width Comic Pop-Art Team Banner */
+.grid-tables tr.team-divider-row {
+  grid-column: 1 / -1 !important;
+  display: block !important;
+  width: 100% !important;
+  height: auto !important;
+  min-height: 42px !important;
+  margin-top: 8px !important;
+  margin-bottom: 2px !important;
+  background: linear-gradient(90deg, var(--team-fade, rgba(253, 224, 71, 0.25)) 0%, #ffffff 55%, var(--team-fade, rgba(253, 224, 71, 0.25)) 100%) !important;
+  border: 3px solid var(--team-color, #000000) !important;
+  box-shadow: 0 0 14px var(--team-color, rgba(0, 0, 0, 0.25)), 4px 4px 0px #000000 !important;
+  border-radius: 12px !important;
+  overflow: visible !important;
+}
+
+.grid-tables tr.team-divider-row td.team-divider-cell {
+  display: block !important;
+  width: 100% !important;
+  height: auto !important;
+  padding: 8px 14px !important;
+  border: none !important;
+  background: transparent !important;
+}
+
+.grid-tables tr.team-divider-row .team-divider-wrap {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  min-height: 24px !important;
+  height: auto !important;
+  line-height: 1.3 !important;
+}
+
+/* Collectible Trading Card Item */
+.grid-tables tbody tr[id^="row-kursi-"] {
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: space-between !important;
+  position: relative !important;
+  min-height: 184px !important;
+  padding: 10px 8px 8px !important;
+  border-radius: 14px !important;
+  background: linear-gradient(165deg, #ffffff 0%, #fffbeb 100%) !important;
+  border: 3.5px solid #000000 !important;
+  box-shadow: 4px 4px 0px #000000 !important;
+  transition: transform 0.16s ease, box-shadow 0.16s ease !important;
+  overflow: hidden !important;
+}
+
+.grid-tables tbody tr[id^="row-kursi-"]:hover {
+  transform: translateY(-3px) !important;
+  background: linear-gradient(165deg, #ecfeff 0%, #ffffff 100%) !important;
+  box-shadow: 6px 6px 0px #000000 !important;
+}
+
+/* Glowing Team Color Border & Aura */
+.grid-tables tbody tr[id^="row-kursi-"].has-team {
+  border: 3.5px solid var(--row-team-color, #000000) !important;
+  box-shadow: 0 0 14px var(--row-team-color, #fde047), 0 0 4px var(--row-team-color, #fde047), 4px 4px 0px #000000 !important;
+}
+
+/* Leader / Rank 1 Highlight */
+.grid-tables tbody tr[id^="row-kursi-"].is-leader,
+.grid-tables tbody tr[id^="row-kursi-"].rank-1-row {
+  background: linear-gradient(165deg, #fef08a 0%, #fde047 100%) !important;
+  box-shadow: 0 0 18px rgba(250, 204, 21, 0.85), 5px 5px 0px #000000 !important;
+}
+
+/* Host Card Accent */
+.grid-tables tbody tr.host-row {
+  background: linear-gradient(165deg, #fff7ed 0%, #ffedd5 100%) !important;
+}
+
+/* Color Tag Card Overrides */
+.grid-tables tbody tr[id^="row-kursi-"].tag-blue {
+  background: linear-gradient(165deg, #eff6ff 0%, #dbeafe 100%) !important;
+  border-color: #2563eb !important;
+  box-shadow: 0 0 14px rgba(37, 99, 235, 0.55), 4px 4px 0px #000000 !important;
+}
+.grid-tables tbody tr[id^="row-kursi-"].tag-pink {
+  background: linear-gradient(165deg, #fdf2f8 0%, #fce7f3 100%) !important;
+  border-color: #db2777 !important;
+  box-shadow: 0 0 14px rgba(219, 39, 119, 0.55), 4px 4px 0px #000000 !important;
+}
+.grid-tables tbody tr[id^="row-kursi-"].tag-purple {
+  background: linear-gradient(165deg, #4c1d95 0%, #2e1065 100%) !important;
+  border-color: #a855f7 !important;
+  box-shadow: 0 0 16px rgba(168, 85, 247, 0.65), 4px 4px 0px #000000 !important;
+}
+.grid-tables tbody tr[id^="row-kursi-"].tag-red {
+  background: linear-gradient(165deg, #991b1b 0%, #450a0a 100%) !important;
+  border-color: #ef4444 !important;
+  box-shadow: 0 0 16px rgba(239, 68, 68, 0.65), 4px 4px 0px #000000 !important;
+}
+.grid-tables tbody tr[id^="row-kursi-"].tag-yellow {
+  background: linear-gradient(165deg, #fef9c3 0%, #fde047 100%) !important;
+  border-color: #ca8a04 !important;
+  box-shadow: 0 0 16px rgba(250, 204, 21, 0.75), 4px 4px 0px #000000 !important;
+}
+
+/* Reset TD inside Card (Higher specificity than theme-comic table tbody tr td) */
+html.theme-comic .grid-tables table tbody tr[id^="row-kursi-"] > td,
+html.theme-comic .grid-tables table tbody tr[id^="row-kursi-"]:not([class*="tag-"]) > td,
+html.theme-comic .grid-tables table tbody tr[id^="row-kursi-"][class*="tag-"] > td {
+  display: block !important;
+  width: 100% !important;
+  height: auto !important;
+  min-height: 0 !important;
+  max-height: none !important;
+  overflow: visible !important;
+  border: none !important;
+  background: transparent !important;
+  padding: 0 !important;
+}
+
+/* Top-Left Rank / Seat Badge */
+html.theme-comic .grid-tables table tbody tr[id^="row-kursi-"] > td.td-no {
+  position: absolute !important;
+  top: 7px !important;
+  left: 7px !important;
+  width: auto !important;
+  min-width: 26px !important;
+  height: 24px !important;
+  padding: 0 7px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  background: #fde047 !important;
+  color: #000000 !important;
+  border: 2.5px solid #000000 !important;
+  border-radius: 8px !important;
+  box-shadow: 2px 2px 0px #000000 !important;
+  font-family: 'Bangers', cursive !important;
+  font-size: 15px !important;
+  letter-spacing: 0.5px !important;
+  z-index: 3 !important;
+}
+
+/* Card Portrait & Name Ordering (Avatar first, then Name, then Score) */
+.grid-tables tbody tr[id^="row-kursi-"] > td.cell-roblox-target {
+  order: 1 !important;
+  margin-top: 22px !important;
+  cursor: pointer !important;
+}
+
+.grid-tables tbody tr[id^="row-kursi-"] > td.cell-roblox-target > div {
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 5px !important;
+  text-align: center !important;
+}
+
+.grid-tables tbody tr[id^="row-kursi-"] .avatar-wrap,
+.grid-tables tbody tr[id^="row-kursi-"] .avatar-mini,
+.grid-tables tbody tr[id^="row-kursi-"] .avatar-placeholder {
+  width: 58px !important;
+  height: 58px !important;
+  border-radius: 12px !important;
+  border: 3px solid var(--row-team-color, #000000) !important;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2), 2px 2px 0px #000000 !important;
+  font-size: 22px !important;
+  object-fit: cover !important;
+}
+
+.grid-tables tbody tr[id^="row-kursi-"] > td.cell-roblox-target .name-roblox-display {
+  display: block !important;
+  max-width: 100% !important;
+  font-size: 11px !important;
+  font-weight: 700 !important;
+  text-align: center !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  white-space: nowrap !important;
+}
+
+/* Primary Player Name & Status Badges */
+.grid-tables tbody tr[id^="row-kursi-"] > td.cell-nama-target {
+  order: 2 !important;
+  margin-top: 2px !important;
+  cursor: pointer !important;
+}
+
+.grid-tables tbody tr[id^="row-kursi-"] > td.cell-nama-target > div {
+  padding-left: 0 !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  gap: 2px !important;
+}
+
+.grid-tables tbody tr[id^="row-kursi-"] > td.cell-nama-target > div > div:first-child {
+  width: 100% !important;
+  justify-content: center !important;
+}
+
+.grid-tables tbody tr[id^="row-kursi-"] .name-tiktok {
+  font-size: 13px !important;
+  font-weight: 900 !important;
+  text-align: center !important;
+  max-width: 100% !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  white-space: nowrap !important;
+}
+
+/* Status Badge + Palette floating at Top-Right of Card */
+.grid-tables tbody tr[id^="row-kursi-"] > td.cell-nama-target > div > div:last-child {
+  position: absolute !important;
+  top: 7px !important;
+  right: 7px !important;
+  gap: 3px !important;
+  z-index: 3 !important;
+}
+
+/* Host Card Merged Cell Layout */
+.grid-tables tbody tr.host-row > td.cell-host-merged {
+  order: 1 !important;
+  margin-top: 22px !important;
+  cursor: pointer !important;
+}
+
+.grid-tables tbody tr.host-row > td.cell-host-merged > div {
+  flex-direction: column !important;
+  align-items: center !important;
+  gap: 4px !important;
+  padding: 0 !important;
+  text-align: center !important;
+}
+
+.grid-tables tbody tr.host-row > td.cell-host-merged > div > div:first-child {
+  flex-direction: column !important;
+  align-items: center !important;
+  gap: 5px !important;
+  width: 100% !important;
+}
+
+.grid-tables tbody tr.host-row > td.cell-host-merged > div > div:first-child > div:last-child {
+  flex: 0 0 auto !important;
+  width: 100% !important;
+  align-items: center !important;
+  text-align: center !important;
+}
+
+.grid-tables tbody tr.host-row #hostDisplayName {
+  color: #0f172a !important;
+  font-size: 13px !important;
+  font-weight: 900 !important;
+  max-width: 100% !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  white-space: nowrap !important;
+}
+
+.grid-tables tbody tr.host-row #hostRobloxTag {
+  color: #475569 !important;
+  font-size: 11px !important;
+  font-weight: 700 !important;
+  max-width: 100% !important;
+}
+
+.grid-tables tbody tr.host-row > td.cell-host-merged > div > div:last-child {
+  position: absolute !important;
+  top: 7px !important;
+  right: 7px !important;
+  z-index: 3 !important;
+}
+
+/* Big Score Footer & Quick Stepper Buttons */
+.grid-tables tbody tr[id^="row-kursi-"] > td.col-point {
+  order: 3 !important;
+  margin-top: 8px !important;
+  padding-top: 6px !important;
+  border-top: 2px dashed rgba(0, 0, 0, 0.2) !important;
+}
+
+.grid-tables tbody tr[id^="row-kursi-"] .score-box {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 6px !important;
+  width: 100% !important;
+}
+
+.grid-tables tbody tr[id^="row-kursi-"] .score-val {
+  min-width: 48px !important;
+  padding: 2px 10px !important;
+  border-radius: 10px !important;
+  border: 2.5px solid #000000 !important;
+  background: #ffffff !important;
+  color: #000000 !important;
+  box-shadow: 2px 2px 0px #000000 !important;
+  font-family: 'Bangers', cursive !important;
+  font-size: 24px !important;
+  line-height: 1.15 !important;
+  letter-spacing: 1px !important;
+  text-align: center !important;
+  cursor: pointer !important;
+}
+
+.grid-tables tbody tr[id^="row-kursi-"] .score-val.score-standby {
+  font-size: 16px !important;
+  opacity: 0.55 !important;
+  background: #f1f5f9 !important;
+}
+
+.card-step-btn {
+  width: 26px !important;
+  height: 26px !important;
+  border-radius: 8px !important;
+  border: 2.5px solid #000000 !important;
+  box-shadow: 2px 2px 0px #000000 !important;
+  font-weight: 900 !important;
+  font-size: 16px !important;
+  line-height: 1 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  cursor: pointer !important;
+  transition: transform 0.1s ease !important;
+  padding: 0 !important;
+}
+
+.card-step-btn.minus {
+  background: #fee2e2 !important;
+  color: #b91c1c !important;
+}
+
+.card-step-btn.plus {
+  background: #fde047 !important;
+  color: #000000 !important;
+}
+
+.card-step-btn:hover {
+  transform: scale(1.08) !important;
+}
+
+.card-step-btn:active {
+  transform: translate(1px, 1px) !important;
+  box-shadow: 1px 1px 0px #000000 !important;
+}
+
+/* Clean Broadcast Overlay (hide controls in stream-only mode) */
+html.mode-tabel .card-step-btn,
+html.mode-tabel .btn-color-palette {
+  display: none !important;
+}
