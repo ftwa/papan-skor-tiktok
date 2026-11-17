@@ -6335,15 +6335,21 @@ html.theme-comic .grid-tables tbody tr[id^="row-kursi-"] .avatar-placeholder {
 html.theme-comic .grid-tables tbody tr[id^="row-kursi-"] > td.cell-roblox-target .name-roblox-display {
   display: block !important;
   max-width: 100% !important;
-  font-size: 16px !important;
+  font-size: 20px !important;
   font-weight: 900 !important;
-  line-height: 1.2 !important;
+  line-height: 1.15 !important;
   color: #0f172a !important;
   opacity: 1 !important;
   text-align: center !important;
   overflow: hidden !important;
   text-overflow: ellipsis !important;
   white-space: nowrap !important;
+  margin-top: 2px !important;
+}
+
+html.theme-comic .grid-tables tbody tr[id^="row-kursi-"] .name-tiktok,
+html.theme-comic .grid-tables tbody tr.host-row #hostRobloxTag {
+  display: none !important;
 }
 
 /* Primary Player Name & Status Badges */
@@ -6418,13 +6424,14 @@ html.theme-comic .grid-tables tbody tr[id^="row-kursi-"] > td.cell-roblox-target
 
 .grid-tables tbody tr.host-row #hostDisplayName {
   color: #0f172a !important;
-  font-size: 17px !important;
+  font-size: 20px !important;
   font-weight: 900 !important;
   line-height: 1.15 !important;
   max-width: 100% !important;
   overflow: hidden !important;
   text-overflow: ellipsis !important;
   white-space: nowrap !important;
+  margin-top: 2px !important;
 }
 
 .grid-tables tbody tr.host-row #hostRobloxTag {
@@ -6449,9 +6456,11 @@ html.theme-comic .grid-tables tbody tr.tag-red #hostDisplayName {
 
 html.theme-comic .grid-tables tbody tr.tag-purple .name-roblox-display,
 html.theme-comic .grid-tables tbody tr.tag-red .name-roblox-display,
+html.theme-comic .grid-tables tbody tr.tag-dark .name-roblox-display,
 html.theme-comic .grid-tables tbody tr.tag-purple #hostRobloxTag,
-html.theme-comic .grid-tables tbody tr.tag-red #hostRobloxTag {
-  color: #fde68a !important;
+html.theme-comic .grid-tables tbody tr.tag-red #hostRobloxTag,
+html.theme-comic .grid-tables tbody tr.tag-dark #hostRobloxTag {
+  color: #ffffff !important;
 }
 
 .grid-tables tbody tr.host-row > td.cell-host-merged > div > div:last-child {
