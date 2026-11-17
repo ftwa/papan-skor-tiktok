@@ -10100,7 +10100,7 @@ html.theme-hazard .c-notif-badge-icon {
 
   </style>
 
-<link rel="stylesheet" href="themes.css?v=20261118_0458">
+<link rel="stylesheet" href="themes.css?v=20261118_0502">
 
 </head>
 
@@ -17380,55 +17380,49 @@ html.theme-hazard .c-notif-badge-icon {
     const currData = getActiveData();
     if (!currData || !currData.players) return;
 
-    requestAnimationFrame(() => {
-      const movedCards = [];
-      currData.players.forEach((p, idx) => {
-        if (!p || !p.id || !prevMap.has(p.id)) return;
-        const el = document.getElementById(`row-kursi-${idx}`);
-        if (!el) return;
-        const prev = prevMap.get(p.id);
-        const curr = el.getBoundingClientRect();
-        const dx = prev.rect.left - curr.left;
-        const dy = prev.rect.top - curr.top;
-        if (Math.abs(dy) > 2 || Math.abs(dx) > 2) {
-          const climbedUp = idx < prev.idx;
-          el.style.transition = 'none';
-          el.style.transform = climbedUp
-            ? `translate(${dx}px, ${dy}px) scale(1.08) rotate(-3deg)`
-            : `translate(${dx}px, ${dy}px) scale(0.96)`;
-          el.style.zIndex = climbedUp ? '45' : '5';
-          movedCards.push({ el, climbedUp, isNewKing: climbedUp && idx === 0 });
-        }
-      });
-
-      if (movedCards.length > 0) {
-        document.body.offsetHeight;
-        requestAnimationFrame(() => {
-          movedCards.forEach(({ el, climbedUp, isNewKing }) => {
-            el.style.transition = '';
-            el.classList.add('moving-card-spring');
-            if (climbedUp) {
-              el.classList.add('card-overtake-up');
-              const existingPill = el.querySelector('.overtake-rank-pill');
-              if (existingPill) existingPill.remove();
-              const pill = document.createElement('div');
-              pill.className = 'overtake-rank-pill';
-              pill.innerText = isNewKing ? '👑 NEW #1!' : '🚀 NAIK!';
-              el.appendChild(pill);
-              setTimeout(() => { if (pill.parentNode) pill.remove(); }, 950);
-            } else {
-              el.classList.add('card-overtake-down');
-            }
-            el.style.transform = '';
-            setTimeout(() => {
-              el.classList.remove('moving-card-spring', 'card-overtake-up', 'card-overtake-down');
-              el.style.transform = '';
-              el.style.zIndex = '';
-            }, 760);
-          });
-        });
+    // 1. INVERT secara sinkron sebelum browser sempat menggambar frame baru (zero flicker!)
+    const movedCards = [];
+    currData.players.forEach((p, idx) => {
+      if (!p || !p.id || !prevMap.has(p.id)) return;
+      const el = document.getElementById(`row-kursi-${idx}`);
+      if (!el) return;
+      const prev = prevMap.get(p.id);
+      const curr = el.getBoundingClientRect();
+      const dx = prev.rect.left - curr.left;
+      const dy = prev.rect.top - curr.top;
+      if (Math.abs(dy) > 2 || Math.abs(dx) > 2) {
+        const climbedUp = idx < prev.idx;
+        el.style.transition = 'none';
+        el.style.transform = climbedUp
+          ? `translate3d(${dx}px, ${dy}px, 0) scale(1.04)`
+          : `translate3d(${dx}px, ${dy}px, 0)`;
+        el.style.zIndex = climbedUp ? '40' : '5';
+        movedCards.push({ el, climbedUp });
       }
     });
+
+    if (movedCards.length > 0) {
+      // Paksa reflow agar posisi awal terkunci sebelum animasi geser dimulai
+      void document.body.offsetHeight;
+      // 2. PLAY: Geser kartu mulus seperti kartu di atas meja
+      requestAnimationFrame(() => {
+        movedCards.forEach(({ el, climbedUp }) => {
+          el.style.transition = '';
+          el.classList.add('moving-card-spring');
+          if (climbedUp) {
+            el.classList.add('card-overtake-up');
+          } else {
+            el.classList.add('card-overtake-down');
+          }
+          el.style.transform = '';
+          setTimeout(() => {
+            el.classList.remove('moving-card-spring', 'card-overtake-up', 'card-overtake-down');
+            el.style.transform = '';
+            el.style.zIndex = '';
+          }, 700);
+        });
+      });
+    }
   }
 
   function urutkanOtomatis() {
