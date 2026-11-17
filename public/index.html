@@ -10106,7 +10106,7 @@ html.theme-hazard .c-notif-badge-icon {
 
   </style>
 
-<link rel="stylesheet" href="themes.css?v=20261118_0538">
+<link rel="stylesheet" href="themes.css?v=20261118_0546">
 
 </head>
 
@@ -17338,7 +17338,6 @@ html.theme-hazard .c-notif-badge-icon {
           </div>
           <div style="display:flex; align-items:center; gap:4px; flex-shrink:0;">
             <span class="pay-status-tag done" title="Status Host">HOST</span>
-            <span class="btn-color-palette" onclick="bukaMiniColorPicker(19, event)" title="Ubah warna latar baris">🎨</span>
           </div>
         </div>
       </td>
@@ -17466,9 +17465,11 @@ html.theme-hazard .c-notif-badge-icon {
         }
       }
 
-      tr.classList.remove(...ALL_TAG_CLASSES, 'dock-target-active');
-      if (p.colorTag) {
-        tr.classList.add(`tag-${p.colorTag}`);
+      tr.classList.remove(...ALL_TAG_CLASSES, 'dock-target-active', 'rank-1-row', 'rank-2-row', 'rank-3-row');
+      if (!isTeam) {
+        if (idx === 0) tr.classList.add('rank-1-row');
+        else if (idx === 1) tr.classList.add('rank-2-row');
+        else if (idx === 2) tr.classList.add('rank-3-row');
       }
       if (pointInputStyle === 'dock' && selectedDockChair === idx && p.isReady) {
         tr.classList.add('dock-target-active');
@@ -17487,12 +17488,8 @@ html.theme-hazard .c-notif-badge-icon {
         tr.style.removeProperty('--row-team-color');
       }
 
-      const colorIconHtml = adaPemain 
-        ? `<span class="btn-color-palette" onclick="bukaMiniColorPicker(${idx}, event)" title="Ubah warna latar baris">🎨</span>` 
-        : '';
-
       const badgePayHtml = adaPemain
-        ? `<span class="pay-status-tag ${p.isPaid ? 'done' : 'ready'}" onclick="togglePayStatus(${idx}, event)" title="Klik untuk ganti status">${p.isPaid ? '✔' : '-'}</span>${colorIconHtml}`
+        ? `<span class="pay-status-tag ${p.isPaid ? 'done' : 'ready'}" onclick="togglePayStatus(${idx}, event)" title="Klik untuk ganti status">${p.isPaid ? '✔' : '-'}</span>`
         : '';
 
       const cellNama = tr.querySelector('.cell-nama-target');
