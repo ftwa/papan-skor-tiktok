@@ -123,13 +123,8 @@
 
 
 
-        const savedTheme = urlTheme || dbTheme || localStorage.getItem('galatama_active_theme_' + detectedRoom) || localStorage.getItem('galatama_active_theme_global') || 'cyber';
-
-        if (savedTheme && savedTheme !== 'cyber') {
-
-          document.documentElement.classList.add('theme-' + savedTheme);
-
-        }
+        // Tema eksklusif Comic Pop-Art
+        document.documentElement.classList.add('theme-comic');
 
       } catch (_) {}
 
@@ -10112,24 +10107,6 @@ html.theme-hazard .c-notif-badge-icon {
         </div>
       </div>
 
-      <!-- DROPDOWN TEMA -->
-
-      <div class="dropdown" id="dropdownTema">
-
-        <button class="btn-action-soft" onclick="toggleDropdownTema(event)" title="Pilih Gaya Desain & Tema">
-
-          <span>🎨</span> <span id="labelTemaAktif">Cyber HUD</span> ▾
-
-        </button>
-
-        <div class="dropdown-content scrollable-list" id="listDropdownTema" style="max-height: 320px; min-width: 175px;">
-
-          <!-- Item tema simpel dirender dinamis -->
-
-        </div>
-
-      </div>
-
       <button class="btn-action-soft btn-shot-table" onclick="ambilScreenshotTabel()" title="Ambil Foto Tabel Papan Skor (Tanpa Tombol/Background Transparan)" style="font-size: 15px; padding: 5px 12px;">📸</button>
 
       
@@ -13457,15 +13434,13 @@ html.theme-hazard .c-notif-badge-icon {
 
 
 
-  /* SISTEM PEMILIHAN & MANAJEMEN TEMA PAPAN SKOR (7 SPECIAL THEMES) */
+  /* SISTEM TEMA EKSKLUSIF COMIC POP-ART */
 
   const THEME_KEY = 'galatama_active_theme_' + CURRENT_ROOM;
 
-  let rawTemaAktif = (new URLSearchParams(window.location.search).get('theme') || (typeof db !== 'undefined' && db && db.activeTheme ? db.activeTheme : '') || localStorage.getItem(THEME_KEY) || localStorage.getItem('galatama_active_theme_global') || 'cyber').toLowerCase();
+  const TEMA_VALID_IDS = ['comic'];
 
-  const TEMA_VALID_IDS = ['cyber', 'aquatic', 'comic', 'arcade', 'hazard', 'imperial', 'matrix'];
-
-  let temaAktif = TEMA_VALID_IDS.includes(rawTemaAktif) ? rawTemaAktif : 'cyber';
+  let temaAktif = 'comic';
 
 
 
@@ -13677,19 +13652,7 @@ html.theme-hazard .c-notif-badge-icon {
 
   const DAFTAR_SEMUA_TEMA = [
 
-    { id: 'cyber', nama: 'Cyber HUD Neon', namaSimpel: 'Cyber HUD', icon: '⚡', sub: 'Sci-Fi Tournament, Neon Cyan & Sapphire Blue', colors: ['#070b14', '#00f0ff', '#38bdf8', '#1e293b'], special: 'Holographic Neon' },
-
-    { id: 'aquatic', nama: 'Aquatic Pro Fishing', namaSimpel: 'Aquatic Ocean', icon: '🐟', sub: 'Deep Ocean Abyss, Aquamarine & Seafoam', colors: ['#021729', '#00f5d4', '#00b4d8', '#ffd166'], special: 'Deep Sea Wave' },
-
-    { id: 'comic', nama: 'Comic Pop-Art', namaSimpel: 'Comic Pop-Art', icon: '💥', sub: 'Webtoon Manga, Bold Black Inks, Halftone Dots', colors: ['#fde047', '#00e5ff', '#ff1744', '#000000'], special: 'Halftone & Bangers' },
-
-    { id: 'arcade', nama: 'Retro 80s Arcade', namaSimpel: 'Retro Arcade', icon: '👾', sub: 'Synthwave 8-Bit, CRT Scanline TV, Hot Magenta', colors: ['#11052c', '#ff007f', '#00f0ff', '#ffee00'], special: '8-Bit Press Start' },
-
-    { id: 'hazard', nama: 'Cyber Hazard 2077', namaSimpel: 'Cyber Hazard', icon: '☣️', sub: 'Industrial Pitch Black & Caution Yellow Stripes', colors: ['#0b0b0b', '#fcee0a', '#f59e0b', '#262626'], special: 'Caution Barricade' },
-
-    { id: 'imperial', nama: 'Imperial Dynasty Red', namaSimpel: 'Imperial Red', icon: '🐉', sub: 'Vermilion Carmine, Royal Gold, Prosperity Hoki', colors: ['#2b0606', '#eab308', '#f59e0b', '#fef08a'], special: 'Prosperity Royal Gold' },
-
-    { id: 'matrix', nama: 'Matrix Terminal Hacker', namaSimpel: 'Matrix Hacker', icon: '💻', sub: 'Phosphor Green Monospace, Falling Digital Code', colors: ['#020a04', '#00ff66', '#052e16', '#86efac'], special: 'Phosphor CRT Monospace' }
+    { id: 'comic', nama: 'Comic Pop-Art', namaSimpel: 'Comic Pop-Art', icon: '💥', sub: 'Webtoon Manga, Bold Black Inks, Halftone Dots', colors: ['#fde047', '#00e5ff', '#ff1744', '#000000'], special: 'Halftone & Bangers' }
 
   ];
 
@@ -13769,11 +13732,7 @@ html.theme-hazard .c-notif-badge-icon {
 
   function terapkanTema(namaTema, siarkan = true) {
 
-    if (!namaTema) return;
-
-    const targetTema = namaTema.toLowerCase();
-
-    temaAktif = ['cyber', 'aquatic', 'comic', 'arcade', 'hazard', 'imperial', 'matrix'].includes(targetTema) ? targetTema : 'cyber';
+    temaAktif = 'comic';
 
     try {
 
