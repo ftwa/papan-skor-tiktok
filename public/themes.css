@@ -7310,9 +7310,10 @@ html.theme-comic #centerNotifPopup.has-custom-accent .c-notif-pts-main {
 
 .icf-grid {
   display: grid !important;
-  grid-template-columns: repeat(3, 1fr) !important;
-  gap: 5px !important;
+  grid-template-columns: repeat(5, 1fr) !important;
+  gap: 4px !important;
   flex: 1 !important;
+  align-items: stretch !important;
 }
 
 .icf-btn {
@@ -7320,10 +7321,13 @@ html.theme-comic #centerNotifPopup.has-custom-accent .c-notif-pts-main {
   border: 2.5px solid #000000 !important;
   box-shadow: 2px 2px 0px #000000 !important;
   font-family: 'Bangers', cursive !important;
-  font-size: 17px !important;
-  letter-spacing: 0.5px !important;
+  font-size: 16px !important;
+  letter-spacing: 0.4px !important;
   cursor: pointer !important;
-  padding: 2px 0 !important;
+  padding: 4px 0 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
   transition: transform 0.1s ease !important;
 }
 .icf-btn:hover { transform: scale(1.06) !important; }
@@ -7350,6 +7354,12 @@ html.theme-comic #centerNotifPopup.has-custom-accent .c-notif-pts-main {
   font-size: 14px !important;
   text-align: center !important;
   padding: 0 4px !important;
+  -moz-appearance: textfield !important;
+}
+.icf-input::-webkit-outer-spin-button,
+.icf-input::-webkit-inner-spin-button {
+  -webkit-appearance: none !important;
+  margin: 0 !important;
 }
 
 .icf-set-btn {
