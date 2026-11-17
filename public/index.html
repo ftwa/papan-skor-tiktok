@@ -10060,7 +10060,7 @@ html.theme-hazard .c-notif-badge-icon {
 
   </style>
 
-<link rel="stylesheet" href="themes.css?v=20261118_0412">
+<link rel="stylesheet" href="themes.css?v=20261118_0415">
 
 </head>
 
@@ -13092,6 +13092,19 @@ html.theme-hazard .c-notif-badge-icon {
 
 
     const pop = document.getElementById('quickPointPopover');
+
+    pop.classList.remove('qp-tag-blue', 'qp-tag-pink', 'qp-tag-purple', 'qp-tag-red', 'qp-tag-yellow', 'qp-tag-green', 'qp-tag-orange', 'qp-tag-cyan', 'qp-tag-dark', 'qp-tag-rainbow', 'qp-custom-accent');
+    pop.style.removeProperty('--qp-accent-color');
+
+    if (p.colorTag) {
+      pop.classList.add(`qp-tag-${p.colorTag}`);
+    } else if (db.teamConfig && db.teamConfig.enabled && db.teamConfig.teams) {
+      const t = dapatkanTimDariKursi(index);
+      if (t && t.color) {
+        pop.style.setProperty('--qp-accent-color', t.color);
+        pop.classList.add('qp-custom-accent');
+      }
+    }
 
     pop.classList.add('show');
 
