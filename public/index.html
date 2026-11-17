@@ -3099,6 +3099,37 @@
 
     }
 
+    /* MODE SCREEN (?view=screen): Overlay Layar Transisi Bersih Tanpa UI Admin */
+    html.mode-screen,
+    html.mode-screen body {
+      background: transparent !important;
+      background-color: transparent !important;
+      overflow: hidden !important;
+    }
+
+    html.mode-screen .container,
+    html.mode-screen .top-bar,
+    html.mode-screen .grid-tables,
+    html.mode-screen .log-card,
+    html.mode-screen #winnerOverlay,
+    html.mode-screen #centerNotifPopup,
+    html.mode-screen .modal-overlay,
+    html.mode-screen .quick-point-popover,
+    html.mode-screen .color-picker-mini,
+    html.mode-screen .arcade-point-dock,
+    html.mode-screen .trans-controls-bar,
+    html.mode-screen .btn-close-trans {
+      display: none !important;
+    }
+
+    html.mode-screen #transitionOverlay:not(.active) {
+      display: none !important;
+    }
+
+    html.mode-screen #transitionOverlay.active {
+      display: flex !important;
+    }
+
 
 
     /* 4. OVERLAY LOG AKTIVITAS STANDALONE (?view=log) */
@@ -10060,7 +10091,7 @@ html.theme-hazard .c-notif-badge-icon {
 
   </style>
 
-<link rel="stylesheet" href="themes.css?v=20261118_0425">
+<link rel="stylesheet" href="themes.css?v=20261118_0438">
 
 </head>
 
@@ -11897,9 +11928,12 @@ html.theme-hazard .c-notif-badge-icon {
 
 
 
+  const processedSyncMsgIds = new Set();
+
   function siarkanPesanSync(pesan) {
 
-    const payload = { ...pesan, _sender: LOCAL_SENDER_ID, _t: Date.now() };
+    const msgId = LOCAL_SENDER_ID + '_' + Date.now() + '_' + Math.random().toString(36).substring(2, 7);
+    const payload = { ...pesan, _sender: LOCAL_SENDER_ID, _msgId: msgId, _t: Date.now() };
 
 
 
@@ -11952,6 +11986,15 @@ html.theme-hazard .c-notif-badge-icon {
   function tanganiPesanSync(msg) {
 
     if (!msg || !msg.type) return;
+
+    if (msg._msgId) {
+      if (processedSyncMsgIds.has(msg._msgId)) return;
+      processedSyncMsgIds.add(msg._msgId);
+      if (processedSyncMsgIds.size > 150) {
+        const firstKey = processedSyncMsgIds.values().next().value;
+        processedSyncMsgIds.delete(firstKey);
+      }
+    }
 
 
 
@@ -12116,9 +12159,15 @@ html.theme-hazard .c-notif-badge-icon {
       }
     } else if (msg.type === 'UPDATE_DATA') {
 
-      if (msg.db) {
+      if (msg.db && currentViewMode !== 'admin') {
+
+        const prevTeamEnabled = !!(db && db.teamConfig && db.teamConfig.enabled);
+        const prevTeamSize = (db && db.teamConfig) ? db.teamConfig.teamSize : 0;
 
         db = msg.db;
+
+        const nextTeamEnabled = !!(db && db.teamConfig && db.teamConfig.enabled);
+        const nextTeamSize = (db && db.teamConfig) ? db.teamConfig.teamSize : 0;
 
         if (msg.db.activeTheme && msg.db.activeTheme !== temaAktif) {
 
@@ -12126,7 +12175,11 @@ html.theme-hazard .c-notif-badge-icon {
 
         }
 
-        if (currentViewMode === 'tabel' || currentViewMode === 'admin') {
+        if (currentViewMode === 'tabel') {
+
+          if (prevTeamEnabled !== nextTeamEnabled || prevTeamSize !== nextTeamSize) {
+            inisialisasiStrukturTabel();
+          }
 
           renderIsiTabel();
 
@@ -12145,7 +12198,7 @@ html.theme-hazard .c-notif-badge-icon {
       }
 
     } else if (msg.type === 'SET_TRANSITION_SCREEN') {
-      if (currentViewMode === 'admin' || currentViewMode === 'tabel' || currentViewMode === 'screen') {
+      if (currentViewMode === 'admin' || currentViewMode === 'screen') {
         if (msg.active) {
           tampilkanLayarTransisiDariSync(msg);
         } else {
@@ -12153,7 +12206,7 @@ html.theme-hazard .c-notif-badge-icon {
         }
       }
     } else if (msg.type === 'SYNC_TRANSITION_TIMER') {
-      if (currentViewMode === 'admin' || currentViewMode === 'tabel' || currentViewMode === 'screen') {
+      if (currentViewMode === 'admin' || currentViewMode === 'screen') {
         transState.remainingSeconds = msg.remainingSeconds;
         transState.isPaused = msg.isPaused;
         transState.endTimestamp = msg.endTimestamp;
