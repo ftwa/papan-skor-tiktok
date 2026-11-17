@@ -10106,7 +10106,7 @@ html.theme-hazard .c-notif-badge-icon {
 
   </style>
 
-<link rel="stylesheet" href="themes.css?v=20261118_0532">
+<link rel="stylesheet" href="themes.css?v=20261118_0538">
 
 </head>
 
@@ -10279,11 +10279,13 @@ html.theme-hazard .c-notif-badge-icon {
       <div class="dtb-core">
         <span class="dtb-icon" id="dtbIcon">⚠️</span>
         <span class="dtb-label" id="dtbLabel">TIMER</span>
-        <span class="dtb-digits" id="dtbDigits">15:00</span>
+        <span class="dtb-digits" id="dtbDigits" onclick="fokusInputTimerManual()" title="Klik untuk edit waktu manual">15:00</span>
       </div>
       <div class="dtb-hazard-edge"></div>
     </div>
     <div class="timer-admin-controls">
+      <input type="text" id="inputTimerManual" class="tctrl-input" value="15:00" placeholder="MM:SS" title="Ketik menit (misal 25) atau MM:SS (misal 12:30) lalu Enter" onkeydown="if(event.key==='Enter'){event.preventDefault(); setRaceTimerManual();}">
+      <button type="button" class="tctrl-btn set" onclick="setRaceTimerManual()" title="Terapkan Waktu Manual">SET</button>
       <button type="button" class="tctrl-btn play" id="btnTimerToggle" onclick="toggleRaceTimer()" title="Mulai / Jeda Timer">▶</button>
       <button type="button" class="tctrl-btn reset" onclick="resetRaceTimer()" title="Reset Timer">↺</button>
       <button type="button" class="tctrl-btn preset" onclick="setRaceTimerMinutes(10)">10m</button>
@@ -13360,6 +13362,10 @@ html.theme-hazard .c-notif-badge-icon {
       label.innerText = raceTimerState.remainingSec === 0 ? 'TIME UP!' : (isDanger ? 'OVERTIME' : 'TIMER');
     }
     if (btnPlay) btnPlay.innerText = raceTimerState.isRunning ? '⏸' : '▶';
+    const inpManual = document.getElementById('inputTimerManual');
+    if (inpManual && document.activeElement !== inpManual) {
+      inpManual.value = formatTimerMMSS(raceTimerState.remainingSec);
+    }
     bar.setAttribute('data-overlay-hidden', raceTimerState.overlayVisible ? '0' : '1');
     if (btnVis) btnVis.style.opacity = raceTimerState.overlayVisible ? '1' : '0.45';
   }
@@ -13434,6 +13440,38 @@ html.theme-hazard .c-notif-badge-icon {
     raceTimerState.remainingSec = Math.max(0, raceTimerState.remainingSec + deltaSec);
     if (!raceTimerState.isRunning) raceTimerState.totalSec = Math.max(60, raceTimerState.remainingSec);
     else raceTimerState.endAt = Date.now() + raceTimerState.remainingSec * 1000;
+    renderRaceTimerUI();
+    simpanDanSiarkanRaceTimer(true);
+  }
+
+  function fokusInputTimerManual() {
+    if (document.documentElement.classList.contains('mode-timer')) return;
+    const inp = document.getElementById('inputTimerManual');
+    if (inp) { inp.focus(); inp.select(); }
+  }
+
+  function setRaceTimerManual() {
+    const inp = document.getElementById('inputTimerManual');
+    if (!inp) return;
+    const raw = (inp.value || '').trim();
+    if (!raw) return;
+    let totalSeconds = 0;
+    if (raw.includes(':')) {
+      const parts = raw.split(':');
+      const m = Math.max(0, parseInt(parts[0], 10) || 0);
+      const s = Math.max(0, Math.min(59, parseInt(parts[1], 10) || 0));
+      totalSeconds = m * 60 + s;
+    } else {
+      const m = Math.max(0, parseFloat(raw.replace(',', '.')) || 0);
+      totalSeconds = Math.round(m * 60);
+    }
+    if (totalSeconds <= 0) totalSeconds = 60;
+    raceTimerState.totalSec = totalSeconds;
+    raceTimerState.remainingSec = totalSeconds;
+    raceTimerState.isRunning = false;
+    raceTimerState.endAt = 0;
+    if (raceTimerInterval) { clearInterval(raceTimerInterval); raceTimerInterval = null; }
+    inp.blur();
     renderRaceTimerUI();
     simpanDanSiarkanRaceTimer(true);
   }
@@ -17475,11 +17513,13 @@ html.theme-hazard .c-notif-badge-icon {
         const avHtml = renderAvatarHtml(p.avatar, p.nick || p.user);
         const displayText = p.nick || p.user || p.robloxUser || '(Kosong)';
         const isDisplayEmpty = !(p.nick || p.user || p.robloxUser);
-        const nickHtml = `<span class="name-roblox-display ${isDisplayEmpty ? 'name-empty' : ''}">${displayText}</span>`;
+        const lenN = displayText.length;
+        const autoFont = lenN <= 8 ? '19px' : (lenN <= 12 ? '16px' : (lenN <= 16 ? '14px' : '12.5px'));
+        const nickHtml = `<span class="name-roblox-display ${isDisplayEmpty ? 'name-empty' : ''}" style="font-size:${autoFont} !important;" title="${escapeHtml(displayText)}">${escapeHtml(displayText)}</span>`;
         cellRoblox.innerHTML = `
-          <div style="display:flex; align-items:center; gap:6px;">
+          <div style="display:flex; align-items:center; gap:6px; width:100%; min-width:0;">
             <div class="avatar-wrap">${avHtml}</div>
-            <div style="flex:1; min-width:0; display:flex; align-items:center;">${nickHtml}</div>
+            <div style="flex:1; width:100%; min-width:0; display:flex; align-items:center; justify-content:center;">${nickHtml}</div>
           </div>`;
       }
 
@@ -17547,7 +17587,11 @@ html.theme-hazard .c-notif-badge-icon {
 
       if (hostAvatar) hostAvatar.innerHTML = renderAvatarHtml(h.avatar, h.nick || h.user || 'Host');
       if (hostNick) {
-        hostNick.innerText = h.nick || h.user || 'HOST';
+        const hostTxt = h.nick || h.user || 'HOST';
+        const hLen = hostTxt.length;
+        const hFont = hLen <= 8 ? '19px' : (hLen <= 12 ? '16px' : (hLen <= 16 ? '14px' : '12.5px'));
+        hostNick.innerText = hostTxt;
+        hostNick.style.fontSize = hFont;
         hostNick.className = `name-roblox-display ${!(h.nick || h.user) ? 'name-empty' : ''}`;
       }
       if (hostTag) {
