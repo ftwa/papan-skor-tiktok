@@ -12240,9 +12240,9 @@ html.theme-hazard .c-notif-badge-icon {
 
           renderIsiTabel();
 
-          jalankanAnimasiFlipKartu(prevFlip);
-
           autoScaleTabel();
+
+          jalankanAnimasiFlipKartu(prevFlip);
 
         }
 
@@ -17573,26 +17573,35 @@ html.theme-hazard .c-notif-badge-icon {
       if (Math.abs(dy) > 2 || Math.abs(dx) > 2) {
         const climbedUp = idx < prev.idx;
         el.style.zIndex = climbedUp ? '45' : '5';
+        el.style.transition = 'none';
+        el.style.willChange = 'transform';
         el.classList.add('moving-card-spring', climbedUp ? 'card-overtake-up' : 'card-overtake-down');
 
         if (typeof el.animate === 'function') {
+          const midX = Math.round(dx * 0.48);
+          const midY = Math.round(dy * 0.48 + (climbedUp ? -14 : 8));
           const anim = el.animate([
-            { transform: `translate3d(${dx}px, ${dy}px, 0) scale(${climbedUp ? 1.06 : 0.97})` },
-            { transform: 'translate3d(0px, 0px, 0) scale(1)' }
+            { transform: `translate3d(${dx}px, ${dy}px, 0) scale(1)`, offset: 0 },
+            { transform: `translate3d(${midX}px, ${midY}px, 0) scale(${climbedUp ? 1.09 : 0.94})`, offset: 0.38 },
+            { transform: 'translate3d(0px, 0px, 0) scale(1)', offset: 1 }
           ], {
-            duration: 820,
-            easing: 'cubic-bezier(0.22, 1, 0.36, 1)',
+            duration: 920,
+            easing: 'cubic-bezier(0.16, 1, 0.3, 1)',
             fill: 'none'
           });
           anim.onfinish = () => {
             el.classList.remove('moving-card-spring', 'card-overtake-up', 'card-overtake-down');
             el.style.zIndex = '';
+            el.style.transition = '';
+            el.style.willChange = '';
           };
         } else {
           setTimeout(() => {
             el.classList.remove('moving-card-spring', 'card-overtake-up', 'card-overtake-down');
             el.style.zIndex = '';
-          }, 820);
+            el.style.transition = '';
+            el.style.willChange = '';
+          }, 920);
         }
       }
     });
