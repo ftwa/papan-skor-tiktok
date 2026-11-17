@@ -13204,43 +13204,6 @@ html.theme-hazard .c-notif-badge-icon {
     tr.appendChild(panel);
     const inp = document.getElementById('inCardDirectInput');
     if (inp) { inp.focus(); inp.select(); }
-    return;
-
-
-
-    let tr = document.getElementById(index === 19 ? 'row-kursi-19' : `row-kursi-${index}`);
-
-    let targetEl = (ev && ev.currentTarget) ? ev.currentTarget : (tr ? (tr.querySelector('.score-val') || tr) : null);
-
-    if (targetEl) {
-
-      const scoreCell = targetEl.querySelector ? (targetEl.querySelector('.score-val') || targetEl) : targetEl;
-
-      const rect = scoreCell.getBoundingClientRect();
-
-      const popWidth = 235;
-
-      const popHeight = pop.offsetHeight || 150;
-
-
-
-      let leftPos = rect.left - popWidth - 10;
-
-      if (leftPos < 10) leftPos = Math.min(window.innerWidth - popWidth - 10, rect.right + 10);
-
-      let topPos = rect.top - (popHeight / 2) + (rect.height / 2);
-
-      topPos = Math.max(10, Math.min(window.innerHeight - popHeight - 10, topPos));
-
-
-
-      pop.style.left = `${leftPos}px`;
-
-      pop.style.top = `${topPos}px`;
-
-    }
-
-
 
     if (isBroadcast) {
 
