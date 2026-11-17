@@ -7393,10 +7393,39 @@ html.theme-comic #centerNotifPopup.has-custom-accent .c-notif-pts-main {
   margin: 0 auto 10px auto !important;
   flex-wrap: wrap !important;
 }
+html.mode-tabel #liveTimerBar,
 html.mode-tabel .timer-admin-controls {
   display: none !important;
 }
-html.mode-tabel .live-timer-bar[data-overlay-hidden="1"] {
+html.mode-timer,
+html.mode-timer body {
+  background: transparent !important;
+  background-image: none !important;
+  margin: 0 !important;
+  padding: 6px !important;
+  overflow: hidden !important;
+}
+html.mode-timer .top-bar,
+html.mode-timer .grid-tables,
+html.mode-timer .log-panel,
+html.mode-timer .log-card,
+html.mode-timer #winnerOverlay,
+html.mode-timer #centerNotifPopup,
+html.mode-timer #transitionOverlay,
+html.mode-timer .modal-overlay,
+html.mode-timer .quick-point-popover,
+html.mode-timer .color-picker-mini,
+html.mode-timer .arcade-point-dock,
+html.mode-timer .timer-admin-controls {
+  display: none !important;
+}
+html.mode-timer #liveTimerBar {
+  margin: 0 auto !important;
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+}
+html.mode-timer #liveTimerBar[data-overlay-hidden="1"] {
   display: none !important;
 }
 .danger-timer-badge {
