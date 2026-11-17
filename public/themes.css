@@ -6116,6 +6116,8 @@ html.mode-notif #centerNotifPopup.show {
    border warna tim menyala dan angka skor besar di tiap kartu.
    ========================================================================== */
 
+html.theme-comic .grid-tables,
+html.mode-tabel.theme-comic .grid-tables,
 .grid-tables {
   display: grid !important;
   grid-template-columns: repeat(5, minmax(0, 1fr)) !important;
@@ -6126,12 +6128,16 @@ html.mode-notif #centerNotifPopup.show {
 }
 
 @media (max-width: 900px) {
+  html.theme-comic .grid-tables,
+  html.mode-tabel.theme-comic .grid-tables,
   .grid-tables {
     grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
   }
 }
 
 @media (max-width: 640px) {
+  html.theme-comic .grid-tables,
+  html.mode-tabel.theme-comic .grid-tables,
   .grid-tables {
     grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
   }
@@ -6202,7 +6208,6 @@ html.mode-notif #centerNotifPopup.show {
 }
 
 .grid-tables tbody tr[id^="row-kursi-"]:hover {
-  transform: translateY(-3px) !important;
   background: linear-gradient(165deg, #ecfeff 0%, #ffffff 100%) !important;
   box-shadow: 6px 6px 0px #000000 !important;
 }
@@ -6305,16 +6310,26 @@ html.theme-comic .grid-tables table tbody tr[id^="row-kursi-"] > td.td-no {
   text-align: center !important;
 }
 
-.grid-tables tbody tr[id^="row-kursi-"] .avatar-wrap,
-.grid-tables tbody tr[id^="row-kursi-"] .avatar-mini,
-.grid-tables tbody tr[id^="row-kursi-"] .avatar-placeholder {
-  width: 58px !important;
-  height: 58px !important;
+html.theme-comic .grid-tables tbody tr[id^="row-kursi-"] .avatar-wrap,
+html.theme-comic .grid-tables tbody tr[id^="row-kursi-"] .avatar-mini {
+  width: 62px !important;
+  height: 62px !important;
+  border-radius: 10px !important;
+  border: none !important;
+  box-shadow: none !important;
+  background: transparent !important;
+  object-fit: contain !important;
+}
+
+html.theme-comic .grid-tables tbody tr[id^="row-kursi-"] .avatar-placeholder {
+  width: 62px !important;
+  height: 62px !important;
   border-radius: 12px !important;
-  border: 3px solid var(--row-team-color, #000000) !important;
-  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2), 2px 2px 0px #000000 !important;
-  font-size: 22px !important;
-  object-fit: cover !important;
+  border: none !important;
+  box-shadow: none !important;
+  background: rgba(15, 23, 42, 0.08) !important;
+  color: #475569 !important;
+  font-size: 24px !important;
 }
 
 .grid-tables tbody tr[id^="row-kursi-"] > td.cell-roblox-target .name-roblox-display {
@@ -6332,11 +6347,13 @@ html.theme-comic .grid-tables table tbody tr[id^="row-kursi-"] > td.td-no {
 .grid-tables tbody tr[id^="row-kursi-"] > td.cell-nama-target {
   order: 2 !important;
   margin-top: 2px !important;
+  position: static !important;
   cursor: pointer !important;
 }
 
 .grid-tables tbody tr[id^="row-kursi-"] > td.cell-nama-target > div {
   padding-left: 0 !important;
+  position: static !important;
   flex-direction: column !important;
   align-items: center !important;
   gap: 2px !important;
@@ -6410,6 +6427,21 @@ html.theme-comic .grid-tables table tbody tr[id^="row-kursi-"] > td.td-no {
   font-size: 11px !important;
   font-weight: 700 !important;
   max-width: 100% !important;
+}
+
+/* High-Contrast White/Gold Text for Dark Purple & Dark Red Cards (including Host) */
+html.theme-comic .grid-tables tbody tr.tag-purple .name-tiktok,
+html.theme-comic .grid-tables tbody tr.tag-red .name-tiktok,
+html.theme-comic .grid-tables tbody tr.tag-purple #hostDisplayName,
+html.theme-comic .grid-tables tbody tr.tag-red #hostDisplayName {
+  color: #ffffff !important;
+}
+
+html.theme-comic .grid-tables tbody tr.tag-purple .name-roblox-display,
+html.theme-comic .grid-tables tbody tr.tag-red .name-roblox-display,
+html.theme-comic .grid-tables tbody tr.tag-purple #hostRobloxTag,
+html.theme-comic .grid-tables tbody tr.tag-red #hostRobloxTag {
+  color: #fde68a !important;
 }
 
 .grid-tables tbody tr.host-row > td.cell-host-merged > div > div:last-child {
