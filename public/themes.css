@@ -6197,7 +6197,7 @@ html.mode-tabel.theme-comic .grid-tables,
   flex-direction: column !important;
   justify-content: space-between !important;
   position: relative !important;
-  min-height: 184px !important;
+  min-height: 208px !important;
   padding: 10px 8px 8px !important;
   border-radius: 14px !important;
   background: linear-gradient(165deg, #ffffff 0%, #fffbeb 100%) !important;
@@ -6298,7 +6298,7 @@ html.theme-comic .grid-tables table tbody tr[id^="row-kursi-"] > td.td-no {
 /* Card Portrait & Name Ordering (Avatar first, then Name, then Score) */
 .grid-tables tbody tr[id^="row-kursi-"] > td.cell-roblox-target {
   order: 1 !important;
-  margin-top: 22px !important;
+  margin-top: 14px !important;
   cursor: pointer !important;
 }
 
@@ -6312,8 +6312,8 @@ html.theme-comic .grid-tables table tbody tr[id^="row-kursi-"] > td.td-no {
 
 html.theme-comic .grid-tables tbody tr[id^="row-kursi-"] .avatar-wrap,
 html.theme-comic .grid-tables tbody tr[id^="row-kursi-"] .avatar-mini {
-  width: 62px !important;
-  height: 62px !important;
+  width: 86px !important;
+  height: 86px !important;
   border-radius: 10px !important;
   border: none !important;
   box-shadow: none !important;
@@ -6322,21 +6322,21 @@ html.theme-comic .grid-tables tbody tr[id^="row-kursi-"] .avatar-mini {
 }
 
 html.theme-comic .grid-tables tbody tr[id^="row-kursi-"] .avatar-placeholder {
-  width: 62px !important;
-  height: 62px !important;
-  border-radius: 12px !important;
+  width: 86px !important;
+  height: 86px !important;
+  border-radius: 14px !important;
   border: none !important;
   box-shadow: none !important;
   background: rgba(15, 23, 42, 0.08) !important;
   color: #475569 !important;
-  font-size: 24px !important;
+  font-size: 32px !important;
 }
 
 .grid-tables tbody tr[id^="row-kursi-"] > td.cell-roblox-target .name-roblox-display {
   display: block !important;
   max-width: 100% !important;
-  font-size: 11px !important;
-  font-weight: 700 !important;
+  font-size: 13px !important;
+  font-weight: 800 !important;
   text-align: center !important;
   overflow: hidden !important;
   text-overflow: ellipsis !important;
@@ -6365,8 +6365,9 @@ html.theme-comic .grid-tables tbody tr[id^="row-kursi-"] .avatar-placeholder {
 }
 
 .grid-tables tbody tr[id^="row-kursi-"] .name-tiktok {
-  font-size: 13px !important;
+  font-size: 17px !important;
   font-weight: 900 !important;
+  line-height: 1.15 !important;
   text-align: center !important;
   max-width: 100% !important;
   overflow: hidden !important;
@@ -6386,7 +6387,7 @@ html.theme-comic .grid-tables tbody tr[id^="row-kursi-"] .avatar-placeholder {
 /* Host Card Merged Cell Layout */
 .grid-tables tbody tr.host-row > td.cell-host-merged {
   order: 1 !important;
-  margin-top: 22px !important;
+  margin-top: 14px !important;
   cursor: pointer !important;
 }
 
@@ -6414,8 +6415,9 @@ html.theme-comic .grid-tables tbody tr[id^="row-kursi-"] .avatar-placeholder {
 
 .grid-tables tbody tr.host-row #hostDisplayName {
   color: #0f172a !important;
-  font-size: 13px !important;
+  font-size: 17px !important;
   font-weight: 900 !important;
+  line-height: 1.15 !important;
   max-width: 100% !important;
   overflow: hidden !important;
   text-overflow: ellipsis !important;
@@ -6424,8 +6426,8 @@ html.theme-comic .grid-tables tbody tr[id^="row-kursi-"] .avatar-placeholder {
 
 .grid-tables tbody tr.host-row #hostRobloxTag {
   color: #475569 !important;
-  font-size: 11px !important;
-  font-weight: 700 !important;
+  font-size: 13px !important;
+  font-weight: 800 !important;
   max-width: 100% !important;
 }
 
@@ -6541,7 +6543,7 @@ html.mode-tabel.theme-comic .grid-tables {
 }
 
 html.mode-tabel.theme-comic .grid-tables tbody tr[id^="row-kursi-"] {
-  min-height: 156px !important;
+  min-height: 176px !important;
   padding: 8px 6px 6px !important;
 }
 
@@ -6984,8 +6986,8 @@ html.mode-notif.theme-comic #centerNotifPopup.show {
 
 /* Left Avatar Cutout Box */
 html.theme-comic #centerNotifPopup .c-notif-avatar-box {
-  width: 86px !important;
-  height: 86px !important;
+  width: 104px !important;
+  height: 104px !important;
   flex-shrink: 0 !important;
   background: radial-gradient(circle, rgba(255, 255, 255, 0.2) 1.5px, transparent 1.5px), #1e293b !important;
   background-size: 8px 8px !important;
@@ -7039,8 +7041,8 @@ html.theme-comic #centerNotifPopup .c-notif-tag {
 html.theme-comic #centerNotifPopup .c-notif-name,
 html.theme-comic #centerNotifPopup #cNotifPlayer {
   margin: 0 !important;
-  padding: 2px 14px !important;
-  font-size: 34px !important;
+  padding: 3px 16px !important;
+  font-size: 40px !important;
   line-height: 1.1 !important;
   text-align: left !important;
   max-width: 100% !important;
