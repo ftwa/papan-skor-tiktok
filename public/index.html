@@ -10100,7 +10100,7 @@ html.theme-hazard .c-notif-badge-icon {
 
   </style>
 
-<link rel="stylesheet" href="themes.css?v=20261118_0525">
+<link rel="stylesheet" href="themes.css?v=20261118_0529">
 
 </head>
 
@@ -10265,6 +10265,29 @@ html.theme-hazard .c-notif-badge-icon {
 
 
   
+
+  <!-- #10 DANGER OVERTIME FLASHER TIMER -->
+  <div id="liveTimerBar" class="live-timer-bar">
+    <div id="dangerTimerBadge" class="danger-timer-badge">
+      <div class="dtb-hazard-edge"></div>
+      <div class="dtb-core">
+        <span class="dtb-icon" id="dtbIcon">⚠️</span>
+        <span class="dtb-label" id="dtbLabel">TIMER</span>
+        <span class="dtb-digits" id="dtbDigits">15:00</span>
+      </div>
+      <div class="dtb-hazard-edge"></div>
+    </div>
+    <div class="timer-admin-controls">
+      <button type="button" class="tctrl-btn play" id="btnTimerToggle" onclick="toggleRaceTimer()" title="Mulai / Jeda Timer">▶</button>
+      <button type="button" class="tctrl-btn reset" onclick="resetRaceTimer()" title="Reset Timer">↺</button>
+      <button type="button" class="tctrl-btn preset" onclick="setRaceTimerMinutes(10)">10m</button>
+      <button type="button" class="tctrl-btn preset" onclick="setRaceTimerMinutes(15)">15m</button>
+      <button type="button" class="tctrl-btn preset" onclick="setRaceTimerMinutes(30)">30m</button>
+      <button type="button" class="tctrl-btn preset" onclick="adjustRaceTimerSeconds(60)">+1m</button>
+      <button type="button" class="tctrl-btn preset" onclick="adjustRaceTimerSeconds(-60)">−1m</button>
+      <button type="button" class="tctrl-btn vis" id="btnTimerVis" onclick="toggleRaceTimerOverlayVis()" title="Tampilkan / Sembunyikan Timer di Layar Live">👁️</button>
+    </div>
+  </div>
 
   <!-- TABEL 20 KURSI -->
 
@@ -12064,6 +12087,10 @@ html.theme-hazard .c-notif-badge-icon {
 
       }
 
+    } else if (msg.type === 'SYNC_TIMER') {
+      if (typeof terapkanSyncTimer === 'function') {
+        terapkanSyncTimer(msg);
+      }
     } else if (msg.type === 'SYNC_SCORE') {
 
       if (db && db.sessions && db.sessions[msg.ses]) {
@@ -13233,6 +13260,166 @@ html.theme-hazard .c-notif-badge-icon {
 
 
   window.historyUndoStack = window.historyUndoStack || [];
+
+  // === #10 DANGER OVERTIME FLASHER TIMER ===
+  const RACE_TIMER_KEY = 'galatama_race_timer_v1';
+  let raceTimerState = {
+    totalSec: 900,
+    remainingSec: 900,
+    isRunning: false,
+    overlayVisible: true,
+    endAt: 0
+  };
+  let raceTimerInterval = null;
+
+  function muatRaceTimer() {
+    try {
+      const raw = localStorage.getItem(RACE_TIMER_KEY);
+      if (raw) {
+        const parsed = JSON.parse(raw);
+        raceTimerState = Object.assign({}, raceTimerState, parsed);
+        if (raceTimerState.isRunning && raceTimerState.endAt > 0) {
+          raceTimerState.remainingSec = Math.max(0, Math.ceil((raceTimerState.endAt - Date.now()) / 1000));
+          if (raceTimerState.remainingSec === 0) raceTimerState.isRunning = false;
+        }
+      }
+    } catch (e) {}
+    renderRaceTimerUI();
+    if (raceTimerState.isRunning) mulaiTickRaceTimer();
+  }
+
+  function simpanDanSiarkanRaceTimer(broadcast = true) {
+    try { localStorage.setItem(RACE_TIMER_KEY, JSON.stringify(raceTimerState)); } catch (e) {}
+    if (broadcast) {
+      siarkanPesanSync(Object.assign({ type: 'SYNC_TIMER' }, raceTimerState));
+    }
+  }
+
+  function terapkanSyncTimer(msg) {
+    raceTimerState.totalSec = Number(msg.totalSec) || 900;
+    raceTimerState.remainingSec = Math.max(0, Number(msg.remainingSec) || 0);
+    raceTimerState.isRunning = !!msg.isRunning;
+    raceTimerState.overlayVisible = msg.overlayVisible !== false;
+    raceTimerState.endAt = Number(msg.endAt) || 0;
+    try { localStorage.setItem(RACE_TIMER_KEY, JSON.stringify(raceTimerState)); } catch (e) {}
+    renderRaceTimerUI();
+    if (raceTimerState.isRunning) {
+      mulaiTickRaceTimer();
+    } else if (raceTimerInterval) {
+      clearInterval(raceTimerInterval);
+      raceTimerInterval = null;
+    }
+  }
+
+  function formatTimerMMSS(sec) {
+    const s = Math.max(0, Math.floor(sec));
+    const m = Math.floor(s / 60);
+    const r = s % 60;
+    return `${String(m).padStart(2, '0')}:${String(r).padStart(2, '0')}`;
+  }
+
+  function renderRaceTimerUI() {
+    const bar = document.getElementById('liveTimerBar');
+    const badge = document.getElementById('dangerTimerBadge');
+    const digits = document.getElementById('dtbDigits');
+    const label = document.getElementById('dtbLabel');
+    const btnPlay = document.getElementById('btnTimerToggle');
+    const btnVis = document.getElementById('btnTimerVis');
+    if (!bar || !badge || !digits) return;
+
+    digits.innerText = formatTimerMMSS(raceTimerState.remainingSec);
+    const isDanger = raceTimerState.remainingSec <= 60;
+    badge.classList.toggle('is-danger', isDanger);
+    badge.classList.toggle('is-running', raceTimerState.isRunning);
+    if (label) {
+      label.innerText = raceTimerState.remainingSec === 0 ? 'TIME UP!' : (isDanger ? 'OVERTIME' : 'TIMER');
+    }
+    if (btnPlay) btnPlay.innerText = raceTimerState.isRunning ? '⏸' : '▶';
+    bar.setAttribute('data-overlay-hidden', raceTimerState.overlayVisible ? '0' : '1');
+    if (btnVis) btnVis.style.opacity = raceTimerState.overlayVisible ? '1' : '0.45';
+  }
+
+  function mulaiTickRaceTimer() {
+    if (raceTimerInterval) clearInterval(raceTimerInterval);
+    raceTimerInterval = setInterval(() => {
+      if (!raceTimerState.isRunning) {
+        clearInterval(raceTimerInterval);
+        raceTimerInterval = null;
+        return;
+      }
+      if (raceTimerState.endAt > 0) {
+        const left = Math.max(0, Math.ceil((raceTimerState.endAt - Date.now()) / 1000));
+        raceTimerState.remainingSec = left;
+      } else if (raceTimerState.remainingSec > 0) {
+        raceTimerState.remainingSec -= 1;
+      }
+      if (raceTimerState.remainingSec <= 0) {
+        raceTimerState.remainingSec = 0;
+        raceTimerState.isRunning = false;
+        raceTimerState.endAt = 0;
+        clearInterval(raceTimerInterval);
+        raceTimerInterval = null;
+        if (typeof mainkanSuaraNotif === 'function' && !document.documentElement.classList.contains('mode-tabel')) {
+          try { mainkanSuaraNotif(); } catch (e) {}
+        }
+        simpanDanSiarkanRaceTimer(true);
+      }
+      renderRaceTimerUI();
+    }, 250);
+  }
+
+  function toggleRaceTimer() {
+    if (raceTimerState.isRunning) {
+      if (raceTimerState.endAt > 0) {
+        raceTimerState.remainingSec = Math.max(0, Math.ceil((raceTimerState.endAt - Date.now()) / 1000));
+      }
+      raceTimerState.isRunning = false;
+      raceTimerState.endAt = 0;
+    } else {
+      if (raceTimerState.remainingSec <= 0) raceTimerState.remainingSec = raceTimerState.totalSec || 900;
+      raceTimerState.isRunning = true;
+      raceTimerState.endAt = Date.now() + raceTimerState.remainingSec * 1000;
+      mulaiTickRaceTimer();
+    }
+    renderRaceTimerUI();
+    simpanDanSiarkanRaceTimer(true);
+  }
+
+  function resetRaceTimer() {
+    raceTimerState.isRunning = false;
+    raceTimerState.endAt = 0;
+    raceTimerState.remainingSec = raceTimerState.totalSec || 900;
+    if (raceTimerInterval) { clearInterval(raceTimerInterval); raceTimerInterval = null; }
+    renderRaceTimerUI();
+    simpanDanSiarkanRaceTimer(true);
+  }
+
+  function setRaceTimerMinutes(mins) {
+    const sec = Math.max(60, mins * 60);
+    raceTimerState.totalSec = sec;
+    raceTimerState.remainingSec = sec;
+    raceTimerState.isRunning = false;
+    raceTimerState.endAt = 0;
+    if (raceTimerInterval) { clearInterval(raceTimerInterval); raceTimerInterval = null; }
+    renderRaceTimerUI();
+    simpanDanSiarkanRaceTimer(true);
+  }
+
+  function adjustRaceTimerSeconds(deltaSec) {
+    raceTimerState.remainingSec = Math.max(0, raceTimerState.remainingSec + deltaSec);
+    if (!raceTimerState.isRunning) raceTimerState.totalSec = Math.max(60, raceTimerState.remainingSec);
+    else raceTimerState.endAt = Date.now() + raceTimerState.remainingSec * 1000;
+    renderRaceTimerUI();
+    simpanDanSiarkanRaceTimer(true);
+  }
+
+  function toggleRaceTimerOverlayVis() {
+    raceTimerState.overlayVisible = !raceTimerState.overlayVisible;
+    renderRaceTimerUI();
+    simpanDanSiarkanRaceTimer(true);
+  }
+
+  setTimeout(muatRaceTimer, 50);
 
   function undoTambahPoin() {
     if (!window.historyUndoStack || window.historyUndoStack.length === 0) {
