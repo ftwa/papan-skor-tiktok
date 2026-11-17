@@ -7574,3 +7574,7 @@ html.mode-timer #liveTimerBar[data-overlay-hidden="1"] {
 }
 .dtb-digits { cursor: pointer !important; }
 html.mode-timer .dtb-digits { cursor: default !important; }
+html:not(.mode-admin) #quickPointPopover,
+html:not(.mode-admin) .in-card-flip-panel {
+  display: none !important;
+}
