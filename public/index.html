@@ -10060,7 +10060,7 @@ html.theme-hazard .c-notif-badge-icon {
 
   </style>
 
-<link rel="stylesheet" href="themes.css?v=20261115_0120">
+<link rel="stylesheet" href="themes.css?v=20261118_0358">
 
 </head>
 
@@ -16943,7 +16943,9 @@ html.theme-hazard .c-notif-badge-icon {
       </td>
       <td class="col-point">
         <div class="score-box">
+          <button type="button" class="card-step-btn minus" onclick="event.stopPropagation(); terapkanTambahPoin(19, -1)" title="Kurangi 1 poin">−</button>
           <div class="score-val host-score" onclick="bukaQuickPointPopover(19, event)" title="Klik untuk tambah poin Host">0</div>
+          <button type="button" class="card-step-btn plus" onclick="event.stopPropagation(); terapkanTambahPoin(19, 1)" title="Tambah 1 poin">+</button>
         </div>
       </td>
     `;
@@ -17049,16 +17051,24 @@ html.theme-hazard .c-notif-badge-icon {
           </div>`;
       }
 
-      const scoreVal = tr.querySelector('.score-val');
-      if (scoreVal) {
+      const colPoint = tr.querySelector('.col-point');
+      if (colPoint) {
         if (p.isReady) {
-          scoreVal.innerText = p.poin;
-          scoreVal.className = 'score-val';
-          scoreVal.onclick = (ev) => bukaQuickPointPopover(idx, ev);
+          colPoint.innerHTML = `
+            <div class="score-box">
+              <button type="button" class="card-step-btn minus" onclick="event.stopPropagation(); terapkanTambahPoin(${idx}, -1)" title="Kurangi 1 poin">−</button>
+              <div class="score-val" title="Klik untuk Poin Cepat">${p.poin}</div>
+              <button type="button" class="card-step-btn plus" onclick="event.stopPropagation(); terapkanTambahPoin(${idx}, 1)" title="Tambah 1 poin">+</button>
+            </div>`;
+          const sv = colPoint.querySelector('.score-val');
+          if (sv) sv.onclick = (ev) => bukaQuickPointPopover(idx, ev);
         } else {
-          scoreVal.innerText = '-';
-          scoreVal.className = 'score-val score-standby';
-          scoreVal.onclick = () => bukaModalInputNama(idx);
+          colPoint.innerHTML = `
+            <div class="score-box">
+              <div class="score-val score-standby" title="Klik untuk isi pemain">-</div>
+            </div>`;
+          const sv = colPoint.querySelector('.score-val');
+          if (sv) sv.onclick = () => bukaModalInputNama(idx);
         }
       }
     });
