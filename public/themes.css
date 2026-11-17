@@ -418,6 +418,12 @@ html.theme-comic .btn-action-soft:hover {
 }
 html.theme-comic .btn-stream-link {
   background: #dc2626 !important;
+  color: #ffffff !important;
+  font-family: 'Bangers', cursive !important;
+  font-weight: 800 !important;
+}
+html.theme-comic .btn-undo-poin {
+  background: #fef08a !important;
   color: #000000 !important;
   font-family: 'Bangers', cursive !important;
   font-weight: 800 !important;
@@ -7261,7 +7267,7 @@ html.theme-comic #centerNotifPopup.has-custom-accent .c-notif-pts-main {
   position: absolute !important;
   inset: 0 !important;
   z-index: 25 !important;
-  background: rgba(15, 23, 42, 0.96) !important;
+  background: #0f172a !important;
   color: #ffffff !important;
   border-radius: 10px !important;
   padding: 8px !important;
