@@ -10100,7 +10100,7 @@ html.theme-hazard .c-notif-badge-icon {
 
   </style>
 
-<link rel="stylesheet" href="themes.css?v=20261118_0502">
+<link rel="stylesheet" href="themes.css?v=20261118_0508">
 
 </head>
 
@@ -13126,6 +13126,32 @@ html.theme-hazard .c-notif-badge-icon {
 
 
 
+  function tutupQuickPointPopover() {
+    document.querySelectorAll('.in-card-flip-panel').forEach(p => p.remove());
+    document.querySelectorAll('.is-flipped-control').forEach(c => c.classList.remove('is-flipped-control'));
+    const pop = document.getElementById('quickPointPopover');
+    if (pop) pop.classList.remove('show');
+    activeQuickPointIndex = null;
+  }
+
+  function eksekusiInCardFlipPoin(idx, delta) {
+    tutupQuickPointPopover();
+    terapkanTambahPoin(idx, delta);
+  }
+
+  function eksekusiInCardFlipSet(idx) {
+    const inp = document.getElementById('inCardDirectInput');
+    if (!inp) return;
+    const val = parseInt(inp.value, 10);
+    if (isNaN(val) || val < 0) return;
+    const currData = getActiveData();
+    const p = (idx === 19) ? currData.host : currData.players[idx];
+    if (!p) return;
+    const delta = val - (p.poin || 0);
+    tutupQuickPointPopover();
+    if (delta !== 0) terapkanTambahPoin(idx, delta);
+  }
+
   function bukaQuickPointPopover(index, ev, isBroadcast = true) {
 
     if (ev) ev.stopPropagation();
@@ -13144,38 +13170,41 @@ html.theme-hazard .c-notif-badge-icon {
 
     }
 
-
-
+    tutupQuickPointPopover();
     activeQuickPointIndex = index;
 
-    renderTombolQuickPoint();
-
-
+    const tr = document.getElementById(index === 19 ? 'row-kursi-19' : `row-kursi-${index}`);
+    if (!tr) return;
 
     const namaTampil = p.nick || p.user || p.robloxUser || (index === 19 ? 'Host' : `Kursi ${index + 1}`);
 
-    document.getElementById('qpPlayerTitle').innerText = `${namaTampil} (${p.poin} Pts)`;
+    const panel = document.createElement('div');
+    panel.className = 'in-card-flip-panel';
+    panel.onclick = (e) => e.stopPropagation();
+    panel.innerHTML = `
+      <div class="icf-header">
+        <span class="icf-title" title="${escapeHtml(namaTampil)}">${escapeHtml(namaTampil)} • ${p.poin}</span>
+        <button type="button" class="icf-close" onclick="event.stopPropagation(); tutupQuickPointPopover()">✕</button>
+      </div>
+      <div class="icf-grid">
+        <button type="button" class="icf-btn plus" onclick="event.stopPropagation(); eksekusiInCardFlipPoin(${index}, 1)">+1</button>
+        <button type="button" class="icf-btn plus" onclick="event.stopPropagation(); eksekusiInCardFlipPoin(${index}, 2)">+2</button>
+        <button type="button" class="icf-btn plus" onclick="event.stopPropagation(); eksekusiInCardFlipPoin(${index}, 5)">+5</button>
+        <button type="button" class="icf-btn plus mega" onclick="event.stopPropagation(); eksekusiInCardFlipPoin(${index}, 10)">+10</button>
+        <button type="button" class="icf-btn minus" onclick="event.stopPropagation(); eksekusiInCardFlipPoin(${index}, -1)">−1</button>
+        <button type="button" class="icf-btn minus" onclick="event.stopPropagation(); eksekusiInCardFlipPoin(${index}, -5)">−5</button>
+      </div>
+      <div class="icf-set-row">
+        <input type="number" id="inCardDirectInput" class="icf-input" value="${p.poin}" min="0" onkeydown="if(event.key==='Enter'){event.preventDefault(); eksekusiInCardFlipSet(${index});}">
+        <button type="button" class="icf-set-btn" onclick="event.stopPropagation(); eksekusiInCardFlipSet(${index})">SET</button>
+      </div>
+    `;
 
-    document.getElementById('qpDirectInput').value = p.poin;
-
-
-
-    const pop = document.getElementById('quickPointPopover');
-
-    pop.classList.remove('qp-tag-blue', 'qp-tag-pink', 'qp-tag-purple', 'qp-tag-red', 'qp-tag-yellow', 'qp-tag-green', 'qp-tag-orange', 'qp-tag-cyan', 'qp-tag-dark', 'qp-tag-rainbow', 'qp-custom-accent');
-    pop.style.removeProperty('--qp-accent-color');
-
-    if (p.colorTag) {
-      pop.classList.add(`qp-tag-${p.colorTag}`);
-    } else if (db.teamConfig && db.teamConfig.enabled && db.teamConfig.teams) {
-      const t = dapatkanTimDariKursi(index);
-      if (t && t.color) {
-        pop.style.setProperty('--qp-accent-color', t.color);
-        pop.classList.add('qp-custom-accent');
-      }
-    }
-
-    pop.classList.add('show');
+    tr.classList.add('is-flipped-control');
+    tr.appendChild(panel);
+    const inp = document.getElementById('inCardDirectInput');
+    if (inp) { inp.focus(); inp.select(); }
+    return;
 
 
 
@@ -13226,24 +13255,6 @@ html.theme-hazard .c-notif-badge-icon {
         nama: namaTampil
 
       });
-
-    }
-
-  }
-
-
-
-  function tutupQuickPointPopover(isBroadcast = true) {
-
-    const pop = document.getElementById('quickPointPopover');
-
-    if (pop) pop.classList.remove('show');
-
-    activeQuickPointIndex = null;
-
-    if (isBroadcast) {
-
-      siarkanPesanSync({ type: 'CLOSE_QUICK_POINT' });
 
     }
 
@@ -17380,8 +17391,6 @@ html.theme-hazard .c-notif-badge-icon {
     const currData = getActiveData();
     if (!currData || !currData.players) return;
 
-    // 1. INVERT secara sinkron sebelum browser sempat menggambar frame baru (zero flicker!)
-    const movedCards = [];
     currData.players.forEach((p, idx) => {
       if (!p || !p.id || !prevMap.has(p.id)) return;
       const el = document.getElementById(`row-kursi-${idx}`);
@@ -17392,37 +17401,30 @@ html.theme-hazard .c-notif-badge-icon {
       const dy = prev.rect.top - curr.top;
       if (Math.abs(dy) > 2 || Math.abs(dx) > 2) {
         const climbedUp = idx < prev.idx;
-        el.style.transition = 'none';
-        el.style.transform = climbedUp
-          ? `translate3d(${dx}px, ${dy}px, 0) scale(1.04)`
-          : `translate3d(${dx}px, ${dy}px, 0)`;
-        el.style.zIndex = climbedUp ? '40' : '5';
-        movedCards.push({ el, climbedUp });
-      }
-    });
+        el.style.zIndex = climbedUp ? '45' : '5';
+        el.classList.add('moving-card-spring', climbedUp ? 'card-overtake-up' : 'card-overtake-down');
 
-    if (movedCards.length > 0) {
-      // Paksa reflow agar posisi awal terkunci sebelum animasi geser dimulai
-      void document.body.offsetHeight;
-      // 2. PLAY: Geser kartu mulus seperti kartu di atas meja
-      requestAnimationFrame(() => {
-        movedCards.forEach(({ el, climbedUp }) => {
-          el.style.transition = '';
-          el.classList.add('moving-card-spring');
-          if (climbedUp) {
-            el.classList.add('card-overtake-up');
-          } else {
-            el.classList.add('card-overtake-down');
-          }
-          el.style.transform = '';
+        if (typeof el.animate === 'function') {
+          const anim = el.animate([
+            { transform: `translate3d(${dx}px, ${dy}px, 0) scale(${climbedUp ? 1.06 : 0.97})` },
+            { transform: 'translate3d(0px, 0px, 0) scale(1)' }
+          ], {
+            duration: 820,
+            easing: 'cubic-bezier(0.22, 1, 0.36, 1)',
+            fill: 'none'
+          });
+          anim.onfinish = () => {
+            el.classList.remove('moving-card-spring', 'card-overtake-up', 'card-overtake-down');
+            el.style.zIndex = '';
+          };
+        } else {
           setTimeout(() => {
             el.classList.remove('moving-card-spring', 'card-overtake-up', 'card-overtake-down');
-            el.style.transform = '';
             el.style.zIndex = '';
-          }, 700);
-        });
-      });
-    }
+          }, 820);
+        }
+      }
+    });
   }
 
   function urutkanOtomatis() {
