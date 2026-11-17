@@ -6937,3 +6937,251 @@ html.theme-comic #centerNotifPopup #cNotifPlayer {
 html.theme-comic #centerNotifPopup .c-notif-pts-main {
   text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.28) !important;
 }
+
+
+/* ==========================================================================
+   PERSONA 5 DIAGONAL SLASH SPLIT-BANNER (#centerNotifPopup)
+   Pita Miring Menyapu Layar dengan Avatar Kiri, Nama Tengah, & Skor Kanan
+   ========================================================================== */
+html.theme-comic #centerNotifPopup,
+html.mode-notif.theme-comic #centerNotifPopup {
+  width: min(860px, 94vw) !important;
+  min-height: 112px !important;
+  height: auto !important;
+  padding: 12px 24px !important;
+  border-radius: 6px !important;
+  border: 4px solid #000000 !important;
+  box-shadow: 10px 10px 0px #000000 !important;
+  background: linear-gradient(115deg, #0f172a 0%, #0f172a 24%, #ffffff 24.3%, #fefce8 72%, #fde047 72.3%, #facc15 100%) !important;
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  gap: 18px !important;
+  text-align: left !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  animation: none !important;
+  transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.2s ease !important;
+}
+
+html.theme-comic #centerNotifPopup:not(.show),
+html.mode-notif.theme-comic #centerNotifPopup:not(.show) {
+  opacity: 0 !important;
+  visibility: hidden !important;
+  transform: translate(-115%, -50%) rotate(-4.5deg) !important;
+}
+
+html.theme-comic #centerNotifPopup.show,
+html.mode-notif.theme-comic #centerNotifPopup.show {
+  opacity: 1 !important;
+  visibility: visible !important;
+  transform: translate(-50%, -50%) rotate(-4.5deg) !important;
+}
+
+/* Left Avatar Cutout Box */
+html.theme-comic #centerNotifPopup .c-notif-avatar-box {
+  width: 86px !important;
+  height: 86px !important;
+  flex-shrink: 0 !important;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.2) 1.5px, transparent 1.5px), #1e293b !important;
+  background-size: 8px 8px !important;
+  border: 3.5px solid #000000 !important;
+  box-shadow: 4px 4px 0px #000000 !important;
+  border-radius: 10px !important;
+  transform: skewX(-6deg) !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  overflow: hidden !important;
+}
+
+html.theme-comic #centerNotifPopup .c-notif-avatar-img {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: contain !important;
+  transform: skewX(6deg) scale(1.08) !important;
+}
+
+html.theme-comic #centerNotifPopup .c-notif-badge-icon {
+  font-size: 42px !important;
+  margin: 0 !important;
+  animation: none !important;
+  transform: skewX(6deg) !important;
+}
+
+/* Center Column: Tag + Giant Player Name */
+html.theme-comic #centerNotifPopup .c-notif-mid-col {
+  flex: 1 !important;
+  min-width: 0 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: flex-start !important;
+  justify-content: center !important;
+  gap: 5px !important;
+}
+
+html.theme-comic #centerNotifPopup .c-notif-tag {
+  display: inline-block !important;
+  padding: 3px 12px !important;
+  font-size: 12px !important;
+  border-radius: 4px !important;
+  transform: skewX(-10deg) !important;
+  background: #ef4444 !important;
+  color: #ffffff !important;
+  border: 2.5px solid #000000 !important;
+  box-shadow: 3px 3px 0px #000000 !important;
+}
+
+html.theme-comic #centerNotifPopup .c-notif-name,
+html.theme-comic #centerNotifPopup #cNotifPlayer {
+  margin: 0 !important;
+  padding: 2px 14px !important;
+  font-size: 34px !important;
+  line-height: 1.1 !important;
+  text-align: left !important;
+  max-width: 100% !important;
+  border-radius: 6px !important;
+  transform: skewX(-6deg) !important;
+  background: #0f172a !important;
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+  border: 3px solid #000000 !important;
+  box-shadow: 4px 4px 0px #000000 !important;
+  text-shadow: none !important;
+  -webkit-text-stroke: 0 !important;
+}
+
+/* Right Column: Giant Score Slash Block */
+html.theme-comic #centerNotifPopup .c-notif-pts-box {
+  width: auto !important;
+  min-width: 175px !important;
+  flex-shrink: 0 !important;
+  padding: 8px 18px !important;
+  border-radius: 8px !important;
+  border: 3.5px solid #000000 !important;
+  box-shadow: 4px 4px 0px #000000 !important;
+  background: #0f172a !important;
+  transform: skewX(-8deg) !important;
+  text-align: center !important;
+}
+
+html.theme-comic #centerNotifPopup .c-notif-pts-main {
+  font-size: 40px !important;
+  line-height: 1 !important;
+  color: #fde047 !important;
+  text-shadow: 2px 2px 0px #000000 !important;
+}
+
+html.theme-comic #centerNotifPopup .c-notif-pts-total {
+  margin-top: 3px !important;
+  font-size: 12px !important;
+  font-weight: 900 !important;
+  color: #ffffff !important;
+  letter-spacing: 0.5px !important;
+}
+
+/* Color Tag Overrides for Persona 5 Slash Banner */
+html.theme-comic #centerNotifPopup.theme-cyan {
+  background: linear-gradient(115deg, #083344 0%, #083344 24%, #ecfeff 24.3%, #cffafe 72%, #06b6d4 72.3%, #0891b2 100%) !important;
+}
+html.theme-comic #centerNotifPopup.theme-cyan .c-notif-tag { background: #06b6d4 !important; color: #000000 !important; }
+html.theme-comic #centerNotifPopup.theme-cyan .c-notif-pts-box { background: #083344 !important; }
+html.theme-comic #centerNotifPopup.theme-cyan .c-notif-pts-main { color: #67e8f9 !important; }
+
+html.theme-comic #centerNotifPopup.theme-blue {
+  background: linear-gradient(115deg, #1e3a8a 0%, #1e3a8a 24%, #eff6ff 24.3%, #dbeafe 72%, #3b82f6 72.3%, #2563eb 100%) !important;
+}
+html.theme-comic #centerNotifPopup.theme-blue .c-notif-tag { background: #38bdf8 !important; color: #000000 !important; }
+html.theme-comic #centerNotifPopup.theme-blue .c-notif-pts-box { background: #1e3a8a !important; }
+html.theme-comic #centerNotifPopup.theme-blue .c-notif-pts-main { color: #93c5fd !important; }
+
+html.theme-comic #centerNotifPopup.theme-pink {
+  background: linear-gradient(115deg, #831843 0%, #831843 24%, #fdf2f8 24.3%, #fce7f3 72%, #f472b6 72.3%, #ec4899 100%) !important;
+}
+html.theme-comic #centerNotifPopup.theme-pink .c-notif-tag { background: #f472b6 !important; color: #000000 !important; }
+html.theme-comic #centerNotifPopup.theme-pink .c-notif-pts-box { background: #831843 !important; }
+html.theme-comic #centerNotifPopup.theme-pink .c-notif-pts-main { color: #fbcfe8 !important; }
+
+html.theme-comic #centerNotifPopup.theme-purple {
+  background: linear-gradient(115deg, #2e1065 0%, #2e1065 24%, #faf5ff 24.3%, #f3e8ff 72%, #a855f7 72.3%, #7e22ce 100%) !important;
+}
+html.theme-comic #centerNotifPopup.theme-purple .c-notif-tag { background: #a855f7 !important; color: #ffffff !important; }
+html.theme-comic #centerNotifPopup.theme-purple .c-notif-pts-box { background: #2e1065 !important; }
+html.theme-comic #centerNotifPopup.theme-purple .c-notif-pts-main { color: #e9d5ff !important; }
+
+html.theme-comic #centerNotifPopup.theme-red {
+  background: linear-gradient(115deg, #450a0a 0%, #450a0a 24%, #fef2f2 24.3%, #fee2e2 72%, #ef4444 72.3%, #b91c1c 100%) !important;
+}
+html.theme-comic #centerNotifPopup.theme-red .c-notif-tag { background: #ef4444 !important; color: #ffffff !important; }
+html.theme-comic #centerNotifPopup.theme-red .c-notif-pts-box { background: #450a0a !important; }
+html.theme-comic #centerNotifPopup.theme-red .c-notif-pts-main { color: #fecaca !important; }
+
+html.theme-comic #centerNotifPopup.theme-green {
+  background: linear-gradient(115deg, #064e3b 0%, #064e3b 24%, #ecfdf5 24.3%, #d1fae5 72%, #10b981 72.3%, #059669 100%) !important;
+}
+html.theme-comic #centerNotifPopup.theme-green .c-notif-tag { background: #10b981 !important; color: #ffffff !important; }
+html.theme-comic #centerNotifPopup.theme-green .c-notif-pts-box { background: #064e3b !important; }
+html.theme-comic #centerNotifPopup.theme-green .c-notif-pts-main { color: #6ee7b7 !important; }
+
+html.theme-comic #centerNotifPopup.theme-orange {
+  background: linear-gradient(115deg, #7c2d12 0%, #7c2d12 24%, #fff7ed 24.3%, #ffedd5 72%, #f97316 72.3%, #ea580c 100%) !important;
+}
+html.theme-comic #centerNotifPopup.theme-orange .c-notif-tag { background: #f97316 !important; color: #ffffff !important; }
+html.theme-comic #centerNotifPopup.theme-orange .c-notif-pts-box { background: #7c2d12 !important; }
+html.theme-comic #centerNotifPopup.theme-orange .c-notif-pts-main { color: #fed7aa !important; }
+
+html.theme-comic #centerNotifPopup.theme-yellow {
+  background: linear-gradient(115deg, #713f12 0%, #713f12 24%, #fefce8 24.3%, #fef08a 72%, #facc15 72.3%, #eab308 100%) !important;
+}
+html.theme-comic #centerNotifPopup.theme-yellow .c-notif-tag { background: #facc15 !important; color: #000000 !important; }
+html.theme-comic #centerNotifPopup.theme-yellow .c-notif-pts-box { background: #713f12 !important; }
+html.theme-comic #centerNotifPopup.theme-yellow .c-notif-pts-main { color: #fef08a !important; }
+
+html.theme-comic #centerNotifPopup.theme-dark {
+  background: linear-gradient(115deg, #020617 0%, #020617 24%, #1e293b 24.3%, #0f172a 72%, #38bdf8 72.3%, #0284c7 100%) !important;
+}
+html.theme-comic #centerNotifPopup.theme-dark .c-notif-tag { background: #38bdf8 !important; color: #000000 !important; }
+html.theme-comic #centerNotifPopup.theme-dark .c-notif-pts-box { background: #020617 !important; }
+html.theme-comic #centerNotifPopup.theme-dark .c-notif-pts-main { color: #38bdf8 !important; }
+
+html.theme-comic #centerNotifPopup.theme-rainbow {
+  background: linear-gradient(115deg, #0f172a 0%, #0f172a 24%, #fef08a 24.3%, #fbcfe8 48%, #bae6fd 72%, #bbf7d0 72.3%, #f472b6 100%) !important;
+}
+
+html.theme-comic #centerNotifPopup.has-custom-accent {
+  background: linear-gradient(115deg, #0f172a 0%, #0f172a 24%, #ffffff 24.3%, #f8fafc 72%, var(--popup-accent-color, #fde047) 72.3%, var(--popup-accent-color, #facc15) 100%) !important;
+}
+html.theme-comic #centerNotifPopup.has-custom-accent .c-notif-tag {
+  background: var(--popup-accent-color, #fde047) !important;
+  color: #ffffff !important;
+}
+html.theme-comic #centerNotifPopup.has-custom-accent .c-notif-pts-box {
+  background: #0f172a !important;
+}
+html.theme-comic #centerNotifPopup.has-custom-accent .c-notif-pts-main {
+  color: var(--popup-accent-color, #fde047) !important;
+}
+
+@media (max-width: 720px) {
+  html.theme-comic #centerNotifPopup,
+  html.mode-notif.theme-comic #centerNotifPopup {
+    padding: 10px 14px !important;
+    gap: 10px !important;
+  }
+  html.theme-comic #centerNotifPopup .c-notif-avatar-box {
+    width: 62px !important;
+    height: 62px !important;
+  }
+  html.theme-comic #centerNotifPopup .c-notif-name,
+  html.theme-comic #centerNotifPopup #cNotifPlayer {
+    font-size: 22px !important;
+  }
+  html.theme-comic #centerNotifPopup .c-notif-pts-box {
+    min-width: 115px !important;
+    padding: 6px 10px !important;
+  }
+  html.theme-comic #centerNotifPopup .c-notif-pts-main {
+    font-size: 26px !important;
+  }
+}
