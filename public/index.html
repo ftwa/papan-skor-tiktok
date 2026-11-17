@@ -63,6 +63,12 @@
 
         document.documentElement.classList.add('mode-log');
 
+      } else if (['timer', 'countdown', 'waktu'].includes(raw)) {
+
+        modeClass = 'mode-timer';
+
+        document.documentElement.classList.add('mode-timer');
+
       } else {
 
         document.documentElement.classList.add('mode-admin');
@@ -10100,7 +10106,7 @@ html.theme-hazard .c-notif-badge-icon {
 
   </style>
 
-<link rel="stylesheet" href="themes.css?v=20261118_0529">
+<link rel="stylesheet" href="themes.css?v=20261118_0532">
 
 </head>
 
@@ -10987,6 +10993,25 @@ html.theme-hazard .c-notif-badge-icon {
     </div>
 
 
+
+        <!-- CARD TIMER LOMBA (TERPISAH) -->
+    <div class="stream-link-card">
+      <div class="stream-card-header">
+        <div class="stream-card-title">
+          <span class="stream-icon">⏱️</span>
+          <span class="stream-name">Overlay Timer Lomba (Danger Overtime)</span>
+        </div>
+        <span class="stream-rec-badge">340 × 80 px</span>
+      </div>
+      <p class="stream-card-sub">Timer hitung mundur terpisah dengan animasi Danger Overtime merah menyala di 60 detik terakhir. Bisa dipindah bebas di TikTok Studio.</p>
+      <div class="stream-input-wrap">
+        <input type="text" readonly id="linkOverlayTimer" class="stream-url-input" onclick="this.select()">
+        <button class="btn-copy-link" onclick="salinLinkStream('linkOverlayTimer', this)">📋 Salin Link</button>
+      </div>
+      <div class="stream-card-actions" style="margin-top: 6px;">
+        <a id="previewOverlayTimer" href="#" target="_blank" class="stream-link-btn" style="color: #7dd3fc; font-weight: 800; font-size: 11px; text-decoration: none;">Buka di Tab Baru ↗</a>
+      </div>
+    </div>
 
         <!-- CARD 5: LAYAR TRANSISI SIARAN -->
     <div class="stream-link-card">
@@ -14654,6 +14679,14 @@ html.theme-hazard .c-notif-badge-icon {
 
     const elLog = document.getElementById('linkOverlayLog');
     const elTransisi = document.getElementById('linkOverlayTransisi');
+    const elTimer = document.getElementById('linkOverlayTimer');
+
+    const urlTimer = `${base}?room=${encodeURIComponent(CURRENT_ROOM)}&view=timer${themeParam}`;
+    if (elTimer) {
+      elTimer.value = urlTimer;
+      const prev = document.getElementById('previewOverlayTimer');
+      if (prev) prev.href = urlTimer;
+    }
 
     const urlTransisi = `${base}?room=${encodeURIComponent(CURRENT_ROOM)}&view=screen${themeParam}`;
     if (elTransisi) {
