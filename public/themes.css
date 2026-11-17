@@ -6945,6 +6945,9 @@ html.theme-comic #centerNotifPopup .c-notif-pts-main {
    ========================================================================== */
 html.theme-comic #centerNotifPopup,
 html.mode-notif.theme-comic #centerNotifPopup {
+  position: fixed !important;
+  top: 50% !important;
+  left: 50% !important;
   width: min(860px, 94vw) !important;
   min-height: 112px !important;
   height: auto !important;
