@@ -13423,7 +13423,7 @@ html.theme-hazard .c-notif-badge-icon {
 
   function undoTambahPoin() {
     if (!window.historyUndoStack || window.historyUndoStack.length === 0) {
-      tampilkanToast('Tidak ada perubahan poin untuk di-Undo!');
+      if (typeof tambahLog === 'function') tambahLog('↩️ Tidak ada perubahan poin untuk di-Undo.');
       return;
     }
     const last = window.historyUndoStack.pop();
@@ -13442,7 +13442,6 @@ html.theme-hazard .c-notif-badge-icon {
     if (typeof tambahLog === 'function') {
       tambahLog(`↩️ UNDO ${namaTampil}: ${sebelumUndo} ➔ ${p.poin}`);
     }
-    tampilkanToast(`↩️ Undo ${namaTampil}: ${sebelumUndo} ➔ ${p.poin}`);
     if (last.idx === 19) {
       simpanDB();
       renderIsiTabel();
