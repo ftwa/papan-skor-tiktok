@@ -7594,6 +7594,11 @@ html.mode-podium #winnerOverlay.winner-overlay {
   background-color: transparent !important;
   background-image: none !important;
 }
+html.mode-podium #winnerOverlay::before,
+html.theme-comic.mode-podium #winnerOverlay::before {
+  display: none !important;
+  background: none !important;
+}
 html.theme-comic #winnerOverlay .winner-light-beams {
   opacity: 0.18 !important;
 }
