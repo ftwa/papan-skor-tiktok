@@ -7595,8 +7595,11 @@ html.mode-podium #winnerOverlay.winner-overlay {
   background-image: none !important;
 }
 html.mode-podium #winnerOverlay::before,
-html.theme-comic.mode-podium #winnerOverlay::before {
+html.theme-comic.mode-podium #winnerOverlay::before,
+html.mode-podium.theme-comic #winnerOverlay.active::before,
+html.mode-podium[class*="theme-"] #winnerOverlay.active::before {
   display: none !important;
+  content: none !important;
   background: none !important;
 }
 html.theme-comic #winnerOverlay .winner-light-beams {
