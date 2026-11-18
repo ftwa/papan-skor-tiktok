@@ -69,6 +69,12 @@
 
         document.documentElement.classList.add('mode-timer');
 
+      } else if (['remote', 'hp', 'mobile', 'ctrl'].includes(raw)) {
+
+        modeClass = 'mode-remote';
+
+        document.documentElement.classList.add('mode-remote');
+
       } else {
 
         document.documentElement.classList.add('mode-admin');
@@ -10106,7 +10112,7 @@ html.theme-hazard .c-notif-badge-icon {
 
   </style>
 
-<link rel="stylesheet" href="themes.css?v=20261118_0631">
+<link rel="stylesheet" href="themes.css?v=20261118_0702">
 
 </head>
 
@@ -10236,6 +10242,12 @@ html.theme-hazard .c-notif-badge-icon {
 
       </button>
 
+      <button class="btn-action-soft btn-remote-qr" onclick="bukaModalRemoteQR()" title="Scan QR untuk kontrol skor dari HP">
+
+        📱 REMOTE
+
+      </button>
+
       <button id="btnUndoPoin" class="btn-action-soft btn-undo-poin" onclick="undoTambahPoin()" title="Batalkan perubahan poin terakhir (Undo)">
 
         ↩️ UNDO
@@ -10295,6 +10307,22 @@ html.theme-hazard .c-notif-badge-icon {
       <button type="button" class="tctrl-btn preset" onclick="adjustRaceTimerSeconds(-60)">−1m</button>
       <button type="button" class="tctrl-btn vis" id="btnTimerVis" onclick="toggleRaceTimerOverlayVis()" title="Tampilkan / Sembunyikan Timer di Layar Live">👁️</button>
     </div>
+  </div>
+
+  <!-- MOBILE REMOTE CONTROL SHELL (?view=remote) -->
+  <div id="mobileRemoteShell" class="mobile-remote-shell">
+    <div class="mr-header">
+      <div class="mr-title-wrap">
+        <span class="mr-title">📱 REMOTE SKOR</span>
+        <span id="remoteSyncBadge" class="sync-badge disconnected"><span class="sync-badge-dot"></span> <span id="remoteSyncText">OFF</span></span>
+      </div>
+      <div class="mr-quick-actions">
+        <span id="mrTimerChip" class="mr-timer-chip">15:00</span>
+        <button type="button" class="mr-top-btn play" onclick="kirimRemoteAction('TIMER_TOGGLE')">▶/⏸</button>
+        <button type="button" class="mr-top-btn undo" onclick="kirimRemoteAction('UNDO')">↩️ UNDO</button>
+      </div>
+    </div>
+    <div id="remotePlayerList" class="mr-player-list"></div>
   </div>
 
   <!-- TABEL 20 KURSI -->
@@ -11098,6 +11126,32 @@ html.theme-hazard .c-notif-badge-icon {
 
 </div>
 
+<!-- MODAL QR REMOTE KONTROL HP -->
+<div class="modal-overlay" id="modalRemoteQR" onclick="tutupModalDiLuar(event)">
+  <div class="modal-box-hud" style="width: 360px; max-width: 94vw; text-align: center;">
+    <div class="modal-header-hud">
+      <div class="modal-title-wrap" style="text-align: left;">
+        <span class="modal-sub-hud">MOBILE CONTROLLER</span>
+        <span class="modal-title-hud">📱 Remote Kontrol HP</span>
+      </div>
+      <button class="btn-close-hud" onclick="tutupModalRemoteQR()">✕</button>
+    </div>
+    <div style="background: #ffffff; border: 3px solid #000000; border-radius: 12px; padding: 12px; display: inline-block; margin: 8px auto; box-shadow: 4px 4px 0px #000000;">
+      <img id="remoteQrImg" src="" alt="QR Code Remote HP" style="width: 210px; height: 210px; display: block;">
+    </div>
+    <p style="font-size: 12px; color: #cbd5e1; margin: 6px 0 8px;">Scan QR di atas pakai kamera HP untuk menambah/mengurangi poin langsung dari HP saat PC main Roblox.</p>
+    <div class="stream-input-wrap" style="margin-bottom: 8px;">
+      <input type="text" readonly id="linkRemoteHP" class="stream-url-input" onclick="this.select()">
+      <button class="btn-copy-link" onclick="salinLinkStream('linkRemoteHP', this)">📋 Salin</button>
+    </div>
+    <div style="display: flex; justify-content: space-between; align-items: center; gap: 8px; margin-bottom: 10px;">
+      <a id="previewRemoteHP" href="#" target="_blank" style="color: #7dd3fc; font-weight: 800; font-size: 12px; text-decoration: none;">Buka di Tab Baru ↗</a>
+      <span style="font-size: 10.5px; color: #fca5a5; font-weight: 700;">⚠️ Jangan sorot QR ke layar Live!</span>
+    </div>
+    <button class="btn-hud-save" onclick="tutupModalRemoteQR()">Tutup</button>
+  </div>
+</div>
+
 
 
 <!-- MODAL PREVIEW & DOWNLOAD SCREENSHOT -->
@@ -11665,6 +11719,14 @@ html.theme-hazard .c-notif-badge-icon {
 
     currentViewMode = 'log';
 
+  } else if (['timer', 'countdown', 'waktu'].includes(rawView)) {
+
+    currentViewMode = 'timer';
+
+  } else if (['remote', 'hp', 'mobile', 'ctrl'].includes(rawView)) {
+
+    currentViewMode = 'remote';
+
   }
 
 
@@ -11752,8 +11814,14 @@ html.theme-hazard .c-notif-badge-icon {
   function perbaruiStatusSyncUI(connected) {
 
     const badge = document.getElementById('syncStatusBadge');
-
     const txt = document.getElementById('syncStatusText');
+    const rBadge = document.getElementById('remoteSyncBadge');
+    const rTxt = document.getElementById('remoteSyncText');
+
+    if (rBadge && rTxt) {
+      rBadge.className = connected ? 'sync-badge connected' : 'sync-badge disconnected';
+      rTxt.innerText = connected ? 'ON' : 'OFF';
+    }
 
     if (!badge || !txt) return;
 
@@ -12114,6 +12182,16 @@ html.theme-hazard .c-notif-badge-icon {
 
       }
 
+    } else if (msg.type === 'REMOTE_ACTION') {
+      if (currentViewMode === 'admin') {
+        if (msg.action === 'ADD_POINT' && typeof msg.chair === 'number' && typeof msg.delta === 'number') {
+          terapkanTambahPoin(msg.chair, msg.delta);
+        } else if (msg.action === 'UNDO') {
+          undoTambahPoin();
+        } else if (msg.action === 'TIMER_TOGGLE') {
+          toggleRaceTimer();
+        }
+      }
     } else if (msg.type === 'SYNC_TIMER') {
       if (typeof terapkanSyncTimer === 'function') {
         terapkanSyncTimer(msg);
@@ -12244,6 +12322,8 @@ html.theme-hazard .c-notif-badge-icon {
 
           jalankanAnimasiFlipKartu(prevFlip);
 
+        } else if (currentViewMode === 'remote') {
+          if (typeof renderRemoteMobileList === 'function') renderRemoteMobileList();
         }
 
       }
@@ -13281,6 +13361,11 @@ html.theme-hazard .c-notif-badge-icon {
     if (label) {
       label.innerText = raceTimerState.remainingSec === 0 ? 'TIME UP!' : (isDanger ? 'OVERTIME' : 'TIMER');
     }
+    const mrTimer = document.getElementById('mrTimerChip');
+    if (mrTimer) {
+      mrTimer.innerText = formatTimerMMSS(raceTimerState.remainingSec);
+      mrTimer.classList.toggle('is-danger', isDanger);
+    }
     if (btnPlay) btnPlay.innerText = raceTimerState.isRunning ? '⏸' : '▶';
     const inpManual = document.getElementById('inputTimerManual');
     if (inpManual && document.activeElement !== inpManual) {
@@ -13400,6 +13485,89 @@ html.theme-hazard .c-notif-badge-icon {
     raceTimerState.overlayVisible = !raceTimerState.overlayVisible;
     renderRaceTimerUI();
     simpanDanSiarkanRaceTimer(true);
+  }
+
+  // === MOBILE REMOTE CONTROL (?view=remote) & QR MODAL ===
+  function bukaModalRemoteQR() {
+    tutupSemuaDropdown();
+    const isLocal = window.location.protocol === 'http:' && (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1');
+    const base = isLocal ? (window.location.origin + window.location.pathname) : 'https://papan-skor-tiktok-pi.vercel.app/';
+    const remoteUrl = `${base}?room=${encodeURIComponent(CURRENT_ROOM)}&view=remote`;
+    const elInput = document.getElementById('linkRemoteHP');
+    const elPrev = document.getElementById('previewRemoteHP');
+    const elImg = document.getElementById('remoteQrImg');
+    if (elInput) elInput.value = remoteUrl;
+    if (elPrev) elPrev.href = remoteUrl;
+    if (elImg) elImg.src = `https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=${encodeURIComponent(remoteUrl)}`;
+    const modal = document.getElementById('modalRemoteQR');
+    if (modal) modal.classList.add('show');
+  }
+
+  function tutupModalRemoteQR() {
+    const modal = document.getElementById('modalRemoteQR');
+    if (modal) modal.classList.remove('show');
+  }
+
+  function kirimRemoteAction(action, chair = null, delta = 0) {
+    if (action === 'ADD_POINT' && chair !== null) {
+      const currData = getActiveData();
+      const p = (chair === 19) ? currData.host : currData.players[chair];
+      if (p) {
+        p.poin = Math.max(0, (p.poin || 0) + delta);
+        if (currentViewMode === 'remote') renderRemoteMobileList();
+      }
+    }
+    siarkanPesanSync({
+      type: 'REMOTE_ACTION',
+      action: action,
+      chair: chair,
+      delta: delta
+    });
+  }
+
+  function renderRemoteMobileList() {
+    const listEl = document.getElementById('remotePlayerList');
+    if (!listEl) return;
+    const currData = getActiveData();
+    const players = (currData && currData.players) ? currData.players : [];
+    const activeRows = [];
+    players.forEach((p, idx) => {
+      const hasName = !!(p && (p.nick || p.user || p.robloxUser));
+      if (hasName || (p && p.poin > 0)) {
+        activeRows.push({ p, idx });
+      }
+    });
+    if (activeRows.length === 0) {
+      listEl.innerHTML = `<div class="mr-empty-note">Belum ada pemain terdaftar di Room <b>${escapeHtml(CURRENT_ROOM)}</b>. Daftarkan pemain dari layar Admin PC terlebih dahulu.</div>`;
+      return;
+    }
+    listEl.innerHTML = activeRows.map(({ p, idx }) => {
+      const nama = p.nick || p.user || p.robloxUser || `Kursi ${idx + 1}`;
+      const avUrl = p.avatar || '';
+      const avHtml = avUrl
+        ? `<img src="${escapeHtml(avUrl)}" alt="" class="mr-avatar">`
+        : `<div class="mr-avatar mr-avatar-empty">${escapeHtml(nama.charAt(0).toUpperCase())}</div>`;
+      return `
+        <div class="mr-card">
+          <div class="mr-card-top">
+            <span class="mr-rank">#${idx + 1}</span>
+            ${avHtml}
+            <div class="mr-name">${escapeHtml(nama)}</div>
+            <div class="mr-score">${p.poin || 0}</div>
+          </div>
+          <div class="mr-btn-row">
+            <button type="button" class="mr-pt-btn minus" onclick="kirimRemoteAction('ADD_POINT', ${idx}, -1)">−1</button>
+            <button type="button" class="mr-pt-btn plus" onclick="kirimRemoteAction('ADD_POINT', ${idx}, 1)">+1</button>
+            <button type="button" class="mr-pt-btn plus" onclick="kirimRemoteAction('ADD_POINT', ${idx}, 2)">+2</button>
+            <button type="button" class="mr-pt-btn plus" onclick="kirimRemoteAction('ADD_POINT', ${idx}, 3)">+3</button>
+            <button type="button" class="mr-pt-btn plus" onclick="kirimRemoteAction('ADD_POINT', ${idx}, 5)">+5</button>
+          </div>
+        </div>`;
+    }).join('');
+  }
+
+  if (currentViewMode === 'remote') {
+    setTimeout(renderRemoteMobileList, 80);
   }
 
   setTimeout(muatRaceTimer, 50);
