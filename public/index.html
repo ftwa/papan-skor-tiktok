@@ -10116,7 +10116,7 @@ html.theme-hazard .c-notif-badge-icon {
 
   </style>
 
-<link rel="stylesheet" href="themes.css?v=20261118_0737">
+<link rel="stylesheet" href="themes.css?v=20261118_1845">
 
 </head>
 
@@ -10258,6 +10258,12 @@ html.theme-hazard .c-notif-badge-icon {
 
       </button>
 
+      <button id="btnAcakKursi" class="btn-action-soft btn-shuffle-kursi" onclick="eksekusiAcakKursi()" title="1-Klik Acak / Undi Posisi Kursi Peserta">
+
+        🎲 ACAK
+
+      </button>
+
       <button id="btnUrutkanManual" class="btn-sort-manual" onclick="eksekusiUrutkanManual()" title="Urutkan ranking sekarang">
 
         URUTKAN
@@ -10324,6 +10330,7 @@ html.theme-hazard .c-notif-badge-icon {
         <span id="mrTimerChip" class="mr-timer-chip">15:00</span>
         <button type="button" class="mr-top-btn play" onclick="kirimRemoteAction('TIMER_TOGGLE')">▶/⏸</button>
         <button type="button" class="mr-top-btn undo" onclick="kirimRemoteAction('UNDO')">↩️ UNDO</button>
+        <button type="button" class="mr-top-btn shuffle" onclick="kirimRemoteAction('SHUFFLE')" title="Acak Kursi Peserta">🎲 ACAK</button>
         <button type="button" class="mr-top-btn" style="background:#38bdf8;color:#000;" onclick="siarkanPesanSync({ type: 'REQUEST_STATE' }); renderRemoteMobileList();" title="Segarkan data dari PC">🔄</button>
       </div>
     </div>
@@ -12202,6 +12209,8 @@ html.theme-hazard .c-notif-badge-icon {
           undoTambahPoin();
         } else if (msg.action === 'TIMER_TOGGLE') {
           toggleRaceTimer();
+        } else if (msg.action === 'SHUFFLE') {
+          eksekusiAcakKursi();
         }
       }
     } else if (msg.type === 'SYNC_TIMER') {
@@ -12309,6 +12318,9 @@ html.theme-hazard .c-notif-badge-icon {
 
       if (msg.db && currentViewMode !== 'admin') {
 
+        // 1. Rekam posisi kartu sebelum data ditimpa agar animasi FLIP 3D di TikTok Studio / OBS berjalan
+        const prevFlip = (currentViewMode === 'tabel') ? rekamPosisiKartuPemain() : null;
+
         const prevTeamEnabled = !!(db && db.teamConfig && db.teamConfig.enabled);
         const prevTeamSize = (db && db.teamConfig) ? db.teamConfig.teamSize : 0;
 
@@ -12324,8 +12336,6 @@ html.theme-hazard .c-notif-badge-icon {
         }
 
         if (currentViewMode === 'tabel') {
-
-          const prevFlip = rekamPosisiKartuPemain();
 
           if (prevTeamEnabled !== nextTeamEnabled || prevTeamSize !== nextTeamSize) {
             inisialisasiStrukturTabel();
@@ -13929,6 +13939,66 @@ html.theme-hazard .c-notif-badge-icon {
       }, 1200);
     }
     tambahLogAktivitas('SKOR', 'Papan skor berhasil diurutkan', 'system');
+  }
+
+  function eksekusiAcakKursi() {
+    tutupQuickPointPopover();
+    tutupMiniColorPicker();
+    const currData = getActiveData();
+    if (!currData || !currData.players) return;
+
+    const punyaIsi = (p) => Boolean((p.user && p.user.trim()) || (p.robloxUser && p.robloxUser.trim()) || (p.nick && p.nick.trim()) || (p.poin && p.poin > 0));
+
+    const aktifPemain = [];
+    const aktifIndices = [];
+    currData.players.forEach((p, idx) => {
+      if (idx < 19 && punyaIsi(p)) {
+        aktifPemain.push(p);
+        aktifIndices.push(idx);
+      }
+    });
+
+    if (aktifPemain.length < 2) {
+      alert('Minimal ada 2 kursi peserta yang terisi untuk diacak!');
+      return;
+    }
+
+    // 1. Rekam posisi awal sebelum diacak agar animasi FLIP 3D berjalan mulus
+    const prevFlipMap = rekamPosisiKartuPemain();
+
+    // 2. Fisher-Yates Shuffle pada array pemain aktif
+    for (let i = aktifPemain.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      const temp = aktifPemain[i];
+      aktifPemain[i] = aktifPemain[j];
+      aktifPemain[j] = temp;
+    }
+
+    // 3. Masukkan kembali ke nomor-nomor kursi yang sedang terisi
+    aktifIndices.forEach((chairIdx, i) => {
+      currData.players[chairIdx] = aktifPemain[i];
+    });
+
+    simpanDB();
+    renderIsiTabel();
+
+    // 4. Jalankan animasi FLIP perpindahan kartu 3D
+    jalankanAnimasiFlipKartu(prevFlipMap);
+
+    const btn = document.getElementById('btnAcakKursi');
+    if (btn) {
+      const origText = btn.innerText;
+      btn.innerText = '🎲 TERACAK!';
+      btn.style.borderColor = '#c084fc';
+      btn.style.color = '#c084fc';
+      setTimeout(() => {
+        btn.innerText = origText;
+        btn.style.borderColor = '';
+        btn.style.color = '';
+      }, 1200);
+    }
+
+    tambahLogAktivitas('ACAK', 'Nomor bangku peserta berhasil diundi / diacak secara acak!', 'system');
   }
 
 
@@ -17749,14 +17819,24 @@ html.theme-hazard .c-notif-badge-icon {
     const currData = getActiveData();
     if (!currData || !currData.players) return;
 
+    // Deteksi jika tabel sedang di-scale di mode-tabel OBS / TikTok Studio
+    const container = document.querySelector('.container');
+    let scaleFactor = 1;
+    if (container && container.style && container.style.transform) {
+      const matchScale = container.style.transform.match(/scale\(([^)]+)\)/);
+      if (matchScale && parseFloat(matchScale[1])) {
+        scaleFactor = parseFloat(matchScale[1]);
+      }
+    }
+
     currData.players.forEach((p, idx) => {
       if (!p || !p.id || !prevMap.has(p.id)) return;
       const el = document.getElementById(`row-kursi-${idx}`);
       if (!el) return;
       const prev = prevMap.get(p.id);
       const curr = el.getBoundingClientRect();
-      const dx = prev.rect.left - curr.left;
-      const dy = prev.rect.top - curr.top;
+      const dx = Math.round((prev.rect.left - curr.left) / scaleFactor);
+      const dy = Math.round((prev.rect.top - curr.top) / scaleFactor);
       if (Math.abs(dy) > 2 || Math.abs(dx) > 2) {
         const climbedUp = idx < prev.idx;
         el.style.zIndex = climbedUp ? '45' : '5';
@@ -17774,7 +17854,7 @@ html.theme-hazard .c-notif-badge-icon {
           ], {
             duration: 920,
             easing: 'cubic-bezier(0.16, 1, 0.3, 1)',
-            fill: 'none'
+            fill: 'both'
           });
           anim.onfinish = () => {
             el.classList.remove('moving-card-spring', 'card-overtake-up', 'card-overtake-down');
