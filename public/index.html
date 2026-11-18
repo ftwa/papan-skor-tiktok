@@ -10320,6 +10320,7 @@ html.theme-hazard .c-notif-badge-icon {
         <span id="mrTimerChip" class="mr-timer-chip">15:00</span>
         <button type="button" class="mr-top-btn play" onclick="kirimRemoteAction('TIMER_TOGGLE')">▶/⏸</button>
         <button type="button" class="mr-top-btn undo" onclick="kirimRemoteAction('UNDO')">↩️ UNDO</button>
+        <button type="button" class="mr-top-btn" style="background:#38bdf8;color:#000;" onclick="siarkanPesanSync({ type: 'REQUEST_STATE' }); renderRemoteMobileList();" title="Segarkan data dari PC">🔄</button>
       </div>
     </div>
     <div id="remotePlayerList" class="mr-player-list"></div>
@@ -11980,6 +11981,9 @@ html.theme-hazard .c-notif-badge-icon {
         if (currentViewMode !== 'admin') {
 
           siarkanPesanSync({ type: 'REQUEST_STATE' });
+          setTimeout(() => {
+            if (currentViewMode === 'remote') siarkanPesanSync({ type: 'REQUEST_STATE' });
+          }, 1200);
 
         }
 
@@ -12180,6 +12184,10 @@ html.theme-hazard .c-notif-badge-icon {
 
         } catch (_) {}
 
+        if (typeof simpanDanSiarkanRaceTimer === 'function') {
+          simpanDanSiarkanRaceTimer(true);
+        }
+
       }
 
     } else if (msg.type === 'REMOTE_ACTION') {
@@ -12208,6 +12216,9 @@ html.theme-hazard .c-notif-badge-icon {
 
       }
 
+      if (currentViewMode === 'remote' && typeof renderRemoteMobileList === 'function') {
+        renderRemoteMobileList();
+      }
       if (db.activeSession === msg.ses) {
 
         const tr = document.getElementById(`row-kursi-${msg.chair}`);
@@ -13490,8 +13501,7 @@ html.theme-hazard .c-notif-badge-icon {
   // === MOBILE REMOTE CONTROL (?view=remote) & QR MODAL ===
   function bukaModalRemoteQR() {
     tutupSemuaDropdown();
-    const isLocal = window.location.protocol === 'http:' && (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1');
-    const base = isLocal ? (window.location.origin + window.location.pathname) : 'https://papan-skor-tiktok-pi.vercel.app/';
+    const base = 'https://papan-skor-tiktok-pi.vercel.app/';
     const remoteUrl = `${base}?room=${encodeURIComponent(CURRENT_ROOM)}&view=remote`;
     const elInput = document.getElementById('linkRemoteHP');
     const elPrev = document.getElementById('previewRemoteHP');
