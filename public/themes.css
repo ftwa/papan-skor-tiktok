@@ -208,6 +208,18 @@ html.theme-cyber .btn-stream-link {
   font-family: 'Outfit', sans-serif !important;
   font-weight: 800 !important;
 }
+html.theme-cyber .btn-shuffle-kursi {
+  background: rgba(168, 85, 247, 0.25) !important;
+  border: 1.5px solid #c084fc !important;
+  color: #f3e8ff !important;
+  font-family: 'Outfit', sans-serif !important;
+  font-weight: 800 !important;
+}
+html.theme-cyber .btn-shuffle-kursi:hover {
+  background: #a855f7 !important;
+  color: #ffffff !important;
+  box-shadow: 0 0 12px rgba(192, 132, 252, 0.6) !important;
+}
 
 /* CONTAINER TABEL */
 html.theme-cyber .table-container {
@@ -433,10 +445,16 @@ html.theme-comic .btn-shuffle-kursi {
   color: #000000 !important;
   font-family: 'Bangers', cursive !important;
   font-weight: 800 !important;
-  letter-spacing: 1.5px !important;
+  font-size: 14px !important;
+  letter-spacing: 1px !important;
+  border: 2.5px solid #000000 !important;
+  box-shadow: 3px 3px 0px #000000 !important;
+  border-radius: 8px !important;
 }
 html.theme-comic .btn-shuffle-kursi:hover {
   background: #d8b4fe !important;
+  transform: translate(-1px, -1px);
+  box-shadow: 4px 4px 0px #000000 !important;
 }
 
 /* CONTAINER TABEL */
