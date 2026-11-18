@@ -13500,12 +13500,12 @@ html.theme-hazard .c-notif-badge-icon {
     if (elPrev) elPrev.href = remoteUrl;
     if (elImg) elImg.src = `https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=${encodeURIComponent(remoteUrl)}`;
     const modal = document.getElementById('modalRemoteQR');
-    if (modal) modal.classList.add('show');
+    if (modal) modal.style.display = 'flex';
   }
 
   function tutupModalRemoteQR() {
     const modal = document.getElementById('modalRemoteQR');
-    if (modal) modal.classList.remove('show');
+    if (modal) modal.style.display = 'none';
   }
 
   function kirimRemoteAction(action, chair = null, delta = 0) {
@@ -16961,6 +16961,7 @@ html.theme-hazard .c-notif-badge-icon {
     if (e.target.id === 'modalConfirmResetTabel') tutupModalKonfirmasiResetTabel();
 
     if (e.target.id === 'modalLinkStream') tutupModalLinkStream();
+    if (e.target.id === 'modalRemoteQR') tutupModalRemoteQR();
 
     if (e.target.id === 'modalPreviewScreenshot') tutupModalScreenshot();
 
