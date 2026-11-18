@@ -428,6 +428,16 @@ html.theme-comic .btn-undo-poin {
   font-family: 'Bangers', cursive !important;
   font-weight: 800 !important;
 }
+html.theme-comic .btn-shuffle-kursi {
+  background: #c084fc !important;
+  color: #000000 !important;
+  font-family: 'Bangers', cursive !important;
+  font-weight: 800 !important;
+  letter-spacing: 1.5px !important;
+}
+html.theme-comic .btn-shuffle-kursi:hover {
+  background: #d8b4fe !important;
+}
 
 /* CONTAINER TABEL */
 html.theme-comic .table-container {
@@ -7700,6 +7710,7 @@ html.mode-remote .mobile-remote-shell {
 }
 .mr-top-btn.play { background: #22c55e !important; color: #000000 !important; }
 .mr-top-btn.undo { background: #fef08a !important; color: #000000 !important; }
+.mr-top-btn.shuffle { background: #c084fc !important; color: #000000 !important; }
 .mr-player-list {
   display: flex !important;
   flex-direction: column !important;
