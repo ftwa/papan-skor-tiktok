@@ -6222,31 +6222,31 @@ html.mode-tabel.theme-comic .grid-tables,
   border-radius: 14px !important;
   background: #ffffff !important;
   border: 3.5px solid var(--card-rgb, #06b6d4) !important;
-  box-shadow: 0 0 12px color-mix(in srgb, var(--card-rgb, #06b6d4) 48%, transparent), 4px 4px 0px #000000 !important;
+  box-shadow: 0 0 12px var(--card-rgb-glow, rgba(6, 182, 212, 0.48)), 4px 4px 0px #000000 !important;
   transition: transform 0.16s ease, box-shadow 0.16s ease !important;
   overflow: hidden !important;
 }
 
 /* Vibrant RGB Border Cycle for Seats #4–#20 */
 #bodyLeft tr[id^="row-kursi-"]:nth-child(8n+1),
-#bodyRight tr[id^="row-kursi-"]:nth-child(8n+1) { --card-rgb: #06b6d4; }
+#bodyRight tr[id^="row-kursi-"]:nth-child(8n+1) { --card-rgb: #06b6d4; --card-rgb-glow: rgba(6, 182, 212, 0.48); }
 #bodyLeft tr[id^="row-kursi-"]:nth-child(8n+2),
-#bodyRight tr[id^="row-kursi-"]:nth-child(8n+2) { --card-rgb: #ec4899; }
+#bodyRight tr[id^="row-kursi-"]:nth-child(8n+2) { --card-rgb: #ec4899; --card-rgb-glow: rgba(236, 72, 153, 0.48); }
 #bodyLeft tr[id^="row-kursi-"]:nth-child(8n+3),
-#bodyRight tr[id^="row-kursi-"]:nth-child(8n+3) { --card-rgb: #22c55e; }
+#bodyRight tr[id^="row-kursi-"]:nth-child(8n+3) { --card-rgb: #22c55e; --card-rgb-glow: rgba(34, 197, 94, 0.48); }
 #bodyLeft tr[id^="row-kursi-"]:nth-child(8n+4),
-#bodyRight tr[id^="row-kursi-"]:nth-child(8n+4) { --card-rgb: #a855f7; }
+#bodyRight tr[id^="row-kursi-"]:nth-child(8n+4) { --card-rgb: #a855f7; --card-rgb-glow: rgba(168, 85, 247, 0.48); }
 #bodyLeft tr[id^="row-kursi-"]:nth-child(8n+5),
-#bodyRight tr[id^="row-kursi-"]:nth-child(8n+5) { --card-rgb: #ef4444; }
+#bodyRight tr[id^="row-kursi-"]:nth-child(8n+5) { --card-rgb: #ef4444; --card-rgb-glow: rgba(239, 68, 68, 0.48); }
 #bodyLeft tr[id^="row-kursi-"]:nth-child(8n+6),
-#bodyRight tr[id^="row-kursi-"]:nth-child(8n+6) { --card-rgb: #3b82f6; }
+#bodyRight tr[id^="row-kursi-"]:nth-child(8n+6) { --card-rgb: #3b82f6; --card-rgb-glow: rgba(59, 130, 246, 0.48); }
 #bodyLeft tr[id^="row-kursi-"]:nth-child(8n+7),
-#bodyRight tr[id^="row-kursi-"]:nth-child(8n+7) { --card-rgb: #f97316; }
+#bodyRight tr[id^="row-kursi-"]:nth-child(8n+7) { --card-rgb: #f97316; --card-rgb-glow: rgba(249, 115, 22, 0.48); }
 #bodyLeft tr[id^="row-kursi-"]:nth-child(8n+8),
-#bodyRight tr[id^="row-kursi-"]:nth-child(8n+8) { --card-rgb: #eab308; }
+#bodyRight tr[id^="row-kursi-"]:nth-child(8n+8) { --card-rgb: #eab308; --card-rgb-glow: rgba(234, 179, 8, 0.48); }
 
 .grid-tables tbody tr[id^="row-kursi-"]:hover {
-  box-shadow: 0 0 18px color-mix(in srgb, var(--card-rgb, #06b6d4) 75%, transparent), 6px 6px 0px #000000 !important;
+  box-shadow: 0 0 16px var(--card-rgb-glow, rgba(6, 182, 212, 0.65)), 6px 6px 0px #000000 !important;
 }
 
 /* Glowing Team Color Border & Aura (overrides RGB when Team Mode active) */
@@ -7792,4 +7792,10 @@ html.mode-remote .mobile-remote-shell {
   text-align: center !important;
   color: #cbd5e1 !important;
   font-size: 13px !important;
+}
+html:not(.mode-admin) .cell-roblox-target,
+html:not(.mode-admin) .cell-nama-target,
+html:not(.mode-admin) .score-val,
+html:not(.mode-admin) .dtb-digits {
+  cursor: default !important;
 }
