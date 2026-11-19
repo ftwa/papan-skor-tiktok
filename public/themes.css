@@ -6485,23 +6485,23 @@ html.theme-comic .grid-tables tbody tr[id^="row-kursi-"] > td.cell-roblox-target
   max-width: 100% !important;
   padding: 3px 4px !important;
   box-sizing: border-box !important;
-  font-family: 'Plus Jakarta Sans', 'Outfit', 'Segoe UI', sans-serif !important;
+  font-family: 'Fredoka', 'Plus Jakarta Sans', 'Outfit', sans-serif !important;
   font-weight: 900 !important;
   line-height: 1.2 !important;
   letter-spacing: -0.3px !important;
-  color: #f8fafc !important;
+  color: #000000 !important;
   opacity: 1 !important;
   text-align: center !important;
   overflow: hidden !important;
   text-overflow: ellipsis !important;
   white-space: nowrap !important;
   margin-top: 6px !important;
-  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.8) !important;
+  text-shadow: none !important;
 }
 
 .grid-tables tbody tr.rank-1-row .name-roblox-display {
-  color: #fef08a !important;
-  text-shadow: 0 0 10px rgba(250, 204, 21, 0.45), 0 2px 6px rgba(0, 0, 0, 0.8) !important;
+  color: #000000 !important;
+  text-shadow: none !important;
 }
 
 .name-roblox-display.name-empty {
