@@ -1,3 +1,8 @@
+/* --- TAMBAHAN: Perbaikan Keterbacaan --- */
+.name-tiktok, .name-roblox-display, .team-podium-player-name {
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8), 0 0 5px rgba(0, 0, 0, 0.5);
+}
+
 @keyframes comicBorderGoyang {
   0% {
     transform: translate(-50%, -50%) rotate(-4deg) scale(1);
@@ -6239,98 +6244,103 @@ html.mode-tabel.theme-comic .grid-tables,
   line-height: 1.3 !important;
 }
 
-/* Collectible Trading Card Item — #4 Podium Glory (Gold/Silver/Bronze) + RGB */
+/* Premium Esports VIP Obsidian Glassmorphism */
 .grid-tables tbody tr[id^="row-kursi-"] {
   display: flex !important;
   flex-direction: column !important;
   justify-content: space-between !important;
   position: relative !important;
-  min-height: 208px !important;
+  min-height: 236px !important;
   padding: 10px 8px 8px !important;
-  border-radius: 14px !important;
-  background: #ffffff !important;
-  border: 3.5px solid var(--card-rgb, #06b6d4) !important;
-  box-shadow: 0 0 12px var(--card-rgb-glow, rgba(6, 182, 212, 0.48)), 4px 4px 0px #000000 !important;
-  transition: transform 0.16s ease, box-shadow 0.16s ease !important;
+  border-radius: 16px !important;
+  background: linear-gradient(160deg, rgba(15, 23, 42, 0.92) 0%, rgba(30, 41, 59, 0.84) 100%) !important;
+  backdrop-filter: blur(14px) !important;
+  -webkit-backdrop-filter: blur(14px) !important;
+  border: 1.5px solid var(--card-rgb, rgba(56, 189, 248, 0.35)) !important;
+  box-shadow: 0 10px 25px -4px rgba(0, 0, 0, 0.7), 0 0 16px var(--card-rgb-glow, rgba(56, 189, 248, 0.18)) !important;
+  transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease !important;
   overflow: hidden !important;
 }
 
-/* Vibrant RGB Border Cycle for Seats #4–#20 */
+/* Vibrant Ambient Neon Glow for Seats #4–#20 */
 #bodyLeft tr[id^="row-kursi-"]:nth-child(8n+1),
-#bodyRight tr[id^="row-kursi-"]:nth-child(8n+1) { --card-rgb: #06b6d4; --card-rgb-glow: rgba(6, 182, 212, 0.48); }
+#bodyRight tr[id^="row-kursi-"]:nth-child(8n+1) { --card-rgb: rgba(6, 182, 212, 0.45); --card-rgb-glow: rgba(6, 182, 212, 0.22); }
 #bodyLeft tr[id^="row-kursi-"]:nth-child(8n+2),
-#bodyRight tr[id^="row-kursi-"]:nth-child(8n+2) { --card-rgb: #ec4899; --card-rgb-glow: rgba(236, 72, 153, 0.48); }
+#bodyRight tr[id^="row-kursi-"]:nth-child(8n+2) { --card-rgb: rgba(236, 72, 153, 0.45); --card-rgb-glow: rgba(236, 72, 153, 0.22); }
 #bodyLeft tr[id^="row-kursi-"]:nth-child(8n+3),
-#bodyRight tr[id^="row-kursi-"]:nth-child(8n+3) { --card-rgb: #22c55e; --card-rgb-glow: rgba(34, 197, 94, 0.48); }
+#bodyRight tr[id^="row-kursi-"]:nth-child(8n+3) { --card-rgb: rgba(34, 197, 94, 0.45); --card-rgb-glow: rgba(34, 197, 94, 0.22); }
 #bodyLeft tr[id^="row-kursi-"]:nth-child(8n+4),
-#bodyRight tr[id^="row-kursi-"]:nth-child(8n+4) { --card-rgb: #a855f7; --card-rgb-glow: rgba(168, 85, 247, 0.48); }
+#bodyRight tr[id^="row-kursi-"]:nth-child(8n+4) { --card-rgb: rgba(168, 85, 247, 0.45); --card-rgb-glow: rgba(168, 85, 247, 0.22); }
 #bodyLeft tr[id^="row-kursi-"]:nth-child(8n+5),
-#bodyRight tr[id^="row-kursi-"]:nth-child(8n+5) { --card-rgb: #ef4444; --card-rgb-glow: rgba(239, 68, 68, 0.48); }
+#bodyRight tr[id^="row-kursi-"]:nth-child(8n+5) { --card-rgb: rgba(239, 68, 68, 0.45); --card-rgb-glow: rgba(239, 68, 68, 0.22); }
 #bodyLeft tr[id^="row-kursi-"]:nth-child(8n+6),
-#bodyRight tr[id^="row-kursi-"]:nth-child(8n+6) { --card-rgb: #3b82f6; --card-rgb-glow: rgba(59, 130, 246, 0.48); }
+#bodyRight tr[id^="row-kursi-"]:nth-child(8n+6) { --card-rgb: rgba(59, 130, 246, 0.45); --card-rgb-glow: rgba(59, 130, 246, 0.22); }
 #bodyLeft tr[id^="row-kursi-"]:nth-child(8n+7),
-#bodyRight tr[id^="row-kursi-"]:nth-child(8n+7) { --card-rgb: #f97316; --card-rgb-glow: rgba(249, 115, 22, 0.48); }
+#bodyRight tr[id^="row-kursi-"]:nth-child(8n+7) { --card-rgb: rgba(249, 115, 22, 0.45); --card-rgb-glow: rgba(249, 115, 22, 0.22); }
 #bodyLeft tr[id^="row-kursi-"]:nth-child(8n+8),
-#bodyRight tr[id^="row-kursi-"]:nth-child(8n+8) { --card-rgb: #eab308; --card-rgb-glow: rgba(234, 179, 8, 0.48); }
+#bodyRight tr[id^="row-kursi-"]:nth-child(8n+8) { --card-rgb: rgba(234, 179, 8, 0.45); --card-rgb-glow: rgba(234, 179, 8, 0.22); }
 
 .grid-tables tbody tr[id^="row-kursi-"]:hover {
-  box-shadow: 0 0 16px var(--card-rgb-glow, rgba(6, 182, 212, 0.65)), 6px 6px 0px #000000 !important;
+  transform: translateY(-2px) !important;
+  box-shadow: 0 16px 32px -4px rgba(0, 0, 0, 0.8), 0 0 24px var(--card-rgb-glow, rgba(56, 189, 248, 0.35)) !important;
+  border-color: var(--card-rgb, rgba(56, 189, 248, 0.75)) !important;
 }
 
-/* Glowing Team Color Border & Aura (overrides RGB when Team Mode active) */
+/* Glowing Team Color Border & Aura */
 .grid-tables tbody tr[id^="row-kursi-"].has-team {
-  border: 3.5px solid var(--row-team-color, #000000) !important;
-  box-shadow: 0 0 14px var(--row-team-color, #fde047), 0 0 4px var(--row-team-color, #fde047), 4px 4px 0px #000000 !important;
+  border: 1.5px solid var(--row-team-color, #38bdf8) !important;
+  box-shadow: 0 10px 25px -4px rgba(0, 0, 0, 0.7), 0 0 20px var(--row-team-color, rgba(56, 189, 248, 0.35)) !important;
 }
 
-/* Podium Glory: Rank #1 Gold, #2 Silver, #3 Bronze */
+/* Premium VIP Podium Glory: Rank #1 Gold, #2 Silver, #3 Bronze */
 .grid-tables tbody tr[id^="row-kursi-"].rank-1-row {
-  background: linear-gradient(165deg, #fef9c3 0%, #fde047 100%) !important;
-  border: 3.5px solid #eab308 !important;
-  box-shadow: 0 0 20px rgba(250, 204, 21, 0.85), 5px 5px 0px #000000 !important;
+  background: linear-gradient(160deg, rgba(34, 28, 10, 0.94) 0%, rgba(20, 16, 6, 0.90) 100%) !important;
+  border: 1.5px solid #facc15 !important;
+  box-shadow: 0 12px 28px -4px rgba(0, 0, 0, 0.75), 0 0 25px rgba(250, 204, 21, 0.35), inset 0 1px 0 rgba(254, 240, 138, 0.4) !important;
 }
 .grid-tables tbody tr[id^="row-kursi-"].rank-2-row {
-  background: linear-gradient(165deg, #ffffff 0%, #e2e8f0 100%) !important;
-  border: 3.5px solid #94a3b8 !important;
-  box-shadow: 0 0 16px rgba(148, 163, 184, 0.75), 5px 5px 0px #000000 !important;
+  background: linear-gradient(160deg, rgba(24, 30, 42, 0.94) 0%, rgba(15, 20, 28, 0.90) 100%) !important;
+  border: 1.5px solid #cbd5e1 !important;
+  box-shadow: 0 12px 28px -4px rgba(0, 0, 0, 0.75), 0 0 20px rgba(203, 213, 225, 0.28), inset 0 1px 0 rgba(255, 255, 255, 0.4) !important;
 }
 .grid-tables tbody tr[id^="row-kursi-"].rank-3-row {
-  background: linear-gradient(165deg, #fff7ed 0%, #fed7aa 100%) !important;
-  border: 3.5px solid #ea580c !important;
-  box-shadow: 0 0 16px rgba(234, 88, 12, 0.65), 5px 5px 0px #000000 !important;
+  background: linear-gradient(160deg, rgba(36, 20, 14, 0.94) 0%, rgba(22, 12, 8, 0.90) 100%) !important;
+  border: 1.5px solid #fb923c !important;
+  box-shadow: 0 12px 28px -4px rgba(0, 0, 0, 0.75), 0 0 20px rgba(251, 146, 60, 0.28), inset 0 1px 0 rgba(254, 215, 170, 0.4) !important;
 }
 
 /* Host Card Accent */
 .grid-tables tbody tr.host-row {
-  background: linear-gradient(165deg, #ffffff 0%, #f8fafc 100%) !important;
-  border-style: dashed !important;
+  background: linear-gradient(160deg, rgba(20, 28, 48, 0.94) 0%, rgba(12, 18, 32, 0.90) 100%) !important;
+  border: 1.5px dashed rgba(56, 189, 248, 0.5) !important;
+  box-shadow: 0 10px 25px -4px rgba(0, 0, 0, 0.7), 0 0 18px rgba(56, 189, 248, 0.2) !important;
 }
 
-/* Color Tag Card Overrides */
+/* Premium Tinted Glass Tag Card Overrides */
 .grid-tables tbody tr[id^="row-kursi-"].tag-blue {
-  background: linear-gradient(165deg, #eff6ff 0%, #dbeafe 100%) !important;
-  border-color: #2563eb !important;
-  box-shadow: 0 0 14px rgba(37, 99, 235, 0.55), 4px 4px 0px #000000 !important;
+  background: linear-gradient(160deg, rgba(16, 36, 72, 0.92) 0%, rgba(10, 22, 46, 0.88) 100%) !important;
+  border: 1.5px solid #3b82f6 !important;
+  box-shadow: 0 10px 25px -4px rgba(0, 0, 0, 0.7), 0 0 20px rgba(59, 130, 246, 0.3) !important;
 }
 .grid-tables tbody tr[id^="row-kursi-"].tag-pink {
-  background: linear-gradient(165deg, #fdf2f8 0%, #fce7f3 100%) !important;
-  border-color: #db2777 !important;
-  box-shadow: 0 0 14px rgba(219, 39, 119, 0.55), 4px 4px 0px #000000 !important;
+  background: linear-gradient(160deg, rgba(72, 16, 48, 0.92) 0%, rgba(44, 10, 30, 0.88) 100%) !important;
+  border: 1.5px solid #ec4899 !important;
+  box-shadow: 0 10px 25px -4px rgba(0, 0, 0, 0.7), 0 0 20px rgba(236, 72, 153, 0.3) !important;
 }
 .grid-tables tbody tr[id^="row-kursi-"].tag-purple {
-  background: linear-gradient(165deg, #4c1d95 0%, #2e1065 100%) !important;
-  border-color: #a855f7 !important;
-  box-shadow: 0 0 16px rgba(168, 85, 247, 0.65), 4px 4px 0px #000000 !important;
+  background: linear-gradient(160deg, rgba(48, 16, 80, 0.92) 0%, rgba(28, 10, 48, 0.88) 100%) !important;
+  border: 1.5px solid #a855f7 !important;
+  box-shadow: 0 10px 25px -4px rgba(0, 0, 0, 0.7), 0 0 20px rgba(168, 85, 247, 0.3) !important;
 }
 .grid-tables tbody tr[id^="row-kursi-"].tag-red {
-  background: linear-gradient(165deg, #991b1b 0%, #450a0a 100%) !important;
-  border-color: #ef4444 !important;
-  box-shadow: 0 0 16px rgba(239, 68, 68, 0.65), 4px 4px 0px #000000 !important;
+  background: linear-gradient(160deg, rgba(72, 16, 20, 0.92) 0%, rgba(44, 10, 12, 0.88) 100%) !important;
+  border: 1.5px solid #ef4444 !important;
+  box-shadow: 0 10px 25px -4px rgba(0, 0, 0, 0.7), 0 0 20px rgba(239, 68, 68, 0.3) !important;
 }
 .grid-tables tbody tr[id^="row-kursi-"].tag-yellow {
-  background: linear-gradient(165deg, #fef9c3 0%, #fde047 100%) !important;
-  border-color: #ca8a04 !important;
-  box-shadow: 0 0 16px rgba(250, 204, 21, 0.75), 4px 4px 0px #000000 !important;
+  background: linear-gradient(160deg, rgba(64, 48, 10, 0.92) 0%, rgba(38, 28, 6, 0.88) 100%) !important;
+  border: 1.5px solid #eab308 !important;
+  box-shadow: 0 10px 25px -4px rgba(0, 0, 0, 0.7), 0 0 20px rgba(234, 179, 8, 0.3) !important;
 }
 
 /* Reset TD inside Card (Higher specificity than theme-comic table tbody tr td) */
@@ -6349,26 +6359,46 @@ html.theme-comic .grid-tables table tbody tr[id^="row-kursi-"][class*="tag-"] > 
 }
 
 /* Top-Left Rank / Seat Badge */
-html.theme-comic .grid-tables table tbody tr[id^="row-kursi-"] > td.td-no {
+html.theme-comic .grid-tables table tbody tr[id^="row-kursi-"] > td.td-no,
+.grid-tables table tbody tr[id^="row-kursi-"] > td.td-no {
   position: absolute !important;
-  top: 7px !important;
-  left: 7px !important;
+  top: 6px !important;
+  left: 8px !important;
   width: auto !important;
-  min-width: 26px !important;
-  height: 24px !important;
-  padding: 0 7px !important;
+  min-width: unset !important;
+  height: auto !important;
+  padding: 0 !important;
   display: inline-flex !important;
   align-items: center !important;
-  justify-content: center !important;
-  background: #fde047 !important;
-  color: #000000 !important;
-  border: 2.5px solid #000000 !important;
-  border-radius: 8px !important;
-  box-shadow: 2px 2px 0px #000000 !important;
+  justify-content: flex-start !important;
+  background: transparent !important;
+  background-color: transparent !important;
+  color: #38bdf8 !important;
+  border: none !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
   font-family: 'Bangers', cursive !important;
-  font-size: 15px !important;
+  font-size: 25px !important;
+  font-weight: 900 !important;
   letter-spacing: 0.5px !important;
+  text-shadow: 0 0 12px rgba(56, 189, 248, 0.6) !important;
   z-index: 3 !important;
+}
+
+html.theme-comic .grid-tables table tbody tr.rank-1-row > td.td-no,
+.grid-tables table tbody tr.rank-1-row > td.td-no {
+  color: #facc15 !important;
+  text-shadow: 0 0 14px rgba(250, 204, 21, 0.75) !important;
+}
+html.theme-comic .grid-tables table tbody tr.rank-2-row > td.td-no,
+.grid-tables table tbody tr.rank-2-row > td.td-no {
+  color: #f1f5f9 !important;
+  text-shadow: 0 0 12px rgba(241, 245, 249, 0.7) !important;
+}
+html.theme-comic .grid-tables table tbody tr.rank-3-row > td.td-no,
+.grid-tables table tbody tr.rank-3-row > td.td-no {
+  color: #fb923c !important;
+  text-shadow: 0 0 12px rgba(251, 146, 60, 0.7) !important;
 }
 
 /* Card Portrait & Name Ordering (Avatar first, then Name, then Score) */
@@ -6394,49 +6424,98 @@ html.theme-comic .grid-tables table tbody tr[id^="row-kursi-"] > td.td-no {
   box-sizing: border-box !important;
 }
 
+/* Card Avatar & Image: Prominent, Big, Crisp & Frame Glow */
 html.theme-comic .grid-tables tbody tr[id^="row-kursi-"] .avatar-wrap,
-html.theme-comic .grid-tables tbody tr[id^="row-kursi-"] .avatar-mini {
-  width: 86px !important;
-  height: 86px !important;
-  border-radius: 10px !important;
-  border: none !important;
-  box-shadow: none !important;
-  background: transparent !important;
+.grid-tables tbody tr[id^="row-kursi-"] .avatar-wrap {
+  width: 110px !important;
+  height: 110px !important;
+  min-width: 110px !important;
+  min-height: 110px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  margin: 0 auto !important;
+  position: relative !important;
+}
+
+html.theme-comic .grid-tables tbody tr[id^="row-kursi-"] .avatar-mini,
+.grid-tables tbody tr[id^="row-kursi-"] .avatar-mini {
+  width: 110px !important;
+  height: 110px !important;
+  border-radius: 16px !important;
+  border: 2px solid rgba(56, 189, 248, 0.3) !important;
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.5), inset 0 0 10px rgba(56, 189, 248, 0.08) !important;
+  background: rgba(15, 23, 42, 0.7) !important;
   object-fit: contain !important;
+  transition: transform 0.18s ease, border-color 0.18s ease !important;
 }
 
-html.theme-comic .grid-tables tbody tr[id^="row-kursi-"] .avatar-placeholder {
-  width: 86px !important;
-  height: 86px !important;
-  border-radius: 14px !important;
-  border: none !important;
+html.theme-comic .grid-tables tbody tr[id^="row-kursi-"]:hover .avatar-mini,
+.grid-tables tbody tr[id^="row-kursi-"]:hover .avatar-mini {
+  transform: scale(1.05) !important;
+}
+
+html.theme-comic .grid-tables tbody tr.rank-1-row .avatar-mini,
+.grid-tables tbody tr.rank-1-row .avatar-mini {
+  border-color: rgba(250, 204, 21, 0.6) !important;
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.5), 0 0 16px rgba(250, 204, 21, 0.25) !important;
+}
+
+html.theme-comic .grid-tables tbody tr[id^="row-kursi-"] .avatar-placeholder,
+.grid-tables tbody tr[id^="row-kursi-"] .avatar-placeholder {
+  width: 110px !important;
+  height: 110px !important;
+  border-radius: 16px !important;
+  border: 2px dashed rgba(148, 163, 184, 0.3) !important;
   box-shadow: none !important;
-  background: rgba(15, 23, 42, 0.08) !important;
-  color: #475569 !important;
-  font-size: 32px !important;
+  background: rgba(15, 23, 42, 0.5) !important;
+  color: #94a3b8 !important;
+  font-size: 42px !important;
+  font-weight: 900 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
 }
 
-html.theme-comic .grid-tables tbody tr[id^="row-kursi-"] > td.cell-roblox-target .name-roblox-display {
-  display: -webkit-box !important;
-  -webkit-line-clamp: 2 !important;
-  -webkit-box-orient: vertical !important;
+/* Display Name: Large, Bold 900, High Visibility & Legibility */
+html.theme-comic .grid-tables tbody tr[id^="row-kursi-"] > td.cell-roblox-target .name-roblox-display,
+.grid-tables tbody tr[id^="row-kursi-"] > td.cell-roblox-target .name-roblox-display {
+  display: block !important;
   width: 100% !important;
   max-width: 100% !important;
-  padding: 0 8px !important;
+  padding: 3px 4px !important;
   box-sizing: border-box !important;
-  font-family: 'Plus Jakarta Sans', 'Segoe UI', sans-serif !important;
-  font-weight: 800 !important;
-  line-height: 1.18 !important;
-  letter-spacing: -0.2px !important;
-  color: #0f172a !important;
+  font-family: 'Plus Jakarta Sans', 'Outfit', 'Segoe UI', sans-serif !important;
+  font-weight: 900 !important;
+  line-height: 1.2 !important;
+  letter-spacing: -0.3px !important;
+  color: #f8fafc !important;
   opacity: 1 !important;
   text-align: center !important;
   overflow: hidden !important;
   text-overflow: ellipsis !important;
-  white-space: normal !important;
-  overflow-wrap: anywhere !important;
-  word-break: break-word !important;
-  margin-top: 2px !important;
+  white-space: nowrap !important;
+  margin-top: 6px !important;
+  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.8) !important;
+}
+
+.grid-tables tbody tr.rank-1-row .name-roblox-display {
+  color: #fef08a !important;
+  text-shadow: 0 0 10px rgba(250, 204, 21, 0.45), 0 2px 6px rgba(0, 0, 0, 0.8) !important;
+}
+
+.name-roblox-display.name-empty {
+  color: #64748b !important;
+  font-style: italic !important;
+  opacity: 0.65 !important;
+}
+
+/* Contrast for Darker Tag Themes */
+html.theme-comic .grid-tables tbody tr.tag-purple .name-roblox-display,
+html.theme-comic .grid-tables tbody tr.tag-red .name-roblox-display,
+html.theme-comic .grid-tables tbody tr.tag-dark .name-roblox-display {
+  color: #ffffff !important;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5) !important;
 }
 
 html.theme-comic .grid-tables tbody tr[id^="row-kursi-"] .name-tiktok,
@@ -6515,7 +6594,7 @@ html.theme-comic .grid-tables tbody tr.host-row #hostRobloxTag {
 }
 
 .grid-tables tbody tr.host-row #hostDisplayName {
-  color: #0f172a !important;
+  color: #f8fafc !important;
   font-size: 20px !important;
   font-weight: 900 !important;
   line-height: 1.15 !important;
@@ -6524,14 +6603,16 @@ html.theme-comic .grid-tables tbody tr.host-row #hostRobloxTag {
   text-overflow: ellipsis !important;
   white-space: nowrap !important;
   margin-top: 2px !important;
+  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.8) !important;
 }
 
 .grid-tables tbody tr.host-row #hostRobloxTag {
-  color: #0f172a !important;
-  font-size: 15px !important;
-  font-weight: 900 !important;
+  color: #38bdf8 !important;
+  font-size: 14px !important;
+  font-weight: 800 !important;
   opacity: 1 !important;
   max-width: 100% !important;
+  text-shadow: 0 0 8px rgba(56, 189, 248, 0.4) !important;
 }
 
 html.theme-comic .grid-tables tbody tr[class*="tag-"]:hover td {
@@ -6567,7 +6648,7 @@ html.theme-comic .grid-tables tbody tr.tag-dark #hostRobloxTag {
   order: 3 !important;
   margin-top: 8px !important;
   padding-top: 6px !important;
-  border-top: 2px dashed rgba(0, 0, 0, 0.2) !important;
+  border-top: 1px solid rgba(255, 255, 255, 0.08) !important;
 }
 
 .grid-tables tbody tr[id^="row-kursi-"] .score-box {
@@ -6579,33 +6660,47 @@ html.theme-comic .grid-tables tbody tr.tag-dark #hostRobloxTag {
 }
 
 .grid-tables tbody tr[id^="row-kursi-"] .score-val {
-  min-width: 48px !important;
-  padding: 2px 10px !important;
+  min-width: 52px !important;
+  padding: 3px 12px !important;
   border-radius: 10px !important;
-  border: 2.5px solid #000000 !important;
-  background: #ffffff !important;
-  color: #000000 !important;
-  box-shadow: 2px 2px 0px #000000 !important;
+  border: 1.5px solid rgba(56, 189, 248, 0.35) !important;
+  background: rgba(15, 23, 42, 0.85) !important;
+  color: #38bdf8 !important;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5), inset 0 0 8px rgba(56, 189, 248, 0.1) !important;
   font-family: 'Bangers', cursive !important;
   font-size: 24px !important;
   line-height: 1.15 !important;
   letter-spacing: 1px !important;
   text-align: center !important;
   cursor: pointer !important;
+  text-shadow: 0 0 10px rgba(56, 189, 248, 0.5) !important;
+  transition: all 0.15s ease !important;
+}
+
+.grid-tables tbody tr.rank-1-row .score-val {
+  border-color: rgba(250, 204, 21, 0.55) !important;
+  color: #facc15 !important;
+  text-shadow: 0 0 10px rgba(250, 204, 21, 0.6) !important;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5), inset 0 0 8px rgba(250, 204, 21, 0.15) !important;
 }
 
 .grid-tables tbody tr[id^="row-kursi-"] .score-val.score-standby {
   font-size: 16px !important;
-  opacity: 0.55 !important;
-  background: #f1f5f9 !important;
+  opacity: 0.5 !important;
+  background: rgba(15, 23, 42, 0.5) !important;
+  color: #64748b !important;
+  border-color: rgba(148, 163, 184, 0.2) !important;
+  text-shadow: none !important;
 }
 
 .card-step-btn {
   width: 26px !important;
   height: 26px !important;
   border-radius: 8px !important;
-  border: 2.5px solid #000000 !important;
-  box-shadow: 2px 2px 0px #000000 !important;
+  border: 1.5px solid rgba(148, 163, 184, 0.25) !important;
+  background: rgba(30, 41, 59, 0.75) !important;
+  color: #cbd5e1 !important;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4) !important;
   font-weight: 900 !important;
   font-size: 16px !important;
   line-height: 1 !important;
@@ -6613,17 +6708,41 @@ html.theme-comic .grid-tables tbody tr.tag-dark #hostRobloxTag {
   align-items: center !important;
   justify-content: center !important;
   cursor: pointer !important;
-  transition: transform 0.1s ease !important;
+  transition: all 0.12s ease !important;
   padding: 0 !important;
 }
 
+.card-step-btn:hover {
+  background: rgba(56, 189, 248, 0.3) !important;
+  border-color: #38bdf8 !important;
+  color: #ffffff !important;
+  box-shadow: 0 0 10px rgba(56, 189, 248, 0.4) !important;
+  transform: scale(1.08) !important;
+}
+
 .card-step-btn.minus {
-  background: #fee2e2 !important;
-  color: #b91c1c !important;
+  background: rgba(239, 68, 68, 0.2) !important;
+  color: #f87171 !important;
+  border-color: rgba(239, 68, 68, 0.4) !important;
+}
+.card-step-btn.minus:hover {
+  background: rgba(239, 68, 68, 0.4) !important;
+  color: #ffffff !important;
+  border-color: #ef4444 !important;
+  box-shadow: 0 0 10px rgba(239, 68, 68, 0.5) !important;
 }
 
 .card-step-btn.plus {
-  background: #fde047 !important;
+  background: rgba(34, 197, 94, 0.2) !important;
+  color: #4ade80 !important;
+  border-color: rgba(34, 197, 94, 0.4) !important;
+}
+.card-step-btn.plus:hover {
+  background: rgba(34, 197, 94, 0.4) !important;
+  color: #ffffff !important;
+  border-color: #22c55e !important;
+  box-shadow: 0 0 10px rgba(34, 197, 94, 0.5) !important;
+}
   color: #000000 !important;
 }
 
@@ -7827,4 +7946,225 @@ html:not(.mode-admin) .cell-nama-target,
 html:not(.mode-admin) .score-val,
 html:not(.mode-admin) .dtb-digits {
   cursor: default !important;
+}
+
+
+/* ==============================================================================
+   COMIC POP-ART TRADING CARDS (TEMA AWAL SESUAI FOTO RESMI USER)
+   ============================================================================== */
+html.theme-comic .grid-tables tbody tr[id^="row-kursi-"] {
+  background: #ffffff !important;
+  border-radius: 16px !important;
+  border: 2.5px solid var(--card-border-comic, #000000) !important;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.12), 2px 2px 0px rgba(0, 0, 0, 0.15) !important;
+  min-height: 236px !important;
+  padding: 8px 8px 8px !important;
+  overflow: hidden !important;
+}
+
+/* Warna border tiap nomor kursi persis sesuai foto user */
+html.theme-comic #bodyLeft tr[id^="row-kursi-"]:nth-child(8n+1) { --card-border-comic: #000000; }
+html.theme-comic #bodyLeft tr[id^="row-kursi-"]:nth-child(8n+2) { --card-border-comic: #38bdf8; }
+html.theme-comic #bodyLeft tr[id^="row-kursi-"]:nth-child(8n+3) { --card-border-comic: #f97316; }
+html.theme-comic #bodyLeft tr[id^="row-kursi-"]:nth-child(8n+4) { --card-border-comic: #eab308; }
+html.theme-comic #bodyLeft tr[id^="row-kursi-"]:nth-child(8n+5) { --card-border-comic: #a855f7; }
+html.theme-comic #bodyLeft tr[id^="row-kursi-"]:nth-child(8n+6) { --card-border-comic: #06b6d4; }
+html.theme-comic #bodyLeft tr[id^="row-kursi-"]:nth-child(8n+7) { --card-border-comic: #3b82f6; }
+html.theme-comic #bodyLeft tr[id^="row-kursi-"]:nth-child(8n+8) { --card-border-comic: #f59e0b; }
+
+html.theme-comic #bodyRight tr[id^="row-kursi-"]:nth-child(8n+1) { --card-border-comic: #14b8a6; }
+html.theme-comic #bodyRight tr[id^="row-kursi-"]:nth-child(8n+2) { --card-border-comic: #ec4899; }
+html.theme-comic #bodyRight tr[id^="row-kursi-"]:nth-child(8n+3) { --card-border-comic: #eab308; }
+html.theme-comic #bodyRight tr[id^="row-kursi-"]:nth-child(8n+4) { --card-border-comic: #84cc16; }
+html.theme-comic #bodyRight tr[id^="row-kursi-"]:nth-child(8n+5) { --card-border-comic: #22c55e; }
+html.theme-comic #bodyRight tr[id^="row-kursi-"]:nth-child(8n+6) { --card-border-comic: #9333ea; }
+html.theme-comic #bodyRight tr[id^="row-kursi-"]:nth-child(8n+7) { --card-border-comic: #f43f5e; }
+html.theme-comic #bodyRight tr[id^="row-kursi-"]:nth-child(8n+8) { --card-border-comic: #06b6d4; }
+
+/* Kursi 1 / Peringkat 1 (Babohu): Latar Belakang Kuning Cerah Comic */
+html.theme-comic .grid-tables tbody tr[id^="row-kursi-"].rank-1-row,
+html.theme-comic .grid-tables tbody tr#row-kursi-0 {
+  background: #fff066 !important;
+  border: 3px solid #000000 !important;
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.2), 3px 3px 0px #000000 !important;
+}
+
+/* Kursi 20 (HOST): Dashed Border Pink/Red */
+html.theme-comic .grid-tables tbody tr[id^="row-kursi-"].host-row,
+html.theme-comic .grid-tables tbody tr#row-kursi-19 {
+  background: #fffdf5 !important;
+  border: 2.5px dashed #f43f5e !important;
+  border-radius: 16px !important;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1) !important;
+}
+
+/* Tag Host Live Indicator */
+html.theme-comic .grid-tables tbody tr.host-row .pay-status-tag,
+html.theme-comic .grid-tables tbody tr#row-kursi-19 .host-live-badge {
+  background: #10b981 !important;
+  color: #ffffff !important;
+  font-family: 'Fredoka', sans-serif !important;
+  font-size: 10px !important;
+  font-weight: 800 !important;
+  border-radius: 4px !important;
+  padding: 1px 5px !important;
+}
+
+/* Nomor Kursi di Pojok Kiri Atas: Kotak Kuning Rounded Border Hitam */
+html.theme-comic .grid-tables table tbody tr[id^="row-kursi-"] > td.td-no,
+html.theme-comic .grid-tables .td-no,
+html.theme-comic .grid-tables table tbody tr > td.td-no {
+  position: absolute !important;
+  top: 6px !important;
+  left: 6px !important;
+  width: auto !important;
+  min-width: 22px !important;
+  height: 22px !important;
+  padding: 0 4px !important;
+  background: #fde047 !important;
+  color: #000000 !important;
+  border: 2px solid #000000 !important;
+  border-radius: 5px !important;
+  box-shadow: 1px 1px 0px #000000 !important;
+  font-family: 'Fredoka', 'Bangers', cursive, sans-serif !important;
+  font-size: 13.5px !important;
+  font-weight: 900 !important;
+  line-height: 1.1 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  text-shadow: none !important;
+  z-index: 5 !important;
+}
+
+/* Avatar Bulat Besar Tanpa Border Kotak (Comic Pop-Art) */
+html.theme-comic .grid-tables tbody tr[id^="row-kursi-"] .avatar-wrap,
+html.theme-comic .avatar-wrap {
+  width: 104px !important;
+  height: 104px !important;
+  min-width: 104px !important;
+  min-height: 104px !important;
+  border-radius: 50% !important;
+  border: 3px solid #000000 !important;
+  box-shadow: 2px 2px 0px #000000, 0 4px 10px rgba(0, 0, 0, 0.15) !important;
+  background: #ffffff !important;
+  overflow: hidden !important;
+  margin: 0 auto !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  position: relative !important;
+  transition: transform 0.18s ease !important;
+}
+
+html.theme-comic .grid-tables tbody tr[id^="row-kursi-"]:hover .avatar-wrap {
+  transform: scale(1.06) !important;
+}
+
+html.theme-comic .grid-tables tbody tr[id^="row-kursi-"] .avatar-mini,
+html.theme-comic .avatar-mini {
+  width: 100% !important;
+  height: 100% !important;
+  border-radius: 50% !important;
+  border: none !important;
+  box-shadow: none !important;
+  background: transparent !important;
+  object-fit: cover !important;
+  display: block !important;
+}
+
+html.theme-comic .grid-tables tbody tr[id^="row-kursi-"] .avatar-placeholder,
+html.theme-comic .avatar-placeholder {
+  width: 100% !important;
+  height: 100% !important;
+  border-radius: 50% !important;
+  border: none !important;
+  box-shadow: none !important;
+  background: #f1f5f9 !important;
+  color: #475569 !important;
+  font-size: 32px !important;
+  font-weight: 900 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+html.theme-comic .grid-tables tbody tr.host-row .avatar-placeholder {
+  background: #ffedd5 !important;
+  color: #64748b !important;
+  font-size: 36px !important;
+}
+
+/* Nama Pemain & Kursi Kosong */
+html.theme-comic .grid-tables tbody tr[id^="row-kursi-"] .name-roblox-display,
+html.theme-comic .grid-tables tbody tr[id^="row-kursi-"] .name-tiktok {
+  color: #000000 !important;
+  font-family: 'Fredoka', 'Plus Jakarta Sans', sans-serif !important;
+  font-weight: 900 !important;
+  text-shadow: none !important;
+}
+html.theme-comic .grid-tables tbody tr[id^="row-kursi-"] .name-roblox-display.name-empty,
+html.theme-comic .grid-tables tbody tr[id^="row-kursi-"] .name-tiktok.name-empty {
+  color: #000000 !important;
+  font-style: italic !important;
+  font-weight: 800 !important;
+  opacity: 0.9 !important;
+  text-shadow: none !important;
+}
+
+/* Kotak Skor di Bawah Kartu: Kotak Putih Border Hitam, Angka Merah */
+html.theme-comic .grid-tables tbody tr[id^="row-kursi-"] .score-val {
+  background: #ffffff !important;
+  border: 2px solid #000000 !important;
+  border-radius: 8px !important;
+  box-shadow: 1.5px 1.5px 0px #000000 !important;
+  color: #dc2626 !important;
+  font-family: 'Bangers', cursive, sans-serif !important;
+  font-size: 20px !important;
+  font-weight: 900 !important;
+  letter-spacing: 0.5px !important;
+  min-width: 48px !important;
+  padding: 1px 8px !important;
+  text-shadow: none !important;
+}
+html.theme-comic .grid-tables tbody tr[id^="row-kursi-"] .score-val.score-standby {
+  background: #ffffff !important;
+  border: 2px solid #000000 !important;
+  color: #dc2626 !important;
+  opacity: 1 !important;
+  text-shadow: none !important;
+}
+
+/* Tombol + Add Friend & Pengaturan Cookie */
+.hud-btn-add-friend {
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  color: #ffffff;
+  border: 1px solid #34d399;
+  padding: 0 12px;
+  border-radius: 7px;
+  font-weight: 800;
+  font-size: 11.5px;
+  cursor: pointer;
+  transition: all 0.14s ease;
+  white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+}
+.hud-btn-add-friend:hover {
+  filter: brightness(1.15);
+  transform: translateY(-1px);
+  box-shadow: 0 0 10px rgba(52, 211, 153, 0.4);
+}
+.hud-btn-add-friend:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+  filter: grayscale(0.5);
+}
+.hud-btn-add-friend.is-success {
+  background: linear-gradient(135deg, #059669 0%, #047857 100%);
+  border-color: #6ee7b7;
+  color: #ecfdf5;
 }

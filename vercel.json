@@ -4,6 +4,7 @@
   "rewrites": [
     { "source": "/api/cari-roblox", "destination": "/api/cari-roblox.js" },
     { "source": "/api/roblox-3d-model", "destination": "/api/roblox-3d-model.js" },
+    { "source": "/api/roblox-friend", "destination": "/api/roblox-friend.js" },
     { "source": "/api/auth", "destination": "/api/auth.js" }
   ]
 }
