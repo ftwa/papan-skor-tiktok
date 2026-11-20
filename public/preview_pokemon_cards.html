@@ -1,0 +1,841 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Preview Kartu Bangku Style Pokémon Asli - 1999 Classic Edition</title>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@600;700;800;900&family=Bangers&family=Outfit:wght@700;800;900&family=Plus+Jakarta+Sans:wght@700;800;900&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    
+    body {
+      background: #0d1117;
+      background-image: radial-gradient(#1f293d 1px, transparent 1px);
+      background-size: 20px 20px;
+      font-family: 'Plus Jakarta Sans', 'Fredoka', sans-serif;
+      color: #ffffff;
+      padding: 30px 16px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    .preview-wrapper {
+      width: 100%;
+      max-width: 1100px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 24px;
+    }
+
+    /* HEADER BANNER */
+    .poke-banner {
+      background: linear-gradient(135deg, #ffcb05 0%, #c7a008 100%);
+      border: 3.5px solid #2a75bb;
+      border-radius: 18px;
+      box-shadow: 0 8px 25px rgba(255, 203, 5, 0.4), 4px 4px 0px #000;
+      padding: 12px 28px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+    }
+    .pb-title {
+      font-family: 'Bangers', cursive;
+      font-size: 30px;
+      letter-spacing: 2.5px;
+      color: #1b53ba;
+      text-shadow: 2px 2px 0px #ffffff, 4px 4px 0px #000000;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .pb-badge {
+      background: #ef4444;
+      border: 2px solid #000;
+      border-radius: 99px;
+      padding: 4px 16px;
+      color: #ffffff;
+      font-family: 'Bangers', cursive;
+      font-size: 15px;
+      letter-spacing: 1px;
+      box-shadow: 2px 2px 0px #000;
+    }
+
+    /* ========================================================
+       GRID KARTU POKÉMON (CLASSIC TCG 1999 LAYOUT)
+       ======================================================== */
+    .pokemon-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      width: 100%;
+    }
+
+    @media (max-width: 960px) {
+      .pokemon-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 540px) {
+      .pokemon-grid { grid-template-columns: 1fr; }
+    }
+
+    /* --------------------------------------------------------
+       STRUKTUR KARTU POKÉMON ASLI (EXACT RETRO BASE SET SPEC)
+       -------------------------------------------------------- */
+    .pkmn-card {
+      position: relative;
+      background: #ffcb05; /* BORDER KUNING KHAS POKEMON */
+      border-radius: 18px;
+      padding: 7px;
+      box-shadow: 
+        0 8px 20px rgba(0, 0, 0, 0.75),
+        3.5px 3.5px 0px #000000;
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      cursor: pointer;
+      user-select: none;
+    }
+    .pkmn-card:hover {
+      transform: translateY(-5px) scale(1.02);
+      box-shadow: 
+        0 14px 28px rgba(0, 0, 0, 0.85),
+        5px 5px 0px #000000;
+    }
+
+    /* INNER CARD BODY (TIPE ELEMEN: PSYCHIC, WATER, FIRE, GRASS, DLL) */
+    .pkmn-inner {
+      border-radius: 12px;
+      padding: 6px 8px 8px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      position: relative;
+      border: 2px solid rgba(0, 0, 0, 0.35);
+      min-height: 275px;
+    }
+
+    /* PALET INNER SESUAI ELEMEN POKÉMON */
+    .type-psychic { background: linear-gradient(180deg, #d8b4fe 0%, #c084fc 100%); color: #000; }
+    .type-water   { background: linear-gradient(180deg, #93c5fd 0%, #60a5fa 100%); color: #000; }
+    .type-fire    { background: linear-gradient(180deg, #fca5a5 0%, #f87171 100%); color: #000; }
+    .type-grass   { background: linear-gradient(180deg, #86efac 0%, #4ade80 100%); color: #000; }
+    .type-lightning { background: linear-gradient(180deg, #fef08a 0%, #fde047 100%); color: #000; }
+    .type-dark    { background: linear-gradient(180deg, #94a3b8 0%, #64748b 100%); color: #000; }
+    .type-fighting { background: linear-gradient(180deg, #fdba74 0%, #fb923c 100%); color: #000; }
+    .type-gold-sar { 
+      background: linear-gradient(180deg, #fde047 0%, #eab308 50%, #ca8a04 100%); 
+      box-shadow: inset 0 0 15px rgba(255, 255, 255, 0.8);
+    }
+
+    /* 1. TOP HEADER (NAMA DI ATAS KOTAK BORDER AVATAR) */
+    .pkmn-top-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      padding: 0 2px;
+    }
+    .pkmn-name-col {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      min-width: 0;
+      flex: 1;
+    }
+    .pkmn-stage-label {
+      font-size: 9.5px;
+      font-weight: 900;
+      letter-spacing: 0.5px;
+      color: #1e293b;
+      line-height: 1;
+    }
+    .pkmn-player-name {
+      font-family: 'Fredoka', 'Plus Jakarta Sans', sans-serif;
+      font-size: 18px;
+      font-weight: 900;
+      color: #0f172a;
+      line-height: 1.1;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 140px;
+    }
+
+    .pkmn-hp-col {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      flex-shrink: 0;
+    }
+    .pkmn-hp-text {
+      font-family: 'Bangers', cursive;
+      font-size: 19px;
+      font-weight: 900;
+      color: #dc2626; /* MERAH HP POKÉMON ASLI */
+      letter-spacing: 0.8px;
+      line-height: 1;
+      text-shadow: 0.5px 0.5px 0px rgba(0,0,0,0.2);
+    }
+    .pkmn-hp-text span { font-size: 11px; margin-right: 2px; }
+
+    /* ORB ELEMEN ENERGI */
+    .pkmn-energy-orb {
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      border: 1.5px solid #000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      box-shadow: 1px 1px 0px #000, inset 0 2px 4px rgba(255,255,255,0.7);
+    }
+    .orb-psychic   { background: radial-gradient(circle at 35% 35%, #e9d5ff, #9333ea); }
+    .orb-water     { background: radial-gradient(circle at 35% 35%, #bae6fd, #0284c7); }
+    .orb-fire      { background: radial-gradient(circle at 35% 35%, #fed7aa, #ea580c); }
+    .orb-grass     { background: radial-gradient(circle at 35% 35%, #bbf7d0, #16a34a); }
+    .orb-lightning { background: radial-gradient(circle at 35% 35%, #fef08a, #ca8a04); }
+    .orb-dark      { background: radial-gradient(circle at 35% 35%, #cbd5e1, #334155); }
+
+    /* 2. KOTAK BORDER ILUSTRASI AVATAR (ART WINDOW PERSIS POKEMON ASLI) */
+    .pkmn-art-window {
+      position: relative;
+      width: 100%;
+      height: 124px;
+      border: 3.5px solid #d97706; /* BORDER EMAS BEVEL KHAS POKEMON */
+      border-radius: 6px;
+      box-shadow: 
+        inset 2px 2px 4px rgba(0, 0, 0, 0.7),
+        inset -1px -1px 3px rgba(255, 255, 255, 0.4),
+        1.5px 1.5px 0px #000000;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 2px 0 3px;
+    }
+
+    /* POKÉMON HOLOGRAPHIC RANDOM SCENIC BACKGROUNDS */
+    .pkmn-holo-bg {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      background-size: cover;
+      background-position: center;
+    }
+
+    /* ANIMASI SWEEPING HOLO FOIL GLITTER DI DALAM KOTAK */
+    .pkmn-art-window::after {
+      content: '';
+      position: absolute;
+      inset: -50%;
+      background: linear-gradient(
+        115deg,
+        transparent 35%,
+        rgba(255, 255, 255, 0.35) 45%,
+        rgba(255, 220, 100, 0.6) 50%,
+        rgba(255, 255, 255, 0.35) 55%,
+        transparent 65%
+      );
+      opacity: 0.55;
+      pointer-events: none;
+      z-index: 3;
+      transform: rotate(25deg);
+      animation: pokeHoloGlitter 3.8s infinite linear;
+    }
+    @keyframes pokeHoloGlitter {
+      0% { transform: translateY(-100%) rotate(25deg); }
+      100% { transform: translateY(100%) rotate(25deg); }
+    }
+
+    /* RANDOM POKÉMON SCENIC THEMES */
+    /* 1. Mewtwo Cosmos Space Galaxy */
+    .bg-cosmos-galaxy {
+      background: 
+        radial-gradient(circle at 25% 30%, #ffffff 0%, rgba(56, 189, 248, 0.8) 2px, transparent 6px),
+        radial-gradient(circle at 75% 25%, #ffffff 0%, rgba(236, 72, 153, 0.8) 2px, transparent 6px),
+        radial-gradient(circle at 45% 75%, #ffffff 0%, rgba(250, 204, 21, 0.8) 2px, transparent 6px),
+        radial-gradient(circle at 50% 50%, rgba(147, 51, 234, 0.7) 0%, rgba(30, 27, 75, 0.95) 75%),
+        linear-gradient(135deg, #09031c 0%, #1e1035 100%);
+    }
+    /* 2. Charizard Volcano Inferno Flame */
+    .bg-volcano-flame {
+      background: 
+        radial-gradient(circle at 30% 25%, #fef08a 0%, #f97316 3px, transparent 8px),
+        radial-gradient(circle at 80% 40%, #fef08a 0%, #ef4444 3px, transparent 8px),
+        radial-gradient(circle at 50% 35%, rgba(254, 240, 138, 0.8) 0%, rgba(239, 68, 68, 0.7) 35%, rgba(127, 29, 29, 0.95) 80%),
+        linear-gradient(135deg, #450a0a 0%, #7f1d1d 100%);
+    }
+    /* 3. Blastoise Hydro Ocean Swirl */
+    .bg-ocean-hydro {
+      background: 
+        radial-gradient(circle at 25% 35%, #ffffff 0%, rgba(56, 189, 248, 0.8) 3px, transparent 8px),
+        radial-gradient(circle at 75% 65%, #ffffff 0%, rgba(6, 182, 212, 0.8) 2px, transparent 6px),
+        radial-gradient(circle at 50% 45%, rgba(186, 230, 253, 0.85) 0%, rgba(2, 132, 199, 0.7) 40%, rgba(3, 105, 161, 0.95) 80%),
+        linear-gradient(135deg, #082f49 0%, #0369a1 100%);
+    }
+    /* 4. Venusaur Sunburst Forest */
+    .bg-forest-solar {
+      background: 
+        radial-gradient(circle at 30% 20%, #fef08a 0%, #84cc16 3px, transparent 8px),
+        radial-gradient(circle at 70% 35%, #ffffff 0%, #22c55e 2px, transparent 6px),
+        radial-gradient(circle at 50% 40%, rgba(254, 240, 138, 0.7) 0%, rgba(34, 197, 94, 0.7) 40%, rgba(20, 83, 45, 0.95) 80%),
+        linear-gradient(135deg, #052e16 0%, #166534 100%);
+    }
+    /* 5. Pikachu Spark Lightning Storm */
+    .bg-electric-storm {
+      background: 
+        radial-gradient(circle at 40% 30%, #ffffff 0%, #fde047 3px, transparent 8px),
+        radial-gradient(circle at 80% 25%, #ffffff 0%, #eab308 2px, transparent 6px),
+        radial-gradient(circle at 50% 40%, rgba(254, 240, 138, 0.9) 0%, rgba(234, 179, 8, 0.7) 35%, rgba(113, 63, 18, 0.95) 80%),
+        linear-gradient(135deg, #422006 0%, #854d0e 100%);
+    }
+    /* 6. Umbreon Midnight City Lanterns */
+    .bg-night-lanterns {
+      background: 
+        radial-gradient(circle at 20% 35%, rgba(254, 240, 138, 0.9) 0%, rgba(245, 158, 11, 0.4) 4px, transparent 10px),
+        radial-gradient(circle at 80% 30%, rgba(254, 240, 138, 0.9) 0%, rgba(245, 158, 11, 0.4) 4px, transparent 10px),
+        radial-gradient(circle at 50% 20%, rgba(255, 255, 255, 1) 0%, rgba(236, 72, 153, 0.6) 30%, rgba(88, 28, 135, 0.95) 75%),
+        linear-gradient(135deg, #17072b 0%, #3b0764 100%);
+    }
+    /* 7. Rayquaza Emerald Stratosphere */
+    .bg-dragon-aurora {
+      background: 
+        radial-gradient(circle at 35% 25%, #ffffff 0%, #34d399 3px, transparent 8px),
+        radial-gradient(circle at 75% 35%, #ffffff 0%, #06b6d4 2px, transparent 6px),
+        radial-gradient(ellipse at 50% 30%, rgba(52, 211, 153, 0.8) 0%, rgba(13, 148, 136, 0.6) 45%, rgba(4, 47, 46, 0.95) 85%),
+        linear-gradient(135deg, #022c22 0%, #115e59 100%);
+    }
+    /* 8. Gengar Shadow Ghost Void */
+    .bg-shadow-void {
+      background: 
+        radial-gradient(circle at 25% 30%, #f472b6 0%, #9333ea 3px, transparent 8px),
+        radial-gradient(circle at 75% 25%, #c084fc 0%, #7e22ce 2px, transparent 6px),
+        radial-gradient(circle at 50% 40%, rgba(236, 72, 153, 0.7) 0%, rgba(107, 33, 168, 0.75) 45%, rgba(24, 9, 39, 0.95) 85%),
+        linear-gradient(135deg, #120324 0%, #3b0764 100%);
+    }
+
+    /* AVATAR PEMAIN DI DALAM ART WINDOW */
+    .pkmn-avatar-img {
+      position: relative;
+      z-index: 2;
+      width: 92px;
+      height: 92px;
+      border-radius: 50%;
+      border: 3px solid #ffffff;
+      box-shadow: 
+        0 0 0 2px #000000,
+        0 6px 14px rgba(0, 0, 0, 0.75);
+      object-fit: cover;
+      background: #ffffff;
+      transition: transform 0.2s ease;
+    }
+    .pkmn-card:hover .pkmn-avatar-img {
+      transform: scale(1.08);
+    }
+
+    /* 3. MID GOLD BANNER (STRIP POKÉDEX PERSIS POKEMON ASLI) */
+    .pkmn-mid-banner {
+      background: linear-gradient(180deg, #fef08a 0%, #eab308 50%, #ca8a04 100%);
+      border: 1.5px solid #000000;
+      border-radius: 5px;
+      box-shadow: 1px 1px 0px #000;
+      padding: 2px 6px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 9px;
+      font-weight: 900;
+      color: #000000;
+      font-style: italic;
+    }
+    .pkmn-mid-banner span { letter-spacing: 0.3px; }
+
+    /* 4. POINT & ATTACK MOVE BOX DI BAWAH (POINT DI BAWAH PERSIS SERANGAN POKEMON) */
+    .pkmn-attack-box {
+      background: rgba(255, 255, 255, 0.75);
+      border: 1.5px solid #000000;
+      border-radius: 8px;
+      box-shadow: 1.5px 1.5px 0px #000;
+      padding: 6px 8px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 2px;
+    }
+    .pab-left {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 1px;
+    }
+    .pab-move-row {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+    .pab-energy-cost {
+      font-size: 11px;
+    }
+    .pab-move-name {
+      font-family: 'Bangers', cursive;
+      font-size: 15px;
+      letter-spacing: 0.8px;
+      color: #000000;
+    }
+    .pab-desc {
+      font-size: 8.5px;
+      color: #334155;
+      font-weight: 700;
+      line-height: 1.1;
+      max-width: 140px;
+    }
+
+    /* POIN UTAMA DI SEBELAH KANAN */
+    .pab-damage-score {
+      font-family: 'Bangers', cursive;
+      font-size: 26px;
+      font-weight: 900;
+      color: #dc2626; /* MERAH TEBAL DAMAGE POKÉMON */
+      letter-spacing: 1px;
+      line-height: 1;
+      text-shadow: 0.5px 0.5px 0px #000;
+    }
+
+    /* 5. FOOTER RESISTANCE & COPYRIGHT (PERSIS POKÉMON ASLI) */
+    .pkmn-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 8px;
+      font-weight: 800;
+      color: #1e293b;
+      padding: 2px 2px 0;
+      border-top: 1px solid rgba(0, 0, 0, 0.2);
+      margin-top: auto;
+    }
+    .pf-stat { display: flex; align-items: center; gap: 2px; }
+    .pf-illus { font-style: italic; opacity: 0.85; }
+
+    /* JUARA 1 SPECIAL SHINE (MAHKOTA 👑 MELAYANG) */
+    .pkmn-card.is-champion {
+      box-shadow: 
+        0 0 35px rgba(250, 204, 21, 0.9),
+        0 10px 25px rgba(0, 0, 0, 0.85),
+        4px 4px 0px #000;
+      border: 3.5px solid #000;
+    }
+    .champion-crown-tag {
+      position: absolute;
+      top: -18px;
+      right: 12px;
+      font-size: 28px;
+      filter: drop-shadow(2px 2px 0px #000);
+      animation: crownBob 1.5s infinite alternate ease-in-out;
+      z-index: 15;
+    }
+    @keyframes crownBob {
+      0% { transform: translateY(0) rotate(-4deg); }
+      100% { transform: translateY(-4px) rotate(4deg); }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="preview-wrapper">
+
+    <!-- HEADER -->
+    <div class="poke-banner">
+      <div class="pb-title">
+        <span>⚡</span> KARTU BANGKU STYLE POKÉMON ASLI <span>🔥</span>
+      </div>
+      <div class="pb-badge">
+        1999 CLASSIC TCG EDITION
+      </div>
+    </div>
+
+    <!-- GRID 8 KARTU POKÉMON DENGAN BACKGROUND RANDOM -->
+    <div class="pokemon-grid">
+      
+      <!-- KARTU 1: BOBOHU (JUARA 1 - TIPE PSYCHIC / MEWTWO COSMOS) -->
+      <div class="pkmn-card is-champion">
+        <div class="champion-crown-tag">👑</div>
+        <div class="pkmn-inner type-psychic">
+          
+          <!-- TOP: NAMA DI ATAS -->
+          <div class="pkmn-top-bar">
+            <div class="pkmn-name-col">
+              <span class="pkmn-stage-label">Kursi #1 • Galatama Gamer</span>
+              <div class="pkmn-player-name">Bobohu</div>
+            </div>
+            <div class="pkmn-hp-col">
+              <div class="pkmn-hp-text"><span>PTS</span>30</div>
+              <div class="pkmn-energy-orb orb-psychic">👁️</div>
+            </div>
+          </div>
+
+          <!-- KOTAK BORDER AVATAR DENGAN BACKGROUND KOSMOS MEWTWO -->
+          <div class="pkmn-art-window">
+            <div class="pkmn-holo-bg bg-cosmos-galaxy"></div>
+            <img src="https://tr.rbxcdn.com/30DAY-AvatarHeadshot-1723528A6B0A80C0D49C96726EB948A2-Png/150/150/AvatarHeadshot/Webp/noFilter" class="pkmn-avatar-img" alt="Avatar Bobohu" onerror="this.src='https://ui-avatars.com/api/?name=Bobohu&background=fde047&color=000&bold=true';">
+          </div>
+
+          <!-- MID STRIP -->
+          <div class="pkmn-mid-banner">
+            <span>Juara 1 • Leaderboard Room</span>
+            <span>LV. 53 #150</span>
+          </div>
+
+          <!-- BOTTOM: POINT DI BAWAH (PERSIS DAMAGE SERANGAN POKÉMON) -->
+          <div class="pkmn-attack-box">
+            <div class="pab-left">
+              <div class="pab-move-row">
+                <span class="pab-energy-cost">👁️ ⭐</span>
+                <span class="pab-move-name">PSYCHIC STRIKE</span>
+              </div>
+              <div class="pab-desc">Menambah 30 poin turnamen live stream.</div>
+            </div>
+            <div class="pab-damage-score">30</div>
+          </div>
+
+          <!-- FOOTER -->
+          <div class="pkmn-footer">
+            <span class="pf-stat">weakness 🎣</span>
+            <span class="pf-illus">Illus. Galatama Live</span>
+            <span>1/102 ★</span>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- KARTU 2: ZENIX (TIPE WATER / BLASTOISE HYDRO) -->
+      <div class="pkmn-card">
+        <div class="pkmn-inner type-water">
+          
+          <div class="pkmn-top-bar">
+            <div class="pkmn-name-col">
+              <span class="pkmn-stage-label">Kursi #2 • Galatama Gamer</span>
+              <div class="pkmn-player-name">Zenix_Pro</div>
+            </div>
+            <div class="pkmn-hp-col">
+              <div class="pkmn-hp-text"><span>PTS</span>24</div>
+              <div class="pkmn-energy-orb orb-water">💧</div>
+            </div>
+          </div>
+
+          <!-- KOTAK BORDER AVATAR DENGAN BACKGROUND HYDRO BLASTOISE -->
+          <div class="pkmn-art-window">
+            <div class="pkmn-holo-bg bg-ocean-hydro"></div>
+            <img src="https://ui-avatars.com/api/?name=Zenix&background=0284c7&color=fff&bold=true&size=150" class="pkmn-avatar-img" alt="Avatar Zenix">
+          </div>
+
+          <div class="pkmn-mid-banner">
+            <span>Runner Up • Hydro Surfer</span>
+            <span>LV. 48 #009</span>
+          </div>
+
+          <div class="pkmn-attack-box">
+            <div class="pab-left">
+              <div class="pab-move-row">
+                <span class="pab-energy-cost">💧 💧</span>
+                <span class="pab-move-name">HYDRO PUMP</span>
+              </div>
+              <div class="pab-desc">Semprotan air poin deras ke papan skor.</div>
+            </div>
+            <div class="pab-damage-score">24</div>
+          </div>
+
+          <div class="pkmn-footer">
+            <span class="pf-stat">weakness ⚡</span>
+            <span class="pf-illus">Illus. Galatama Live</span>
+            <span>2/102 ★</span>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- KARTU 3: SHADOW RIDER (TIPE FIRE / CHARIZARD VOLCANO) -->
+      <div class="pkmn-card">
+        <div class="pkmn-inner type-fire">
+          
+          <div class="pkmn-top-bar">
+            <div class="pkmn-name-col">
+              <span class="pkmn-stage-label">Kursi #3 • Galatama Gamer</span>
+              <div class="pkmn-player-name">ShadowRider</div>
+            </div>
+            <div class="pkmn-hp-col">
+              <div class="pkmn-hp-text"><span>PTS</span>18</div>
+              <div class="pkmn-energy-orb orb-fire">🔥</div>
+            </div>
+          </div>
+
+          <!-- KOTAK BORDER AVATAR DENGAN BACKGROUND VOLCANO CHARIZARD -->
+          <div class="pkmn-art-window">
+            <div class="pkmn-holo-bg bg-volcano-flame"></div>
+            <img src="https://ui-avatars.com/api/?name=Rider&background=c2410c&color=fff&bold=true&size=150" class="pkmn-avatar-img" alt="Avatar Rider">
+          </div>
+
+          <div class="pkmn-mid-banner">
+            <span>Rank 3 • Fire Breaker</span>
+            <span>LV. 42 #006</span>
+          </div>
+
+          <div class="pkmn-attack-box">
+            <div class="pab-left">
+              <div class="pab-move-row">
+                <span class="pab-energy-cost">🔥 🔥</span>
+                <span class="pab-move-name">FIRE SPIN</span>
+              </div>
+              <div class="pab-desc">Bara api menyala mengejar poin teratas.</div>
+            </div>
+            <div class="pab-damage-score">18</div>
+          </div>
+
+          <div class="pkmn-footer">
+            <span class="pf-stat">weakness 💧</span>
+            <span class="pf-illus">Illus. Galatama Live</span>
+            <span>3/102 ★</span>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- KARTU 4: PIKACHU LIGHTNING (TIPE ELECTRIC / STORM) -->
+      <div class="pkmn-card">
+        <div class="pkmn-inner type-lightning">
+          
+          <div class="pkmn-top-bar">
+            <div class="pkmn-name-col">
+              <span class="pkmn-stage-label">Kursi #4 • Galatama Gamer</span>
+              <div class="pkmn-player-name">VoltMaster</div>
+            </div>
+            <div class="pkmn-hp-col">
+              <div class="pkmn-hp-text"><span>PTS</span>12</div>
+              <div class="pkmn-energy-orb orb-lightning">⚡</div>
+            </div>
+          </div>
+
+          <!-- KOTAK BORDER AVATAR DENGAN BACKGROUND LIGHTNING STORM -->
+          <div class="pkmn-art-window">
+            <div class="pkmn-holo-bg bg-electric-storm"></div>
+            <img src="https://ui-avatars.com/api/?name=Volt&background=eab308&color=000&bold=true&size=150" class="pkmn-avatar-img" alt="Avatar Volt">
+          </div>
+
+          <div class="pkmn-mid-banner">
+            <span>Electric Mouse • Thunder Rod</span>
+            <span>LV. 36 #025</span>
+          </div>
+
+          <div class="pkmn-attack-box">
+            <div class="pab-left">
+              <div class="pab-move-row">
+                <span class="pab-energy-cost">⚡ ⚡</span>
+                <span class="pab-move-name">THUNDER JOLT</span>
+              </div>
+              <div class="pab-desc">Sengatan listrik kilat berkecepatan tinggi.</div>
+            </div>
+            <div class="pab-damage-score">12</div>
+          </div>
+
+          <div class="pkmn-footer">
+            <span class="pf-stat">weakness 🥊</span>
+            <span class="pf-illus">Illus. Galatama Live</span>
+            <span>4/102 ★</span>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- KARTU 5: GRASS VENUSAUR (TIPE GRASS / SOLAR FOREST) -->
+      <div class="pkmn-card">
+        <div class="pkmn-inner type-grass">
+          
+          <div class="pkmn-top-bar">
+            <div class="pkmn-name-col">
+              <span class="pkmn-stage-label">Kursi #5 • Galatama Gamer</span>
+              <div class="pkmn-player-name">(Kosong)</div>
+            </div>
+            <div class="pkmn-hp-col">
+              <div class="pkmn-hp-text" style="color:#15803d;"><span>PTS</span>0</div>
+              <div class="pkmn-energy-orb orb-grass">🍃</div>
+            </div>
+          </div>
+
+          <!-- KOTAK BORDER AVATAR DENGAN BACKGROUND SOLAR FOREST -->
+          <div class="pkmn-art-window">
+            <div class="pkmn-holo-bg bg-forest-solar"></div>
+            <div class="pkmn-avatar-img" style="display:flex; align-items:center; justify-content:center; color:#64748b; font-size:32px; font-weight:900;">-</div>
+          </div>
+
+          <div class="pkmn-mid-banner">
+            <span>Seed Pokémon • Standby Mode</span>
+            <span>LV. 20 #003</span>
+          </div>
+
+          <div class="pkmn-attack-box">
+            <div class="pab-left">
+              <div class="pab-move-row">
+                <span class="pab-energy-cost">🍃</span>
+                <span class="pab-move-name">SOLAR BEAM</span>
+              </div>
+              <div class="pab-desc">Menunggu pemain untuk melancarkan serangan.</div>
+            </div>
+            <div class="pab-damage-score" style="color:#64748b;">0</div>
+          </div>
+
+          <div class="pkmn-footer">
+            <span class="pf-stat">weakness 🔥</span>
+            <span class="pf-illus">Illus. Galatama Live</span>
+            <span>5/102 ★</span>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- KARTU 6: UMBREON NIGHT (TIPE DARK / LANTERNS) -->
+      <div class="pkmn-card">
+        <div class="pkmn-inner type-dark">
+          
+          <div class="pkmn-top-bar">
+            <div class="pkmn-name-col">
+              <span class="pkmn-stage-label">Kursi #6 • Galatama Gamer</span>
+              <div class="pkmn-player-name">(Kosong)</div>
+            </div>
+            <div class="pkmn-hp-col">
+              <div class="pkmn-hp-text" style="color:#1e293b;"><span>PTS</span>0</div>
+              <div class="pkmn-energy-orb orb-dark">🌙</div>
+            </div>
+          </div>
+
+          <!-- KOTAK BORDER AVATAR DENGAN BACKGROUND NIGHT LANTERNS -->
+          <div class="pkmn-art-window">
+            <div class="pkmn-holo-bg bg-night-lanterns"></div>
+            <div class="pkmn-avatar-img" style="display:flex; align-items:center; justify-content:center; color:#64748b; font-size:32px; font-weight:900;">-</div>
+          </div>
+
+          <div class="pkmn-mid-banner">
+            <span>Moonlight Pokémon • Standby</span>
+            <span>LV. 25 #197</span>
+          </div>
+
+          <div class="pkmn-attack-box">
+            <div class="pab-left">
+              <div class="pab-move-row">
+                <span class="pab-energy-cost">🌙</span>
+                <span class="pab-move-name">SHADOW CLAW</span>
+              </div>
+              <div class="pab-desc">Menunggu pemain untuk melancarkan serangan.</div>
+            </div>
+            <div class="pab-damage-score" style="color:#64748b;">0</div>
+          </div>
+
+          <div class="pkmn-footer">
+            <span class="pf-stat">weakness 🥊</span>
+            <span class="pf-illus">Illus. Galatama Live</span>
+            <span>6/102 ★</span>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- KARTU 7: GENGAR SHADOW VOID (TIPE GHOST / VOID) -->
+      <div class="pkmn-card">
+        <div class="pkmn-inner type-psychic">
+          
+          <div class="pkmn-top-bar">
+            <div class="pkmn-name-col">
+              <span class="pkmn-stage-label">Kursi #7 • Galatama Gamer</span>
+              <div class="pkmn-player-name">(Kosong)</div>
+            </div>
+            <div class="pkmn-hp-col">
+              <div class="pkmn-hp-text"><span>PTS</span>0</div>
+              <div class="pkmn-energy-orb orb-psychic">👁️</div>
+            </div>
+          </div>
+
+          <!-- KOTAK BORDER AVATAR DENGAN BACKGROUND SHADOW VOID -->
+          <div class="pkmn-art-window">
+            <div class="pkmn-holo-bg bg-shadow-void"></div>
+            <div class="pkmn-avatar-img" style="display:flex; align-items:center; justify-content:center; color:#64748b; font-size:32px; font-weight:900;">-</div>
+          </div>
+
+          <div class="pkmn-mid-banner">
+            <span>Shadow Pokémon • Standby</span>
+            <span>LV. 28 #094</span>
+          </div>
+
+          <div class="pkmn-attack-box">
+            <div class="pab-left">
+              <div class="pab-move-row">
+                <span class="pab-energy-cost">👁️</span>
+                <span class="pab-move-name">NIGHT SHADE</span>
+              </div>
+              <div class="pab-desc">Menunggu pemain untuk melancarkan serangan.</div>
+            </div>
+            <div class="pab-damage-score" style="color:#64748b;">0</div>
+          </div>
+
+          <div class="pkmn-footer">
+            <span class="pf-stat">weakness 🌙</span>
+            <span class="pf-illus">Illus. Galatama Live</span>
+            <span>7/102 ★</span>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- KARTU 8: RAYQUAZA DRAGON AURORA -->
+      <div class="pkmn-card">
+        <div class="pkmn-inner type-grass">
+          
+          <div class="pkmn-top-bar">
+            <div class="pkmn-name-col">
+              <span class="pkmn-stage-label">Kursi #8 • Galatama Gamer</span>
+              <div class="pkmn-player-name">(Kosong)</div>
+            </div>
+            <div class="pkmn-hp-col">
+              <div class="pkmn-hp-text" style="color:#15803d;"><span>PTS</span>0</div>
+              <div class="pkmn-energy-orb orb-grass">🍃</div>
+            </div>
+          </div>
+
+          <!-- KOTAK BORDER AVATAR DENGAN BACKGROUND DRAGON AURORA -->
+          <div class="pkmn-art-window">
+            <div class="pkmn-holo-bg bg-dragon-aurora"></div>
+            <div class="pkmn-avatar-img" style="display:flex; align-items:center; justify-content:center; color:#64748b; font-size:32px; font-weight:900;">-</div>
+          </div>
+
+          <div class="pkmn-mid-banner">
+            <span>Sky High Pokémon • Standby</span>
+            <span>LV. 30 #384</span>
+          </div>
+
+          <div class="pkmn-attack-box">
+            <div class="pab-left">
+              <div class="pab-move-row">
+                <span class="pab-energy-cost">🍃 ⚡</span>
+                <span class="pab-move-name">EXTREME SPEED</span>
+              </div>
+              <div class="pab-desc">Menunggu pemain untuk melancarkan serangan.</div>
+            </div>
+            <div class="pab-damage-score" style="color:#64748b;">0</div>
+          </div>
+
+          <div class="pkmn-footer">
+            <span class="pf-stat">weakness ❄️</span>
+            <span class="pf-illus">Illus. Galatama Live</span>
+            <span>8/102 ★</span>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+</body>
+</html>
