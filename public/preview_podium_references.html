@@ -1,0 +1,1015 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Koleksi Referensi Desain Podium 3 Besar - Best Gaming & Esports Showcase</title>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,600;0,700;0,800;0,900;1,700&family=Fredoka:wght@600;700;800;900&family=Bangers&family=Orbitron:wght@700;800;900&family=Cinzel:wght@700;800;900&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    
+    body {
+      background: #060810;
+      background-image: 
+        radial-gradient(circle at 50% 10%, rgba(99, 102, 241, 0.18) 0%, transparent 60%),
+        radial-gradient(#1e293b 1px, transparent 1px);
+      background-size: 100% 100%, 20px 20px;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      color: #ffffff;
+      padding: 24px 16px 60px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 1100px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 24px;
+    }
+
+    /* HEADER & TAB SELECTOR */
+    .showcase-header {
+      background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%);
+      border: 2px solid #6366f1;
+      border-radius: 20px;
+      box-shadow: 0 12px 35px rgba(99, 102, 241, 0.3), 0 0 20px rgba(0,0,0,0.6);
+      padding: 18px 24px;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .sh-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .sh-top h1 {
+      font-size: 22px;
+      font-weight: 900;
+      color: #f8fafc;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .sh-top p {
+      font-size: 13px;
+      color: #94a3b8;
+      margin-top: 2px;
+    }
+
+    /* TABS */
+    .tab-bar {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      background: rgba(15, 23, 42, 0.7);
+      padding: 5px;
+      border-radius: 14px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    .tab-btn {
+      flex: 1;
+      min-width: 180px;
+      background: transparent;
+      border: none;
+      border-radius: 10px;
+      padding: 10px 14px;
+      color: #94a3b8;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 13px;
+      font-weight: 800;
+      cursor: pointer;
+      transition: all 0.25s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+    .tab-btn:hover {
+      background: rgba(255, 255, 255, 0.08);
+      color: #f8fafc;
+    }
+    .tab-btn.active {
+      background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
+      color: #ffffff;
+      box-shadow: 0 4px 15px rgba(99, 102, 241, 0.45);
+    }
+
+    /* THEME CONTAINER PANELS */
+    .theme-panel {
+      display: none;
+      width: 100%;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+      animation: fadeIn 0.3s ease;
+    }
+    .theme-panel.active {
+      display: flex;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .theme-desc-banner {
+      background: rgba(30, 41, 59, 0.6);
+      border-left: 4px solid #6366f1;
+      border-radius: 0 12px 12px 0;
+      padding: 10px 18px;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      font-size: 13px;
+      color: #cbd5e1;
+    }
+    .theme-desc-banner strong {
+      color: #fde047;
+    }
+
+    /* ========================================================
+       STYLE 1: 3D BREAKOUT POP-OUT CARD (MARVEL SNAP / TCG 3D)
+       Avatar menembus batas kartu ke atas, efek 3D berlapis
+       ======================================================== */
+    .popout-stage {
+      display: grid;
+      grid-template-columns: 1fr 1.2fr 1fr;
+      align-items: end;
+      gap: 24px;
+      width: 100%;
+      max-width: 950px;
+      padding-top: 55px; /* ruang untuk avatar nembus atas */
+    }
+
+    .popout-card {
+      position: relative;
+      background: linear-gradient(180deg, #1e293b 0%, #0f172a 100%);
+      border-radius: 20px;
+      padding: 12px;
+      cursor: pointer;
+      transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.25);
+      user-select: none;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .popout-card:hover {
+      transform: translateY(-8px) scale(1.02);
+    }
+
+    /* BORDER GLOW ANIMATED */
+    .popout-card::before {
+      content: '';
+      position: absolute;
+      inset: -2.5px;
+      border-radius: 22px;
+      background: linear-gradient(var(--glow-angle, 135deg), var(--c-primary), #ffffff, var(--c-secondary), var(--c-primary));
+      z-index: -1;
+      filter: blur(1px);
+    }
+    .popout-card::after {
+      content: '';
+      position: absolute;
+      inset: -6px;
+      border-radius: 26px;
+      background: var(--c-primary);
+      opacity: 0.35;
+      z-index: -2;
+      filter: blur(12px);
+    }
+
+    /* TIER COLORS FOR STYLE 1 */
+    .popout-card.rank-1 {
+      --c-primary: #eab308;
+      --c-secondary: #fef08a;
+      min-height: 380px;
+      order: 2;
+    }
+    .popout-card.rank-2 {
+      --c-primary: #38bdf8;
+      --c-secondary: #e0f2fe;
+      min-height: 340px;
+      order: 1;
+    }
+    .popout-card.rank-3 {
+      --c-primary: #f97316;
+      --c-secondary: #ffedd5;
+      min-height: 325px;
+      order: 3;
+    }
+
+    /* FLOATING CROWN RANK 1 */
+    .floating-crown {
+      position: absolute;
+      top: -46px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 38px;
+      filter: drop-shadow(0 4px 12px rgba(250, 204, 21, 0.8));
+      animation: crownBounce 2.5s infinite alternate ease-in-out;
+      z-index: 10;
+    }
+    @keyframes crownBounce {
+      0% { transform: translateX(-50%) translateY(0); }
+      100% { transform: translateX(-50%) translateY(-6px); }
+    }
+
+    /* 3D AVATAR MENEMBUS KELUAR BINGKAI (BREAKOUT EFFECT) */
+    .popout-avatar-wrapper {
+      position: relative;
+      width: 100%;
+      height: 170px;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      margin-top: -45px; /* Overlap keluar dari kartu */
+      z-index: 5;
+    }
+    .rank-1 .popout-avatar-wrapper {
+      height: 195px;
+      margin-top: -55px;
+    }
+
+    .popout-halo-bg {
+      position: absolute;
+      width: 130px;
+      height: 130px;
+      border-radius: 50%;
+      background: radial-gradient(circle, var(--c-primary) 0%, transparent 70%);
+      opacity: 0.6;
+      filter: blur(8px);
+      z-index: 1;
+    }
+
+    .popout-avatar-img {
+      position: relative;
+      z-index: 2;
+      height: 100%;
+      max-width: 100%;
+      object-fit: contain;
+      filter: drop-shadow(0 10px 16px rgba(0,0,0,0.7));
+      transition: transform 0.2s;
+    }
+    .popout-card:hover .popout-avatar-img {
+      transform: scale(1.08);
+    }
+
+    /* CARD INFO DETAILS */
+    .popout-info {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      margin-top: 8px;
+      position: relative;
+      z-index: 6;
+    }
+    .popout-rank-badge {
+      background: linear-gradient(135deg, var(--c-primary) 0%, #000 120%);
+      border: 2px solid #ffffff;
+      border-radius: 99px;
+      padding: 2px 14px;
+      font-weight: 900;
+      font-size: 13px;
+      color: #ffffff;
+      letter-spacing: 1px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+    }
+    .popout-player-name {
+      font-size: 19px;
+      font-weight: 900;
+      color: #ffffff;
+      letter-spacing: -0.3px;
+      text-shadow: 0 2px 8px rgba(0,0,0,0.8);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 90%;
+    }
+    .rank-1 .popout-player-name { font-size: 22px; color: #fef08a; }
+
+    .popout-score-capsule {
+      background: rgba(0, 0, 0, 0.6);
+      border: 1.5px solid var(--c-primary);
+      border-radius: 12px;
+      padding: 6px 16px;
+      display: flex;
+      align-items: baseline;
+      gap: 6px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.5), inset 0 0 10px rgba(0,0,0,0.5);
+      margin-top: 4px;
+    }
+    .popout-score-val {
+      font-size: 24px;
+      font-weight: 900;
+      color: var(--c-secondary);
+      font-family: 'Fredoka', sans-serif;
+    }
+    .popout-score-lbl {
+      font-size: 11px;
+      font-weight: 800;
+      color: #94a3b8;
+    }
+
+    /* SUB BADGE */
+    .popout-sub-chip {
+      font-size: 10px;
+      font-weight: 800;
+      color: #cbd5e1;
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: 6px;
+      padding: 2px 8px;
+      margin-top: 4px;
+    }
+
+
+    /* ========================================================
+       STYLE 2: CYBERPUNK / ESPORTS NEON GLASS (VALORANT / APEX)
+       Smoked glass, neon lasers, giant watermark 01/02/03
+       ======================================================== */
+    .esports-stage {
+      display: grid;
+      grid-template-columns: 1fr 1.2fr 1fr;
+      align-items: end;
+      gap: 20px;
+      width: 100%;
+      max-width: 950px;
+      padding-top: 15px;
+    }
+
+    .esports-card {
+      position: relative;
+      background: rgba(15, 23, 42, 0.85);
+      backdrop-filter: blur(20px);
+      border-radius: 18px;
+      border: 2px solid var(--neon-color);
+      box-shadow: 
+        0 15px 35px rgba(0, 0, 0, 0.75),
+        0 0 25px var(--neon-glow) inset,
+        0 0 15px var(--neon-glow);
+      padding: 16px 14px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      overflow: hidden;
+      cursor: pointer;
+      transition: all 0.25s;
+    }
+    .esports-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 
+        0 20px 45px rgba(0, 0, 0, 0.85),
+        0 0 35px var(--neon-color);
+    }
+
+    .esports-card.rank-1 {
+      --neon-color: #facc15;
+      --neon-glow: rgba(250, 204, 21, 0.35);
+      min-height: 370px;
+      order: 2;
+    }
+    .esports-card.rank-2 {
+      --neon-color: #38bdf8;
+      --neon-glow: rgba(56, 189, 248, 0.35);
+      min-height: 335px;
+      order: 1;
+    }
+    .esports-card.rank-3 {
+      --neon-color: #f43f5e;
+      --neon-glow: rgba(244, 63, 94, 0.35);
+      min-height: 320px;
+      order: 3;
+    }
+
+    /* GIANT BACKGROUND NUMBER WATERMARK (01, 02, 03) */
+    .esports-wm-num {
+      position: absolute;
+      top: -15px;
+      right: -10px;
+      font-family: 'Orbitron', sans-serif;
+      font-size: 110px;
+      font-weight: 900;
+      color: var(--neon-color);
+      opacity: 0.12;
+      line-height: 1;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .esports-top-tag {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 11px;
+      font-weight: 900;
+      color: var(--neon-color);
+      letter-spacing: 2px;
+      border-bottom: 1.5px solid var(--neon-color);
+      padding-bottom: 2px;
+      margin-bottom: 12px;
+      z-index: 2;
+    }
+
+    .esports-avatar-frame {
+      width: 105px;
+      height: 105px;
+      border-radius: 50%;
+      border: 3px solid var(--neon-color);
+      box-shadow: 0 0 20px var(--neon-glow);
+      position: relative;
+      z-index: 2;
+      overflow: hidden;
+      background: #020617;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .rank-1 .esports-avatar-frame {
+      width: 125px;
+      height: 125px;
+      border-width: 4px;
+    }
+    .esports-avatar-frame img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .esports-name {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 18px;
+      font-weight: 900;
+      color: #ffffff;
+      margin-top: 14px;
+      letter-spacing: 0.5px;
+      z-index: 2;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 95%;
+    }
+    .rank-1 .esports-name { font-size: 21px; color: #fef08a; }
+
+    .esports-pts-bar {
+      margin-top: 10px;
+      background: rgba(0, 0, 0, 0.7);
+      border: 1px solid var(--neon-color);
+      border-radius: 8px;
+      padding: 6px 18px;
+      display: flex;
+      align-items: baseline;
+      gap: 6px;
+      z-index: 2;
+    }
+    .esports-pts-val {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 22px;
+      font-weight: 900;
+      color: var(--neon-color);
+    }
+    .esports-pts-lbl {
+      font-size: 10px;
+      font-weight: 800;
+      color: #94a3b8;
+      letter-spacing: 1px;
+    }
+
+
+    /* ========================================================
+       STYLE 3: ROYAL LUXURY OBSIDIAN & 24K GOLD (VIP GALA)
+       Obsidian gelap, ukiran emas 24k beveled mewah, mahkota raja
+       ======================================================== */
+    .royal-stage {
+      display: grid;
+      grid-template-columns: 1fr 1.2fr 1fr;
+      align-items: end;
+      gap: 22px;
+      width: 100%;
+      max-width: 950px;
+      padding-top: 15px;
+    }
+
+    .royal-card {
+      position: relative;
+      background: radial-gradient(circle at 50% 20%, #1e1e24 0%, #0d0d11 100%);
+      border-radius: 20px;
+      border: 3px solid var(--gold-border);
+      box-shadow: 
+        0 18px 45px rgba(0, 0, 0, 0.9),
+        0 0 25px var(--gold-glow) inset,
+        0 4px 15px rgba(0, 0, 0, 0.8);
+      padding: 16px 14px 18px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+    .royal-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 24px 50px rgba(0, 0, 0, 0.95), 0 0 35px var(--gold-border);
+    }
+
+    .royal-card.rank-1 {
+      --gold-border: #facc15;
+      --gold-glow: rgba(250, 204, 21, 0.35);
+      min-height: 385px;
+      order: 2;
+    }
+    .royal-card.rank-2 {
+      --gold-border: #e2e8f0;
+      --gold-glow: rgba(226, 232, 240, 0.3);
+      min-height: 345px;
+      order: 1;
+    }
+    .royal-card.rank-3 {
+      --gold-border: #d97706;
+      --gold-glow: rgba(217, 119, 6, 0.3);
+      min-height: 330px;
+      order: 3;
+    }
+
+    .royal-crown-crest {
+      font-size: 32px;
+      filter: drop-shadow(0 2px 8px rgba(0,0,0,0.8));
+      margin-bottom: 6px;
+    }
+    .royal-card.rank-1 .royal-crown-crest { font-size: 42px; }
+
+    .royal-avatar-ring {
+      width: 105px;
+      height: 105px;
+      border-radius: 50%;
+      border: 3.5px solid var(--gold-border);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.8);
+      background: #000;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .rank-1 .royal-avatar-ring {
+      width: 125px;
+      height: 125px;
+      border-width: 4.5px;
+    }
+    .royal-avatar-ring img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .royal-title-rank {
+      font-family: 'Cinzel', serif;
+      font-size: 13px;
+      font-weight: 800;
+      color: var(--gold-border);
+      letter-spacing: 2px;
+      margin-top: 12px;
+    }
+    .royal-name {
+      font-family: 'Cinzel', serif;
+      font-size: 19px;
+      font-weight: 900;
+      color: #ffffff;
+      letter-spacing: 1px;
+      margin-top: 2px;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.9);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 95%;
+    }
+    .rank-1 .royal-name { font-size: 23px; color: #fef08a; }
+
+    .royal-score-plate {
+      margin-top: 10px;
+      background: linear-gradient(135deg, rgba(250, 204, 21, 0.2) 0%, rgba(0,0,0,0.8) 100%);
+      border: 1.5px solid var(--gold-border);
+      border-radius: 6px;
+      padding: 5px 16px;
+      font-family: 'Cinzel', serif;
+      font-size: 20px;
+      font-weight: 900;
+      color: var(--gold-border);
+      letter-spacing: 1px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.6);
+    }
+
+
+    /* ========================================================
+       STYLE 4: ANIME GACHA SSR / RADIANT STELLAR
+       Bintang 5, efek prisma pelangi, banner miring jepang
+       ======================================================== */
+    .gacha-stage {
+      display: grid;
+      grid-template-columns: 1fr 1.2fr 1fr;
+      align-items: end;
+      gap: 22px;
+      width: 100%;
+      max-width: 950px;
+      padding-top: 15px;
+    }
+
+    .gacha-card {
+      position: relative;
+      background: linear-gradient(180deg, #2e1065 0%, #0f172a 100%);
+      border-radius: 20px;
+      border: 2.5px solid #a855f7;
+      box-shadow: 0 16px 40px rgba(168, 85, 247, 0.35), 0 0 25px rgba(0,0,0,0.8);
+      padding: 14px 12px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      overflow: hidden;
+      cursor: pointer;
+      transition: all 0.25s;
+    }
+    .gacha-card:hover {
+      transform: translateY(-8px) scale(1.02);
+    }
+
+    .gacha-card.rank-1 {
+      border-color: #f59e0b;
+      box-shadow: 0 20px 45px rgba(245, 158, 11, 0.45), 0 0 25px rgba(0,0,0,0.8);
+      min-height: 380px;
+      order: 2;
+    }
+    .gacha-card.rank-2 {
+      border-color: #38bdf8;
+      box-shadow: 0 16px 35px rgba(56, 189, 248, 0.35);
+      min-height: 340px;
+      order: 1;
+    }
+    .gacha-card.rank-3 {
+      border-color: #ec4899;
+      box-shadow: 0 16px 35px rgba(236, 72, 153, 0.35);
+      min-height: 325px;
+      order: 3;
+    }
+
+    /* PRISMATIC RAINBOW OVERLAY */
+    .gacha-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(255,0,128,0.15), rgba(0,255,255,0.15), rgba(255,255,0,0.15));
+      pointer-events: none;
+    }
+
+    .gacha-rarity-stars {
+      color: #fde047;
+      font-size: 16px;
+      letter-spacing: 2px;
+      text-shadow: 0 0 10px #facc15;
+      margin-bottom: 8px;
+      z-index: 2;
+    }
+
+    .gacha-avatar-box {
+      width: 100px;
+      height: 100px;
+      border-radius: 16px;
+      border: 3px solid #ffffff;
+      background: #1e1b4b;
+      overflow: hidden;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.7);
+      z-index: 2;
+    }
+    .rank-1 .gacha-avatar-box {
+      width: 120px;
+      height: 120px;
+      border-color: #fde047;
+    }
+    .gacha-avatar-box img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .gacha-tag-pill {
+      margin-top: 10px;
+      background: linear-gradient(135deg, #ec4899 0%, #8b5cf6 100%);
+      color: #fff;
+      font-size: 10px;
+      font-weight: 900;
+      padding: 2px 10px;
+      border-radius: 99px;
+      letter-spacing: 1px;
+      z-index: 2;
+    }
+
+    .gacha-name {
+      font-size: 18px;
+      font-weight: 900;
+      color: #ffffff;
+      margin-top: 6px;
+      z-index: 2;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 95%;
+    }
+    .rank-1 .gacha-name { font-size: 21px; color: #fef08a; }
+
+    .gacha-score-box {
+      margin-top: 8px;
+      background: rgba(0, 0, 0, 0.65);
+      border: 1.5px solid rgba(255, 255, 255, 0.3);
+      border-radius: 10px;
+      padding: 4px 16px;
+      font-size: 22px;
+      font-weight: 900;
+      color: #fde047;
+      z-index: 2;
+    }
+
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    
+    <!-- HEADER -->
+    <div class="showcase-header">
+      <div class="sh-top">
+        <div>
+          <h1>🏆 Galeri Referensi Desain Podium 3 Besar</h1>
+          <p>Pilih salah satu style di bawah untuk melihat preview interaktifnya secara langsung.</p>
+        </div>
+        <div>
+          <a href="index.html?view=tabel" style="background:#334155; color:#fff; text-decoration:none; padding:8px 16px; border-radius:10px; font-weight:800; font-size:13px;">Kembali ke Papan Skor</a>
+        </div>
+      </div>
+
+      <!-- TABS -->
+      <div class="tab-bar">
+        <button class="tab-btn active" onclick="switchTab('tab-popout', this)">
+          <span>⚡ Style A: 3D Pop-Out Breakout</span>
+        </button>
+        <button class="tab-btn" onclick="switchTab('tab-esports', this)">
+          <span>🎯 Style B: Cyberpunk Neon Glass</span>
+        </button>
+        <button class="tab-btn" onclick="switchTab('tab-royal', this)">
+          <span>👑 Style C: Royal 24K Luxury Gold</span>
+        </button>
+        <button class="tab-btn" onclick="switchTab('tab-gacha', this)">
+          <span>✨ Style D: Anime SSR Gacha Stellar</span>
+        </button>
+      </div>
+    </div>
+
+
+    <!-- ========================================================
+         TAB 1: STYLE A (3D BREAKOUT POP-OUT CARD)
+         ======================================================== -->
+    <div id="tab-popout" class="theme-panel active">
+      <div class="theme-desc-banner">
+        <div>
+          <strong>Style A: 3D Breakout Pop-Out (Marvel Snap / Modern TCG 3D)</strong>
+          <div style="font-size:12px; color:#94a3b8; margin-top:2px;">Avatar 3D menembus keluar dari bingkai atas kartu, efek kedalaman (depth parallax), halo aura bercahaya, dan mahkota emas melayang untuk Juara 1.</div>
+        </div>
+      </div>
+
+      <div class="popout-stage">
+        
+        <!-- JUARA 2: Rian_99 -->
+        <div class="popout-card rank-2">
+          <div class="popout-avatar-wrapper">
+            <div class="popout-halo-bg"></div>
+            <img class="popout-avatar-img" src="https://tr.rbxcdn.com/30DAY-Avatar-635A2AA0A87D473B6136800B5B86F761-Png/352/352/Avatar/Png/noFilter" alt="Rian" onerror="this.src='roblox_3d_cache/9109958726/avatar_2d_official.png'">
+          </div>
+          <div class="popout-info">
+            <span class="popout-rank-badge">#2 SILVER</span>
+            <div class="popout-player-name">Rian_99</div>
+            <span class="popout-sub-chip">Bangku 2 • Cyber Runner</span>
+            <div class="popout-score-capsule">
+              <span class="popout-score-val">58</span>
+              <span class="popout-score-lbl">PTS</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- JUARA 1: Bobohu (HERO) -->
+        <div class="popout-card rank-1">
+          <div class="floating-crown">👑</div>
+          <div class="popout-avatar-wrapper">
+            <div class="popout-halo-bg"></div>
+            <img class="popout-avatar-img" src="https://tr.rbxcdn.com/30DAY-Avatar-310966282D3529E36976BF6B07B1DC90-Png/352/352/Avatar/Png/noFilter" alt="Bobohu" onerror="this.src='roblox_3d_cache/9109958726/avatar_2d_official.png'">
+          </div>
+          <div class="popout-info">
+            <span class="popout-rank-badge">#1 GOLD CHAMPION</span>
+            <div class="popout-player-name">Bobohu</div>
+            <span class="popout-sub-chip" style="background:rgba(250,204,21,0.2); color:#fde047;">Bangku 1 • Grand Master</span>
+            <div class="popout-score-capsule">
+              <span class="popout-score-val" style="color:#fde047; font-size:28px;">63</span>
+              <span class="popout-score-lbl">PTS</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- JUARA 3: Fajar_Pro -->
+        <div class="popout-card rank-3">
+          <div class="popout-avatar-wrapper">
+            <div class="popout-halo-bg"></div>
+            <img class="popout-avatar-img" src="https://tr.rbxcdn.com/30DAY-Avatar-BF68F8B33B8FD75DC022244CA714186E-Png/352/352/Avatar/Png/noFilter" alt="Fajar" onerror="this.src='roblox_3d_cache/9109958726/avatar_2d_official.png'">
+          </div>
+          <div class="popout-info">
+            <span class="popout-rank-badge">#3 BRONZE</span>
+            <div class="popout-player-name">Fajar_Pro</div>
+            <span class="popout-sub-chip">Bangku 3 • Flame Striker</span>
+            <div class="popout-score-capsule">
+              <span class="popout-score-val">52</span>
+              <span class="popout-score-lbl">PTS</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+
+    <!-- ========================================================
+         TAB 2: STYLE B (CYBERPUNK / ESPORTS NEON GLASS)
+         ======================================================== -->
+    <div id="tab-esports" class="theme-panel">
+      <div class="theme-desc-banner">
+        <div>
+          <strong>Style B: Cyberpunk Esports Neon Glass (Valorant / Apex Legends)</strong>
+          <div style="font-size:12px; color:#94a3b8; margin-top:2px;">Kaca gelap tembus pandang (glassmorphism), laser neon menyala tajam, watermark nomor peringkat 01/02/03 raksasa di latar belakang, dan font display futuristik.</div>
+        </div>
+      </div>
+
+      <div class="esports-stage">
+        
+        <!-- JUARA 2 -->
+        <div class="esports-card rank-2">
+          <div class="esports-wm-num">02</div>
+          <span class="esports-top-tag">RANK 02 // SILVER</span>
+          <div class="esports-avatar-frame">
+            <img src="https://tr.rbxcdn.com/30DAY-Avatar-635A2AA0A87D473B6136800B5B86F761-Png/352/352/Avatar/Png/noFilter" alt="Rian" onerror="this.src='roblox_3d_cache/9109958726/avatar_2d_official.png'">
+          </div>
+          <div class="esports-name">Rian_99</div>
+          <div class="esports-pts-bar">
+            <span class="esports-pts-val">58</span>
+            <span class="esports-pts-lbl">PTS</span>
+          </div>
+        </div>
+
+        <!-- JUARA 1 -->
+        <div class="esports-card rank-1">
+          <div class="esports-wm-num">01</div>
+          <span class="esports-top-tag">RANK 01 // APEX CHAMPION</span>
+          <div class="esports-avatar-frame">
+            <img src="https://tr.rbxcdn.com/30DAY-Avatar-310966282D3529E36976BF6B07B1DC90-Png/352/352/Avatar/Png/noFilter" alt="Bobohu" onerror="this.src='roblox_3d_cache/9109958726/avatar_2d_official.png'">
+          </div>
+          <div class="esports-name">Bobohu</div>
+          <div class="esports-pts-bar">
+            <span class="esports-pts-val" style="font-size:26px;">63</span>
+            <span class="esports-pts-lbl">PTS</span>
+          </div>
+        </div>
+
+        <!-- JUARA 3 -->
+        <div class="esports-card rank-3">
+          <div class="esports-wm-num">03</div>
+          <span class="esports-top-tag">RANK 03 // BRONZE</span>
+          <div class="esports-avatar-frame">
+            <img src="https://tr.rbxcdn.com/30DAY-Avatar-BF68F8B33B8FD75DC022244CA714186E-Png/352/352/Avatar/Png/noFilter" alt="Fajar" onerror="this.src='roblox_3d_cache/9109958726/avatar_2d_official.png'">
+          </div>
+          <div class="esports-name">Fajar_Pro</div>
+          <div class="esports-pts-bar">
+            <span class="esports-pts-val">52</span>
+            <span class="esports-pts-lbl">PTS</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+
+    <!-- ========================================================
+         TAB 3: STYLE C (ROYAL LUXURY OBSIDIAN & 24K GOLD)
+         ======================================================== -->
+    <div id="tab-royal" class="theme-panel">
+      <div class="theme-desc-banner">
+        <div>
+          <strong>Style C: Royal 24K Luxury Obsidian & Gold (VIP Gala Trophy)</strong>
+          <div style="font-size:12px; color:#94a3b8; margin-top:2px;">Kartu hitam mewah obsidian, ukiran border emas 24 karat timbul, lambang mahkota imperial kerajaan, dan tipografi romawi klasik berkelas sultan.</div>
+        </div>
+      </div>
+
+      <div class="royal-stage">
+        
+        <!-- JUARA 2 -->
+        <div class="royal-card rank-2">
+          <div class="royal-crown-crest">🥈</div>
+          <div class="royal-avatar-ring">
+            <img src="https://tr.rbxcdn.com/30DAY-Avatar-635A2AA0A87D473B6136800B5B86F761-Png/352/352/Avatar/Png/noFilter" alt="Rian" onerror="this.src='roblox_3d_cache/9109958726/avatar_2d_official.png'">
+          </div>
+          <div class="royal-title-rank">RUNNER-UP</div>
+          <div class="royal-name">Rian_99</div>
+          <div class="royal-score-plate">58 PTS</div>
+        </div>
+
+        <!-- JUARA 1 -->
+        <div class="royal-card rank-1">
+          <div class="royal-crown-crest">👑</div>
+          <div class="royal-avatar-ring">
+            <img src="https://tr.rbxcdn.com/30DAY-Avatar-310966282D3529E36976BF6B07B1DC90-Png/352/352/Avatar/Png/noFilter" alt="Bobohu" onerror="this.src='roblox_3d_cache/9109958726/avatar_2d_official.png'">
+          </div>
+          <div class="royal-title-rank">SOVEREIGN CHAMPION</div>
+          <div class="royal-name">Bobohu</div>
+          <div class="royal-score-plate" style="font-size:24px; color:#fef08a;">63 PTS</div>
+        </div>
+
+        <!-- JUARA 3 -->
+        <div class="royal-card rank-3">
+          <div class="royal-crown-crest">🥉</div>
+          <div class="royal-avatar-ring">
+            <img src="https://tr.rbxcdn.com/30DAY-Avatar-BF68F8B33B8FD75DC022244CA714186E-Png/352/352/Avatar/Png/noFilter" alt="Fajar" onerror="this.src='roblox_3d_cache/9109958726/avatar_2d_official.png'">
+          </div>
+          <div class="royal-title-rank">THIRD PLACE</div>
+          <div class="royal-name">Fajar_Pro</div>
+          <div class="royal-score-plate">52 PTS</div>
+        </div>
+
+      </div>
+    </div>
+
+
+    <!-- ========================================================
+         TAB 4: STYLE D (ANIME GACHA SSR / RADIANT STELLAR)
+         ======================================================== -->
+    <div id="tab-gacha" class="theme-panel">
+      <div class="theme-desc-banner">
+        <div>
+          <strong>Style D: Anime SSR Gacha Stellar (Genshin / Honkai / Zenless)</strong>
+          <div style="font-size:12px; color:#94a3b8; margin-top:2px;">Bintang 5 bercahaya (★★★★★), prisma kristal pelangi gacha, kartu bergaya gacha pull character showcase dengan aura kosmik ungu & amber.</div>
+        </div>
+      </div>
+
+      <div class="gacha-stage">
+        
+        <!-- JUARA 2 -->
+        <div class="gacha-card rank-2">
+          <div class="gacha-rarity-stars">★★★★☆</div>
+          <div class="gacha-avatar-box">
+            <img src="https://tr.rbxcdn.com/30DAY-Avatar-635A2AA0A87D473B6136800B5B86F761-Png/352/352/Avatar/Png/noFilter" alt="Rian" onerror="this.src='roblox_3d_cache/9109958726/avatar_2d_official.png'">
+          </div>
+          <span class="gacha-tag-pill">SR · RANK 2</span>
+          <div class="gacha-name">Rian_99</div>
+          <div class="gacha-score-box">58 PTS</div>
+        </div>
+
+        <!-- JUARA 1 -->
+        <div class="gacha-card rank-1">
+          <div class="gacha-rarity-stars" style="font-size:20px;">★★★★★</div>
+          <div class="gacha-avatar-box">
+            <img src="https://tr.rbxcdn.com/30DAY-Avatar-310966282D3529E36976BF6B07B1DC90-Png/352/352/Avatar/Png/noFilter" alt="Bobohu" onerror="this.src='roblox_3d_cache/9109958726/avatar_2d_official.png'">
+          </div>
+          <span class="gacha-tag-pill" style="background:linear-gradient(135deg,#f59e0b,#ef4444); font-size:11px;">SSR · CHAMPION</span>
+          <div class="gacha-name">Bobohu</div>
+          <div class="gacha-score-box" style="font-size:26px; color:#fde047;">63 PTS</div>
+        </div>
+
+        <!-- JUARA 3 -->
+        <div class="gacha-card rank-3">
+          <div class="gacha-rarity-stars">★★★★☆</div>
+          <div class="gacha-avatar-box">
+            <img src="https://tr.rbxcdn.com/30DAY-Avatar-BF68F8B33B8FD75DC022244CA714186E-Png/352/352/Avatar/Png/noFilter" alt="Fajar" onerror="this.src='roblox_3d_cache/9109958726/avatar_2d_official.png'">
+          </div>
+          <span class="gacha-tag-pill">SR · RANK 3</span>
+          <div class="gacha-name">Fajar_Pro</div>
+          <div class="gacha-score-box">52 PTS</div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    function switchTab(tabId, btn) {
+      // Deactivate all panels
+      document.querySelectorAll('.theme-panel').forEach(p => p.classList.remove('active'));
+      // Deactivate all tabs
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      
+      // Activate selected
+      const target = document.getElementById(tabId);
+      if (target) target.classList.add('active');
+      if (btn) btn.classList.add('active');
+    }
+  </script>
+</body>
+</html>
