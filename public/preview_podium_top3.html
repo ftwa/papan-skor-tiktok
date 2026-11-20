@@ -3,274 +3,412 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Preview Podium 3 Besar - Comic Pop-Art Glowing</title>
+  <title>Preview Kartu Spesial TCG - Holographic Secret Rare</title>
   <link rel="stylesheet" href="themes.css?v=20261120_compact_cards_v2">
   <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@600;700;800;900&family=Bangers&family=Outfit:wght@700;800;900&family=Plus+Jakarta+Sans:wght@700;800;900&display=swap" rel="stylesheet">
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
-      background-color: #f8fafc;
-      background-image: radial-gradient(#cbd5e1 1.5px, transparent 1.5px);
-      background-size: 16px 16px;
+      background-color: #0b0f19;
+      background-image: 
+        radial-gradient(circle at 50% 15%, rgba(120, 50, 220, 0.25) 0%, transparent 60%),
+        radial-gradient(rgba(255, 255, 255, 0.1) 1.5px, transparent 1.5px);
+      background-size: 100% 100%, 20px 20px;
       font-family: 'Fredoka', 'Plus Jakarta Sans', sans-serif;
-      color: #000;
-      padding: 16px 12px;
+      color: #ffffff;
+      padding: 24px 16px;
       display: flex;
       flex-direction: column;
       align-items: center;
       min-height: 100vh;
     }
 
-    /* CONTAINER UTAMA */
-    .preview-stage {
+    .preview-container {
       width: 100%;
       max-width: 980px;
       display: flex;
       flex-direction: column;
-      gap: 16px;
+      gap: 20px;
     }
 
-    /* HEADER TITEL */
-    .podium-header-banner {
+    /* HEADER BANNER */
+    .tcg-header-bar {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      background: #ffffff;
-      border: 3.5px solid #000000;
-      border-radius: 14px;
-      box-shadow: 4px 4px 0px #000000;
-      padding: 10px 18px;
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.12) 0%, rgba(255, 255, 255, 0.04) 100%);
+      border: 2px solid rgba(255, 255, 255, 0.25);
+      border-radius: 16px;
+      backdrop-filter: blur(12px);
+      padding: 12px 22px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
     }
-    .phb-title {
+    .thb-title {
       font-family: 'Bangers', cursive;
-      font-size: 26px;
-      letter-spacing: 1.5px;
-      color: #dc2626;
+      font-size: 28px;
+      letter-spacing: 2px;
+      color: #fde047;
+      text-shadow: 0 0 16px rgba(253, 224, 71, 0.6), 2px 2px 0px #000;
       display: flex;
       align-items: center;
-      gap: 8px;
-      text-shadow: 1px 1px 0px #fde047;
+      gap: 10px;
     }
-    .phb-badge {
-      background: #fde047;
-      border: 2px solid #000;
-      border-radius: 8px;
-      box-shadow: 2px 2px 0px #000;
+    .thb-badge {
+      background: linear-gradient(135deg, #ec4899 0%, #8b5cf6 50%, #3b82f6 100%);
+      border: 1.5px solid #ffffff;
+      border-radius: 99px;
+      padding: 4px 14px;
       font-family: 'Bangers', cursive;
       font-size: 14px;
-      letter-spacing: 1px;
-      padding: 3px 10px;
+      letter-spacing: 1.2px;
+      color: #ffffff;
+      box-shadow: 0 0 15px rgba(236, 72, 153, 0.6);
     }
 
     /* ========================================================
-       PODIUM 3 BESAR MENYALA (TOP 3 GLOWING CHAMPIONS)
+       STAGE PODIUM KARTU HOLOGRAPHIC SPECIAL ART (POKEMON SAR)
        ======================================================== */
-    .top3-podium-section {
+    .tcg-podium-stage {
       display: grid;
-      grid-template-columns: 1fr 1.15fr 1fr;
+      grid-template-columns: 1fr 1.2fr 1fr;
       align-items: end;
-      gap: 16px;
-      padding: 14px 10px 8px;
-      margin: 0 auto;
+      gap: 20px;
+      padding: 24px 8px 16px;
       width: 100%;
-      max-width: 820px;
+      max-width: 890px;
+      margin: 0 auto;
     }
 
-    /* KARTU PODIUM */
-    .podium-hero-card {
+    /* BASE KARTU TCG */
+    .tcg-card {
       position: relative;
       border-radius: 20px;
-      border: 3.5px solid #000000;
+      overflow: hidden;
       display: flex;
       flex-direction: column;
+      justify-content: space-between;
+      padding: 10px;
+      transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      cursor: pointer;
+    }
+
+    /* BORDER HOLOGRAPHIC FOIL (RAINBOW METALLIC FRAME) */
+    .tcg-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: 20px;
+      padding: 3.5px;
+      background: linear-gradient(
+        135deg,
+        #fef08a 0%,
+        #38bdf8 25%,
+        #ec4899 50%,
+        #a855f7 75%,
+        #facc15 100%
+      );
+      -webkit-mask: 
+        linear-gradient(#fff 0 0) content-box, 
+        linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor;
+      mask-composite: exclude;
+      pointer-events: none;
+      z-index: 10;
+    }
+
+    /* KILAU FOIL HOLOGRAPHIC SHINE EFFECT */
+    .tcg-card::after {
+      content: '';
+      position: absolute;
+      inset: -50%;
+      background: linear-gradient(
+        115deg,
+        transparent 35%,
+        rgba(255, 255, 255, 0.4) 48%,
+        rgba(254, 240, 138, 0.7) 50%,
+        rgba(255, 255, 255, 0.4) 52%,
+        transparent 65%
+      );
+      opacity: 0.55;
+      pointer-events: none;
+      z-index: 9;
+      transform: rotate(25deg);
+      animation: tcgHoloSweep 4s infinite linear;
+    }
+
+    @keyframes tcgHoloSweep {
+      0% { transform: translateY(-100%) rotate(25deg); }
+      100% { transform: translateY(100%) rotate(25deg); }
+    }
+
+    /* --------------------------------------------------------
+       1. JUARA 1: CELESTIAL GOLD & MIDNIGHT FIREWORKS (SAR GOLD)
+       -------------------------------------------------------- */
+    .tcg-card.card-rank-1 {
+      order: 2;
+      height: 310px;
+      background: 
+        radial-gradient(circle at 50% 25%, rgba(254, 240, 138, 0.55) 0%, transparent 65%),
+        linear-gradient(155deg, #2e0854 0%, #4c0519 30%, #831843 55%, #ea580c 80%, #facc15 100%);
+      box-shadow: 
+        0 0 35px rgba(250, 204, 21, 0.85),
+        0 15px 40px rgba(0, 0, 0, 0.9),
+        0 0 80px rgba(234, 88, 12, 0.4);
+      z-index: 5;
+      transform: translateY(-16px) scale(1.03);
+    }
+    .tcg-card.card-rank-1:hover {
+      transform: translateY(-20px) scale(1.06);
+      box-shadow: 
+        0 0 55px rgba(250, 204, 21, 1),
+        0 20px 50px rgba(0, 0, 0, 0.95);
+    }
+
+    /* --------------------------------------------------------
+       2. JUARA 2: ASTRAL MOONLIGHT & CYBER FROST (SAR SILVER CYAN)
+       -------------------------------------------------------- */
+    .tcg-card.card-rank-2 {
+      order: 1;
+      height: 275px;
+      background: 
+        radial-gradient(circle at 50% 30%, rgba(56, 189, 248, 0.5) 0%, transparent 65%),
+        linear-gradient(155deg, #021c38 0%, #0c4a6e 35%, #0369a1 60%, #0284c7 80%, #38bdf8 100%);
+      box-shadow: 
+        0 0 30px rgba(56, 189, 248, 0.75),
+        0 12px 30px rgba(0, 0, 0, 0.8);
+      z-index: 3;
+    }
+    .tcg-card.card-rank-2:hover {
+      transform: translateY(-6px) scale(1.03);
+      box-shadow: 0 0 45px rgba(56, 189, 248, 0.95);
+    }
+
+    /* --------------------------------------------------------
+       3. JUARA 3: SOLAR SUNSET & NEBULA FLAME (SAR BRONZE RUBY)
+       -------------------------------------------------------- */
+    .tcg-card.card-rank-3 {
+      order: 3;
+      height: 260px;
+      background: 
+        radial-gradient(circle at 50% 30%, rgba(249, 115, 22, 0.5) 0%, transparent 65%),
+        linear-gradient(155deg, #2a0845 0%, #6b21a8 30%, #9f1239 60%, #ea580c 85%, #fde047 100%);
+      box-shadow: 
+        0 0 30px rgba(249, 115, 22, 0.75),
+        0 12px 30px rgba(0, 0, 0, 0.8);
+      z-index: 2;
+    }
+    .tcg-card.card-rank-3:hover {
+      transform: translateY(-6px) scale(1.03);
+      box-shadow: 0 0 45px rgba(249, 115, 22, 0.95);
+    }
+
+    /* KONTEN KARTU TCG */
+    /* 1. TOP HEADER KARTU (Evolution Capsule + HP/Poin) */
+    .tcg-card-top-header {
+      display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 12px 10px 10px;
-      text-align: center;
-      transition: all 0.2s ease;
+      width: 100%;
+      z-index: 12;
+      padding: 0 2px;
     }
-
-    /* --- JUARA 1: GOLDEN RADIANT SUN (TENGAH, TERTINGGI, MENYALA) --- */
-    .podium-hero-card.hero-rank-1 {
-      order: 2;
-      background: #fff066;
-      height: 250px;
-      box-shadow: 
-        0 0 35px rgba(250, 204, 21, 0.95),
-        0 0 15px rgba(234, 179, 8, 0.8),
-        5px 5px 0px #000000;
-      border-width: 4px;
-      z-index: 5;
-      animation: goldChampionPulse 2.2s infinite alternate ease-in-out;
-    }
-
-    @keyframes goldChampionPulse {
-      0% {
-        box-shadow: 0 0 25px rgba(250, 204, 21, 0.75), 0 0 10px rgba(234, 179, 8, 0.6), 5px 5px 0px #000000;
-        transform: translateY(-8px) scale(1.02);
-      }
-      100% {
-        box-shadow: 0 0 45px rgba(250, 204, 21, 1), 0 0 20px rgba(245, 158, 11, 0.9), 6px 6px 0px #000000;
-        transform: translateY(-12px) scale(1.04);
-      }
-    }
-
-    /* Mahkota Emas Melayang di Atas Juara 1 */
-    .crown-gold-float {
-      position: absolute;
-      top: -24px;
-      font-size: 34px;
-      filter: drop-shadow(2px 2px 0px #000) drop-shadow(0 0 10px rgba(250, 204, 21, 0.9));
-      animation: crownBounce 1.4s ease-in-out infinite alternate;
-    }
-    @keyframes crownBounce {
-      0% { transform: translateY(0) rotate(-4deg); }
-      100% { transform: translateY(-5px) rotate(4deg); }
-    }
-
-    /* --- JUARA 2: ELECTRIC SKY CYAN GLOW (KIRI) --- */
-    .podium-hero-card.hero-rank-2 {
-      order: 1;
-      background: #7dd3fc;
-      height: 220px;
-      box-shadow: 
-        0 0 25px rgba(56, 189, 248, 0.85),
-        0 0 10px rgba(14, 165, 233, 0.6),
-        4px 4px 0px #000000;
-      z-index: 3;
-      animation: cyanRunnerPulse 2.4s infinite alternate ease-in-out;
-    }
-    @keyframes cyanRunnerPulse {
-      0% { box-shadow: 0 0 18px rgba(56, 189, 248, 0.65), 4px 4px 0px #000; }
-      100% { box-shadow: 0 0 30px rgba(56, 189, 248, 0.95), 5px 5px 0px #000; }
-    }
-
-    /* --- JUARA 3: BLAZING ORANGE FLAME GLOW (KANAN) --- */
-    .podium-hero-card.hero-rank-3 {
-      order: 3;
-      background: #fdba74;
-      height: 205px;
-      box-shadow: 
-        0 0 25px rgba(249, 115, 22, 0.85),
-        0 0 10px rgba(234, 88, 12, 0.6),
-        4px 4px 0px #000000;
-      z-index: 2;
-      animation: orangeFlamePulse 2.6s infinite alternate ease-in-out;
-    }
-    @keyframes orangeFlamePulse {
-      0% { box-shadow: 0 0 16px rgba(249, 115, 22, 0.6), 4px 4px 0px #000; }
-      100% { box-shadow: 0 0 28px rgba(249, 115, 22, 0.95), 5px 5px 0px #000; }
-    }
-
-    /* BADGE RANK DI ATAS KARTU HERO */
-    .hero-rank-pill {
-      font-family: 'Bangers', cursive;
-      font-size: 13.5px;
-      letter-spacing: 1px;
-      padding: 2px 10px;
+    .tcg-rank-gem {
+      background: linear-gradient(135deg, #ffffff 0%, #cbd5e1 50%, #94a3b8 100%);
+      border: 1.5px solid #000000;
       border-radius: 99px;
-      border: 2px solid #000000;
-      box-shadow: 2px 2px 0px #000000;
-      display: inline-flex;
+      padding: 2px 8px;
+      font-family: 'Bangers', cursive;
+      font-size: 13px;
+      letter-spacing: 0.8px;
+      color: #000000;
+      box-shadow: 1px 1px 0px #000, 0 0 10px rgba(255, 255, 255, 0.5);
+      display: flex;
       align-items: center;
       gap: 4px;
-      margin-bottom: 4px;
     }
-    .hero-rank-1 .hero-rank-pill { background: #ffffff; color: #dc2626; font-size: 15px; }
-    .hero-rank-2 .hero-rank-pill { background: #ffffff; color: #0284c7; }
-    .hero-rank-3 .hero-rank-pill { background: #ffffff; color: #c2410c; }
+    .card-rank-1 .tcg-rank-gem {
+      background: linear-gradient(135deg, #fef08a 0%, #facc15 50%, #ca8a04 100%);
+      color: #000000;
+      font-size: 14px;
+      box-shadow: 0 0 12px rgba(250, 204, 21, 0.8), 1.5px 1.5px 0px #000;
+    }
 
-    /* AVATAR HERO */
-    .hero-avatar-wrap {
+    .tcg-hp-capsule {
+      font-family: 'Bangers', cursive;
+      font-size: 16px;
+      letter-spacing: 0.8px;
+      color: #ffffff;
+      text-shadow: 2px 2px 0px #000000, 0 0 10px rgba(255, 255, 255, 0.6);
+      display: flex;
+      align-items: center;
+      gap: 3px;
+    }
+    .tcg-hp-capsule .hp-label { font-size: 11px; opacity: 0.85; }
+
+    /* 2. AVATAR STAGE (FULL ART WINDOW) */
+    .tcg-avatar-window {
+      position: relative;
+      margin: 4px auto;
+      z-index: 11;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .card-rank-1 .tcg-avatar-window { width: 110px; height: 110px; }
+    .card-rank-2 .tcg-avatar-window { width: 92px; height: 92px; }
+    .card-rank-3 .tcg-avatar-window { width: 86px; height: 86px; }
+
+    .tcg-avatar-frame {
+      width: 100%;
+      height: 100%;
       border-radius: 50%;
-      border: 3px solid #000000;
-      background: #ffffff;
-      box-shadow: 2.5px 2.5px 0px #000000;
+      border: 3.5px solid #ffffff;
+      box-shadow: 
+        0 0 0 2px #000000,
+        0 0 20px rgba(255, 255, 255, 0.7),
+        0 8px 16px rgba(0, 0, 0, 0.6);
+      background: #0f172a;
       overflow: hidden;
       display: flex;
       align-items: center;
       justify-content: center;
-      margin: 4px auto;
     }
-    .hero-rank-1 .hero-avatar-wrap { width: 94px; height: 94px; border-width: 3.5px; }
-    .hero-rank-2 .hero-avatar-wrap { width: 80px; height: 80px; }
-    .hero-rank-3 .hero-avatar-wrap { width: 74px; height: 74px; }
-    .hero-avatar-wrap img { width: 100%; height: 100%; object-fit: cover; }
+    .card-rank-1 .tcg-avatar-frame {
+      border-color: #fde047;
+      border-width: 4px;
+      box-shadow: 0 0 0 2px #000, 0 0 25px rgba(253, 224, 71, 0.9);
+    }
+    .tcg-avatar-frame img { width: 100%; height: 100%; object-fit: cover; }
 
-    /* NAMA HERO */
-    .hero-name {
+    /* MAHKOTA 3D MELAYANG */
+    .tcg-crown-3d {
+      position: absolute;
+      top: -24px;
+      font-size: 38px;
+      filter: drop-shadow(2px 2px 0px #000) drop-shadow(0 0 12px rgba(250, 204, 21, 0.95));
+      animation: crownFloating 1.6s ease-in-out infinite alternate;
+      z-index: 15;
+    }
+    @keyframes crownFloating {
+      0% { transform: translateY(0) rotate(-3deg); }
+      100% { transform: translateY(-6px) rotate(3deg); }
+    }
+
+    /* 3. NAMA PEMAIN (GLASS BANNER DENGAN FOIL BADGE) */
+    .tcg-player-banner {
+      background: rgba(0, 0, 0, 0.65);
+      border: 1.5px solid rgba(255, 255, 255, 0.35);
+      border-radius: 12px;
+      padding: 4px 10px;
+      width: 100%;
+      text-align: center;
+      backdrop-filter: blur(8px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+      z-index: 12;
+      margin: 4px 0;
+    }
+    .tcg-player-name {
       font-family: 'Fredoka', sans-serif;
-      font-size: 19px;
+      font-size: 18px;
       font-weight: 900;
-      color: #000000;
+      color: #ffffff;
+      text-shadow: 1.5px 1.5px 0px #000000;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
-      max-width: 170px;
-      margin: 2px 0;
     }
-    .hero-rank-1 .hero-name { font-size: 22px; max-width: 200px; }
+    .card-rank-1 .tcg-player-name {
+      font-size: 21px;
+      color: #fef08a;
+      text-shadow: 0 0 12px rgba(254, 240, 138, 0.8), 2px 2px 0px #000;
+    }
 
-    /* SKOR HERO */
-    .hero-score-badge {
-      background: #ffffff;
+    /* 4. METALLIC EX-RULE BOTTOM BOX (SKOR & STATUS) */
+    .tcg-score-box {
+      background: linear-gradient(135deg, #ffffff 0%, #f1f5f9 100%);
       border: 2.5px solid #000000;
-      border-radius: 10px;
-      box-shadow: 2px 2px 0px #000000;
-      padding: 3px 12px;
-      color: #dc2626;
-      font-family: 'Bangers', cursive;
-      font-size: 22px;
-      font-weight: 900;
-      letter-spacing: 1px;
+      border-radius: 12px;
+      box-shadow: 2px 2px 0px #000;
+      padding: 4px 12px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      z-index: 12;
     }
-    .hero-rank-1 .hero-score-badge {
-      font-size: 25px;
-      background: #ffffff;
+    .card-rank-1 .tcg-score-box {
+      background: linear-gradient(135deg, #fef08a 0%, #fde047 100%);
       border-width: 3px;
     }
-
-    /* KETIKAN KURSI ASAL DI BAWAH KARTU */
-    .hero-seat-origin {
-      font-size: 11px;
+    .tsb-label {
+      font-size: 10.5px;
       font-weight: 900;
-      background: rgba(0, 0, 0, 0.08);
-      border-radius: 4px;
-      padding: 1px 6px;
-      margin-top: 4px;
+      color: #334155;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .card-rank-1 .tsb-label { color: #854d0e; }
+    .tsb-value {
+      font-family: 'Bangers', cursive;
+      font-size: 24px;
+      font-weight: 900;
+      color: #dc2626;
+      letter-spacing: 1px;
+      line-height: 1;
+    }
+    .card-rank-1 .tsb-value {
+      font-size: 28px;
+      color: #b91c1c;
+      text-shadow: 1px 1px 0px #fff;
+    }
+
+    /* FOOTER KARTU KURSI NOMOR */
+    .tcg-card-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      font-size: 10px;
+      font-weight: 900;
+      color: rgba(255, 255, 255, 0.7);
+      padding: 2px 4px 0;
+      z-index: 12;
+    }
+    .tcf-rarity {
+      color: #facc15;
+      letter-spacing: 1.5px;
+      font-family: 'Bangers', cursive;
+      font-size: 12px;
     }
 
     /* ========================================================
-       DIVIDER BANNER KE SISA GRID
+       DIVIDER & GRID KURSI DI BAWAH
        ======================================================== */
     .grid-divider-banner {
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 10px;
-      margin-top: 6px;
+      gap: 12px;
+      margin-top: 10px;
     }
     .gdb-line {
       flex: 1;
-      height: 3px;
-      background: #000000;
-      border-radius: 2px;
+      height: 2px;
+      background: rgba(255, 255, 255, 0.2);
     }
     .gdb-text {
       font-family: 'Bangers', cursive;
       font-size: 16px;
-      letter-spacing: 1.2px;
-      background: #ffffff;
-      border: 2px solid #000000;
+      letter-spacing: 1.5px;
+      background: #1e293b;
+      border: 1.5px solid rgba(255, 255, 255, 0.3);
       border-radius: 8px;
-      box-shadow: 2px 2px 0px #000000;
-      padding: 3px 14px;
-      color: #000000;
+      padding: 4px 16px;
+      color: #fde047;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
     }
 
-    /* ========================================================
-       GRID SISA KARTU (KURSI 4 - 12) - COMPACT RAPAT
-       ======================================================== */
+    /* GRID KURSI SISA DI BAWAH (COMPACT) */
     .demo-grid-compact {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
@@ -300,6 +438,7 @@
       font-weight: 900;
       font-size: 13px;
       padding: 0 5px;
+      color: #000;
     }
     .demo-card .d-av {
       width: 76px;
@@ -334,131 +473,165 @@
 </head>
 <body>
 
-  <div class="preview-stage">
+  <div class="preview-container">
     
     <!-- HEADER -->
-    <div class="podium-header-banner">
-      <div class="phb-title">
-        <span>👑</span> PODIUM TOP 3 BESAR <span>💥</span>
+    <div class="tcg-header-bar">
+      <div class="thb-title">
+        <span>✨</span> POKEMON TCG SECRET RARE EDITION <span>✨</span>
       </div>
-      <div class="phb-badge">
-        🔥 GLOWING POP-ART SPECIAL EDITION
+      <div class="thb-badge">
+        ★ SAR / SECRET ILLUSTRATION RARE
       </div>
     </div>
 
-    <!-- PODIUM 3 BESAR MENYALA -->
-    <div class="top3-podium-section">
+    <!-- STAGE PODIUM KARTU HOLOGRAPHIC (POKEMON TCG SAR STYLE) -->
+    <div class="tcg-podium-stage">
       
-      <!-- JUARA 2 (KIRI) -->
-      <div class="podium-hero-card hero-rank-2">
-        <span class="hero-rank-pill">🥈 RANK #2</span>
-        <div class="hero-avatar-wrap">
-          <img src="https://ui-avatars.com/api/?name=Zenix&background=7dd3fc&color=000&bold=true&size=150" alt="Avatar Juara 2">
+      <!-- JUARA 2: ASTRAL MOONLIGHT (CYBER FROST / SAR SILVER) -->
+      <div class="tcg-card card-rank-2">
+        <div class="tcg-card-top-header">
+          <div class="tcg-rank-gem">🥈 RANK #2</div>
+          <div class="tcg-hp-capsule"><span class="hp-label">PTS</span> 24</div>
         </div>
-        <div class="hero-name">Zenix_Pro</div>
-        <div class="hero-score-badge">24 POIN</div>
-        <div class="hero-seat-origin">Kursi #2</div>
+        
+        <div class="tcg-avatar-window">
+          <div class="tcg-avatar-frame">
+            <img src="https://ui-avatars.com/api/?name=Zenix&background=0284c7&color=fff&bold=true&size=150" alt="Avatar Juara 2">
+          </div>
+        </div>
+
+        <div class="tcg-player-banner">
+          <div class="tcg-player-name">Zenix_Pro <span style="font-size:12px; color:#38bdf8;">★ EX</span></div>
+        </div>
+
+        <div class="tcg-score-box">
+          <span class="tsb-label">Total Skor</span>
+          <span class="tsb-value">24 POIN</span>
+        </div>
+
+        <div class="tcg-card-footer">
+          <span>Kursi #2</span>
+          <span class="tcf-rarity">★★★ SAR</span>
+        </div>
       </div>
 
-      <!-- JUARA 1 (TENGAH - ELEVATED GOLDEN GLOW) -->
-      <div class="podium-hero-card hero-rank-1">
-        <div class="crown-gold-float">👑</div>
-        <span class="hero-rank-pill">🏆 JUARA 1</span>
-        <div class="hero-avatar-wrap">
-          <img src="https://tr.rbxcdn.com/30DAY-AvatarHeadshot-1723528A6B0A80C0D49C96726EB948A2-Png/150/150/AvatarHeadshot/Webp/noFilter" alt="Avatar Juara 1" onerror="this.src='https://ui-avatars.com/api/?name=Bobohu&background=fff066&color=000&bold=true';">
+      <!-- JUARA 1: CELESTIAL GOLD (MIDNIGHT FIREWORKS / UMBREON SAR STYLE) -->
+      <div class="tcg-card card-rank-1">
+        <div class="tcg-card-top-header">
+          <div class="tcg-rank-gem">👑 JUARA 1</div>
+          <div class="tcg-hp-capsule"><span class="hp-label">PTS</span> 30</div>
         </div>
-        <div class="hero-name">Bobohu</div>
-        <div class="hero-score-badge">30 POIN</div>
-        <div class="hero-seat-origin">Kursi #1</div>
+
+        <div class="tcg-avatar-window">
+          <div class="tcg-crown-3d">👑</div>
+          <div class="tcg-avatar-frame">
+            <img src="https://tr.rbxcdn.com/30DAY-AvatarHeadshot-1723528A6B0A80C0D49C96726EB948A2-Png/150/150/AvatarHeadshot/Webp/noFilter" alt="Avatar Juara 1" onerror="this.src='https://ui-avatars.com/api/?name=Bobohu&background=facc15&color=000&bold=true';">
+          </div>
+        </div>
+
+        <div class="tcg-player-banner">
+          <div class="tcg-player-name">Bobohu <span style="font-size:13px; color:#facc15;">★★★ ULTRA EX</span></div>
+        </div>
+
+        <div class="tcg-score-box">
+          <span class="tsb-label">Champion Skor</span>
+          <span class="tsb-value">30 POIN</span>
+        </div>
+
+        <div class="tcg-card-footer">
+          <span>Kursi #1</span>
+          <span class="tcf-rarity" style="color:#fde047; text-shadow:0 0 10px #fde047;">★★★★★ SECRET RARE</span>
+        </div>
       </div>
 
-      <!-- JUARA 3 (KANAN) -->
-      <div class="podium-hero-card hero-rank-3">
-        <span class="hero-rank-pill">🥉 RANK #3</span>
-        <div class="hero-avatar-wrap">
-          <img src="https://ui-avatars.com/api/?name=Rider&background=fdba74&color=000&bold=true&size=150" alt="Avatar Juara 3">
+      <!-- JUARA 3: SOLAR SUNSET (NEBULA FLAME / SAR BRONZE RUBY) -->
+      <div class="tcg-card card-rank-3">
+        <div class="tcg-card-top-header">
+          <div class="tcg-rank-gem">🥉 RANK #3</div>
+          <div class="tcg-hp-capsule"><span class="hp-label">PTS</span> 18</div>
         </div>
-        <div class="hero-name">ShadowRider</div>
-        <div class="hero-score-badge">18 POIN</div>
-        <div class="hero-seat-origin">Kursi #4</div>
+
+        <div class="tcg-avatar-window">
+          <div class="tcg-avatar-frame">
+            <img src="https://ui-avatars.com/api/?name=Rider&background=c2410c&color=fff&bold=true&size=150" alt="Avatar Juara 3">
+          </div>
+        </div>
+
+        <div class="tcg-player-banner">
+          <div class="tcg-player-name">ShadowRider <span style="font-size:12px; color:#fb923c;">★ EX</span></div>
+        </div>
+
+        <div class="tcg-score-box">
+          <span class="tsb-label">Total Skor</span>
+          <span class="tsb-value">18 POIN</span>
+        </div>
+
+        <div class="tcg-card-footer">
+          <span>Kursi #4</span>
+          <span class="tcf-rarity">★★★ SAR</span>
+        </div>
       </div>
 
     </div>
 
-    <!-- DIVIDER -->
+    <!-- DIVIDER KE KARTU GRID -->
     <div class="grid-divider-banner">
       <div class="gdb-line"></div>
-      <div class="gdb-text">⚡ KARTU KURSI LAINNYA (COMPACT GRID) ⚡</div>
+      <div class="gdb-text">⚡ KARTU KURSI LAINNYA (SOLID COMPACT GRID) ⚡</div>
       <div class="gdb-line"></div>
     </div>
 
-    <!-- GRID KURSI SISA (COMPACT RAPAT 6px) -->
+    <!-- GRID SISA KARTU (KURSI 4 - 11) -->
     <div class="demo-grid-compact">
-      
-      <!-- Kursi 3 -->
       <div class="demo-card" style="background:#fed7aa;">
         <span class="d-no">3</span>
         <div class="d-av">-</div>
         <div class="d-name">(Kosong)</div>
         <div class="d-score">0</div>
       </div>
-
-      <!-- Kursi 5 -->
       <div class="demo-card" style="background:#e9d5ff;">
         <span class="d-no">5</span>
         <div class="d-av">-</div>
         <div class="d-name">(Kosong)</div>
         <div class="d-score">0</div>
       </div>
-
-      <!-- Kursi 6 -->
       <div class="demo-card" style="background:#a5f3fc;">
         <span class="d-no">6</span>
         <div class="d-av">-</div>
         <div class="d-name">(Kosong)</div>
         <div class="d-score">0</div>
       </div>
-
-      <!-- Kursi 7 -->
       <div class="demo-card" style="background:#fbcfe8;">
         <span class="d-no">7</span>
         <div class="d-av">-</div>
         <div class="d-name">(Kosong)</div>
         <div class="d-score">0</div>
       </div>
-
-      <!-- Kursi 8 -->
       <div class="demo-card" style="background:#fde68a;">
         <span class="d-no">8</span>
         <div class="d-av">-</div>
         <div class="d-name">(Kosong)</div>
         <div class="d-score">0</div>
       </div>
-
-      <!-- Kursi 9 -->
       <div class="demo-card" style="background:#fecaca;">
         <span class="d-no">9</span>
         <div class="d-av">-</div>
         <div class="d-name">(Kosong)</div>
         <div class="d-score">0</div>
       </div>
-
-      <!-- Kursi 10 -->
       <div class="demo-card" style="background:#99f6e4;">
         <span class="d-no">10</span>
         <div class="d-av">-</div>
         <div class="d-name">(Kosong)</div>
         <div class="d-score">0</div>
       </div>
-
-      <!-- Kursi 11 -->
       <div class="demo-card" style="background:#c7d2fe;">
         <span class="d-no">11</span>
         <div class="d-av">-</div>
         <div class="d-name">(Kosong)</div>
         <div class="d-score">0</div>
       </div>
-
     </div>
 
   </div>
