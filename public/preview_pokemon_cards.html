@@ -3,16 +3,18 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Preview Kartu Bangku Style Pokémon Asli - 1999 Classic Edition</title>
-  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@600;700;800;900&family=Bangers&family=Outfit:wght@700;800;900&family=Plus+Jakarta+Sans:wght@700;800;900&display=swap" rel="stylesheet">
+  <title>Preview Kartu Bangku Pokémon Modern TCG - Exact Bobohu Style</title>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,600;0,700;0,800;0,900;1,600;1,700&family=Fredoka:wght@600;700;800;900&family=Bangers&display=swap" rel="stylesheet">
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
     
     body {
-      background: #0d1117;
-      background-image: radial-gradient(#1f293d 1px, transparent 1px);
-      background-size: 20px 20px;
-      font-family: 'Plus Jakarta Sans', 'Fredoka', sans-serif;
+      background: #080c14;
+      background-image: 
+        radial-gradient(circle at 50% 0%, rgba(56, 189, 248, 0.15) 0%, transparent 60%),
+        radial-gradient(#1e293b 1px, transparent 1px);
+      background-size: 100% 100%, 24px 24px;
+      font-family: 'Plus Jakarta Sans', sans-serif;
       color: #ffffff;
       padding: 30px 16px;
       display: flex;
@@ -21,815 +23,1095 @@
       min-height: 100vh;
     }
 
-    .preview-wrapper {
+    .container {
       width: 100%;
-      max-width: 1100px;
+      max-width: 1200px;
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 24px;
+      gap: 32px;
     }
 
     /* HEADER BANNER */
-    .poke-banner {
-      background: linear-gradient(135deg, #ffcb05 0%, #c7a008 100%);
-      border: 3.5px solid #2a75bb;
+    .header-banner {
+      background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+      border: 2px solid #38bdf8;
       border-radius: 18px;
-      box-shadow: 0 8px 25px rgba(255, 203, 5, 0.4), 4px 4px 0px #000;
-      padding: 12px 28px;
+      box-shadow: 0 10px 30px rgba(56, 189, 248, 0.25), 0 0 20px rgba(0,0,0,0.5);
+      padding: 16px 28px;
       display: flex;
       align-items: center;
       justify-content: space-between;
       width: 100%;
+      flex-wrap: wrap;
+      gap: 16px;
     }
-    .pb-title {
-      font-family: 'Bangers', cursive;
-      font-size: 30px;
-      letter-spacing: 2.5px;
-      color: #1b53ba;
-      text-shadow: 2px 2px 0px #ffffff, 4px 4px 0px #000000;
+    .hb-title {
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 14px;
     }
-    .pb-badge {
-      background: #ef4444;
-      border: 2px solid #000;
-      border-radius: 99px;
-      padding: 4px 16px;
-      color: #ffffff;
-      font-family: 'Bangers', cursive;
-      font-size: 15px;
-      letter-spacing: 1px;
-      box-shadow: 2px 2px 0px #000;
+    .hb-icon {
+      width: 44px;
+      height: 44px;
+      background: linear-gradient(135deg, #ef4444 50%, #ffffff 50%);
+      border: 3px solid #000;
+      border-radius: 50%;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.4);
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .hb-icon::before {
+      content: '';
+      position: absolute;
+      width: 100%;
+      height: 4px;
+      background: #000;
+    }
+    .hb-icon::after {
+      content: '';
+      position: absolute;
+      width: 14px;
+      height: 14px;
+      background: #fff;
+      border: 3px solid #000;
+      border-radius: 50%;
+      z-index: 2;
+    }
+    .hb-text h1 {
+      font-size: 22px;
+      font-weight: 900;
+      letter-spacing: 0.5px;
+      color: #f8fafc;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .hb-text p {
+      font-size: 13px;
+      color: #94a3b8;
+      margin-top: 2px;
+    }
+    .hb-actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .hb-btn {
+      background: #38bdf8;
+      color: #041226;
+      border: none;
+      border-radius: 10px;
+      padding: 8px 18px;
+      font-weight: 800;
+      font-size: 13px;
+      cursor: pointer;
+      transition: all 0.2s;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .hb-btn:hover {
+      background: #7dd3fc;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(56, 189, 248, 0.4);
+    }
+    .hb-btn.secondary {
+      background: #334155;
+      color: #f1f5f9;
+    }
+    .hb-btn.secondary:hover {
+      background: #475569;
+    }
+
+    /* SECTION TITLE */
+    .section-title {
+      font-size: 18px;
+      font-weight: 800;
+      color: #e2e8f0;
+      align-self: flex-start;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .section-title::before {
+      content: '';
+      display: inline-block;
+      width: 5px;
+      height: 20px;
+      background: #38bdf8;
+      border-radius: 3px;
     }
 
     /* ========================================================
-       GRID KARTU POKÉMON (CLASSIC TCG 1999 LAYOUT)
+       MODERN POKÉMON CARD ARCHITECTURE (EXACT BOBOHU REPLICA)
        ======================================================== */
-    .pokemon-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 16px;
+    
+    /* SPOTLIGHT AREA */
+    .spotlight-area {
+      display: flex;
+      justify-content: center;
+      align-items: center;
       width: 100%;
+      padding: 10px 0;
     }
 
-    @media (max-width: 960px) {
-      .pokemon-grid { grid-template-columns: repeat(2, 1fr); }
-    }
-    @media (max-width: 540px) {
-      .pokemon-grid { grid-template-columns: 1fr; }
-    }
-
-    /* --------------------------------------------------------
-       STRUKTUR KARTU POKÉMON ASLI (EXACT RETRO BASE SET SPEC)
-       -------------------------------------------------------- */
-    .pkmn-card {
-      position: relative;
-      background: #ffcb05; /* BORDER KUNING KHAS POKEMON */
+    .poke-modern-card {
+      width: 320px;
+      height: 446px;
+      background: 
+        linear-gradient(135deg, 
+          #d1d5db 0%, 
+          #f3f4f6 20%, 
+          #cbd5e1 40%, 
+          #94a3b8 55%, 
+          #f8fafc 75%, 
+          #cbd5e1 100%);
       border-radius: 18px;
-      padding: 7px;
-      box-shadow: 
-        0 8px 20px rgba(0, 0, 0, 0.75),
-        3.5px 3.5px 0px #000000;
-      display: flex;
-      flex-direction: column;
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
-      cursor: pointer;
-      user-select: none;
-    }
-    .pkmn-card:hover {
-      transform: translateY(-5px) scale(1.02);
-      box-shadow: 
-        0 14px 28px rgba(0, 0, 0, 0.85),
-        5px 5px 0px #000000;
-    }
-
-    /* INNER CARD BODY (TIPE ELEMEN: PSYCHIC, WATER, FIRE, GRASS, DLL) */
-    .pkmn-inner {
-      border-radius: 12px;
-      padding: 6px 8px 8px;
-      display: flex;
-      flex-direction: column;
-      gap: 4px;
+      padding: 8px;
       position: relative;
-      border: 2px solid rgba(0, 0, 0, 0.35);
-      min-height: 275px;
+      box-shadow: 
+        0 18px 40px rgba(0, 0, 0, 0.75),
+        0 2px 6px rgba(255, 255, 255, 0.6) inset,
+        0 -2px 6px rgba(0, 0, 0, 0.4) inset;
+      user-select: none;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      cursor: pointer;
     }
 
-    /* PALET INNER SESUAI ELEMEN POKÉMON */
-    .type-psychic { background: linear-gradient(180deg, #d8b4fe 0%, #c084fc 100%); color: #000; }
-    .type-water   { background: linear-gradient(180deg, #93c5fd 0%, #60a5fa 100%); color: #000; }
-    .type-fire    { background: linear-gradient(180deg, #fca5a5 0%, #f87171 100%); color: #000; }
-    .type-grass   { background: linear-gradient(180deg, #86efac 0%, #4ade80 100%); color: #000; }
-    .type-lightning { background: linear-gradient(180deg, #fef08a 0%, #fde047 100%); color: #000; }
-    .type-dark    { background: linear-gradient(180deg, #94a3b8 0%, #64748b 100%); color: #000; }
-    .type-fighting { background: linear-gradient(180deg, #fdba74 0%, #fb923c 100%); color: #000; }
-    .type-gold-sar { 
-      background: linear-gradient(180deg, #fde047 0%, #eab308 50%, #ca8a04 100%); 
-      box-shadow: inset 0 0 15px rgba(255, 255, 255, 0.8);
+    .poke-modern-card:hover {
+      transform: translateY(-8px) scale(1.02);
+      box-shadow: 
+        0 26px 50px rgba(56, 189, 248, 0.35),
+        0 0 20px rgba(255, 255, 255, 0.5);
     }
 
-    /* 1. TOP HEADER (NAMA DI ATAS KOTAK BORDER AVATAR) */
-    .pkmn-top-bar {
+    /* Holographic rainbow sheen on silver border */
+    .poke-modern-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      border-radius: 18px;
+      background: linear-gradient(
+        115deg,
+        transparent 0%,
+        rgba(255, 0, 150, 0.08) 25%,
+        rgba(0, 255, 255, 0.12) 50%,
+        rgba(255, 255, 0, 0.08) 75%,
+        transparent 100%
+      );
+      pointer-events: none;
+      z-index: 5;
+    }
+
+    /* INNER CONTAINER */
+    .card-body {
+      width: 100%;
+      height: 100%;
+      border-radius: 12px;
+      padding: 8px 10px 6px;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      border: 1.5px solid rgba(0, 0, 0, 0.15);
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2) inset;
+      overflow: hidden;
+    }
+
+    /* ELEMENT CARD THEMES */
+    .theme-water-card {
+      background: linear-gradient(180deg, #bfe2fd 0%, #90cdf4 35%, #7ec6f8 100%);
+      color: #0f172a;
+    }
+    .theme-fire-card {
+      background: linear-gradient(180deg, #fecaca 0%, #fca5a5 35%, #f87171 100%);
+      color: #0f172a;
+    }
+    .theme-lightning-card {
+      background: linear-gradient(180deg, #fef08a 0%, #fde047 35%, #facc15 100%);
+      color: #0f172a;
+    }
+    .theme-psychic-card {
+      background: linear-gradient(180deg, #e9d5ff 0%, #d8b4fe 35%, #c084fc 100%);
+      color: #0f172a;
+    }
+    .theme-grass-card {
+      background: linear-gradient(180deg, #bbf7d0 0%, #86efac 35%, #4ade80 100%);
+      color: #0f172a;
+    }
+    .theme-dark-card {
+      background: linear-gradient(180deg, #cbd5e1 0%, #94a3b8 35%, #64748b 100%);
+      color: #0f172a;
+    }
+
+    /* Subtle card background watermark clouds */
+    .card-body::after {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background-image: 
+        radial-gradient(circle at 80% 20%, rgba(255,255,255,0.4) 0%, transparent 40%),
+        radial-gradient(circle at 20% 80%, rgba(255,255,255,0.25) 0%, transparent 40%);
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    /* ----------------------------------------------------
+       TOP HEADER (STAGE BADGE, NAME, PTS & ENERGY ORB)
+       ---------------------------------------------------- */
+    .card-header {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      width: 100%;
-      padding: 0 2px;
+      position: relative;
+      z-index: 6;
+      height: 38px;
+      margin-bottom: 4px;
     }
-    .pkmn-name-col {
+
+    /* STAGE 1 BADGE & METALLIC COIN OVERLAY */
+    .stage-group {
+      position: relative;
       display: flex;
-      flex-direction: column;
-      align-items: flex-start;
-      min-width: 0;
-      flex: 1;
+      align-items: center;
+      min-width: 65px;
     }
-    .pkmn-stage-label {
-      font-size: 9.5px;
+    .stage-pill {
+      position: absolute;
+      left: 12px;
+      top: -10px;
+      background: linear-gradient(180deg, #ffffff 0%, #cbd5e1 100%);
+      border: 1px solid #64748b;
+      border-radius: 4px 8px 0 0;
+      padding: 0px 8px 1px 16px;
+      font-size: 8px;
       font-weight: 900;
-      letter-spacing: 0.5px;
       color: #1e293b;
-      line-height: 1;
+      font-style: italic;
+      letter-spacing: 0.5px;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.2);
+      z-index: 2;
     }
-    .pkmn-player-name {
-      font-family: 'Fredoka', 'Plus Jakarta Sans', sans-serif;
-      font-size: 18px;
+    .stage-coin {
+      width: 38px;
+      height: 38px;
+      background: 
+        radial-gradient(circle at 35% 30%, #ffffff 0%, #e2e8f0 40%, #94a3b8 80%, #64748b 100%);
+      border: 2px solid #ffffff;
+      border-radius: 50%;
+      box-shadow: 
+        0 3px 6px rgba(0,0,0,0.35),
+        0 0 0 1px #64748b inset;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 15px;
       font-weight: 900;
       color: #0f172a;
-      line-height: 1.1;
+      z-index: 3;
+      text-shadow: 0 1px 0 rgba(255,255,255,0.8);
+      position: relative;
+      left: -2px;
+      top: -2px;
+    }
+
+    /* PLAYER NAME */
+    .card-player-name {
+      font-size: 19px;
+      font-weight: 900;
+      color: #0f172a;
+      letter-spacing: -0.3px;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
-      max-width: 140px;
+      margin-left: 4px;
+      flex: 1;
+      text-shadow: 0 1px 0 rgba(255,255,255,0.7);
     }
 
-    .pkmn-hp-col {
+    /* RIGHT PTS & ENERGY */
+    .card-pts-group {
       display: flex;
       align-items: center;
-      gap: 4px;
-      flex-shrink: 0;
+      gap: 6px;
+      margin-left: 6px;
     }
-    .pkmn-hp-text {
-      font-family: 'Bangers', cursive;
-      font-size: 19px;
+    .card-pts-val {
+      font-size: 17px;
       font-weight: 900;
-      color: #dc2626; /* MERAH HP POKÉMON ASLI */
-      letter-spacing: 0.8px;
-      line-height: 1;
-      text-shadow: 0.5px 0.5px 0px rgba(0,0,0,0.2);
+      color: #0f172a;
+      letter-spacing: -0.5px;
     }
-    .pkmn-hp-text span { font-size: 11px; margin-right: 2px; }
+    .card-pts-unit {
+      font-size: 9.5px;
+      font-weight: 800;
+      color: #1e293b;
+      margin-left: 2px;
+    }
 
-    /* ORB ELEMEN ENERGI */
-    .pkmn-energy-orb {
+    /* 3D ENERGY ORB */
+    .energy-orb {
       width: 22px;
       height: 22px;
       border-radius: 50%;
-      border: 1.5px solid #000;
+      border: 1.5px solid #ffffff;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.35);
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 12px;
-      box-shadow: 1px 1px 0px #000, inset 0 2px 4px rgba(255,255,255,0.7);
-    }
-    .orb-psychic   { background: radial-gradient(circle at 35% 35%, #e9d5ff, #9333ea); }
-    .orb-water     { background: radial-gradient(circle at 35% 35%, #bae6fd, #0284c7); }
-    .orb-fire      { background: radial-gradient(circle at 35% 35%, #fed7aa, #ea580c); }
-    .orb-grass     { background: radial-gradient(circle at 35% 35%, #bbf7d0, #16a34a); }
-    .orb-lightning { background: radial-gradient(circle at 35% 35%, #fef08a, #ca8a04); }
-    .orb-dark      { background: radial-gradient(circle at 35% 35%, #cbd5e1, #334155); }
-
-    /* 2. KOTAK BORDER ILUSTRASI AVATAR (ART WINDOW PERSIS POKEMON ASLI) */
-    .pkmn-art-window {
       position: relative;
+      flex-shrink: 0;
+    }
+    .orb-water {
+      background: radial-gradient(circle at 35% 30%, #38bdf8 0%, #0284c7 60%, #0369a1 100%);
+    }
+    .orb-fire {
+      background: radial-gradient(circle at 35% 30%, #fb923c 0%, #ea580c 60%, #c2410c 100%);
+    }
+    .orb-lightning {
+      background: radial-gradient(circle at 35% 30%, #fef08a 0%, #eab308 60%, #a16207 100%);
+    }
+    .orb-psychic {
+      background: radial-gradient(circle at 35% 30%, #e879f9 0%, #a855f7 60%, #7e22ce 100%);
+    }
+    .orb-grass {
+      background: radial-gradient(circle at 35% 30%, #86efac 0%, #22c55e 60%, #15803d 100%);
+    }
+    .orb-dark {
+      background: radial-gradient(circle at 35% 30%, #94a3b8 0%, #475569 60%, #1e293b 100%);
+    }
+    .energy-orb svg {
+      width: 13px;
+      height: 13px;
+      fill: #ffffff;
+      filter: drop-shadow(0 1px 1px rgba(0,0,0,0.5));
+    }
+
+    /* ----------------------------------------------------
+       CENTER ART FRAME (BEVELED METALLIC + HOLO SCENIC BG)
+       ---------------------------------------------------- */
+    .card-art-box {
       width: 100%;
-      height: 124px;
-      border: 3.5px solid #d97706; /* BORDER EMAS BEVEL KHAS POKEMON */
+      height: 165px;
+      border: 3.5px solid #cbd5e1;
       border-radius: 6px;
-      box-shadow: 
-        inset 2px 2px 4px rgba(0, 0, 0, 0.7),
-        inset -1px -1px 3px rgba(255, 255, 255, 0.4),
-        1.5px 1.5px 0px #000000;
+      position: relative;
       overflow: hidden;
+      box-shadow: 
+        0 1px 3px rgba(255,255,255,0.9) inset,
+        0 -1px 3px rgba(0,0,0,0.4) inset,
+        0 3px 6px rgba(0,0,0,0.25);
+      z-index: 4;
       display: flex;
       align-items: center;
       justify-content: center;
-      margin: 2px 0 3px;
     }
 
-    /* POKÉMON HOLOGRAPHIC RANDOM SCENIC BACKGROUNDS */
-    .pkmn-holo-bg {
+    /* DYNAMIC GENERATED POKÉMON BACKGROUNDS (SCENIC / HOLO ART) */
+    .art-bg-water-splash {
       position: absolute;
-      inset: 0;
-      z-index: 1;
-      background-size: cover;
-      background-position: center;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: 
+        radial-gradient(circle at 50% 50%, rgba(255,255,255,0.7) 0%, transparent 40%),
+        conic-gradient(from 180deg at 50% 50%, #38bdf8, #818cf8, #c084fc, #f472b6, #fb923c, #facc15, #34d399, #38bdf8);
+      filter: brightness(1.1) saturate(1.4);
     }
-
-    /* ANIMASI SWEEPING HOLO FOIL GLITTER DI DALAM KOTAK */
-    .pkmn-art-window::after {
+    .art-bg-water-splash::after {
       content: '';
       position: absolute;
-      inset: -50%;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background-image: 
+        radial-gradient(ellipse at 50% 90%, rgba(14, 165, 233, 0.8) 0%, transparent 60%),
+        radial-gradient(circle at 20% 30%, rgba(255, 255, 255, 0.8) 0%, transparent 20%),
+        radial-gradient(circle at 80% 40%, rgba(255, 255, 255, 0.8) 0%, transparent 25%);
+    }
+
+    .art-bg-cosmic-night {
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: linear-gradient(180deg, #090d16 0%, #1e1b4b 50%, #312e81 100%);
+    }
+    .art-bg-cosmic-night::after {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background-image: 
+        radial-gradient(circle at 30% 20%, #f472b6 0%, transparent 35%),
+        radial-gradient(circle at 75% 30%, #38bdf8 0%, transparent 30%),
+        radial-gradient(circle at 50% 80%, #fbbf24 0%, transparent 40%);
+      mix-blend-mode: screen;
+      opacity: 0.85;
+    }
+
+    .art-bg-fire-aurora {
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: radial-gradient(circle at 50% 40%, #ffedd5 0%, #f97316 45%, #991b1b 100%);
+    }
+    .art-bg-lightning-storm {
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: radial-gradient(circle at 50% 50%, #fef08a 0%, #ca8a04 50%, #1e1b4b 100%);
+    }
+    .art-bg-psychic-void {
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: radial-gradient(circle at 50% 40%, #fbcfe8 0%, #a855f7 50%, #4c1d95 100%);
+    }
+    .art-bg-emerald-glade {
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: radial-gradient(circle at 50% 50%, #dcfce7 0%, #22c55e 50%, #064e3b 100%);
+    }
+
+    /* Holographic Foil Overlay over Art */
+    .art-holo-overlay {
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
       background: linear-gradient(
-        115deg,
-        transparent 35%,
-        rgba(255, 255, 255, 0.35) 45%,
-        rgba(255, 220, 100, 0.6) 50%,
-        rgba(255, 255, 255, 0.35) 55%,
-        transparent 65%
+        135deg,
+        rgba(255,255,255,0.4) 0%,
+        rgba(255,255,255,0) 40%,
+        rgba(255,255,255,0.3) 60%,
+        rgba(255,255,255,0) 100%
       );
-      opacity: 0.55;
+      mix-blend-mode: overlay;
       pointer-events: none;
       z-index: 3;
-      transform: rotate(25deg);
-      animation: pokeHoloGlitter 3.8s infinite linear;
-    }
-    @keyframes pokeHoloGlitter {
-      0% { transform: translateY(-100%) rotate(25deg); }
-      100% { transform: translateY(100%) rotate(25deg); }
     }
 
-    /* RANDOM POKÉMON SCENIC THEMES */
-    /* 1. Mewtwo Cosmos Space Galaxy */
-    .bg-cosmos-galaxy {
-      background: 
-        radial-gradient(circle at 25% 30%, #ffffff 0%, rgba(56, 189, 248, 0.8) 2px, transparent 6px),
-        radial-gradient(circle at 75% 25%, #ffffff 0%, rgba(236, 72, 153, 0.8) 2px, transparent 6px),
-        radial-gradient(circle at 45% 75%, #ffffff 0%, rgba(250, 204, 21, 0.8) 2px, transparent 6px),
-        radial-gradient(circle at 50% 50%, rgba(147, 51, 234, 0.7) 0%, rgba(30, 27, 75, 0.95) 75%),
-        linear-gradient(135deg, #09031c 0%, #1e1035 100%);
-    }
-    /* 2. Charizard Volcano Inferno Flame */
-    .bg-volcano-flame {
-      background: 
-        radial-gradient(circle at 30% 25%, #fef08a 0%, #f97316 3px, transparent 8px),
-        radial-gradient(circle at 80% 40%, #fef08a 0%, #ef4444 3px, transparent 8px),
-        radial-gradient(circle at 50% 35%, rgba(254, 240, 138, 0.8) 0%, rgba(239, 68, 68, 0.7) 35%, rgba(127, 29, 29, 0.95) 80%),
-        linear-gradient(135deg, #450a0a 0%, #7f1d1d 100%);
-    }
-    /* 3. Blastoise Hydro Ocean Swirl */
-    .bg-ocean-hydro {
-      background: 
-        radial-gradient(circle at 25% 35%, #ffffff 0%, rgba(56, 189, 248, 0.8) 3px, transparent 8px),
-        radial-gradient(circle at 75% 65%, #ffffff 0%, rgba(6, 182, 212, 0.8) 2px, transparent 6px),
-        radial-gradient(circle at 50% 45%, rgba(186, 230, 253, 0.85) 0%, rgba(2, 132, 199, 0.7) 40%, rgba(3, 105, 161, 0.95) 80%),
-        linear-gradient(135deg, #082f49 0%, #0369a1 100%);
-    }
-    /* 4. Venusaur Sunburst Forest */
-    .bg-forest-solar {
-      background: 
-        radial-gradient(circle at 30% 20%, #fef08a 0%, #84cc16 3px, transparent 8px),
-        radial-gradient(circle at 70% 35%, #ffffff 0%, #22c55e 2px, transparent 6px),
-        radial-gradient(circle at 50% 40%, rgba(254, 240, 138, 0.7) 0%, rgba(34, 197, 94, 0.7) 40%, rgba(20, 83, 45, 0.95) 80%),
-        linear-gradient(135deg, #052e16 0%, #166534 100%);
-    }
-    /* 5. Pikachu Spark Lightning Storm */
-    .bg-electric-storm {
-      background: 
-        radial-gradient(circle at 40% 30%, #ffffff 0%, #fde047 3px, transparent 8px),
-        radial-gradient(circle at 80% 25%, #ffffff 0%, #eab308 2px, transparent 6px),
-        radial-gradient(circle at 50% 40%, rgba(254, 240, 138, 0.9) 0%, rgba(234, 179, 8, 0.7) 35%, rgba(113, 63, 18, 0.95) 80%),
-        linear-gradient(135deg, #422006 0%, #854d0e 100%);
-    }
-    /* 6. Umbreon Midnight City Lanterns */
-    .bg-night-lanterns {
-      background: 
-        radial-gradient(circle at 20% 35%, rgba(254, 240, 138, 0.9) 0%, rgba(245, 158, 11, 0.4) 4px, transparent 10px),
-        radial-gradient(circle at 80% 30%, rgba(254, 240, 138, 0.9) 0%, rgba(245, 158, 11, 0.4) 4px, transparent 10px),
-        radial-gradient(circle at 50% 20%, rgba(255, 255, 255, 1) 0%, rgba(236, 72, 153, 0.6) 30%, rgba(88, 28, 135, 0.95) 75%),
-        linear-gradient(135deg, #17072b 0%, #3b0764 100%);
-    }
-    /* 7. Rayquaza Emerald Stratosphere */
-    .bg-dragon-aurora {
-      background: 
-        radial-gradient(circle at 35% 25%, #ffffff 0%, #34d399 3px, transparent 8px),
-        radial-gradient(circle at 75% 35%, #ffffff 0%, #06b6d4 2px, transparent 6px),
-        radial-gradient(ellipse at 50% 30%, rgba(52, 211, 153, 0.8) 0%, rgba(13, 148, 136, 0.6) 45%, rgba(4, 47, 46, 0.95) 85%),
-        linear-gradient(135deg, #022c22 0%, #115e59 100%);
-    }
-    /* 8. Gengar Shadow Ghost Void */
-    .bg-shadow-void {
-      background: 
-        radial-gradient(circle at 25% 30%, #f472b6 0%, #9333ea 3px, transparent 8px),
-        radial-gradient(circle at 75% 25%, #c084fc 0%, #7e22ce 2px, transparent 6px),
-        radial-gradient(circle at 50% 40%, rgba(236, 72, 153, 0.7) 0%, rgba(107, 33, 168, 0.75) 45%, rgba(24, 9, 39, 0.95) 85%),
-        linear-gradient(135deg, #120324 0%, #3b0764 100%);
-    }
-
-    /* AVATAR PEMAIN DI DALAM ART WINDOW */
-    .pkmn-avatar-img {
+    /* 3D AVATAR SPRITE / IMAGE */
+    .art-avatar-img {
       position: relative;
       z-index: 2;
-      width: 92px;
-      height: 92px;
-      border-radius: 50%;
-      border: 3px solid #ffffff;
-      box-shadow: 
-        0 0 0 2px #000000,
-        0 6px 14px rgba(0, 0, 0, 0.75);
-      object-fit: cover;
-      background: #ffffff;
+      height: 145px;
+      max-width: 100%;
+      object-fit: contain;
+      filter: drop-shadow(0 8px 12px rgba(0, 0, 0, 0.65));
       transition: transform 0.2s ease;
     }
-    .pkmn-card:hover .pkmn-avatar-img {
-      transform: scale(1.08);
+    .poke-modern-card:hover .art-avatar-img {
+      transform: scale(1.05);
     }
 
-    /* 3. MID GOLD BANNER (STRIP POKÉDEX PERSIS POKEMON ASLI) */
-    .pkmn-mid-banner {
-      background: linear-gradient(180deg, #fef08a 0%, #eab308 50%, #ca8a04 100%);
-      border: 1.5px solid #000000;
-      border-radius: 5px;
-      box-shadow: 1px 1px 0px #000;
-      padding: 2px 6px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      font-size: 9px;
-      font-weight: 900;
-      color: #000000;
-      font-style: italic;
+    /* ----------------------------------------------------
+       SUB-ART METALLIC CAPSULE RIBBON (#001 • Stream Hero)
+       ---------------------------------------------------- */
+    .art-ribbon-bar {
+      position: relative;
+      z-index: 5;
+      margin-top: -6px;
+      margin-bottom: 6px;
+      align-self: center;
+      background: linear-gradient(180deg, #f8fafc 0%, #e2e8f0 50%, #94a3b8 100%);
+      border: 1px solid #64748b;
+      border-radius: 99px;
+      padding: 1px 16px;
+      font-size: 8.5px;
+      font-weight: 800;
+      color: #0f172a;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.25);
+      letter-spacing: 0.4px;
+      text-transform: uppercase;
     }
-    .pkmn-mid-banner span { letter-spacing: 0.3px; }
 
-    /* 4. POINT & ATTACK MOVE BOX DI BAWAH (POINT DI BAWAH PERSIS SERANGAN POKEMON) */
-    .pkmn-attack-box {
-      background: rgba(255, 255, 255, 0.75);
-      border: 1.5px solid #000000;
-      border-radius: 8px;
-      box-shadow: 1.5px 1.5px 0px #000;
-      padding: 6px 8px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-top: 2px;
-    }
-    .pab-left {
+    /* ----------------------------------------------------
+       ACTION / ATTACK SECTION (+3 POIN / DESCRIPTION)
+       ---------------------------------------------------- */
+    .card-attack-area {
+      position: relative;
+      z-index: 5;
+      padding: 4px 6px 6px;
       display: flex;
       flex-direction: column;
-      align-items: flex-start;
-      gap: 1px;
+      gap: 3px;
     }
-    .pab-move-row {
+
+    .attack-row-main {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+    }
+
+    .attack-bold-title {
+      font-size: 24px;
+      font-weight: 900;
+      color: #034f84;
+      letter-spacing: -0.5px;
+      line-height: 1;
+    }
+
+    .attack-damage-col {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      line-height: 1.05;
+    }
+    .damage-big-val {
+      font-size: 19px;
+      font-weight: 900;
+      color: #0f172a;
+    }
+    .damage-or-val {
+      font-size: 8.5px;
+      font-weight: 700;
+      color: #475569;
+      text-transform: lowercase;
+    }
+
+    .attack-desc-text {
+      font-size: 10.5px;
+      font-weight: 700;
+      color: #0f172a;
+      line-height: 1.25;
+      margin-top: 1px;
+    }
+
+    /* ----------------------------------------------------
+       BOTTOM TOTAL CAPSULE BOX & FLAVOR TEXT
+       ---------------------------------------------------- */
+    .card-total-box {
+      margin-top: auto;
+      background: rgba(255, 255, 255, 0.75);
+      border: 1px solid rgba(14, 165, 233, 0.5);
+      border-radius: 6px;
+      padding: 3px 6px;
       display: flex;
       align-items: center;
-      gap: 5px;
+      justify-content: center;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+      position: relative;
+      z-index: 5;
     }
-    .pab-energy-cost {
-      font-size: 11px;
-    }
-    .pab-move-name {
-      font-family: 'Bangers', cursive;
-      font-size: 15px;
-      letter-spacing: 0.8px;
-      color: #000000;
-    }
-    .pab-desc {
-      font-size: 8.5px;
-      color: #334155;
-      font-weight: 700;
-      line-height: 1.1;
-      max-width: 140px;
-    }
-
-    /* POIN UTAMA DI SEBELAH KANAN */
-    .pab-damage-score {
-      font-family: 'Bangers', cursive;
-      font-size: 26px;
+    .total-title-text {
+      font-size: 13.5px;
       font-weight: 900;
-      color: #dc2626; /* MERAH TEBAL DAMAGE POKÉMON */
-      letter-spacing: 1px;
-      line-height: 1;
-      text-shadow: 0.5px 0.5px 0px #000;
+      color: #0f172a;
+      letter-spacing: 0.2px;
     }
 
-    /* 5. FOOTER RESISTANCE & COPYRIGHT (PERSIS POKÉMON ASLI) */
-    .pkmn-footer {
+    .card-flavor-text {
+      font-size: 8px;
+      font-style: italic;
+      color: #334155;
+      text-align: center;
+      line-height: 1.2;
+      margin-top: 3px;
+      margin-bottom: 2px;
+      position: relative;
+      z-index: 5;
+      padding: 0 4px;
+    }
+
+    /* ----------------------------------------------------
+       CARD FOOTER (ILLUS, SET CODE, COPYRIGHT)
+       ---------------------------------------------------- */
+    .card-footer {
+      position: relative;
+      z-index: 5;
+      border-top: 1px solid rgba(0, 0, 0, 0.15);
+      padding-top: 2px;
+      display: flex;
+      flex-direction: column;
+      gap: 1px;
+    }
+    .footer-row-top {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      font-size: 8px;
-      font-weight: 800;
-      color: #1e293b;
-      padding: 2px 2px 0;
-      border-top: 1px solid rgba(0, 0, 0, 0.2);
-      margin-top: auto;
+      font-size: 7.5px;
+      font-weight: 700;
+      color: #334155;
     }
-    .pf-stat { display: flex; align-items: center; gap: 2px; }
-    .pf-illus { font-style: italic; opacity: 0.85; }
+    .footer-symbol {
+      display: inline-flex;
+      align-items: center;
+      gap: 3px;
+    }
+    .badge-regulation {
+      border: 1px solid #334155;
+      padding: 0 2px;
+      border-radius: 2px;
+      font-weight: 900;
+      font-size: 6.5px;
+    }
+    .badge-setcode {
+      background: #0f172a;
+      color: #fff;
+      padding: 0 3px;
+      border-radius: 2px;
+      font-size: 6.5px;
+      font-weight: 900;
+    }
+    .footer-copyright {
+      font-size: 6.5px;
+      color: #64748b;
+      text-align: center;
+      font-weight: 600;
+    }
 
-    /* JUARA 1 SPECIAL SHINE (MAHKOTA 👑 MELAYANG) */
-    .pkmn-card.is-champion {
-      box-shadow: 
-        0 0 35px rgba(250, 204, 21, 0.9),
-        0 10px 25px rgba(0, 0, 0, 0.85),
-        4px 4px 0px #000;
-      border: 3.5px solid #000;
+    /* ========================================================
+       GRID SECTION: 8 KURSI SESUAI LIVE SCOREBOARD
+       ======================================================== */
+    .grid-section {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
     }
-    .champion-crown-tag {
-      position: absolute;
-      top: -18px;
-      right: 12px;
-      font-size: 28px;
-      filter: drop-shadow(2px 2px 0px #000);
-      animation: crownBob 1.5s infinite alternate ease-in-out;
-      z-index: 15;
+
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+      width: 100%;
     }
-    @keyframes crownBob {
-      0% { transform: translateY(0) rotate(-4deg); }
-      100% { transform: translateY(-4px) rotate(4deg); }
+
+    @media (max-width: 1100px) {
+      .cards-grid { grid-template-columns: repeat(2, 1fr); }
     }
+    @media (max-width: 600px) {
+      .cards-grid { grid-template-columns: 1fr; }
+    }
+
+    /* COMPACT CARD VERSION FOR STREAM / GRID */
+    .poke-modern-card.compact {
+      width: 100%;
+      height: 380px;
+      padding: 7px;
+    }
+    .poke-modern-card.compact .card-art-box {
+      height: 135px;
+    }
+    .poke-modern-card.compact .art-avatar-img {
+      height: 120px;
+    }
+    .poke-modern-card.compact .attack-bold-title {
+      font-size: 20px;
+    }
+    .poke-modern-card.compact .card-player-name {
+      font-size: 16px;
+    }
+    .poke-modern-card.compact .card-pts-val {
+      font-size: 15px;
+    }
+
   </style>
 </head>
 <body>
 
-  <div class="preview-wrapper">
-
+  <div class="container">
+    
     <!-- HEADER -->
-    <div class="poke-banner">
-      <div class="pb-title">
-        <span>⚡</span> KARTU BANGKU STYLE POKÉMON ASLI <span>🔥</span>
+    <div class="header-banner">
+      <div class="hb-title">
+        <div class="hb-icon"></div>
+        <div class="hb-text">
+          <h1>Modern Pokémon Card Style</h1>
+          <p>Format Kartu Modern Scarlet & Violet (Exact 1:1 Bobohu Reference Style)</p>
+        </div>
       </div>
-      <div class="pb-badge">
-        1999 CLASSIC TCG EDITION
+      <div class="hb-actions">
+        <a href="index.html?view=tabel" class="hb-btn secondary">Kembali ke Live Score</a>
+        <button class="hb-btn" onclick="randomizeAllArt()">Acak Background Kartu</button>
       </div>
     </div>
 
-    <!-- GRID 8 KARTU POKÉMON DENGAN BACKGROUND RANDOM -->
-    <div class="pokemon-grid">
+    <!-- 1. SPOTLIGHT EXACT REPLICA (BOBOHU) -->
+    <div class="section-title">Spotlight: Exact Bobohu 1:1 Replica (Referensi User)</div>
+    
+    <div class="spotlight-area">
       
-      <!-- KARTU 1: BOBOHU (JUARA 1 - TIPE PSYCHIC / MEWTWO COSMOS) -->
-      <div class="pkmn-card is-champion">
-        <div class="champion-crown-tag">👑</div>
-        <div class="pkmn-inner type-psychic">
+      <!-- KARTU BOBOHU -->
+      <div class="poke-modern-card">
+        <div class="card-body theme-water-card">
           
-          <!-- TOP: NAMA DI ATAS -->
-          <div class="pkmn-top-bar">
-            <div class="pkmn-name-col">
-              <span class="pkmn-stage-label">Kursi #1 • Galatama Gamer</span>
-              <div class="pkmn-player-name">Bobohu</div>
+          <!-- TOP HEADER -->
+          <div class="card-header">
+            <div class="stage-group">
+              <div class="stage-pill">STAGE 1</div>
+              <div class="stage-coin">#1</div>
             </div>
-            <div class="pkmn-hp-col">
-              <div class="pkmn-hp-text"><span>PTS</span>30</div>
-              <div class="pkmn-energy-orb orb-psychic">👁️</div>
-            </div>
-          </div>
-
-          <!-- KOTAK BORDER AVATAR DENGAN BACKGROUND KOSMOS MEWTWO -->
-          <div class="pkmn-art-window">
-            <div class="pkmn-holo-bg bg-cosmos-galaxy"></div>
-            <img src="https://tr.rbxcdn.com/30DAY-AvatarHeadshot-1723528A6B0A80C0D49C96726EB948A2-Png/150/150/AvatarHeadshot/Webp/noFilter" class="pkmn-avatar-img" alt="Avatar Bobohu" onerror="this.src='https://ui-avatars.com/api/?name=Bobohu&background=fde047&color=000&bold=true';">
-          </div>
-
-          <!-- MID STRIP -->
-          <div class="pkmn-mid-banner">
-            <span>Juara 1 • Leaderboard Room</span>
-            <span>LV. 53 #150</span>
-          </div>
-
-          <!-- BOTTOM: POINT DI BAWAH (PERSIS DAMAGE SERANGAN POKÉMON) -->
-          <div class="pkmn-attack-box">
-            <div class="pab-left">
-              <div class="pab-move-row">
-                <span class="pab-energy-cost">👁️ ⭐</span>
-                <span class="pab-move-name">PSYCHIC STRIKE</span>
+            <div class="card-player-name">Bobohu</div>
+            <div class="card-pts-group">
+              <span class="card-pts-val">63</span>
+              <span class="card-pts-unit">PTS</span>
+              <div class="energy-orb orb-water">
+                <svg viewBox="0 0 24 24"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/></svg>
               </div>
-              <div class="pab-desc">Menambah 30 poin turnamen live stream.</div>
             </div>
-            <div class="pab-damage-score">30</div>
+          </div>
+
+          <!-- CENTER ART BOX WITH WATER SPLASH HOLO BACKGROUND -->
+          <div class="card-art-box">
+            <div class="art-bg-water-splash" id="art-spotlight"></div>
+            <div class="art-holo-overlay"></div>
+            <img class="art-avatar-img" 
+                 src="https://tr.rbxcdn.com/30DAY-Avatar-310966282D3529E36976BF6B07B1DC90-Png/352/352/Avatar/Png/noFilter" 
+                 alt="Bobohu Avatar"
+                 onerror="this.src='roblox_3d_cache/9109958726/avatar_2d_official.png'">
+          </div>
+
+          <!-- METALLIC CAPSULE RIBBON -->
+          <div class="art-ribbon-bar">#001 • Stream Hero • 2026</div>
+
+          <!-- ATTACK / ACTION AREA -->
+          <div class="card-attack-area">
+            <div class="attack-row-main">
+              <div class="attack-bold-title">+3 POIN</div>
+              <div class="attack-damage-col">
+                <span class="damage-big-val">30</span>
+                <span class="damage-or-val">or 60</span>
+              </div>
+            </div>
+            <div class="attack-desc-text">Tambahkan poin bonus dalam permainan</div>
+          </div>
+
+          <!-- BOTTOM TOTAL PILL BOX -->
+          <div class="card-total-box">
+            <span class="total-title-text">Total : 63 Poin</span>
+          </div>
+
+          <!-- FLAVOR TEXT -->
+          <div class="card-flavor-text">
+            Bobo humum puntak Pokémon yang diik memilzilin palian dalam mermainan yanya Pokémon.
           </div>
 
           <!-- FOOTER -->
-          <div class="pkmn-footer">
-            <span class="pf-stat">weakness 🎣</span>
-            <span class="pf-illus">Illus. Galatama Live</span>
-            <span>1/102 ★</span>
+          <div class="card-footer">
+            <div class="footer-row-top">
+              <span>Illus. bobo hu</span>
+              <span class="footer-symbol">
+                <span class="badge-regulation">G</span>
+                <span class="badge-setcode">SV4a</span>
+                <span>047/190 ★</span>
+              </span>
+            </div>
+            <div class="footer-copyright">©2024 Pokémon/Nintendo/Creatures/GAME FREAK.</div>
           </div>
 
         </div>
       </div>
 
-      <!-- KARTU 2: ZENIX (TIPE WATER / BLASTOISE HYDRO) -->
-      <div class="pkmn-card">
-        <div class="pkmn-inner type-water">
-          
-          <div class="pkmn-top-bar">
-            <div class="pkmn-name-col">
-              <span class="pkmn-stage-label">Kursi #2 • Galatama Gamer</span>
-              <div class="pkmn-player-name">Zenix_Pro</div>
+    </div>
+
+    <!-- 2. GRID 8 KURSI LIVE STREAMING -->
+    <div class="section-title">Preview 8 Kartu Bangku Peserta (Randomized Elemental Holo Art)</div>
+
+    <div class="cards-grid">
+      
+      <!-- KURSI 1: Bobohu (Water) -->
+      <div class="poke-modern-card compact">
+        <div class="card-body theme-water-card">
+          <div class="card-header">
+            <div class="stage-group">
+              <div class="stage-pill">STAGE 1</div>
+              <div class="stage-coin">#1</div>
             </div>
-            <div class="pkmn-hp-col">
-              <div class="pkmn-hp-text"><span>PTS</span>24</div>
-              <div class="pkmn-energy-orb orb-water">💧</div>
-            </div>
-          </div>
-
-          <!-- KOTAK BORDER AVATAR DENGAN BACKGROUND HYDRO BLASTOISE -->
-          <div class="pkmn-art-window">
-            <div class="pkmn-holo-bg bg-ocean-hydro"></div>
-            <img src="https://ui-avatars.com/api/?name=Zenix&background=0284c7&color=fff&bold=true&size=150" class="pkmn-avatar-img" alt="Avatar Zenix">
-          </div>
-
-          <div class="pkmn-mid-banner">
-            <span>Runner Up • Hydro Surfer</span>
-            <span>LV. 48 #009</span>
-          </div>
-
-          <div class="pkmn-attack-box">
-            <div class="pab-left">
-              <div class="pab-move-row">
-                <span class="pab-energy-cost">💧 💧</span>
-                <span class="pab-move-name">HYDRO PUMP</span>
+            <div class="card-player-name">Bobohu</div>
+            <div class="card-pts-group">
+              <span class="card-pts-val">63</span>
+              <span class="card-pts-unit">PTS</span>
+              <div class="energy-orb orb-water">
+                <svg viewBox="0 0 24 24"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/></svg>
               </div>
-              <div class="pab-desc">Semprotan air poin deras ke papan skor.</div>
             </div>
-            <div class="pab-damage-score">24</div>
           </div>
-
-          <div class="pkmn-footer">
-            <span class="pf-stat">weakness ⚡</span>
-            <span class="pf-illus">Illus. Galatama Live</span>
-            <span>2/102 ★</span>
+          <div class="card-art-box">
+            <div class="art-bg-water-splash"></div>
+            <div class="art-holo-overlay"></div>
+            <img class="art-avatar-img" src="https://tr.rbxcdn.com/30DAY-Avatar-310966282D3529E36976BF6B07B1DC90-Png/352/352/Avatar/Png/noFilter" alt="Avatar" onerror="this.src='roblox_3d_cache/9109958726/avatar_2d_official.png'">
           </div>
-
+          <div class="art-ribbon-bar">#001 • Bangku 1 • Hero</div>
+          <div class="card-attack-area">
+            <div class="attack-row-main">
+              <div class="attack-bold-title">+3 POIN</div>
+              <div class="attack-damage-col"><span class="damage-big-val">30</span></div>
+            </div>
+            <div class="attack-desc-text">Tambahkan poin bonus dalam permainan</div>
+          </div>
+          <div class="card-total-box"><span class="total-title-text">Total : 63 Poin</span></div>
+          <div class="card-flavor-text">Pemenang babak awal dengan akurasi lemparan sempurna.</div>
+          <div class="card-footer">
+            <div class="footer-row-top"><span>Illus. bobohu</span><span>G [SV4a] 001/010 ★</span></div>
+            <div class="footer-copyright">©2026 Pokémon/Galatama</div>
+          </div>
         </div>
       </div>
 
-      <!-- KARTU 3: SHADOW RIDER (TIPE FIRE / CHARIZARD VOLCANO) -->
-      <div class="pkmn-card">
-        <div class="pkmn-inner type-fire">
-          
-          <div class="pkmn-top-bar">
-            <div class="pkmn-name-col">
-              <span class="pkmn-stage-label">Kursi #3 • Galatama Gamer</span>
-              <div class="pkmn-player-name">ShadowRider</div>
+      <!-- KURSI 2: Umbreon Night / Rian (Darkness) -->
+      <div class="poke-modern-card compact">
+        <div class="card-body theme-dark-card">
+          <div class="card-header">
+            <div class="stage-group">
+              <div class="stage-pill">STAGE 1</div>
+              <div class="stage-coin">#2</div>
             </div>
-            <div class="pkmn-hp-col">
-              <div class="pkmn-hp-text"><span>PTS</span>18</div>
-              <div class="pkmn-energy-orb orb-fire">🔥</div>
-            </div>
-          </div>
-
-          <!-- KOTAK BORDER AVATAR DENGAN BACKGROUND VOLCANO CHARIZARD -->
-          <div class="pkmn-art-window">
-            <div class="pkmn-holo-bg bg-volcano-flame"></div>
-            <img src="https://ui-avatars.com/api/?name=Rider&background=c2410c&color=fff&bold=true&size=150" class="pkmn-avatar-img" alt="Avatar Rider">
-          </div>
-
-          <div class="pkmn-mid-banner">
-            <span>Rank 3 • Fire Breaker</span>
-            <span>LV. 42 #006</span>
-          </div>
-
-          <div class="pkmn-attack-box">
-            <div class="pab-left">
-              <div class="pab-move-row">
-                <span class="pab-energy-cost">🔥 🔥</span>
-                <span class="pab-move-name">FIRE SPIN</span>
+            <div class="card-player-name">Rian_99</div>
+            <div class="card-pts-group">
+              <span class="card-pts-val">58</span>
+              <span class="card-pts-unit">PTS</span>
+              <div class="energy-orb orb-dark">
+                <svg viewBox="0 0 24 24"><path d="M12 3a9 9 0 1 0 9 9c0-.46-.04-.92-.1-1.36a5.389 5.389 0 0 1-4.4 2.26 5.403 5.403 0 0 1-3.14-9.8c-.44-.06-.9-.1-1.36-.1z"/></svg>
               </div>
-              <div class="pab-desc">Bara api menyala mengejar poin teratas.</div>
             </div>
-            <div class="pab-damage-score">18</div>
           </div>
-
-          <div class="pkmn-footer">
-            <span class="pf-stat">weakness 💧</span>
-            <span class="pf-illus">Illus. Galatama Live</span>
-            <span>3/102 ★</span>
+          <div class="card-art-box">
+            <div class="art-bg-cosmic-night"></div>
+            <div class="art-holo-overlay"></div>
+            <img class="art-avatar-img" src="https://tr.rbxcdn.com/30DAY-Avatar-635A2AA0A87D473B6136800B5B86F761-Png/352/352/Avatar/Png/noFilter" alt="Avatar" onerror="this.src='roblox_3d_cache/9109958726/avatar_2d_official.png'">
           </div>
-
+          <div class="art-ribbon-bar">#002 • Bangku 2 • Night</div>
+          <div class="card-attack-area">
+            <div class="attack-row-main">
+              <div class="attack-bold-title" style="color: #1e1b4b;">+5 POIN</div>
+              <div class="attack-damage-col"><span class="damage-big-val">50</span></div>
+            </div>
+            <div class="attack-desc-text">Serangan bayangan malam dengan ketepatan tinggi</div>
+          </div>
+          <div class="card-total-box"><span class="total-title-text">Total : 58 Poin</span></div>
+          <div class="card-flavor-text">Menatap lentera festival malam sambil mengumpulkan poin.</div>
+          <div class="card-footer">
+            <div class="footer-row-top"><span>Illus. rian99</span><span>G [SV4a] 002/010 ★</span></div>
+            <div class="footer-copyright">©2026 Pokémon/Galatama</div>
+          </div>
         </div>
       </div>
 
-      <!-- KARTU 4: PIKACHU LIGHTNING (TIPE ELECTRIC / STORM) -->
-      <div class="pkmn-card">
-        <div class="pkmn-inner type-lightning">
-          
-          <div class="pkmn-top-bar">
-            <div class="pkmn-name-col">
-              <span class="pkmn-stage-label">Kursi #4 • Galatama Gamer</span>
-              <div class="pkmn-player-name">VoltMaster</div>
+      <!-- KURSI 3: Fajar Blaze (Fire) -->
+      <div class="poke-modern-card compact">
+        <div class="card-body theme-fire-card">
+          <div class="card-header">
+            <div class="stage-group">
+              <div class="stage-pill">STAGE 1</div>
+              <div class="stage-coin">#3</div>
             </div>
-            <div class="pkmn-hp-col">
-              <div class="pkmn-hp-text"><span>PTS</span>12</div>
-              <div class="pkmn-energy-orb orb-lightning">⚡</div>
-            </div>
-          </div>
-
-          <!-- KOTAK BORDER AVATAR DENGAN BACKGROUND LIGHTNING STORM -->
-          <div class="pkmn-art-window">
-            <div class="pkmn-holo-bg bg-electric-storm"></div>
-            <img src="https://ui-avatars.com/api/?name=Volt&background=eab308&color=000&bold=true&size=150" class="pkmn-avatar-img" alt="Avatar Volt">
-          </div>
-
-          <div class="pkmn-mid-banner">
-            <span>Electric Mouse • Thunder Rod</span>
-            <span>LV. 36 #025</span>
-          </div>
-
-          <div class="pkmn-attack-box">
-            <div class="pab-left">
-              <div class="pab-move-row">
-                <span class="pab-energy-cost">⚡ ⚡</span>
-                <span class="pab-move-name">THUNDER JOLT</span>
+            <div class="card-player-name">Fajar_Pro</div>
+            <div class="card-pts-group">
+              <span class="card-pts-val">52</span>
+              <span class="card-pts-unit">PTS</span>
+              <div class="energy-orb orb-fire">
+                <svg viewBox="0 0 24 24"><path d="M12 2c1.1 2.5 3 4.5 3 7.5 0 2.2-1.8 4-4 4s-4-1.8-4-4c0-3 1.9-5 3-7.5zm-5 11c0 3.9 3.1 7 7 7s7-3.1 7-7c0-2.4-1.2-4.5-3-5.7.1.9-.1 1.9-.7 2.7-1.1 1.4-3.1 1.7-4.5.6-.4-.3-.7-.7-.9-1.1-1.3 1.3-2.1 3-2.1 4.5z"/></svg>
               </div>
-              <div class="pab-desc">Sengatan listrik kilat berkecepatan tinggi.</div>
             </div>
-            <div class="pab-damage-score">12</div>
           </div>
-
-          <div class="pkmn-footer">
-            <span class="pf-stat">weakness 🥊</span>
-            <span class="pf-illus">Illus. Galatama Live</span>
-            <span>4/102 ★</span>
+          <div class="card-art-box">
+            <div class="art-bg-fire-aurora"></div>
+            <div class="art-holo-overlay"></div>
+            <img class="art-avatar-img" src="https://tr.rbxcdn.com/30DAY-Avatar-BF68F8B33B8FD75DC022244CA714186E-Png/352/352/Avatar/Png/noFilter" alt="Avatar" onerror="this.src='roblox_3d_cache/9109958726/avatar_2d_official.png'">
           </div>
-
+          <div class="art-ribbon-bar">#003 • Bangku 3 • Blaze</div>
+          <div class="card-attack-area">
+            <div class="attack-row-main">
+              <div class="attack-bold-title" style="color: #991b1b;">+2 POIN</div>
+              <div class="attack-damage-col"><span class="damage-big-val">20</span></div>
+            </div>
+            <div class="attack-desc-text">Kobaran api penentu yang memanaskan suasana arena</div>
+          </div>
+          <div class="card-total-box"><span class="total-title-text">Total : 52 Poin</span></div>
+          <div class="card-flavor-text">Semangat membara tiada henti memimpin di podium 3.</div>
+          <div class="card-footer">
+            <div class="footer-row-top"><span>Illus. fajar</span><span>G [SV4a] 003/010 ★</span></div>
+            <div class="footer-copyright">©2026 Pokémon/Galatama</div>
+          </div>
         </div>
       </div>
 
-      <!-- KARTU 5: GRASS VENUSAUR (TIPE GRASS / SOLAR FOREST) -->
-      <div class="pkmn-card">
-        <div class="pkmn-inner type-grass">
-          
-          <div class="pkmn-top-bar">
-            <div class="pkmn-name-col">
-              <span class="pkmn-stage-label">Kursi #5 • Galatama Gamer</span>
-              <div class="pkmn-player-name">(Kosong)</div>
+      <!-- KURSI 4: Dika Spark (Lightning) -->
+      <div class="poke-modern-card compact">
+        <div class="card-body theme-lightning-card">
+          <div class="card-header">
+            <div class="stage-group">
+              <div class="stage-pill">BASIC</div>
+              <div class="stage-coin">#4</div>
             </div>
-            <div class="pkmn-hp-col">
-              <div class="pkmn-hp-text" style="color:#15803d;"><span>PTS</span>0</div>
-              <div class="pkmn-energy-orb orb-grass">🍃</div>
-            </div>
-          </div>
-
-          <!-- KOTAK BORDER AVATAR DENGAN BACKGROUND SOLAR FOREST -->
-          <div class="pkmn-art-window">
-            <div class="pkmn-holo-bg bg-forest-solar"></div>
-            <div class="pkmn-avatar-img" style="display:flex; align-items:center; justify-content:center; color:#64748b; font-size:32px; font-weight:900;">-</div>
-          </div>
-
-          <div class="pkmn-mid-banner">
-            <span>Seed Pokémon • Standby Mode</span>
-            <span>LV. 20 #003</span>
-          </div>
-
-          <div class="pkmn-attack-box">
-            <div class="pab-left">
-              <div class="pab-move-row">
-                <span class="pab-energy-cost">🍃</span>
-                <span class="pab-move-name">SOLAR BEAM</span>
+            <div class="card-player-name">Dika_Gamer</div>
+            <div class="card-pts-group">
+              <span class="card-pts-val">46</span>
+              <span class="card-pts-unit">PTS</span>
+              <div class="energy-orb orb-lightning">
+                <svg viewBox="0 0 24 24"><path d="M7 2v11h3v9l7-12h-4l4-8z"/></svg>
               </div>
-              <div class="pab-desc">Menunggu pemain untuk melancarkan serangan.</div>
             </div>
-            <div class="pab-damage-score" style="color:#64748b;">0</div>
           </div>
-
-          <div class="pkmn-footer">
-            <span class="pf-stat">weakness 🔥</span>
-            <span class="pf-illus">Illus. Galatama Live</span>
-            <span>5/102 ★</span>
+          <div class="card-art-box">
+            <div class="art-bg-lightning-storm"></div>
+            <div class="art-holo-overlay"></div>
+            <img class="art-avatar-img" src="https://tr.rbxcdn.com/30DAY-Avatar-9E3393506FDB057F11F3293F54CBBCBE-Png/352/352/Avatar/Png/noFilter" alt="Avatar" onerror="this.src='roblox_3d_cache/9109958726/avatar_2d_official.png'">
           </div>
-
+          <div class="art-ribbon-bar">#004 • Bangku 4 • Thunder</div>
+          <div class="card-attack-area">
+            <div class="attack-row-main">
+              <div class="attack-bold-title" style="color: #854d0e;">+4 POIN</div>
+              <div class="attack-damage-col"><span class="damage-big-val">40</span></div>
+            </div>
+            <div class="attack-desc-text">Kilatan petir instan saat gift meluncur cepat</div>
+          </div>
+          <div class="card-total-box"><span class="total-title-text">Total : 46 Poin</span></div>
+          <div class="card-flavor-text">Kecepatan refleks tinggi menyambar poin demi poin.</div>
+          <div class="card-footer">
+            <div class="footer-row-top"><span>Illus. dika</span><span>G [SV4a] 004/010 ★</span></div>
+            <div class="footer-copyright">©2026 Pokémon/Galatama</div>
+          </div>
         </div>
       </div>
 
-      <!-- KARTU 6: UMBREON NIGHT (TIPE DARK / LANTERNS) -->
-      <div class="pkmn-card">
-        <div class="pkmn-inner type-dark">
-          
-          <div class="pkmn-top-bar">
-            <div class="pkmn-name-col">
-              <span class="pkmn-stage-label">Kursi #6 • Galatama Gamer</span>
-              <div class="pkmn-player-name">(Kosong)</div>
+      <!-- KURSI 5: Maya Psychic (Psychic) -->
+      <div class="poke-modern-card compact">
+        <div class="card-body theme-psychic-card">
+          <div class="card-header">
+            <div class="stage-group">
+              <div class="stage-pill">BASIC</div>
+              <div class="stage-coin">#5</div>
             </div>
-            <div class="pkmn-hp-col">
-              <div class="pkmn-hp-text" style="color:#1e293b;"><span>PTS</span>0</div>
-              <div class="pkmn-energy-orb orb-dark">🌙</div>
-            </div>
-          </div>
-
-          <!-- KOTAK BORDER AVATAR DENGAN BACKGROUND NIGHT LANTERNS -->
-          <div class="pkmn-art-window">
-            <div class="pkmn-holo-bg bg-night-lanterns"></div>
-            <div class="pkmn-avatar-img" style="display:flex; align-items:center; justify-content:center; color:#64748b; font-size:32px; font-weight:900;">-</div>
-          </div>
-
-          <div class="pkmn-mid-banner">
-            <span>Moonlight Pokémon • Standby</span>
-            <span>LV. 25 #197</span>
-          </div>
-
-          <div class="pkmn-attack-box">
-            <div class="pab-left">
-              <div class="pab-move-row">
-                <span class="pab-energy-cost">🌙</span>
-                <span class="pab-move-name">SHADOW CLAW</span>
+            <div class="card-player-name">Maya_Star</div>
+            <div class="card-pts-group">
+              <span class="card-pts-val">41</span>
+              <span class="card-pts-unit">PTS</span>
+              <div class="energy-orb orb-psychic">
+                <svg viewBox="0 0 24 24"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg>
               </div>
-              <div class="pab-desc">Menunggu pemain untuk melancarkan serangan.</div>
             </div>
-            <div class="pab-damage-score" style="color:#64748b;">0</div>
           </div>
-
-          <div class="pkmn-footer">
-            <span class="pf-stat">weakness 🥊</span>
-            <span class="pf-illus">Illus. Galatama Live</span>
-            <span>6/102 ★</span>
+          <div class="card-art-box">
+            <div class="art-bg-psychic-void"></div>
+            <div class="art-holo-overlay"></div>
+            <img class="art-avatar-img" src="https://tr.rbxcdn.com/30DAY-Avatar-F38461E7C697FF2C6322D7EFD16E1C0D-Png/352/352/Avatar/Png/noFilter" alt="Avatar" onerror="this.src='roblox_3d_cache/9109958726/avatar_2d_official.png'">
           </div>
-
+          <div class="art-ribbon-bar">#005 • Bangku 5 • Mystic</div>
+          <div class="card-attack-area">
+            <div class="attack-row-main">
+              <div class="attack-bold-title" style="color: #6b21a8;">+3 POIN</div>
+              <div class="attack-damage-col"><span class="damage-big-val">30</span></div>
+            </div>
+            <div class="attack-desc-text">Konsentrasi mistis memanggil kemenangan tak terduga</div>
+          </div>
+          <div class="card-total-box"><span class="total-title-text">Total : 41 Poin</span></div>
+          <div class="card-flavor-text">Membaca gerakan lawan sebelum ronde dimulai.</div>
+          <div class="card-footer">
+            <div class="footer-row-top"><span>Illus. maya</span><span>G [SV4a] 005/010 ★</span></div>
+            <div class="footer-copyright">©2026 Pokémon/Galatama</div>
+          </div>
         </div>
       </div>
 
-      <!-- KARTU 7: GENGAR SHADOW VOID (TIPE GHOST / VOID) -->
-      <div class="pkmn-card">
-        <div class="pkmn-inner type-psychic">
-          
-          <div class="pkmn-top-bar">
-            <div class="pkmn-name-col">
-              <span class="pkmn-stage-label">Kursi #7 • Galatama Gamer</span>
-              <div class="pkmn-player-name">(Kosong)</div>
+      <!-- KURSI 6: Budi Leaf (Grass) -->
+      <div class="poke-modern-card compact">
+        <div class="card-body theme-grass-card">
+          <div class="card-header">
+            <div class="stage-group">
+              <div class="stage-pill">BASIC</div>
+              <div class="stage-coin">#6</div>
             </div>
-            <div class="pkmn-hp-col">
-              <div class="pkmn-hp-text"><span>PTS</span>0</div>
-              <div class="pkmn-energy-orb orb-psychic">👁️</div>
-            </div>
-          </div>
-
-          <!-- KOTAK BORDER AVATAR DENGAN BACKGROUND SHADOW VOID -->
-          <div class="pkmn-art-window">
-            <div class="pkmn-holo-bg bg-shadow-void"></div>
-            <div class="pkmn-avatar-img" style="display:flex; align-items:center; justify-content:center; color:#64748b; font-size:32px; font-weight:900;">-</div>
-          </div>
-
-          <div class="pkmn-mid-banner">
-            <span>Shadow Pokémon • Standby</span>
-            <span>LV. 28 #094</span>
-          </div>
-
-          <div class="pkmn-attack-box">
-            <div class="pab-left">
-              <div class="pab-move-row">
-                <span class="pab-energy-cost">👁️</span>
-                <span class="pab-move-name">NIGHT SHADE</span>
+            <div class="card-player-name">Budi_Kuat</div>
+            <div class="card-pts-group">
+              <span class="card-pts-val">37</span>
+              <span class="card-pts-unit">PTS</span>
+              <div class="energy-orb orb-grass">
+                <svg viewBox="0 0 24 24"><path d="M17 8C8 10 5.9 16.17 3.82 21.34l1.89.66.95-2.3c.48.17.98.3 1.34.3C19 20 22 3 22 3c-1 2-8 2.25-13 3.25S2 11.5 2 13.5s1.75 3.75 1.75 3.75C7 8 17 8 17 8z"/></svg>
               </div>
-              <div class="pab-desc">Menunggu pemain untuk melancarkan serangan.</div>
             </div>
-            <div class="pab-damage-score" style="color:#64748b;">0</div>
           </div>
-
-          <div class="pkmn-footer">
-            <span class="pf-stat">weakness 🌙</span>
-            <span class="pf-illus">Illus. Galatama Live</span>
-            <span>7/102 ★</span>
+          <div class="card-art-box">
+            <div class="art-bg-emerald-glade"></div>
+            <div class="art-holo-overlay"></div>
+            <img class="art-avatar-img" src="https://tr.rbxcdn.com/30DAY-Avatar-AE2C9493AD0F456539BC5FD410303757-Png/352/352/Avatar/Png/noFilter" alt="Avatar" onerror="this.src='roblox_3d_cache/9109958726/avatar_2d_official.png'">
           </div>
-
+          <div class="art-ribbon-bar">#006 • Bangku 6 • Nature</div>
+          <div class="card-attack-area">
+            <div class="attack-row-main">
+              <div class="attack-bold-title" style="color: #166534;">+2 POIN</div>
+              <div class="attack-damage-col"><span class="damage-big-val">20</span></div>
+            </div>
+            <div class="attack-desc-text">Pemulihan daya tahan dengan akumulasi poin konsisten</div>
+          </div>
+          <div class="card-total-box"><span class="total-title-text">Total : 37 Poin</span></div>
+          <div class="card-flavor-text">Kuat dan kokoh bagai akar pohon di tengah persaingan.</div>
+          <div class="card-footer">
+            <div class="footer-row-top"><span>Illus. budi</span><span>G [SV4a] 006/010 ★</span></div>
+            <div class="footer-copyright">©2026 Pokémon/Galatama</div>
+          </div>
         </div>
       </div>
 
-      <!-- KARTU 8: RAYQUAZA DRAGON AURORA -->
-      <div class="pkmn-card">
-        <div class="pkmn-inner type-grass">
-          
-          <div class="pkmn-top-bar">
-            <div class="pkmn-name-col">
-              <span class="pkmn-stage-label">Kursi #8 • Galatama Gamer</span>
-              <div class="pkmn-player-name">(Kosong)</div>
+      <!-- KURSI 7: Kevin Hydro (Water) -->
+      <div class="poke-modern-card compact">
+        <div class="card-body theme-water-card">
+          <div class="card-header">
+            <div class="stage-group">
+              <div class="stage-pill">BASIC</div>
+              <div class="stage-coin">#7</div>
             </div>
-            <div class="pkmn-hp-col">
-              <div class="pkmn-hp-text" style="color:#15803d;"><span>PTS</span>0</div>
-              <div class="pkmn-energy-orb orb-grass">🍃</div>
-            </div>
-          </div>
-
-          <!-- KOTAK BORDER AVATAR DENGAN BACKGROUND DRAGON AURORA -->
-          <div class="pkmn-art-window">
-            <div class="pkmn-holo-bg bg-dragon-aurora"></div>
-            <div class="pkmn-avatar-img" style="display:flex; align-items:center; justify-content:center; color:#64748b; font-size:32px; font-weight:900;">-</div>
-          </div>
-
-          <div class="pkmn-mid-banner">
-            <span>Sky High Pokémon • Standby</span>
-            <span>LV. 30 #384</span>
-          </div>
-
-          <div class="pkmn-attack-box">
-            <div class="pab-left">
-              <div class="pab-move-row">
-                <span class="pab-energy-cost">🍃 ⚡</span>
-                <span class="pab-move-name">EXTREME SPEED</span>
+            <div class="card-player-name">Kevin_999</div>
+            <div class="card-pts-group">
+              <span class="card-pts-val">30</span>
+              <span class="card-pts-unit">PTS</span>
+              <div class="energy-orb orb-water">
+                <svg viewBox="0 0 24 24"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/></svg>
               </div>
-              <div class="pab-desc">Menunggu pemain untuk melancarkan serangan.</div>
             </div>
-            <div class="pab-damage-score" style="color:#64748b;">0</div>
           </div>
-
-          <div class="pkmn-footer">
-            <span class="pf-stat">weakness ❄️</span>
-            <span class="pf-illus">Illus. Galatama Live</span>
-            <span>8/102 ★</span>
+          <div class="card-art-box">
+            <div class="art-bg-water-splash"></div>
+            <div class="art-holo-overlay"></div>
+            <img class="art-avatar-img" src="https://tr.rbxcdn.com/30DAY-Avatar-CC5A14D30E092A267E98BBE01B93324F-Png/352/352/Avatar/Png/noFilter" alt="Avatar" onerror="this.src='roblox_3d_cache/9109958726/avatar_2d_official.png'">
           </div>
+          <div class="art-ribbon-bar">#007 • Bangku 7 • Torrent</div>
+          <div class="card-attack-area">
+            <div class="attack-row-main">
+              <div class="attack-bold-title">+1 POIN</div>
+              <div class="attack-damage-col"><span class="damage-big-val">10</span></div>
+            </div>
+            <div class="attack-desc-text">Arus pasang yang siap menyalip poin lawan di detik akhir</div>
+          </div>
+          <div class="card-total-box"><span class="total-title-text">Total : 30 Poin</span></div>
+          <div class="card-flavor-text">Gelombang pasang yang tenang namun menyimpan kejutan.</div>
+          <div class="card-footer">
+            <div class="footer-row-top"><span>Illus. kevin</span><span>G [SV4a] 007/010 ★</span></div>
+            <div class="footer-copyright">©2026 Pokémon/Galatama</div>
+          </div>
+        </div>
+      </div>
 
+      <!-- KURSI 8: Rizky Night (Dark) -->
+      <div class="poke-modern-card compact">
+        <div class="card-body theme-dark-card">
+          <div class="card-header">
+            <div class="stage-group">
+              <div class="stage-pill">BASIC</div>
+              <div class="stage-coin">#8</div>
+            </div>
+            <div class="card-player-name">Rizky_Master</div>
+            <div class="card-pts-group">
+              <span class="card-pts-val">24</span>
+              <span class="card-pts-unit">PTS</span>
+              <div class="energy-orb orb-dark">
+                <svg viewBox="0 0 24 24"><path d="M12 3a9 9 0 1 0 9 9c0-.46-.04-.92-.1-1.36a5.389 5.389 0 0 1-4.4 2.26 5.403 5.403 0 0 1-3.14-9.8c-.44-.06-.9-.1-1.36-.1z"/></svg>
+              </div>
+            </div>
+          </div>
+          <div class="card-art-box">
+            <div class="art-bg-cosmic-night"></div>
+            <div class="art-holo-overlay"></div>
+            <img class="art-avatar-img" src="https://tr.rbxcdn.com/30DAY-Avatar-635A2AA0A87D473B6136800B5B86F761-Png/352/352/Avatar/Png/noFilter" alt="Avatar" onerror="this.src='roblox_3d_cache/9109958726/avatar_2d_official.png'">
+          </div>
+          <div class="art-ribbon-bar">#008 • Bangku 8 • Shadow</div>
+          <div class="card-attack-area">
+            <div class="attack-row-main">
+              <div class="attack-bold-title" style="color: #1e1b4b;">+1 POIN</div>
+              <div class="attack-damage-col"><span class="damage-big-val">10</span></div>
+            </div>
+            <div class="attack-desc-text">Langkah senyap membangun poin untuk bangkit kembali</div>
+          </div>
+          <div class="card-total-box"><span class="total-title-text">Total : 24 Poin</span></div>
+          <div class="card-flavor-text">Pantang menyerah hingga ronde terakhir selesai.</div>
+          <div class="card-footer">
+            <div class="footer-row-top"><span>Illus. rizky</span><span>G [SV4a] 008/010 ★</span></div>
+            <div class="footer-copyright">©2026 Pokémon/Galatama</div>
+          </div>
         </div>
       </div>
 
@@ -837,5 +1119,27 @@
 
   </div>
 
+  <script>
+    const backgrounds = [
+      'art-bg-water-splash',
+      'art-bg-cosmic-night',
+      'art-bg-fire-aurora',
+      'art-bg-lightning-storm',
+      'art-bg-psychic-void',
+      'art-bg-emerald-glade'
+    ];
+
+    function randomizeAllArt() {
+      const artBoxes = document.querySelectorAll('.card-art-box');
+      artBoxes.forEach(box => {
+        const bgEl = box.firstElementChild;
+        if (bgEl) {
+          backgrounds.forEach(c => bgEl.classList.remove(c));
+          const rand = backgrounds[Math.floor(Math.random() * backgrounds.length)];
+          bgEl.classList.add(rand);
+        }
+      });
+    }
+  </script>
 </body>
 </html>
