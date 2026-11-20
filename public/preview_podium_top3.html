@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="id" class="theme-comic">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Preview Podium 3 Besar - Comic Pop-Art Glowing</title>
+  <link rel="stylesheet" href="themes.css?v=20261120_compact_cards_v2">
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@600;700;800;900&family=Bangers&family=Outfit:wght@700;800;900&family=Plus+Jakarta+Sans:wght@700;800;900&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background-color: #f8fafc;
+      background-image: radial-gradient(#cbd5e1 1.5px, transparent 1.5px);
+      background-size: 16px 16px;
+      font-family: 'Fredoka', 'Plus Jakarta Sans', sans-serif;
+      color: #000;
+      padding: 16px 12px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    /* CONTAINER UTAMA */
+    .preview-stage {
+      width: 100%;
+      max-width: 980px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    /* HEADER TITEL */
+    .podium-header-banner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: #ffffff;
+      border: 3.5px solid #000000;
+      border-radius: 14px;
+      box-shadow: 4px 4px 0px #000000;
+      padding: 10px 18px;
+    }
+    .phb-title {
+      font-family: 'Bangers', cursive;
+      font-size: 26px;
+      letter-spacing: 1.5px;
+      color: #dc2626;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      text-shadow: 1px 1px 0px #fde047;
+    }
+    .phb-badge {
+      background: #fde047;
+      border: 2px solid #000;
+      border-radius: 8px;
+      box-shadow: 2px 2px 0px #000;
+      font-family: 'Bangers', cursive;
+      font-size: 14px;
+      letter-spacing: 1px;
+      padding: 3px 10px;
+    }
+
+    /* ========================================================
+       PODIUM 3 BESAR MENYALA (TOP 3 GLOWING CHAMPIONS)
+       ======================================================== */
+    .top3-podium-section {
+      display: grid;
+      grid-template-columns: 1fr 1.15fr 1fr;
+      align-items: end;
+      gap: 16px;
+      padding: 14px 10px 8px;
+      margin: 0 auto;
+      width: 100%;
+      max-width: 820px;
+    }
+
+    /* KARTU PODIUM */
+    .podium-hero-card {
+      position: relative;
+      border-radius: 20px;
+      border: 3.5px solid #000000;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 10px 10px;
+      text-align: center;
+      transition: all 0.2s ease;
+    }
+
+    /* --- JUARA 1: GOLDEN RADIANT SUN (TENGAH, TERTINGGI, MENYALA) --- */
+    .podium-hero-card.hero-rank-1 {
+      order: 2;
+      background: #fff066;
+      height: 250px;
+      box-shadow: 
+        0 0 35px rgba(250, 204, 21, 0.95),
+        0 0 15px rgba(234, 179, 8, 0.8),
+        5px 5px 0px #000000;
+      border-width: 4px;
+      z-index: 5;
+      animation: goldChampionPulse 2.2s infinite alternate ease-in-out;
+    }
+
+    @keyframes goldChampionPulse {
+      0% {
+        box-shadow: 0 0 25px rgba(250, 204, 21, 0.75), 0 0 10px rgba(234, 179, 8, 0.6), 5px 5px 0px #000000;
+        transform: translateY(-8px) scale(1.02);
+      }
+      100% {
+        box-shadow: 0 0 45px rgba(250, 204, 21, 1), 0 0 20px rgba(245, 158, 11, 0.9), 6px 6px 0px #000000;
+        transform: translateY(-12px) scale(1.04);
+      }
+    }
+
+    /* Mahkota Emas Melayang di Atas Juara 1 */
+    .crown-gold-float {
+      position: absolute;
+      top: -24px;
+      font-size: 34px;
+      filter: drop-shadow(2px 2px 0px #000) drop-shadow(0 0 10px rgba(250, 204, 21, 0.9));
+      animation: crownBounce 1.4s ease-in-out infinite alternate;
+    }
+    @keyframes crownBounce {
+      0% { transform: translateY(0) rotate(-4deg); }
+      100% { transform: translateY(-5px) rotate(4deg); }
+    }
+
+    /* --- JUARA 2: ELECTRIC SKY CYAN GLOW (KIRI) --- */
+    .podium-hero-card.hero-rank-2 {
+      order: 1;
+      background: #7dd3fc;
+      height: 220px;
+      box-shadow: 
+        0 0 25px rgba(56, 189, 248, 0.85),
+        0 0 10px rgba(14, 165, 233, 0.6),
+        4px 4px 0px #000000;
+      z-index: 3;
+      animation: cyanRunnerPulse 2.4s infinite alternate ease-in-out;
+    }
+    @keyframes cyanRunnerPulse {
+      0% { box-shadow: 0 0 18px rgba(56, 189, 248, 0.65), 4px 4px 0px #000; }
+      100% { box-shadow: 0 0 30px rgba(56, 189, 248, 0.95), 5px 5px 0px #000; }
+    }
+
+    /* --- JUARA 3: BLAZING ORANGE FLAME GLOW (KANAN) --- */
+    .podium-hero-card.hero-rank-3 {
+      order: 3;
+      background: #fdba74;
+      height: 205px;
+      box-shadow: 
+        0 0 25px rgba(249, 115, 22, 0.85),
+        0 0 10px rgba(234, 88, 12, 0.6),
+        4px 4px 0px #000000;
+      z-index: 2;
+      animation: orangeFlamePulse 2.6s infinite alternate ease-in-out;
+    }
+    @keyframes orangeFlamePulse {
+      0% { box-shadow: 0 0 16px rgba(249, 115, 22, 0.6), 4px 4px 0px #000; }
+      100% { box-shadow: 0 0 28px rgba(249, 115, 22, 0.95), 5px 5px 0px #000; }
+    }
+
+    /* BADGE RANK DI ATAS KARTU HERO */
+    .hero-rank-pill {
+      font-family: 'Bangers', cursive;
+      font-size: 13.5px;
+      letter-spacing: 1px;
+      padding: 2px 10px;
+      border-radius: 99px;
+      border: 2px solid #000000;
+      box-shadow: 2px 2px 0px #000000;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      margin-bottom: 4px;
+    }
+    .hero-rank-1 .hero-rank-pill { background: #ffffff; color: #dc2626; font-size: 15px; }
+    .hero-rank-2 .hero-rank-pill { background: #ffffff; color: #0284c7; }
+    .hero-rank-3 .hero-rank-pill { background: #ffffff; color: #c2410c; }
+
+    /* AVATAR HERO */
+    .hero-avatar-wrap {
+      border-radius: 50%;
+      border: 3px solid #000000;
+      background: #ffffff;
+      box-shadow: 2.5px 2.5px 0px #000000;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 4px auto;
+    }
+    .hero-rank-1 .hero-avatar-wrap { width: 94px; height: 94px; border-width: 3.5px; }
+    .hero-rank-2 .hero-avatar-wrap { width: 80px; height: 80px; }
+    .hero-rank-3 .hero-avatar-wrap { width: 74px; height: 74px; }
+    .hero-avatar-wrap img { width: 100%; height: 100%; object-fit: cover; }
+
+    /* NAMA HERO */
+    .hero-name {
+      font-family: 'Fredoka', sans-serif;
+      font-size: 19px;
+      font-weight: 900;
+      color: #000000;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 170px;
+      margin: 2px 0;
+    }
+    .hero-rank-1 .hero-name { font-size: 22px; max-width: 200px; }
+
+    /* SKOR HERO */
+    .hero-score-badge {
+      background: #ffffff;
+      border: 2.5px solid #000000;
+      border-radius: 10px;
+      box-shadow: 2px 2px 0px #000000;
+      padding: 3px 12px;
+      color: #dc2626;
+      font-family: 'Bangers', cursive;
+      font-size: 22px;
+      font-weight: 900;
+      letter-spacing: 1px;
+    }
+    .hero-rank-1 .hero-score-badge {
+      font-size: 25px;
+      background: #ffffff;
+      border-width: 3px;
+    }
+
+    /* KETIKAN KURSI ASAL DI BAWAH KARTU */
+    .hero-seat-origin {
+      font-size: 11px;
+      font-weight: 900;
+      background: rgba(0, 0, 0, 0.08);
+      border-radius: 4px;
+      padding: 1px 6px;
+      margin-top: 4px;
+    }
+
+    /* ========================================================
+       DIVIDER BANNER KE SISA GRID
+       ======================================================== */
+    .grid-divider-banner {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 6px;
+    }
+    .gdb-line {
+      flex: 1;
+      height: 3px;
+      background: #000000;
+      border-radius: 2px;
+    }
+    .gdb-text {
+      font-family: 'Bangers', cursive;
+      font-size: 16px;
+      letter-spacing: 1.2px;
+      background: #ffffff;
+      border: 2px solid #000000;
+      border-radius: 8px;
+      box-shadow: 2px 2px 0px #000000;
+      padding: 3px 14px;
+      color: #000000;
+    }
+
+    /* ========================================================
+       GRID SISA KARTU (KURSI 4 - 12) - COMPACT RAPAT
+       ======================================================== */
+    .demo-grid-compact {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 6px;
+      width: 100%;
+    }
+    .demo-card {
+      border: 2.5px solid #000000;
+      border-radius: 14px;
+      box-shadow: 2.5px 2.5px 0px #000000;
+      padding: 6px 4px 6px;
+      min-height: 175px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+      position: relative;
+    }
+    .demo-card .d-no {
+      position: absolute;
+      top: 5px;
+      left: 5px;
+      background: #ffffff;
+      border: 2px solid #000000;
+      border-radius: 5px;
+      font-family: 'Fredoka', cursive;
+      font-weight: 900;
+      font-size: 13px;
+      padding: 0 5px;
+    }
+    .demo-card .d-av {
+      width: 76px;
+      height: 76px;
+      border-radius: 50%;
+      border: 2.5px solid #000000;
+      background: #ffffff;
+      margin: 8px auto 2px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 26px;
+      font-weight: 900;
+      color: #94a3b8;
+    }
+    .demo-card .d-name {
+      font-size: 14.5px;
+      font-weight: 900;
+      color: #000000;
+      font-style: italic;
+    }
+    .demo-card .d-score {
+      background: #ffffff;
+      border: 2px solid #000000;
+      border-radius: 7px;
+      color: #dc2626;
+      font-family: 'Bangers', cursive;
+      font-size: 18px;
+      padding: 1px 12px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="preview-stage">
+    
+    <!-- HEADER -->
+    <div class="podium-header-banner">
+      <div class="phb-title">
+        <span>👑</span> PODIUM TOP 3 BESAR <span>💥</span>
+      </div>
+      <div class="phb-badge">
+        🔥 GLOWING POP-ART SPECIAL EDITION
+      </div>
+    </div>
+
+    <!-- PODIUM 3 BESAR MENYALA -->
+    <div class="top3-podium-section">
+      
+      <!-- JUARA 2 (KIRI) -->
+      <div class="podium-hero-card hero-rank-2">
+        <span class="hero-rank-pill">🥈 RANK #2</span>
+        <div class="hero-avatar-wrap">
+          <img src="https://ui-avatars.com/api/?name=Zenix&background=7dd3fc&color=000&bold=true&size=150" alt="Avatar Juara 2">
+        </div>
+        <div class="hero-name">Zenix_Pro</div>
+        <div class="hero-score-badge">24 POIN</div>
+        <div class="hero-seat-origin">Kursi #2</div>
+      </div>
+
+      <!-- JUARA 1 (TENGAH - ELEVATED GOLDEN GLOW) -->
+      <div class="podium-hero-card hero-rank-1">
+        <div class="crown-gold-float">👑</div>
+        <span class="hero-rank-pill">🏆 JUARA 1</span>
+        <div class="hero-avatar-wrap">
+          <img src="https://tr.rbxcdn.com/30DAY-AvatarHeadshot-1723528A6B0A80C0D49C96726EB948A2-Png/150/150/AvatarHeadshot/Webp/noFilter" alt="Avatar Juara 1" onerror="this.src='https://ui-avatars.com/api/?name=Bobohu&background=fff066&color=000&bold=true';">
+        </div>
+        <div class="hero-name">Bobohu</div>
+        <div class="hero-score-badge">30 POIN</div>
+        <div class="hero-seat-origin">Kursi #1</div>
+      </div>
+
+      <!-- JUARA 3 (KANAN) -->
+      <div class="podium-hero-card hero-rank-3">
+        <span class="hero-rank-pill">🥉 RANK #3</span>
+        <div class="hero-avatar-wrap">
+          <img src="https://ui-avatars.com/api/?name=Rider&background=fdba74&color=000&bold=true&size=150" alt="Avatar Juara 3">
+        </div>
+        <div class="hero-name">ShadowRider</div>
+        <div class="hero-score-badge">18 POIN</div>
+        <div class="hero-seat-origin">Kursi #4</div>
+      </div>
+
+    </div>
+
+    <!-- DIVIDER -->
+    <div class="grid-divider-banner">
+      <div class="gdb-line"></div>
+      <div class="gdb-text">⚡ KARTU KURSI LAINNYA (COMPACT GRID) ⚡</div>
+      <div class="gdb-line"></div>
+    </div>
+
+    <!-- GRID KURSI SISA (COMPACT RAPAT 6px) -->
+    <div class="demo-grid-compact">
+      
+      <!-- Kursi 3 -->
+      <div class="demo-card" style="background:#fed7aa;">
+        <span class="d-no">3</span>
+        <div class="d-av">-</div>
+        <div class="d-name">(Kosong)</div>
+        <div class="d-score">0</div>
+      </div>
+
+      <!-- Kursi 5 -->
+      <div class="demo-card" style="background:#e9d5ff;">
+        <span class="d-no">5</span>
+        <div class="d-av">-</div>
+        <div class="d-name">(Kosong)</div>
+        <div class="d-score">0</div>
+      </div>
+
+      <!-- Kursi 6 -->
+      <div class="demo-card" style="background:#a5f3fc;">
+        <span class="d-no">6</span>
+        <div class="d-av">-</div>
+        <div class="d-name">(Kosong)</div>
+        <div class="d-score">0</div>
+      </div>
+
+      <!-- Kursi 7 -->
+      <div class="demo-card" style="background:#fbcfe8;">
+        <span class="d-no">7</span>
+        <div class="d-av">-</div>
+        <div class="d-name">(Kosong)</div>
+        <div class="d-score">0</div>
+      </div>
+
+      <!-- Kursi 8 -->
+      <div class="demo-card" style="background:#fde68a;">
+        <span class="d-no">8</span>
+        <div class="d-av">-</div>
+        <div class="d-name">(Kosong)</div>
+        <div class="d-score">0</div>
+      </div>
+
+      <!-- Kursi 9 -->
+      <div class="demo-card" style="background:#fecaca;">
+        <span class="d-no">9</span>
+        <div class="d-av">-</div>
+        <div class="d-name">(Kosong)</div>
+        <div class="d-score">0</div>
+      </div>
+
+      <!-- Kursi 10 -->
+      <div class="demo-card" style="background:#99f6e4;">
+        <span class="d-no">10</span>
+        <div class="d-av">-</div>
+        <div class="d-name">(Kosong)</div>
+        <div class="d-score">0</div>
+      </div>
+
+      <!-- Kursi 11 -->
+      <div class="demo-card" style="background:#c7d2fe;">
+        <span class="d-no">11</span>
+        <div class="d-av">-</div>
+        <div class="d-name">(Kosong)</div>
+        <div class="d-score">0</div>
+      </div>
+
+    </div>
+
+  </div>
+
+</body>
+</html>
