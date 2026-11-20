@@ -7532,53 +7532,127 @@ html:not(.mode-admin) .dtb-digits {
 
 
 /* ==============================================================================
-   COMIC POP-ART TRADING CARDS (TEMA AWAL SESUAI FOTO RESMI USER)
+   COMIC POP-ART TRADING CARDS (SOLID COLOR TIAP NOMOR KURSI)
    ============================================================================== */
 html.theme-comic .grid-tables tbody tr[id^="row-kursi-"] {
-  background: #ffffff !important;
+  background: #bae6fd !important; /* Default cheerful sky blue */
   border-radius: 16px !important;
-  border: 2.5px solid var(--card-border-comic, #000000) !important;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.12), 2px 2px 0px rgba(0, 0, 0, 0.15) !important;
+  border: 3px solid #000000 !important;
+  box-shadow: 3.5px 3.5px 0px #000000, 0 6px 14px rgba(0, 0, 0, 0.14) !important;
   min-height: 236px !important;
   padding: 8px 8px 8px !important;
   overflow: hidden !important;
+  transition: transform 0.16s ease, box-shadow 0.16s ease !important;
 }
 
-/* Warna border tiap nomor kursi persis sesuai foto user */
-html.theme-comic #bodyLeft tr[id^="row-kursi-"]:nth-child(8n+1) { --card-border-comic: #000000; }
-html.theme-comic #bodyLeft tr[id^="row-kursi-"]:nth-child(8n+2) { --card-border-comic: #38bdf8; }
-html.theme-comic #bodyLeft tr[id^="row-kursi-"]:nth-child(8n+3) { --card-border-comic: #f97316; }
-html.theme-comic #bodyLeft tr[id^="row-kursi-"]:nth-child(8n+4) { --card-border-comic: #eab308; }
-html.theme-comic #bodyLeft tr[id^="row-kursi-"]:nth-child(8n+5) { --card-border-comic: #a855f7; }
-html.theme-comic #bodyLeft tr[id^="row-kursi-"]:nth-child(8n+6) { --card-border-comic: #06b6d4; }
-html.theme-comic #bodyLeft tr[id^="row-kursi-"]:nth-child(8n+7) { --card-border-comic: #3b82f6; }
-html.theme-comic #bodyLeft tr[id^="row-kursi-"]:nth-child(8n+8) { --card-border-comic: #f59e0b; }
+html.theme-comic .grid-tables tbody tr[id^="row-kursi-"]:hover {
+  transform: translateY(-3px) scale(1.02) !important;
+  box-shadow: 5px 5px 0px #000000, 0 12px 22px rgba(0, 0, 0, 0.2) !important;
+}
 
-html.theme-comic #bodyRight tr[id^="row-kursi-"]:nth-child(8n+1) { --card-border-comic: #14b8a6; }
-html.theme-comic #bodyRight tr[id^="row-kursi-"]:nth-child(8n+2) { --card-border-comic: #ec4899; }
-html.theme-comic #bodyRight tr[id^="row-kursi-"]:nth-child(8n+3) { --card-border-comic: #eab308; }
-html.theme-comic #bodyRight tr[id^="row-kursi-"]:nth-child(8n+4) { --card-border-comic: #84cc16; }
-html.theme-comic #bodyRight tr[id^="row-kursi-"]:nth-child(8n+5) { --card-border-comic: #22c55e; }
-html.theme-comic #bodyRight tr[id^="row-kursi-"]:nth-child(8n+6) { --card-border-comic: #9333ea; }
-html.theme-comic #bodyRight tr[id^="row-kursi-"]:nth-child(8n+7) { --card-border-comic: #f43f5e; }
-html.theme-comic #bodyRight tr[id^="row-kursi-"]:nth-child(8n+8) { --card-border-comic: #06b6d4; }
-
-/* Kursi 1 / Peringkat 1 (Babohu): Latar Belakang Kuning Cerah Comic */
-html.theme-comic .grid-tables tbody tr[id^="row-kursi-"].rank-1-row,
-html.theme-comic .grid-tables tbody tr#row-kursi-0 {
+/* PALET SOLID COLOR TIAP NOMOR KURSI (COMIC POP-ART CHEERFUL) */
+/* Kursi 1: Kuning Lemon Pop (Leader) */
+html.theme-comic .grid-tables tbody tr#row-kursi-0,
+html.theme-comic .grid-tables tbody tr[id^="row-kursi-"].rank-1-row {
   background: #fff066 !important;
-  border: 3px solid #000000 !important;
-  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.2), 3px 3px 0px #000000 !important;
+}
+/* Kursi 2: Biru Langit Segar (Sky Blue) */
+html.theme-comic .grid-tables tbody tr#row-kursi-1 {
+  background: #bae6fd !important;
+}
+/* Kursi 3: Oranye Segar (Fresh Peach Orange) */
+html.theme-comic .grid-tables tbody tr#row-kursi-2 {
+  background: #fed7aa !important;
+}
+/* Kursi 4: Hijau Mint / Lime (Bright Mint Lime) */
+html.theme-comic .grid-tables tbody tr#row-kursi-3 {
+  background: #bbf7d0 !important;
+}
+/* Kursi 5: Ungu Lavender (Sweet Lavender) */
+html.theme-comic .grid-tables tbody tr#row-kursi-4 {
+  background: #e9d5ff !important;
+}
+/* Kursi 6: Aqua / Cyan Bahari (Cyan Turquoise) */
+html.theme-comic .grid-tables tbody tr#row-kursi-5 {
+  background: #a5f3fc !important;
+}
+/* Kursi 7: Pink Bubblegum (Coral Pink) */
+html.theme-comic .grid-tables tbody tr#row-kursi-6 {
+  background: #fbcfe8 !important;
+}
+/* Kursi 8: Amber Emas Madu (Warm Amber) */
+html.theme-comic .grid-tables tbody tr#row-kursi-7 {
+  background: #fde68a !important;
+}
+/* Kursi 9: Coral Red Lembut (Pastel Coral) */
+html.theme-comic .grid-tables tbody tr#row-kursi-8 {
+  background: #fecaca !important;
+}
+/* Kursi 10: Hijau Emerald Tosca (Seafoam Emerald) */
+html.theme-comic .grid-tables tbody tr#row-kursi-9 {
+  background: #99f6e4 !important;
+}
+/* Kursi 11: Electric Periwinkle / Lilac Blue */
+html.theme-comic .grid-tables tbody tr#row-kursi-10 {
+  background: #c7d2fe !important;
+}
+/* Kursi 12: Cantaloupe Apricot Pop */
+html.theme-comic .grid-tables tbody tr#row-kursi-11 {
+  background: #fed7aa !important;
+}
+/* Kursi 13: Neon Lime Pop */
+html.theme-comic .grid-tables tbody tr#row-kursi-12 {
+  background: #d9f99d !important;
+}
+/* Kursi 14: Rose Blush Pop */
+html.theme-comic .grid-tables tbody tr#row-kursi-13 {
+  background: #fecdd3 !important;
+}
+/* Kursi 15: Soft Glacier Blue */
+html.theme-comic .grid-tables tbody tr#row-kursi-14 {
+  background: #cffafe !important;
+}
+/* Kursi 16: Pastel Orchid Lilac */
+html.theme-comic .grid-tables tbody tr#row-kursi-15 {
+  background: #fae8ff !important;
+}
+/* Kursi 17: Butter Banana Yellow */
+html.theme-comic .grid-tables tbody tr#row-kursi-16 {
+  background: #fef08a !important;
+}
+/* Kursi 18: Fresh Matcha Green */
+html.theme-comic .grid-tables tbody tr#row-kursi-17 {
+  background: #d1fae5 !important;
+}
+/* Kursi 19: Sunset Tangerine */
+html.theme-comic .grid-tables tbody tr#row-kursi-18 {
+  background: #fed7aa !important;
+}
+/* Kursi 20 (HOST): Pastel Gold VIP */
+html.theme-comic .grid-tables tbody tr#row-kursi-19,
+html.theme-comic .grid-tables tbody tr[id^="row-kursi-"].host-row {
+  background: #fef3c7 !important;
+  border: 3px dashed #f43f5e !important;
 }
 
-/* Kursi 20 (HOST): Dashed Border Pink/Red */
-html.theme-comic .grid-tables tbody tr[id^="row-kursi-"].host-row,
-html.theme-comic .grid-tables tbody tr#row-kursi-19 {
-  background: #fffdf5 !important;
-  border: 2.5px dashed #f43f5e !important;
-  border-radius: 16px !important;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1) !important;
-}
+/* Fallback Urutan nth-child */
+html.theme-comic #bodyLeft tr[id^="row-kursi-"]:nth-child(8n+1) { background: #fff066 !important; }
+html.theme-comic #bodyLeft tr[id^="row-kursi-"]:nth-child(8n+2) { background: #bae6fd !important; }
+html.theme-comic #bodyLeft tr[id^="row-kursi-"]:nth-child(8n+3) { background: #fed7aa !important; }
+html.theme-comic #bodyLeft tr[id^="row-kursi-"]:nth-child(8n+4) { background: #bbf7d0 !important; }
+html.theme-comic #bodyLeft tr[id^="row-kursi-"]:nth-child(8n+5) { background: #e9d5ff !important; }
+html.theme-comic #bodyLeft tr[id^="row-kursi-"]:nth-child(8n+6) { background: #a5f3fc !important; }
+html.theme-comic #bodyLeft tr[id^="row-kursi-"]:nth-child(8n+7) { background: #fbcfe8 !important; }
+html.theme-comic #bodyLeft tr[id^="row-kursi-"]:nth-child(8n+8) { background: #fde68a !important; }
+
+html.theme-comic #bodyRight tr[id^="row-kursi-"]:nth-child(8n+1) { background: #fecaca !important; }
+html.theme-comic #bodyRight tr[id^="row-kursi-"]:nth-child(8n+2) { background: #99f6e4 !important; }
+html.theme-comic #bodyRight tr[id^="row-kursi-"]:nth-child(8n+3) { background: #c7d2fe !important; }
+html.theme-comic #bodyRight tr[id^="row-kursi-"]:nth-child(8n+4) { background: #d9f99d !important; }
+html.theme-comic #bodyRight tr[id^="row-kursi-"]:nth-child(8n+5) { background: #fecdd3 !important; }
+html.theme-comic #bodyRight tr[id^="row-kursi-"]:nth-child(8n+6) { background: #cffafe !important; }
+html.theme-comic #bodyRight tr[id^="row-kursi-"]:nth-child(8n+7) { background: #fae8ff !important; }
+html.theme-comic #bodyRight tr[id^="row-kursi-"]:nth-child(8n+8) { background: #fef08a !important; }
 
 /* Tag Host Live Indicator */
 html.theme-comic .grid-tables tbody tr.host-row .pay-status-tag,
@@ -7592,7 +7666,7 @@ html.theme-comic .grid-tables tbody tr#row-kursi-19 .host-live-badge {
   padding: 1px 5px !important;
 }
 
-/* Nomor Kursi di Pojok Kiri Atas: Kotak Kuning Rounded Border Hitam */
+/* Nomor Kursi di Pojok Kiri Atas: Kotak Putih Bersih Border Hitam */
 html.theme-comic .grid-tables table tbody tr[id^="row-kursi-"] > td.td-no,
 html.theme-comic .grid-tables .td-no,
 html.theme-comic .grid-tables table tbody tr > td.td-no {
@@ -7600,14 +7674,29 @@ html.theme-comic .grid-tables table tbody tr > td.td-no {
   top: 6px !important;
   left: 6px !important;
   width: auto !important;
-  min-width: 22px !important;
-  height: 22px !important;
-  padding: 0 4px !important;
-  background: #fde047 !important;
+  min-width: 24px !important;
+  height: 24px !important;
+  padding: 0 5px !important;
+  background: #ffffff !important;
   color: #000000 !important;
   border: 2px solid #000000 !important;
-  border-radius: 5px !important;
-  box-shadow: 1px 1px 0px #000000 !important;
+  border-radius: 6px !important;
+  box-shadow: 1.5px 1.5px 0px #000000 !important;
+  font-family: 'Fredoka', 'Bangers', cursive, sans-serif !important;
+  font-size: 14px !important;
+  font-weight: 900 !important;
+  line-height: 1.1 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  text-shadow: none !important;
+  z-index: 5 !important;
+}
+
+html.theme-comic .grid-tables table tbody tr#row-kursi-0 > td.td-no,
+html.theme-comic .grid-tables table tbody tr.rank-1-row > td.td-no {
+  background: #fde047 !important;
+}
   font-family: 'Fredoka', 'Bangers', cursive, sans-serif !important;
   font-size: 13.5px !important;
   font-weight: 900 !important;
