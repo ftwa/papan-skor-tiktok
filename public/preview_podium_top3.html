@@ -3,738 +3,797 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Preview Kartu Spesial Ultra Radiant - Full Art TCG</title>
-  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@600;700;800;900&family=Bangers&family=Outfit:wght@700;800;900&family=Plus+Jakarta+Sans:wght@700;800;900&display=swap" rel="stylesheet">
+  <title>Podium 3 Besar Pokémon TCG Style (Khusus 3 Besar) + Sisa Kartu Ringkas</title>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,600;0,700;0,800;0,900;1,600;1,700&family=Fredoka:wght@600;700;800;900&family=Bangers&display=swap" rel="stylesheet">
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
     
     body {
-      background: #030712;
+      background: #080c14;
       background-image: 
-        radial-gradient(circle at 50% 20%, rgba(139, 92, 246, 0.28) 0%, transparent 60%),
-        radial-gradient(circle at 15% 50%, rgba(56, 189, 248, 0.2) 0%, transparent 50%),
-        radial-gradient(circle at 85% 50%, rgba(249, 115, 22, 0.2) 0%, transparent 50%),
-        radial-gradient(#334155 1px, transparent 1px);
-      background-size: 100% 100%, 100% 100%, 100% 100%, 24px 24px;
-      font-family: 'Fredoka', 'Plus Jakarta Sans', sans-serif;
+        radial-gradient(circle at 50% 15%, rgba(56, 189, 248, 0.18) 0%, transparent 60%),
+        radial-gradient(circle at 10% 40%, rgba(244, 114, 182, 0.12) 0%, transparent 50%),
+        radial-gradient(circle at 90% 40%, rgba(251, 146, 60, 0.12) 0%, transparent 50%),
+        radial-gradient(#1e293b 1px, transparent 1px);
+      background-size: 100% 100%, 100% 100%, 100% 100%, 22px 22px;
+      font-family: 'Plus Jakarta Sans', sans-serif;
       color: #ffffff;
-      padding: 30px 16px;
+      padding: 24px 14px;
       display: flex;
       flex-direction: column;
       align-items: center;
       min-height: 100vh;
-      overflow-x: hidden;
     }
 
-    .main-wrapper {
+    .main-container {
       width: 100%;
-      max-width: 1020px;
+      max-width: 1050px;
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 24px;
+      gap: 20px;
     }
 
-    /* ========================================================
-       STAGE SPOTLIGHTS & ARENA BACKGROUND
-       ======================================================== */
-    .arena-backdrop {
-      position: relative;
-      width: 100%;
-      border-radius: 28px;
-      padding: 30px 20px 24px;
-      background: linear-gradient(180deg, rgba(15, 23, 42, 0.75) 0%, rgba(2, 6, 23, 0.95) 100%);
-      border: 3px solid rgba(255, 255, 255, 0.15);
-      box-shadow: 
-        0 20px 60px rgba(0, 0, 0, 0.9),
-        0 0 40px rgba(168, 85, 247, 0.25) inset;
-      overflow: hidden;
+    /* HEADER BAR */
+    .top-bar {
+      background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+      border: 2px solid #38bdf8;
+      border-radius: 16px;
+      box-shadow: 0 8px 25px rgba(56, 189, 248, 0.25), 0 0 15px rgba(0,0,0,0.5);
+      padding: 12px 24px;
       display: flex;
-      flex-direction: column;
       align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      flex-wrap: wrap;
+      gap: 12px;
     }
-
-    /* Efek Sinar Lampu Sorot Panggung (Stadium Spotlights) */
-    .arena-backdrop::before {
-      content: '';
-      position: absolute;
-      top: -60px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 130%;
-      height: 380px;
-      background: 
-        conic-gradient(from 160deg at 20% 0%, rgba(56, 189, 248, 0.3) 0deg, transparent 35deg),
-        conic-gradient(from 200deg at 80% 0%, rgba(249, 115, 22, 0.3) 0deg, transparent 35deg),
-        conic-gradient(from 170deg at 50% 0%, rgba(250, 204, 21, 0.4) 0deg, transparent 30deg);
-      pointer-events: none;
-      z-index: 1;
-      opacity: 0.85;
-      animation: lightPulse 4s infinite alternate ease-in-out;
-    }
-    @keyframes lightPulse {
-      0% { opacity: 0.65; transform: translateX(-50%) scale(0.97); }
-      100% { opacity: 1; transform: translateX(-50%) scale(1.03); }
-    }
-
-    /* HEADER PANGGUNG JUARA */
-    .stage-title-capsule {
-      position: relative;
-      z-index: 5;
-      background: linear-gradient(135deg, rgba(255, 255, 255, 0.18) 0%, rgba(255, 255, 255, 0.05) 100%);
-      border: 2px solid rgba(255, 255, 255, 0.35);
-      border-radius: 99px;
-      padding: 6px 26px;
+    .tb-left {
       display: flex;
       align-items: center;
       gap: 12px;
-      backdrop-filter: blur(16px);
-      box-shadow: 0 0 25px rgba(250, 204, 21, 0.35), 0 10px 25px rgba(0,0,0,0.5);
-      margin-bottom: 20px;
     }
-    .stc-text {
-      font-family: 'Bangers', cursive;
-      font-size: 26px;
-      letter-spacing: 2.5px;
-      background: linear-gradient(135deg, #fef08a 0%, #facc15 40%, #fb923c 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      filter: drop-shadow(0 2px 8px rgba(250, 204, 21, 0.6));
-    }
-    .stc-sub {
-      background: linear-gradient(135deg, #ec4899 0%, #8b5cf6 100%);
+    .tb-badge {
+      background: linear-gradient(135deg, #ef4444 0%, #f59e0b 100%);
       color: #fff;
-      font-size: 11px;
       font-weight: 900;
+      font-size: 11px;
       padding: 3px 10px;
       border-radius: 99px;
-      border: 1px solid rgba(255, 255, 255, 0.6);
-      letter-spacing: 1px;
+      letter-spacing: 0.5px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.3);
     }
-
-    /* ========================================================
-       GRID 3 PODIUM HERO
-       ======================================================== */
-    .podium-stage-grid {
-      position: relative;
-      z-index: 5;
-      display: grid;
-      grid-template-columns: 1fr 1.25fr 1fr;
-      align-items: end;
-      gap: 22px;
-      width: 100%;
-      max-width: 920px;
-      padding: 0 10px;
-    }
-
-    /* ========================================================
-       KARTU SPESIAL DENGAN LATAR BELAKANG FULL-ART (POKEMON SAR)
-       ======================================================== */
-    .sar-card {
-      position: relative;
-      border-radius: 22px;
-      overflow: hidden;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      padding: 12px 10px 10px;
-      cursor: pointer;
-      transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.25);
-    }
-
-    /* 1. BORDER MULTI-COLOR CHROMATIC RAINBOW (MENYALA BANYAK WARNA) */
-    .sar-card::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      border-radius: 22px;
-      padding: 4px;
-      background: linear-gradient(
-        var(--rainbow-angle, 135deg),
-        #ff007f 0%,
-        #7928ca 18%,
-        #0070f3 36%,
-        #00dfd8 54%,
-        #7928ca 72%,
-        #ffbf00 90%,
-        #ff007f 100%
-      );
-      -webkit-mask: 
-        linear-gradient(#fff 0 0) content-box, 
-        linear-gradient(#fff 0 0);
-      -webkit-mask-composite: xor;
-      mask-composite: exclude;
-      pointer-events: none;
-      z-index: 10;
-      animation: rotateRainbow 6s linear infinite;
-    }
-    @keyframes rotateRainbow {
-      0% { --rainbow-angle: 0deg; filter: hue-rotate(0deg); }
-      100% { --rainbow-angle: 360deg; filter: hue-rotate(360deg); }
-    }
-
-    /* 2. SWEEPING HOLOGRAPHIC PRISMATIC LIGHT FOIL (KILAU SAPUAN CAHAYA) */
-    .sar-card::after {
-      content: '';
-      position: absolute;
-      inset: -60%;
-      background: linear-gradient(
-        115deg,
-        transparent 35%,
-        rgba(255, 255, 255, 0.35) 45%,
-        rgba(255, 220, 100, 0.65) 50%,
-        rgba(100, 220, 255, 0.65) 53%,
-        rgba(255, 255, 255, 0.35) 56%,
-        transparent 65%
-      );
-      opacity: 0.6;
-      pointer-events: none;
-      z-index: 9;
-      transform: rotate(25deg);
-      animation: holoPrismSweep 3.6s infinite linear;
-    }
-    @keyframes holoPrismSweep {
-      0% { transform: translateY(-120%) rotate(25deg); }
-      100% { transform: translateY(120%) rotate(25deg); }
-    }
-
-    /* --------------------------------------------------------
-       LATAR BELAKANG SENI FULL-ART (SCENIC BACKGROUND)
-       -------------------------------------------------------- */
-    .card-art-scene {
-      position: absolute;
-      inset: 0;
-      z-index: 2;
-      background-size: cover;
-      background-position: center;
-      transition: transform 0.4s ease;
-    }
-    .sar-card:hover .card-art-scene {
-      transform: scale(1.05);
-    }
-
-    /* --- JUARA 1: FESTIVAL KEMBANG API & BINTANG KOSMIK (SAR GOLD) --- */
-    .sar-card.rank-1 {
-      order: 2;
-      height: 335px;
-      z-index: 6;
-      transform: translateY(-20px);
-      box-shadow: 
-        0 0 50px rgba(250, 204, 21, 0.95),
-        0 0 90px rgba(234, 88, 12, 0.5),
-        0 20px 50px rgba(0, 0, 0, 0.95);
-      animation: championFloat 2.8s infinite alternate ease-in-out;
-    }
-    @keyframes championFloat {
-      0% {
-        transform: translateY(-20px) scale(1.02);
-        box-shadow: 0 0 45px rgba(250, 204, 21, 0.85), 0 0 80px rgba(234, 88, 12, 0.4), 0 20px 50px rgba(0,0,0,0.95);
-      }
-      100% {
-        transform: translateY(-28px) scale(1.05);
-        box-shadow: 0 0 65px rgba(250, 204, 21, 1), 0 0 110px rgba(236, 72, 153, 0.6), 0 25px 60px rgba(0,0,0,1);
-      }
-    }
-
-    /* Background Pemandangan Juara 1: Langit Festival Kembang Api + Lentera */
-    .rank-1 .card-art-scene {
-      background: 
-        /* Lentera Melayang */
-        radial-gradient(circle at 18% 40%, rgba(254, 240, 138, 0.9) 0%, rgba(245, 158, 11, 0.4) 6px, transparent 14px),
-        radial-gradient(circle at 82% 35%, rgba(254, 240, 138, 0.9) 0%, rgba(245, 158, 11, 0.4) 5px, transparent 12px),
-        radial-gradient(circle at 75% 55%, rgba(254, 240, 138, 0.9) 0%, rgba(245, 158, 11, 0.4) 4px, transparent 10px),
-        /* Kembang Api Spektakuler */
-        radial-gradient(circle at 50% 20%, rgba(255, 255, 255, 1) 0%, rgba(253, 224, 71, 0.8) 15%, rgba(236, 72, 153, 0.6) 35%, rgba(139, 92, 246, 0.3) 55%, transparent 75%),
-        radial-gradient(circle at 25% 15%, rgba(56, 189, 248, 0.7) 0%, transparent 40%),
-        radial-gradient(circle at 78% 18%, rgba(244, 63, 94, 0.7) 0%, transparent 40%),
-        /* Siluet Kastil Panggung di Bawah */
-        linear-gradient(180deg, transparent 65%, rgba(15, 5, 29, 0.9) 85%, #05020a 100%),
-        /* Gradasi Langit Ungu Malam Kosmik */
-        linear-gradient(160deg, #18022b 0%, #3b0764 25%, #701a75 50%, #9a3412 80%, #facc15 100%);
-    }
-
-    /* --- JUARA 2: TIRAI AURORA BOREALIS & KOTA KRISTAL (SAR CYAN) --- */
-    .sar-card.rank-2 {
-      order: 1;
-      height: 290px;
-      z-index: 4;
-      box-shadow: 
-        0 0 40px rgba(56, 189, 248, 0.85),
-        0 0 70px rgba(6, 182, 212, 0.45),
-        0 15px 35px rgba(0, 0, 0, 0.9);
-      animation: runnerFloat 3.2s infinite alternate ease-in-out;
-    }
-    @keyframes runnerFloat {
-      0% { transform: translateY(0); box-shadow: 0 0 35px rgba(56, 189, 248, 0.75); }
-      100% { transform: translateY(-8px); box-shadow: 0 0 50px rgba(56, 189, 248, 1), 0 0 80px rgba(147, 51, 234, 0.5); }
-    }
-
-    /* Background Pemandangan Juara 2: Tirai Gelombang Aurora + Bintang Es */
-    .rank-2 .card-art-scene {
-      background: 
-        /* Bintang-bintang Kristal */
-        radial-gradient(circle at 30% 25%, #ffffff 0%, rgba(56, 189, 248, 0.6) 2px, transparent 6px),
-        radial-gradient(circle at 70% 20%, #ffffff 0%, rgba(168, 85, 247, 0.6) 2px, transparent 6px),
-        radial-gradient(circle at 85% 45%, #ffffff 0%, rgba(56, 189, 248, 0.6) 2px, transparent 6px),
-        /* Gelombang Aurora Melengkung */
-        radial-gradient(ellipse at 50% 15%, rgba(45, 212, 191, 0.8) 0%, rgba(56, 189, 248, 0.6) 35%, rgba(99, 102, 241, 0.4) 65%, transparent 85%),
-        /* Siluet Kristal Bawah */
-        linear-gradient(180deg, transparent 70%, rgba(2, 6, 23, 0.92) 88%, #020617 100%),
-        /* Gradasi Langit Biru Malam */
-        linear-gradient(160deg, #021226 0%, #0c4a6e 30%, #0369a1 60%, #0284c7 85%, #67e8f9 100%);
-    }
-
-    /* --- JUARA 3: NEBULA KOSMIK & MATAHARI SENJA (SAR BRONZE FLAME) --- */
-    .sar-card.rank-3 {
-      order: 3;
-      height: 275px;
-      z-index: 3;
-      box-shadow: 
-        0 0 40px rgba(249, 115, 22, 0.85),
-        0 0 70px rgba(225, 29, 72, 0.45),
-        0 15px 35px rgba(0, 0, 0, 0.9);
-      animation: bronzeFloat 3.5s infinite alternate ease-in-out;
-    }
-    @keyframes bronzeFloat {
-      0% { transform: translateY(0); box-shadow: 0 0 35px rgba(249, 115, 22, 0.75); }
-      100% { transform: translateY(-7px); box-shadow: 0 0 50px rgba(249, 115, 22, 1), 0 0 80px rgba(234, 179, 8, 0.5); }
-    }
-
-    /* Background Pemandangan Juara 3: Nebula Sunset & Percikan Api */
-    .rank-3 .card-art-scene {
-      background: 
-        /* Percikan Api Ember */
-        radial-gradient(circle at 25% 35%, #fef08a 0%, #f97316 3px, transparent 8px),
-        radial-gradient(circle at 75% 28%, #fef08a 0%, #ef4444 2px, transparent 6px),
-        radial-gradient(circle at 40% 50%, #fef08a 0%, #f97316 2px, transparent 6px),
-        /* Semburat Nebula Sunset */
-        radial-gradient(circle at 50% 25%, rgba(254, 240, 138, 0.9) 0%, rgba(249, 115, 22, 0.7) 25%, rgba(219, 39, 119, 0.5) 50%, transparent 75%),
-        /* Siluet Bukit Magma */
-        linear-gradient(180deg, transparent 70%, rgba(24, 9, 3, 0.92) 88%, #130702 100%),
-        /* Gradasi Langit Senja Kosmik */
-        linear-gradient(160deg, #1f041d 0%, #581c87 25%, #9f1239 55%, #ea580c 80%, #fde047 100%);
-    }
-
-    /* ========================================================
-       KOMPONEN KARTU TCG EMAS & HOLOGRAPHIC
-       ======================================================== */
-    /* 1. TOP HEADER */
-    .sar-top-header {
-      position: relative;
-      z-index: 12;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      width: 100%;
-      padding: 0 4px;
-    }
-    .sar-rank-badge {
-      font-family: 'Bangers', cursive;
-      font-size: 14px;
-      letter-spacing: 1px;
-      padding: 3px 12px;
-      border-radius: 99px;
-      border: 2px solid #ffffff;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.6), 0 0 12px rgba(255, 255, 255, 0.5);
-      display: inline-flex;
-      align-items: center;
-      gap: 5px;
-    }
-    .rank-1 .sar-rank-badge {
-      background: linear-gradient(135deg, #fef08a 0%, #facc15 50%, #d97706 100%);
-      color: #000;
-      font-size: 15px;
-      box-shadow: 0 0 16px rgba(250, 204, 21, 0.9), 0 2px 4px #000;
-    }
-    .rank-2 .sar-rank-badge {
-      background: linear-gradient(135deg, #f0f9ff 0%, #7dd3fc 50%, #0284c7 100%);
-      color: #000;
-    }
-    .rank-3 .sar-rank-badge {
-      background: linear-gradient(135deg, #fff7ed 0%, #fdba74 50%, #c2410c 100%);
-      color: #000;
-    }
-
-    .sar-hp-pill {
-      font-family: 'Bangers', cursive;
-      font-size: 17px;
-      letter-spacing: 1px;
-      color: #ffffff;
-      text-shadow: 2px 2px 0px #000, 0 0 12px rgba(255, 255, 255, 0.8);
-      display: flex;
-      align-items: center;
-      gap: 4px;
-    }
-    .sar-hp-pill span { font-size: 12px; opacity: 0.9; }
-
-    /* 2. AVATAR STAGE (3D POP-OUT & GLOWING FRAME) */
-    .sar-avatar-stage {
-      position: relative;
-      margin: 4px auto;
-      z-index: 12;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    .rank-1 .sar-avatar-stage { width: 116px; height: 116px; }
-    .rank-2 .sar-avatar-stage { width: 96px; height: 96px; }
-    .rank-3 .sar-avatar-stage { width: 90px; height: 90px; }
-
-    .sar-avatar-halo {
-      width: 100%;
-      height: 100%;
-      border-radius: 50%;
-      border: 4px solid #ffffff;
-      box-shadow: 
-        0 0 0 2.5px #000000,
-        0 0 30px var(--halo-glow, rgba(255, 255, 255, 0.8)),
-        0 10px 24px rgba(0, 0, 0, 0.85);
-      background: #0f172a;
-      overflow: hidden;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    .rank-1 .sar-avatar-halo {
-      border-color: #fde047;
-      border-width: 4.5px;
-      --halo-glow: rgba(250, 204, 21, 1);
-    }
-    .rank-2 .sar-avatar-halo {
-      border-color: #38bdf8;
-      --halo-glow: rgba(56, 189, 248, 1);
-    }
-    .rank-3 .sar-avatar-halo {
-      border-color: #fb923c;
-      --halo-glow: rgba(249, 115, 22, 1);
-    }
-    .sar-avatar-halo img { width: 100%; height: 100%; object-fit: cover; }
-
-    /* MAHKOTA 3D MELAYANG DI ATAS JUARA 1 */
-    .sar-crown-gold {
-      position: absolute;
-      top: -26px;
-      font-size: 42px;
-      filter: drop-shadow(2px 2px 0px #000) drop-shadow(0 0 16px rgba(250, 204, 21, 1));
-      animation: crownSway 1.8s ease-in-out infinite alternate;
-      z-index: 15;
-    }
-    @keyframes crownSway {
-      0% { transform: translateY(0) rotate(-4deg); }
-      100% { transform: translateY(-7px) rotate(4deg); }
-    }
-
-    /* 3. NAMA PEMAIN: GLASSMORPHISM METALLIC SHINE */
-    .sar-name-capsule {
-      position: relative;
-      z-index: 12;
-      background: rgba(10, 15, 30, 0.72);
-      border: 1.5px solid rgba(255, 255, 255, 0.4);
-      border-radius: 14px;
-      backdrop-filter: blur(10px);
-      padding: 5px 12px;
-      width: 100%;
-      text-align: center;
-      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.6);
-      margin: 3px 0;
-    }
-    .sar-name-text {
-      font-family: 'Fredoka', sans-serif;
+    .tb-left h1 {
       font-size: 19px;
       font-weight: 900;
-      color: #ffffff;
-      text-shadow: 1.5px 1.5px 0px #000;
+      color: #f8fafc;
+      letter-spacing: -0.3px;
+    }
+    .tb-left p {
+      font-size: 12px;
+      color: #94a3b8;
+    }
+    .tb-actions {
+      display: flex;
+      gap: 8px;
+    }
+    .tb-btn {
+      background: #38bdf8;
+      color: #041226;
+      border: none;
+      border-radius: 8px;
+      padding: 7px 14px;
+      font-weight: 800;
+      font-size: 12px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+    .tb-btn:hover {
+      background: #7dd3fc;
+      transform: translateY(-1px);
+    }
+    .tb-btn.secondary {
+      background: #334155;
+      color: #f8fafc;
+    }
+
+    /* ========================================================
+       SECTION 1: PODIUM 3 BESAR (KARTU POKÉMON MODERN TCG)
+       ======================================================== */
+    .podium-stage-wrapper {
+      position: relative;
+      width: 100%;
+      border-radius: 24px;
+      padding: 24px 16px 20px;
+      background: linear-gradient(180deg, rgba(15, 23, 42, 0.7) 0%, rgba(2, 6, 23, 0.9) 100%);
+      border: 2px solid rgba(56, 189, 248, 0.35);
+      box-shadow: 0 16px 45px rgba(0, 0, 0, 0.8), 0 0 30px rgba(56, 189, 248, 0.15) inset;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .podium-title-ribbon {
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.15) 0%, rgba(255, 255, 255, 0.05) 100%);
+      border: 1.5px solid rgba(255, 255, 255, 0.4);
+      border-radius: 99px;
+      padding: 5px 22px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      box-shadow: 0 0 20px rgba(250, 204, 21, 0.3), 0 8px 20px rgba(0,0,0,0.5);
+      margin-bottom: 20px;
+    }
+    .ptr-title {
+      font-family: 'Bangers', cursive;
+      font-size: 22px;
+      letter-spacing: 2px;
+      background: linear-gradient(135deg, #fef08a 0%, #facc15 50%, #fb923c 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      filter: drop-shadow(0 2px 6px rgba(250, 204, 21, 0.5));
+    }
+    .ptr-tag {
+      background: #ef4444;
+      color: #fff;
+      font-size: 10px;
+      font-weight: 900;
+      padding: 2px 8px;
+      border-radius: 99px;
+      letter-spacing: 0.5px;
+    }
+
+    /* GRID 3 PODIUM */
+    .podium-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.15fr 1fr;
+      align-items: end;
+      gap: 18px;
+      width: 100%;
+      max-width: 920px;
+    }
+
+    @media (max-width: 768px) {
+      .podium-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+      }
+    }
+
+    /* KARTU POKEMON MODERN TCG */
+    .poke-podium-card {
+      position: relative;
+      border-radius: 18px;
+      padding: 7px;
+      user-select: none;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      cursor: pointer;
+    }
+
+    .poke-podium-card:hover {
+      transform: translateY(-6px) scale(1.02);
+    }
+
+    /* Holographic rainbow sheen on silver border */
+    .poke-podium-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      border-radius: 18px;
+      background: linear-gradient(
+        115deg,
+        transparent 0%,
+        rgba(255, 0, 150, 0.08) 25%,
+        rgba(0, 255, 255, 0.12) 50%,
+        rgba(255, 255, 0, 0.08) 75%,
+        transparent 100%
+      );
+      pointer-events: none;
+      z-index: 5;
+    }
+
+    /* TIER 1: JUARA 1 (TENGAH - Bobohu Water Gold/Silver) */
+    .poke-podium-card.rank-1 {
+      height: 440px;
+      background: 
+        linear-gradient(135deg, 
+          #fde047 0%, 
+          #ffffff 20%, 
+          #eab308 40%, 
+          #ca8a04 55%, 
+          #fef08a 75%, 
+          #fde047 100%);
+      box-shadow: 
+        0 20px 45px rgba(250, 204, 21, 0.45),
+        0 0 25px rgba(250, 204, 21, 0.3),
+        0 2px 6px rgba(255, 255, 255, 0.8) inset;
+      order: 2;
+    }
+    .poke-podium-card.rank-1 .card-body {
+      background: linear-gradient(180deg, #bfe2fd 0%, #90cdf4 35%, #7ec6f8 100%);
+    }
+
+    /* TIER 2: JUARA 2 (KIRI - Rian_99 Cosmic Dark Silver) */
+    .poke-podium-card.rank-2 {
+      height: 405px;
+      background: 
+        linear-gradient(135deg, 
+          #d1d5db 0%, 
+          #ffffff 25%, 
+          #94a3b8 50%, 
+          #cbd5e1 75%, 
+          #f1f5f9 100%);
+      box-shadow: 
+        0 15px 35px rgba(56, 189, 248, 0.35),
+        0 0 20px rgba(255, 255, 255, 0.25),
+        0 2px 5px rgba(255, 255, 255, 0.7) inset;
+      order: 1;
+    }
+    .poke-podium-card.rank-2 .card-body {
+      background: linear-gradient(180deg, #cbd5e1 0%, #94a3b8 35%, #64748b 100%);
+    }
+
+    /* TIER 3: JUARA 3 (KANAN - Fajar_Pro Fire Bronze) */
+    .poke-podium-card.rank-3 {
+      height: 395px;
+      background: 
+        linear-gradient(135deg, 
+          #fdba74 0%, 
+          #ffffff 25%, 
+          #ea580c 50%, 
+          #c2410c 75%, 
+          #fed7aa 100%);
+      box-shadow: 
+        0 15px 35px rgba(249, 115, 22, 0.35),
+        0 0 20px rgba(251, 146, 60, 0.25),
+        0 2px 5px rgba(255, 255, 255, 0.7) inset;
+      order: 3;
+    }
+    .poke-podium-card.rank-3 .card-body {
+      background: linear-gradient(180deg, #fecaca 0%, #fca5a5 35%, #f87171 100%);
+    }
+
+    /* INNER CARD BODY */
+    .card-body {
+      width: 100%;
+      height: 100%;
+      border-radius: 12px;
+      padding: 7px 9px 5px;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      border: 1.5px solid rgba(0, 0, 0, 0.15);
+      overflow: hidden;
+    }
+
+    /* HEADER */
+    .card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: relative;
+      z-index: 6;
+      height: 36px;
+      margin-bottom: 3px;
+    }
+    .stage-group {
+      position: relative;
+      display: flex;
+      align-items: center;
+      min-width: 58px;
+    }
+    .stage-pill {
+      position: absolute;
+      left: 10px;
+      top: -9px;
+      background: linear-gradient(180deg, #ffffff 0%, #cbd5e1 100%);
+      border: 1px solid #64748b;
+      border-radius: 4px 8px 0 0;
+      padding: 0px 7px 1px 14px;
+      font-size: 7.5px;
+      font-weight: 900;
+      color: #1e293b;
+      font-style: italic;
+      z-index: 2;
+    }
+    .stage-coin {
+      width: 34px;
+      height: 34px;
+      background: radial-gradient(circle at 35% 30%, #ffffff 0%, #e2e8f0 40%, #94a3b8 80%, #64748b 100%);
+      border: 2px solid #ffffff;
+      border-radius: 50%;
+      box-shadow: 0 3px 6px rgba(0,0,0,0.35);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      font-weight: 900;
+      color: #0f172a;
+      z-index: 3;
+      position: relative;
+      left: -2px;
+    }
+    .rank-1 .stage-coin {
+      background: radial-gradient(circle at 35% 30%, #fef08a 0%, #facc15 50%, #b45309 100%);
+      color: #713f12;
+      border-color: #fef9c3;
+    }
+
+    .card-player-name {
+      font-size: 17px;
+      font-weight: 900;
+      color: #0f172a;
+      letter-spacing: -0.3px;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
+      margin-left: 3px;
+      flex: 1;
+    }
+    .rank-1 .card-player-name { font-size: 19px; }
+
+    .card-pts-group {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      margin-left: 4px;
+    }
+    .card-pts-val {
+      font-size: 16px;
+      font-weight: 900;
+      color: #0f172a;
+    }
+    .rank-1 .card-pts-val { font-size: 18px; }
+    .card-pts-unit {
+      font-size: 9px;
+      font-weight: 800;
+      color: #1e293b;
+      margin-left: 1px;
+    }
+
+    .energy-orb {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      border: 1.5px solid #ffffff;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.3);
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 6px;
     }
-    .rank-1 .sar-name-text {
-      font-size: 22px;
-      color: #fef08a;
-      text-shadow: 0 0 14px rgba(254, 240, 138, 0.8), 2px 2px 0px #000;
-    }
-    .sar-ex-tag {
-      font-family: 'Bangers', cursive;
-      font-size: 12px;
-      padding: 1px 6px;
-      border-radius: 4px;
-      background: linear-gradient(135deg, #ec4899 0%, #a855f7 100%);
-      color: #fff;
-      border: 1px solid #fff;
-    }
-    .rank-1 .sar-ex-tag {
-      background: linear-gradient(135deg, #ef4444 0%, #f59e0b 100%);
-    }
+    .orb-water { background: radial-gradient(circle at 35% 30%, #38bdf8 0%, #0284c7 100%); }
+    .orb-dark { background: radial-gradient(circle at 35% 30%, #94a3b8 0%, #334155 100%); }
+    .orb-fire { background: radial-gradient(circle at 35% 30%, #fb923c 0%, #c2410c 100%); }
+    .energy-orb svg { width: 11px; height: 11px; fill: #ffffff; }
 
-    /* 4. SCORE BOX METALLIC RULE CAPSULE */
-    .sar-score-strip {
+    /* CENTER ART BOX */
+    .card-art-box {
+      width: 100%;
+      border: 3px solid #cbd5e1;
+      border-radius: 6px;
       position: relative;
-      z-index: 12;
-      background: linear-gradient(135deg, #ffffff 0%, #f1f5f9 100%);
-      border: 2.5px solid #000000;
-      border-radius: 12px;
-      box-shadow: 2px 2px 0px #000, 0 4px 10px rgba(0, 0, 0, 0.4);
-      padding: 4px 12px;
+      overflow: hidden;
+      box-shadow: 0 1px 3px rgba(255,255,255,0.9) inset, 0 3px 6px rgba(0,0,0,0.25);
+      z-index: 4;
       display: flex;
       align-items: center;
-      justify-content: space-between;
-      width: 100%;
+      justify-content: center;
     }
-    .rank-1 .sar-score-strip {
-      background: linear-gradient(135deg, #fef08a 0%, #fde047 100%);
-      border-width: 3px;
+    .rank-1 .card-art-box { height: 160px; border-color: #fde047; }
+    .rank-2 .card-art-box { height: 140px; }
+    .rank-3 .card-art-box { height: 135px; }
+
+    .art-bg-water-splash {
+      position: absolute;
+      inset: 0;
+      background: 
+        radial-gradient(circle at 50% 50%, rgba(255,255,255,0.7) 0%, transparent 40%),
+        conic-gradient(from 180deg at 50% 50%, #38bdf8, #818cf8, #c084fc, #f472b6, #fb923c, #facc15, #34d399, #38bdf8);
+      filter: brightness(1.1) saturate(1.4);
     }
-    .sss-label {
-      font-size: 11px;
-      font-weight: 900;
-      color: #334155;
+    .art-bg-cosmic-night {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, #090d16 0%, #1e1b4b 50%, #312e81 100%);
+    }
+    .art-bg-cosmic-night::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: 
+        radial-gradient(circle at 30% 20%, #f472b6 0%, transparent 35%),
+        radial-gradient(circle at 75% 30%, #38bdf8 0%, transparent 30%),
+        radial-gradient(circle at 50% 80%, #fbbf24 0%, transparent 40%);
+      mix-blend-mode: screen;
+      opacity: 0.85;
+    }
+    .art-bg-fire-aurora {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 50% 40%, #ffedd5 0%, #f97316 45%, #991b1b 100%);
+    }
+
+    .art-avatar-img {
+      position: relative;
+      z-index: 2;
+      max-width: 100%;
+      object-fit: contain;
+      filter: drop-shadow(0 6px 10px rgba(0, 0, 0, 0.65));
+      transition: transform 0.2s;
+    }
+    .rank-1 .art-avatar-img { height: 140px; }
+    .rank-2 .art-avatar-img { height: 122px; }
+    .rank-3 .art-avatar-img { height: 118px; }
+
+    /* RIBBON */
+    .art-ribbon-bar {
+      position: relative;
+      z-index: 5;
+      margin-top: -5px;
+      margin-bottom: 4px;
+      align-self: center;
+      background: linear-gradient(180deg, #f8fafc 0%, #e2e8f0 50%, #94a3b8 100%);
+      border: 1px solid #64748b;
+      border-radius: 99px;
+      padding: 1px 12px;
+      font-size: 8px;
+      font-weight: 800;
+      color: #0f172a;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.25);
+      letter-spacing: 0.3px;
       text-transform: uppercase;
     }
-    .rank-1 .sss-label { color: #854d0e; }
-    .sss-score {
-      font-family: 'Bangers', cursive;
-      font-size: 25px;
+    .rank-1 .art-ribbon-bar {
+      background: linear-gradient(180deg, #fef08a 0%, #facc15 50%, #ca8a04 100%);
+      border-color: #713f12;
+      color: #713f12;
+    }
+
+    /* ATTACK AREA */
+    .card-attack-area {
+      position: relative;
+      z-index: 5;
+      padding: 2px 4px 4px;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+    .attack-row-main {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+    }
+    .attack-bold-title {
+      font-size: 21px;
       font-weight: 900;
-      color: #dc2626;
+      color: #034f84;
       line-height: 1;
     }
-    .rank-1 .sss-score {
-      font-size: 29px;
-      color: #b91c1c;
-      text-shadow: 1px 1px 0px #fff;
-    }
+    .rank-1 .attack-bold-title { font-size: 23px; color: #0284c7; }
+    .rank-2 .attack-bold-title { color: #1e1b4b; }
+    .rank-3 .attack-bold-title { color: #991b1b; }
 
-    /* 5. FOOTER KARTU */
-    .sar-card-footer {
-      position: relative;
-      z-index: 12;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      width: 100%;
-      font-size: 10.5px;
+    .damage-big-val {
+      font-size: 17px;
       font-weight: 900;
-      color: rgba(255, 255, 255, 0.85);
-      padding: 2px 4px 0;
-      text-shadow: 1px 1px 2px #000;
+      color: #0f172a;
     }
-    .scf-stars {
-      color: #facc15;
-      font-family: 'Bangers', cursive;
-      font-size: 13px;
-      letter-spacing: 1.5px;
-      text-shadow: 0 0 10px #facc15;
+    .attack-desc-text {
+      font-size: 9.5px;
+      font-weight: 700;
+      color: #0f172a;
+      line-height: 1.2;
     }
 
-    /* ========================================================
-       GRID SISA KARTU DI BAWAH (COMPACT CLEAN)
-       ======================================================== */
-    .grid-divider-banner {
+    /* TOTAL BOX */
+    .card-total-box {
+      margin-top: auto;
+      background: rgba(255, 255, 255, 0.8);
+      border: 1px solid rgba(14, 165, 233, 0.5);
+      border-radius: 5px;
+      padding: 2px 5px;
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 14px;
-      width: 100%;
-      margin: 12px 0 6px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.06);
     }
-    .gdb-line {
-      flex: 1;
-      height: 2px;
-      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
-    }
-    .gdb-text {
-      font-family: 'Bangers', cursive;
-      font-size: 17px;
-      letter-spacing: 2px;
-      background: #0f172a;
-      border: 2px solid rgba(255, 255, 255, 0.35);
-      border-radius: 10px;
-      padding: 5px 18px;
-      color: #fde047;
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.7);
+    .total-title-text {
+      font-size: 12.5px;
+      font-weight: 900;
+      color: #0f172a;
     }
 
-    .demo-grid-compact {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 6px;
+    .card-flavor-text {
+      font-size: 7.5px;
+      font-style: italic;
+      color: #334155;
+      text-align: center;
+      line-height: 1.15;
+      margin: 2px 0 1px;
+    }
+
+    .card-footer {
+      border-top: 1px solid rgba(0, 0, 0, 0.15);
+      padding-top: 1px;
+      display: flex;
+      justify-content: space-between;
+      font-size: 7px;
+      font-weight: 700;
+      color: #334155;
+    }
+
+
+    /* ========================================================
+       SECTION 2: SISA BANGKU PESERTA (COMPACT & HEMAT TEMPAT)
+       ======================================================== */
+    .bottom-section {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .compact-divider {
+      display: flex;
+      align-items: center;
+      gap: 12px;
       width: 100%;
     }
-    .demo-card {
-      border: 2.5px solid #000000;
-      border-radius: 14px;
-      box-shadow: 2.5px 2.5px 0px #000000;
-      padding: 6px 4px 6px;
-      min-height: 175px;
+    .cd-line {
+      flex: 1;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, rgba(56, 189, 248, 0.4), transparent);
+    }
+    .cd-badge {
+      background: #1e293b;
+      border: 1.5px solid #38bdf8;
+      border-radius: 99px;
+      padding: 4px 18px;
+      font-size: 12px;
+      font-weight: 800;
+      color: #7dd3fc;
+      letter-spacing: 0.5px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+    }
+
+    /* GRID SISA KURSI RINGKAS */
+    .compact-seats-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 8px;
+      width: 100%;
+    }
+
+    @media (max-width: 900px) {
+      .compact-seats-grid { grid-template-columns: repeat(3, 1fr); }
+    }
+    @media (max-width: 500px) {
+      .compact-seats-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    .seat-card-compact {
+      border: 2px solid #000000;
+      border-radius: 12px;
+      box-shadow: 2px 2px 0px #000000;
+      padding: 6px 6px 8px;
+      min-height: 165px;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: space-between;
       position: relative;
+      transition: transform 0.2s;
     }
-    .demo-card .d-no {
+    .seat-card-compact:hover {
+      transform: translateY(-3px);
+    }
+
+    .seat-card-compact .seat-no {
       position: absolute;
       top: 5px;
-      left: 5px;
+      left: 6px;
       background: #ffffff;
-      border: 2px solid #000000;
+      border: 1.5px solid #000000;
       border-radius: 5px;
-      font-family: 'Fredoka', cursive;
       font-weight: 900;
-      font-size: 13px;
-      padding: 0 5px;
+      font-size: 11px;
+      padding: 0 4px;
       color: #000;
     }
-    .demo-card .d-av {
-      width: 76px;
-      height: 76px;
+
+    .seat-card-compact .avatar-box {
+      width: 68px;
+      height: 68px;
       border-radius: 50%;
-      border: 2.5px solid #000000;
+      border: 2px solid #000000;
       background: #ffffff;
-      margin: 8px auto 2px;
+      margin: 14px auto 2px;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 26px;
-      font-weight: 900;
-      color: #94a3b8;
+      overflow: hidden;
+      box-shadow: 2px 2px 0px rgba(0,0,0,0.15);
     }
-    .demo-card .d-name {
-      font-size: 14.5px;
-      font-weight: 900;
-      color: #000000;
-      font-style: italic;
+    .seat-card-compact .avatar-box img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
     }
-    .demo-card .d-score {
+
+    .seat-card-compact .player-name {
+      font-size: 12px;
+      font-weight: 900;
+      color: #000;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 95%;
+      margin: 2px 0;
+    }
+
+    .seat-card-compact .score-badge {
       background: #ffffff;
-      border: 2px solid #000000;
-      border-radius: 7px;
-      color: #dc2626;
-      font-family: 'Bangers', cursive;
-      font-size: 18px;
-      padding: 1px 12px;
+      border: 1.5px solid #000000;
+      border-radius: 6px;
+      font-size: 13px;
+      font-weight: 900;
+      color: #0f172a;
+      padding: 2px 10px;
+      box-shadow: 1px 1px 0px #000;
+      width: 90%;
+      text-align: center;
     }
+
+    /* SOLID PASTEL COLORS FOR COMPACT SEATS */
+    .bg-seat-yellow { background: #fef08a; }
+    .bg-seat-purple { background: #e9d5ff; }
+    .bg-seat-green  { background: #bbf7d0; }
+    .bg-seat-blue   { background: #bae6fd; }
+    .bg-seat-pink   { background: #fbcfe8; }
+
   </style>
 </head>
 <body>
 
-  <div class="main-wrapper">
+  <div class="main-container">
+    
+    <!-- HEADER -->
+    <div class="top-bar">
+      <div class="tb-left">
+        <span class="tb-badge">SOLUSI OPTIMAL</span>
+        <div>
+          <h1>Podium 3 Besar Kartu Pokémon + Sisa Kursi Ringkas</h1>
+          <p>Style Pokémon TCG khusus 3 Besar (Spotlight Juara), kursi lainnya tetap compact & hemat ruang.</p>
+        </div>
+      </div>
+      <div class="tb-actions">
+        <a href="index.html?view=tabel" class="tb-btn secondary">Papan Skor Utama</a>
+        <a href="preview_pokemon_cards.html" class="tb-btn">Semua Kartu Pokémon</a>
+      </div>
+    </div>
 
-    <!-- ARENA PANGGUNG PODIUM DENGAN SINAR LAMPU SOROT -->
-    <div class="arena-backdrop">
+    <!-- 1. PODIUM 3 BESAR (KARTU POKEMON MODERN TCG) -->
+    <div class="podium-stage-wrapper">
       
-      <!-- HEADER PANGGUNG -->
-      <div class="stage-title-capsule">
-        <span>✨</span>
-        <div class="stc-text">GRAND CHAMPIONS PODIUM</div>
-        <div class="stc-sub">★ SPECIAL ILLUSTRATION RARE ★</div>
-        <span>✨</span>
+      <div class="podium-title-ribbon">
+        <span class="ptr-tag">TOP 3</span>
+        <span class="ptr-title">HALL OF CHAMPIONS (POKÉMON TCG SPECIAL)</span>
       </div>
 
-      <!-- GRID KARTU SPESIAL (FULL ART POKEMON SAR STYLE) -->
-      <div class="podium-stage-grid">
+      <div class="podium-grid">
         
-        <!-- JUARA 2: ASTRAL AURORA BOREALIS (CYAN NEON) -->
-        <div class="sar-card rank-2">
-          <!-- Full Art Pemandangan Aurora & Kristal Bintang -->
-          <div class="card-art-scene"></div>
-
-          <div class="sar-top-header">
-            <div class="sar-rank-badge">🥈 RANK #2</div>
-            <div class="sar-hp-pill"><span>PTS</span> 24 ⚡</div>
-          </div>
-
-          <div class="sar-avatar-stage">
-            <div class="sar-avatar-halo">
-              <img src="https://ui-avatars.com/api/?name=Zenix&background=0284c7&color=fff&bold=true&size=150" alt="Avatar Juara 2">
+        <!-- JUARA 2: Rian_99 (Cosmic Dark Silver) -->
+        <div class="poke-podium-card rank-2">
+          <div class="card-body">
+            <div class="card-header">
+              <div class="stage-group">
+                <div class="stage-pill">STAGE 1</div>
+                <div class="stage-coin">#2</div>
+              </div>
+              <div class="card-player-name">Rian_99</div>
+              <div class="card-pts-group">
+                <span class="card-pts-val">58</span>
+                <span class="card-pts-unit">PTS</span>
+                <div class="energy-orb orb-dark">
+                  <svg viewBox="0 0 24 24"><path d="M12 3a9 9 0 1 0 9 9c0-.46-.04-.92-.1-1.36a5.389 5.389 0 0 1-4.4 2.26 5.403 5.403 0 0 1-3.14-9.8c-.44-.06-.9-.1-1.36-.1z"/></svg>
+                </div>
+              </div>
             </div>
-          </div>
-
-          <div class="sar-name-capsule">
-            <div class="sar-name-text">
-              Zenix_Pro <span class="sar-ex-tag">★ EX</span>
+            <div class="card-art-box">
+              <div class="art-bg-cosmic-night"></div>
+              <img class="art-avatar-img" src="https://tr.rbxcdn.com/30DAY-Avatar-635A2AA0A87D473B6136800B5B86F761-Png/352/352/Avatar/Png/noFilter" alt="Rian" onerror="this.src='roblox_3d_cache/9109958726/avatar_2d_official.png'">
             </div>
-          </div>
-
-          <div class="sar-score-strip">
-            <span class="sss-label">Total Poin</span>
-            <span class="sss-score">24 POIN</span>
-          </div>
-
-          <div class="sar-card-footer">
-            <span>Kursi #2</span>
-            <span class="scf-stars">★★★ SAR</span>
+            <div class="art-ribbon-bar">#002 • Peringkat 2 • Night Hero</div>
+            <div class="card-attack-area">
+              <div class="attack-row-main">
+                <div class="attack-bold-title">+5 POIN</div>
+                <span class="damage-big-val">50</span>
+              </div>
+              <div class="attack-desc-text">Serangan bayangan malam dengan ketepatan tinggi</div>
+            </div>
+            <div class="card-total-box"><span class="total-title-text">Total : 58 Poin</span></div>
+            <div class="card-flavor-text">Menatap lentera festival malam sambil mengumpulkan poin.</div>
+            <div class="card-footer">
+              <span>Illus. rian99</span>
+              <span>G [SV4a] 002/010 ★</span>
+            </div>
           </div>
         </div>
 
-        <!-- JUARA 1: FESTIVAL KEMBANG API & LENTERA MALAM (GOLDEN SUN / UMBREON SAR) -->
-        <div class="sar-card rank-1">
-          <!-- Full Art Pemandangan Kembang Api & Lentera Emas -->
-          <div class="card-art-scene"></div>
-
-          <div class="sar-top-header">
-            <div class="sar-rank-badge">👑 JUARA 1</div>
-            <div class="sar-hp-pill"><span>PTS</span> 30 🔥</div>
-          </div>
-
-          <div class="sar-avatar-stage">
-            <div class="sar-crown-gold">👑</div>
-            <div class="sar-avatar-halo">
-              <img src="https://tr.rbxcdn.com/30DAY-AvatarHeadshot-1723528A6B0A80C0D49C96726EB948A2-Png/150/150/AvatarHeadshot/Webp/noFilter" alt="Avatar Juara 1" onerror="this.src='https://ui-avatars.com/api/?name=Bobohu&background=facc15&color=000&bold=true';">
+        <!-- JUARA 1: Bobohu (Golden Silver Rainbow Water) -->
+        <div class="poke-podium-card rank-1">
+          <div class="card-body">
+            <div class="card-header">
+              <div class="stage-group">
+                <div class="stage-pill">STAGE 1</div>
+                <div class="stage-coin">#1</div>
+              </div>
+              <div class="card-player-name">Bobohu</div>
+              <div class="card-pts-group">
+                <span class="card-pts-val">63</span>
+                <span class="card-pts-unit">PTS</span>
+                <div class="energy-orb orb-water">
+                  <svg viewBox="0 0 24 24"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/></svg>
+                </div>
+              </div>
             </div>
-          </div>
-
-          <div class="sar-name-capsule">
-            <div class="sar-name-text">
-              Bobohu <span class="sar-ex-tag">★★★ ULTRA EX</span>
+            <div class="card-art-box">
+              <div class="art-bg-water-splash"></div>
+              <img class="art-avatar-img" src="https://tr.rbxcdn.com/30DAY-Avatar-310966282D3529E36976BF6B07B1DC90-Png/352/352/Avatar/Png/noFilter" alt="Bobohu" onerror="this.src='roblox_3d_cache/9109958726/avatar_2d_official.png'">
             </div>
-          </div>
-
-          <div class="sar-score-strip">
-            <span class="sss-label">Champion Skor</span>
-            <span class="sss-score">30 POIN</span>
-          </div>
-
-          <div class="sar-card-footer">
-            <span>Kursi #1</span>
-            <span class="scf-stars" style="color:#fde047; font-size:14px; text-shadow:0 0 14px #fde047;">★★★★★ SECRET RARE</span>
+            <div class="art-ribbon-bar">#001 • Peringkat 1 • Galatama King</div>
+            <div class="card-attack-area">
+              <div class="attack-row-main">
+                <div class="attack-bold-title">+3 POIN</div>
+                <span class="damage-big-val">60</span>
+              </div>
+              <div class="attack-desc-text">Tambahkan poin bonus dalam permainan</div>
+            </div>
+            <div class="card-total-box"><span class="total-title-text">Total : 63 Poin</span></div>
+            <div class="card-flavor-text">Pemenang puncak Galatama dengan akurasi lemparan spektakuler.</div>
+            <div class="card-footer">
+              <span>Illus. bobohu</span>
+              <span>G [SV4a] 001/010 ★</span>
+            </div>
           </div>
         </div>
 
-        <!-- JUARA 3: NEBULA KOSMIK & MATAHARI SENJA (BRONZE FLAME) -->
-        <div class="sar-card rank-3">
-          <!-- Full Art Pemandangan Percikan Api & Sunset Nebula -->
-          <div class="card-art-scene"></div>
-
-          <div class="sar-top-header">
-            <div class="sar-rank-badge">🥉 RANK #3</div>
-            <div class="sar-hp-pill"><span>PTS</span> 18 💥</div>
-          </div>
-
-          <div class="sar-avatar-stage">
-            <div class="sar-avatar-halo">
-              <img src="https://ui-avatars.com/api/?name=Rider&background=c2410c&color=fff&bold=true&size=150" alt="Avatar Juara 3">
+        <!-- JUARA 3: Fajar_Pro (Fire Bronze) -->
+        <div class="poke-podium-card rank-3">
+          <div class="card-body">
+            <div class="card-header">
+              <div class="stage-group">
+                <div class="stage-pill">STAGE 1</div>
+                <div class="stage-coin">#3</div>
+              </div>
+              <div class="card-player-name">Fajar_Pro</div>
+              <div class="card-pts-group">
+                <span class="card-pts-val">52</span>
+                <span class="card-pts-unit">PTS</span>
+                <div class="energy-orb orb-fire">
+                  <svg viewBox="0 0 24 24"><path d="M12 2c1.1 2.5 3 4.5 3 7.5 0 2.2-1.8 4-4 4s-4-1.8-4-4c0-3 1.9-5 3-7.5zm-5 11c0 3.9 3.1 7 7 7s7-3.1 7-7c0-2.4-1.2-4.5-3-5.7.1.9-.1 1.9-.7 2.7-1.1 1.4-3.1 1.7-4.5.6-.4-.3-.7-.7-.9-1.1-1.3 1.3-2.1 3-2.1 4.5z"/></svg>
+                </div>
+              </div>
             </div>
-          </div>
-
-          <div class="sar-name-capsule">
-            <div class="sar-name-text">
-              ShadowRider <span class="sar-ex-tag">★ EX</span>
+            <div class="card-art-box">
+              <div class="art-bg-fire-aurora"></div>
+              <img class="art-avatar-img" src="https://tr.rbxcdn.com/30DAY-Avatar-BF68F8B33B8FD75DC022244CA714186E-Png/352/352/Avatar/Png/noFilter" alt="Fajar" onerror="this.src='roblox_3d_cache/9109958726/avatar_2d_official.png'">
             </div>
-          </div>
-
-          <div class="sar-score-strip">
-            <span class="sss-label">Total Poin</span>
-            <span class="sss-score">18 POIN</span>
-          </div>
-
-          <div class="sar-card-footer">
-            <span>Kursi #4</span>
-            <span class="scf-stars">★★★ SAR</span>
+            <div class="art-ribbon-bar">#003 • Peringkat 3 • Flame Master</div>
+            <div class="card-attack-area">
+              <div class="attack-row-main">
+                <div class="attack-bold-title">+2 POIN</div>
+                <span class="damage-big-val">30</span>
+              </div>
+              <div class="attack-desc-text">Kobaran api penentu yang memanaskan persaingan</div>
+            </div>
+            <div class="card-total-box"><span class="total-title-text">Total : 52 Poin</span></div>
+            <div class="card-flavor-text">Semangat membara tiada henti mengamankan podium 3.</div>
+            <div class="card-footer">
+              <span>Illus. fajar</span>
+              <span>G [SV4a] 003/010 ★</span>
+            </div>
           </div>
         </div>
 
@@ -742,63 +801,69 @@
 
     </div>
 
-    <!-- DIVIDER KE KARTU GRID BIASA -->
-    <div class="grid-divider-banner">
-      <div class="gdb-line"></div>
-      <div class="gdb-text">⚡ KARTU KURSI LAINNYA (COMPACT GRID) ⚡</div>
-      <div class="gdb-line"></div>
-    </div>
+    <!-- 2. SISA BANGKU PESERTA (KURSI 4 - 8: COMPACT SOLID PASTEL) -->
+    <div class="bottom-section">
+      
+      <div class="compact-divider">
+        <div class="cd-line"></div>
+        <div class="cd-badge">PESERTA LAINNYA (KURSI 4 - 8) • HEMAT TEMPAT & RAPAT</div>
+        <div class="cd-line"></div>
+      </div>
 
-    <!-- GRID SISA KARTU (KURSI 4 - 11) -->
-    <div class="demo-grid-compact">
-      <div class="demo-card" style="background:#fed7aa;">
-        <span class="d-no">3</span>
-        <div class="d-av">-</div>
-        <div class="d-name">(Kosong)</div>
-        <div class="d-score">0</div>
+      <div class="compact-seats-grid">
+        
+        <!-- KURSI 4 -->
+        <div class="seat-card-compact bg-seat-yellow">
+          <div class="seat-no">#4</div>
+          <div class="avatar-box">
+            <img src="https://tr.rbxcdn.com/30DAY-Avatar-9E3393506FDB057F11F3293F54CBBCBE-Png/352/352/Avatar/Png/noFilter" alt="Dika" onerror="this.src='roblox_3d_cache/9109958726/avatar_2d_official.png'">
+          </div>
+          <div class="player-name">Dika_Gamer</div>
+          <div class="score-badge">46 PTS</div>
+        </div>
+
+        <!-- KURSI 5 -->
+        <div class="seat-card-compact bg-seat-purple">
+          <div class="seat-no">#5</div>
+          <div class="avatar-box">
+            <img src="https://tr.rbxcdn.com/30DAY-Avatar-F38461E7C697FF2C6322D7EFD16E1C0D-Png/352/352/Avatar/Png/noFilter" alt="Maya" onerror="this.src='roblox_3d_cache/9109958726/avatar_2d_official.png'">
+          </div>
+          <div class="player-name">Maya_Star</div>
+          <div class="score-badge">41 PTS</div>
+        </div>
+
+        <!-- KURSI 6 -->
+        <div class="seat-card-compact bg-seat-green">
+          <div class="seat-no">#6</div>
+          <div class="avatar-box">
+            <img src="https://tr.rbxcdn.com/30DAY-Avatar-AE2C9493AD0F456539BC5FD410303757-Png/352/352/Avatar/Png/noFilter" alt="Budi" onerror="this.src='roblox_3d_cache/9109958726/avatar_2d_official.png'">
+          </div>
+          <div class="player-name">Budi_Kuat</div>
+          <div class="score-badge">37 PTS</div>
+        </div>
+
+        <!-- KURSI 7 -->
+        <div class="seat-card-compact bg-seat-blue">
+          <div class="seat-no">#7</div>
+          <div class="avatar-box">
+            <img src="https://tr.rbxcdn.com/30DAY-Avatar-CC5A14D30E092A267E98BBE01B93324F-Png/352/352/Avatar/Png/noFilter" alt="Kevin" onerror="this.src='roblox_3d_cache/9109958726/avatar_2d_official.png'">
+          </div>
+          <div class="player-name">Kevin_999</div>
+          <div class="score-badge">30 PTS</div>
+        </div>
+
+        <!-- KURSI 8 -->
+        <div class="seat-card-compact bg-seat-pink">
+          <div class="seat-no">#8</div>
+          <div class="avatar-box">
+            <img src="https://tr.rbxcdn.com/30DAY-Avatar-635A2AA0A87D473B6136800B5B86F761-Png/352/352/Avatar/Png/noFilter" alt="Rizky" onerror="this.src='roblox_3d_cache/9109958726/avatar_2d_official.png'">
+          </div>
+          <div class="player-name">Rizky_Master</div>
+          <div class="score-badge">24 PTS</div>
+        </div>
+
       </div>
-      <div class="demo-card" style="background:#e9d5ff;">
-        <span class="d-no">5</span>
-        <div class="d-av">-</div>
-        <div class="d-name">(Kosong)</div>
-        <div class="d-score">0</div>
-      </div>
-      <div class="demo-card" style="background:#a5f3fc;">
-        <span class="d-no">6</span>
-        <div class="d-av">-</div>
-        <div class="d-name">(Kosong)</div>
-        <div class="d-score">0</div>
-      </div>
-      <div class="demo-card" style="background:#fbcfe8;">
-        <span class="d-no">7</span>
-        <div class="d-av">-</div>
-        <div class="d-name">(Kosong)</div>
-        <div class="d-score">0</div>
-      </div>
-      <div class="demo-card" style="background:#fde68a;">
-        <span class="d-no">8</span>
-        <div class="d-av">-</div>
-        <div class="d-name">(Kosong)</div>
-        <div class="d-score">0</div>
-      </div>
-      <div class="demo-card" style="background:#fecaca;">
-        <span class="d-no">9</span>
-        <div class="d-av">-</div>
-        <div class="d-name">(Kosong)</div>
-        <div class="d-score">0</div>
-      </div>
-      <div class="demo-card" style="background:#99f6e4;">
-        <span class="d-no">10</span>
-        <div class="d-av">-</div>
-        <div class="d-name">(Kosong)</div>
-        <div class="d-score">0</div>
-      </div>
-      <div class="demo-card" style="background:#c7d2fe;">
-        <span class="d-no">11</span>
-        <div class="d-av">-</div>
-        <div class="d-name">(Kosong)</div>
-        <div class="d-score">0</div>
-      </div>
+
     </div>
 
   </div>
