@@ -574,51 +574,10 @@ html.theme-comic .c-notif-tag {
   box-shadow: 2.5px 2.5px 0px #000000 !important;
   padding: 3px 12px !important;
 }
-html.theme-comic .c-notif-name,
-html.theme-comic #cNotifPlayer {
-  color: #ffffff !important;
-  -webkit-text-fill-color: #ffffff !important;
-  font-family: 'Bangers', cursive !important;
-  font-size: 26px !important;
-  font-weight: 900 !important;
-  line-height: 1.25 !important;
-  letter-spacing: 1.5px !important;
-  text-align: center !important;
-  margin: 6px auto !important;
-  padding: 5px 16px !important;
-  background: #0f172a !important;
-  border: 2.5px solid #000000 !important;
-  border-radius: 12px !important;
-  box-shadow: 3.5px 3.5px 0px #000000 !important;
-  display: inline-block !important;
-  max-width: 90% !important;
-  word-break: break-word !important;
-  overflow: visible !important;
-  text-overflow: clip !important;
-  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.6) !important;
-  -webkit-text-stroke: 0.5px rgba(255, 255, 255, 0.25) !important;
-}
-html.theme-comic .c-notif-pts-box {
-  background: #fde047 !important;
-  border: 3.5px solid #000000 !important;
-  border-radius: 22px !important;
-  padding: 8px 12px !important;
-  width: 100% !important;
-  box-sizing: border-box !important;
-}
-html.theme-comic .c-notif-pts-main {
-  color: #dc2626 !important;
-  font-family: 'Bangers', cursive !important;
-  font-size: 38px !important;
-  font-weight: 900 !important;
-  text-shadow: 0 0 15px rgba(0,0,0,0.6) !important;
-}
-html.theme-comic .c-notif-pts-total {
-  color: #334155 !important;
-  font-family: 'Fredoka', sans-serif !important;
-  font-size: 11px !important;
-  font-weight: 700 !important;
-}
+/* Overridden by Comic Pop-Art Badge Toast */
+/* Overridden by Comic Pop-Art Badge Toast */
+/* Overridden */
+/* Overridden */
 
 /* ==============================================================================
    PODIUM JUARA MEGAH KHUSUS TEMA (comic)
